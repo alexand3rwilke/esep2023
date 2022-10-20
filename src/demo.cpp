@@ -23,30 +23,33 @@ int main() {
 	// spruh73l.pdf page 4877
 
 	int count = 0;
+	int timeSec = 200;
 
-	while( count < 5 ) {
+	while( count < 1 ) {
 
 		//std::cout << "Switch traffic light on" << std::endl;
 		out32((uintptr_t) (gpio_bank_1 + 0x194), 0x00010000); // set register
-		usleep(1000 * 500);
+		usleep(1000 * timeSec);
 
 		out32((uintptr_t) (gpio_bank_1 + 0x194), 0x00020000); // set register
-		usleep(1000 * 500);
+		usleep(1000 * timeSec);
 
-		out32((uintptr_t) (gpio_bank_1 + 0x194), 0x00040000); // set register
-		usleep(1000 * 500);
+		out32((uintptr_t) (gpio_bank_1 + 0x194), 0x00080000); // set register
+		usleep(10000 * timeSec);
+
+		out32((uintptr_t) (gpio_bank_1 + 0x190), 0x00080000); // set register
+		usleep(10000 * timeSec);
 
 		//std::cout << "Switch traffic light off" << std::endl;
 		out32((uintptr_t) (gpio_bank_1 + 0x190), 0x00010000); // clear register
-		usleep(1000 * 500);
+		usleep(1000 * timeSec);
 
 		//std::cout << "Switch traffic light off" << std::endl;
 		out32((uintptr_t) (gpio_bank_1 + 0x190), 0x00020000); // clear register
-		usleep(1000 * 500);
+		usleep(1000 * timeSec);
 
-		//std::cout << "Switch traffic light off" << std::endl;
-		out32((uintptr_t) (gpio_bank_1 + 0x190), 0x00040000); // clear register
-		usleep(1000 * 500);
+
+
 
 		++count;
 	}
