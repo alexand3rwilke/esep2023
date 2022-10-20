@@ -1,7 +1,7 @@
-ARTIFACT = demo
+ARTIFACT = TestingDemo
 
 #Build architecture/variant string, possible values: x86, armv7le, etc...
-PLATFORM ?= armv7le
+PLATFORM ?= x86_64
 
 #Build profile, possible values: release, debug, profile, coverage
 BUILD_PROFILE ?= debug
@@ -14,6 +14,12 @@ TARGET = $(OUTPUT_DIR)/$(ARTIFACT)
 
 CC = qcc -Vgcc_nto$(PLATFORM)
 CXX = qcc -lang-c++ -Vgcc_nto$(PLATFORM)
+
+##################################################################
+# Hier einkommentieren wenn die Tests kompiliert werden sollen!
+#CXX += -DRUN_TESTS
+##################################################################
+
 LD = $(CXX)
 
 #User defined include/preprocessor flags and libraries
@@ -23,6 +29,13 @@ LD = $(CXX)
 
 #LIBS += -L/path/to/my/lib/$(PLATFORM)/usr/lib -lmylib
 #LIBS += -L../mylib/$(OUTPUT_DIR) -lmylib
+
+###########################################################
+# Wir benutzen die library für das GoogleTest framework. 
+#	Diese muss ggf. noch auf euer VM installiert werden! 
+#	Siehe readme für weitere Informationen.
+#LIBS += -lgtest
+###########################################################
 
 #Compiler flags for build profiles
 CCFLAGS_release += -O2
