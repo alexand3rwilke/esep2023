@@ -1,170 +1,103 @@
 /*
- * Hardware.cpp
+ * Actuator.cpp
  *
- *  Created on: 03.12.2021
- *      Author: Bjoern Dittmann
+ *  Created on: 25.10.22
+ *      Author: Alexander Wilke
  */
 
-#include "Hardware.h"
+#include "Actuator.h"
 
-#include "GpioPorts.h"
-#include "Registers.h"
+#include <iostream>
+#include <stdint.h>
+#include <sys/mman.h>
+#include <hw/inout.h>
+#include <sys/neutrino.h>
 
-Hardware::Hardware(IGpioAccess* gpioController) {
-	this->gpioController = gpioController;
+
+#define GPIO1_ADDRESS_START (uint64_t)0x4804C000
+#define GPIO1_ADDRESS_LENGTH 0x1000
+#define GPIO_SET_REGISTER(base) (uintptr_t)base + 0x194
+#define GPIO_CLEAR_REGISTER(base) (uintptr_t)base + 0x190
+
+
+uintptr_t gpio_bank_1;
+
+Actuator::Actuator() {
+
+	ThreadCtl( _NTO_TCTL_IO, 0);
+	gpio_bank_1 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO1_ADDRESS_START);
+
 }
 
-Hardware::~Hardware() {
+Actuator::~Actuator() {
 
 }
 
 // ASSAMBLY LINE
-void Hardware::assamblyMoveRightOn(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT0,
-		ERegister::SETDATAOUT,
-		12,
-		true
-	);
+void Actuator::assamblyMoveRightOn(void) {
+	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00001000);
 }
 
-void Hardware::assamblyMoveRightOff(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT0,
-		ERegister::SETDATAOUT,
-		12,
-		false
-	);
+void Actuator::assamblyMoveRightOff(void) {
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00001000);
 }
 
-void Hardware::assamblyMoveLeftOn(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT1,
-		ERegister::SETDATAOUT,
-		13,
-		true
-	);
+void Actuator::assamblyMoveLeftOn(void) {
+	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00002000);
 }
 
-void Hardware::assamblyMoveLeftOff(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT1,
-		ERegister::SETDATAOUT,
-		13,
-		false
-	);
+void Actuator::assamblyMoveLeftOff(void) {
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00002000);
 }
 
-void Hardware::assamblyMoveSlowOn(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT2,
-		ERegister::SETDATAOUT,
-		14,
-		true
-	);
+void Actuator::assamblyMoveSlowOn(void) {
+	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00004000);
 }
 
-void Hardware::assamblyMoveSlowOff(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT2,
-		ERegister::SETDATAOUT,
-		14,
-		false
-	);
+void Actuator::assamblyMoveSlowOff(void) {
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00004000);
 }
 
 
-void Hardware::assamblyStopOn(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT3,
-		ERegister::SETDATAOUT,
-		15,
-		true
-	);
+void Actuator::assamblyStopOn(void) {
+	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00008000);
 }
 
-void Hardware::assamblyStopOff(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT3,
-		ERegister::SETDATAOUT,
-		15,
-		false
-	);
+void Actuator::assamblyStopOff(void) {
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00008000);
 }
 
+void Actuator::redOn(void) {
 
-void Hardware::redOn(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT4,
-		ERegister::SETDATAOUT,
-		16,
-		true
-	);
+	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00010000);
 }
 
-void Hardware::redOff(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT4,
-		ERegister::SETDATAOUT,
-		16,
-		false
-	);
+void Actuator::redOff(void) {
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00010000);
 }
 
-void Hardware::yellowOn(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT5,
-		ERegister::SETDATAOUT,
-		17,
-		true
-	);
+void Actuator::yellowOn(void) {
+	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00020000);
 }
 
-void Hardware::yellowOff(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT5,
-		ERegister::SETDATAOUT,
-		17,
-		false
-	);
+void Actuator::yellowOff(void) {
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00020000);
 }
 
-void Hardware::greenOn(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT6,
-		ERegister::SETDATAOUT,
-		18,
-		true
-	);
+void Actuator::greenOn(void) {
+	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00040000);
 }
 
-void Hardware::greenOff(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT6,
-		ERegister::SETDATAOUT,
-		18,
-		false
-	);
+void Actuator::greenOff(void) {
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00040000);
 }
 
-
-//SWITCH
-void Hardware::switchOn(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT7,
-		ERegister::SETDATAOUT,
-		19,
-		true
-	);
+void Actuator::switchOn(void) {
+	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00080000);
 }
 
-void Hardware::switchOff(void) {
-	this->gpioController->writePin(
-		EGpioPort::GPIO_PORT7,
-		ERegister::SETDATAOUT,
-		19,
-		false
-	);
+void Actuator::switchOff(void) {
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
 }
 
 
