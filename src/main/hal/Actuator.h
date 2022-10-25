@@ -1,42 +1,37 @@
 /*
- * Hardware.h
+ * Actuator.ch
  *
- *  Created on: 03.12.2021
- *      Author: Bjoern Dittmann
+ *  Created on: 25.10.22
+ *      Author: Alexander Wilke
  */
 
-#ifndef SRC_MAIN_HAL_HARDWARE_H_
-#define SRC_MAIN_HAL_HARDWARE_H_
 
-#include "IHardwareAbstraction.h"
+#ifndef SRC_MAIN_HAL_ACTUATOR_H_
+#define SRC_MAIN_HAL_ACTUATOR_H_
 
-#include "IGpioAccess.h"
 
-class Hardware : public IHardwareAbstraction {
-
-private:
-	IGpioAccess* gpioController;
+class Actuator  {
 
 public:
-	Hardware(IGpioAccess* gpioController);
-	virtual ~Hardware();
+	Actuator();
+	virtual ~Actuator();
 
-	void assamblyMoveRightOn(void) override;
-	void assamblyMoveRightOff(void) override;
-	void assamblyMoveLeftOn(void) override;
-	void assamblyMoveLeftOff(void) override;
-	void assamblyMoveSlowOn(void) override;
-	void assamblyMoveSlowOff(void) override;
-	void assamblyStopOn(void) override;
-	void assamblyStopOff(void) override;
-	void redOn(void) override;
-	void redOff(void) override;
-	void yellowOn(void) override;
-	void yellowOff(void) override;
-	void greenOn(void) override;
-	void greenOff(void) override;
-	void switchOn(void) override;
-	void switchOff(void) override;
+	void assamblyMoveRightOn(void);
+	void assamblyMoveRightOff(void);
+	void assamblyMoveLeftOn(void);
+	void assamblyMoveLeftOff(void);
+	void assamblyMoveSlowOn(void);
+	void assamblyMoveSlowOff(void);
+	void assamblyStopOn(void);
+	void assamblyStopOff(void);
+	void redOn(void);
+	void redOff(void);
+	void yellowOn(void);
+	void yellowOff(void);
+	void greenOn(void);
+	void greenOff(void);
+	void switchOn(void);
+	void switchOff(void);
 };
 
-#endif /* SRC_MAIN_HAL_HARDWARE_H_ */
+#endif /* SRC_MAIN_HAL_ACTUATOR_H_ */

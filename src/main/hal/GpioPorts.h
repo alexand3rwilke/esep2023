@@ -1,20 +1,18 @@
 /*
  * GpioPorts.h
  *
- *  Created on: 03.12.2021
- *      Author: Bjoern Dittmann
+ *  Created on: 25.10.2022
+ *      Author: Alexander Wilke
  */
 
 #ifndef SRC_MAIN_HAL_GPIOPORTS_H_
 #define SRC_MAIN_HAL_GPIOPORTS_H_
 
-
+// TODO: MAYBE DELETE THIS ONE??
 enum EGpioPort{
-
 
 	GPIO_BANK_1_BASEPORT = 0x4804C000,
 
-	// ASSAMBLY 
 	// ASSAMBLY MOVE RIGHT 
 	GPIO_PORT0 = 0x4804D000,
 	// ASSAMBLY MOVE LEFT 
@@ -24,16 +22,15 @@ enum EGpioPort{
 	// ASSAMBLY STOP 
 	GPIO_PORT3 = 0x48054000,
 
-	//LED PINS
+	//LED RED
 	GPIO_PORT4 = 0x4805C000,
+	//LED YELLOW
 	GPIO_PORT5 = 0x4806C000,
+	//LED GREEN
 	GPIO_PORT6 = 0x4808C000,
 
 	// SWITCH PIN
 	GPIO_PORT7 = 0x480CC000,
-	
-
-	//EJECTOR PIN
 };
 
 
