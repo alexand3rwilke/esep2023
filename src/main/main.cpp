@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include "hal/Actuator.h"
+#include "hal/Sensor.h"
 
 
 using namespace std;
@@ -24,37 +25,41 @@ int main(int argc, char** args) {
 
 	// Init Actuator
 	Actuator a;
+	Sensor s;
 
-	// Move Assambly Left
-	a.assamblyMoveLeftOn();
-	wait(3);
-	a.assamblyMoveLeftOff();
+	unsigned int test = s.getLSA1();
+	cout << test << endl;
+
+//	 Move Assambly Left
+//	a.assamblyMoveLeftOn();
+//	wait(3);
+//	a.assamblyMoveLeftOff();
 
 	// Move Assambly Right
-	a.assamblyMoveRightOn();
-	wait(3);
-	a.assamblyMoveRightOff();
-
-	// Move Assambly Slow
-	a.assamblyMoveLeftOn();
-	a.assamblyMoveSlowOn();
-	wait(3);
-	a.assamblyMoveSlowOff();
-	a.assamblyMoveLeftOff();
-
-	// Open Switch
-	a.switchOn();
-	wait(3);
-	a.switchOff();
-
-	// LED On
-	a.redOn();
-	a.yellowOn();
-	a.greenOn();
-	wait(3);
-	a.redOff();
-	a.yellowOff();
-	a.greenOff();
+//	a.assamblyMoveRightOn();
+//	wait(3);
+//	a.assamblyMoveRightOff();
+//
+//	// Move Assambly Slow
+//	a.assamblyMoveRightOn();
+//	a.assamblyMoveSlowOn();
+//	wait(3);
+//	a.assamblyMoveSlowOff();
+//	a.assamblyMoveRightOff();
+//
+//	// Open Switch
+//	a.switchOn();
+//	wait(3);
+//	a.switchOff();
+//
+//	// LED On
+//	a.redOn();
+//	a.yellowOn();
+//	a.greenOn();
+//	wait(3);
+//	a.redOff();
+//	a.yellowOff();
+//	a.greenOff();
 
 	return EXIT_SUCCESS;
 }
