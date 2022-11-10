@@ -20,6 +20,9 @@
 #define GPIO_CLEAR_REGISTER(base) (uintptr_t)base + 0x190
 
 
+
+
+
 uintptr_t gpio_bank_1;
 
 Actuator::Actuator() {
