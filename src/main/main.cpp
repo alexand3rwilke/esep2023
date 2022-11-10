@@ -9,6 +9,9 @@
 
 #include <iostream>
 #include "hal/Actuator.h"
+#include <stdio.h>
+#include <iostream>
+
 
 
 using namespace std;
@@ -24,6 +27,7 @@ int main(int argc, char** args) {
 
 	// Init Actuator
 	Actuator a;
+	Sensor s;
 
 	// Move Assambly Left
 	a.assamblyMoveLeftOn();
@@ -55,6 +59,12 @@ int main(int argc, char** args) {
 	a.redOff();
 	a.yellowOff();
 	a.greenOff();
+
+	// Read Sensorpins 0-31
+	for (int pin = 0; pin < 32; pin++) {
+			int outputPin = (in32((uintptr_t) gpioBase + GPIO_DATAIN) >> pin) & 0x1;
+			printf("Value on pin %d is %d\n", pin, outputPin);
+		}
 
 	return EXIT_SUCCESS;
 }

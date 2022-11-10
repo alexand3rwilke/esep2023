@@ -3,7 +3,9 @@
  *
  *  Created on: 25.10.22
  *      Author: Alexander Wilke
+ *
  */
+#include "Sensor.h"
 
 #include <iostream>
 #include <stdint.h>
@@ -19,8 +21,6 @@
 
 
 #define BIT_MASK(x) (0x1 << (x))
-
-
 
 uintptr_t gpioBase;
 
@@ -38,7 +38,7 @@ Sensor::~Sensor() {
 
 	//Get value at pin x
 int Sensor::getValueAtPin(int pin) {
-	if(pin > 0  && pin <= 32) {
+	if(pin > 0  && pin < 32) {
 		return current_level = (in32((uintptr_t) gpioBase + GPIO_DATAIN) >> pin) & 0x1;
 
 	}
