@@ -17,6 +17,7 @@ public:
 	virtual ~Sensor();
 
 	int getValueAtPin(void);
+	uint32_t readHeight(void);
 };
 
 #endif /* SRC_MAIN_HAL_Sensor_H_ */
