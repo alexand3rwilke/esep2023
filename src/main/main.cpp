@@ -60,6 +60,11 @@ int main(int argc, char** args) {
 	a.yellowOff();
 	a.greenOff();
 
+	// read height
+	uint32_t heightData = s.readHeight();
+
+	cout << heightData << endl;
+
 	// Read Sensorpins 0-31
 	for (int pin = 0; pin < 32; pin++) {
 			int outputPin = (in32((uintptr_t) gpioBase + GPIO_DATAIN) >> pin) & 0x1;
