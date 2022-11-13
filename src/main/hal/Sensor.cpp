@@ -1,3 +1,4 @@
+
 /*
  * Sensor.cpp
  *
@@ -56,13 +57,3 @@ uint32_t readHeight() {
 
 	return in32((uintptr_t) adcBaseAddr + ADC_DATA);
 }
-
-
-
-
-
-
-
-
-
-

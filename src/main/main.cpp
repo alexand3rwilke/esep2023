@@ -12,8 +12,6 @@
 #include <stdio.h>
 #include <iostream>
 
-
-
 using namespace std;
 
 void wait(int seconds) {
@@ -29,6 +27,9 @@ int main(int argc, char** args) {
 	Actuator a;
 	Sensor s;
 
+	unsigned int test = s.getLSA1();
+	cout << test << endl;
+
 	// Move Assambly Left
 	a.assamblyMoveLeftOn();
 	wait(3);
@@ -40,11 +41,11 @@ int main(int argc, char** args) {
 	a.assamblyMoveRightOff();
 
 	// Move Assambly Slow
-	a.assamblyMoveLeftOn();
+	a.assamblyMoveRightOn();
 	a.assamblyMoveSlowOn();
 	wait(3);
 	a.assamblyMoveSlowOff();
-	a.assamblyMoveLeftOff();
+	a.assamblyMoveRightOff();
 
 	// Open Switch
 	a.switchOn();
