@@ -10,7 +10,7 @@
 #ifndef SRC_MAIN_HAL_Sensor_H_
 #define SRC_MAIN_HAL_Sensor_H_
 
-#include "Addresses.h"
+#include "../Imports.h"
 #include "stdint.h"
 
 

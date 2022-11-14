@@ -1,12 +1,12 @@
 /*
- * Addresses.h
+ * Imports.h
  *
  *  Created on: 14.11.2022
  *      Author: acr819
  */
 
-#ifndef SRC_MAIN_HAL_ADDRESSES_H_
-#define SRC_MAIN_HAL_ADDRESSES_H_
+#ifndef SRC_IMPORTS_H_
+#define SRCIMPORTS_H_
 
 // Sensorik
 #define GPIO_PORT0 (uint64_t)0x44E07000
@@ -24,4 +24,4 @@
 #define GPIO_SET_REGISTER(base) (uintptr_t)base + 0x194
 #define GPIO_CLEAR_REGISTER(base) (uintptr_t)base + 0x190
 
-#endif /* SRC_MAIN_HAL_ADDRESSES_H_ */
+#endif /* SRCIMPORTS_H_ */
