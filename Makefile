@@ -13,7 +13,7 @@ TARGET = $(OUTPUT_DIR)/$(ARTIFACT)
 #Compiler definitions
 
 CC = qcc -Vgcc_nto$(PLATFORM)
-CXX = qcc -lang-c++ -Vgcc_nto$(PLATFORM)
+CXX = qcc -lang-c++ -std=c++14 -D_QNX_SOURCE -Vgcc_nto$(PLATFORM)
 
 ##################################################################
 # Hier einkommentieren wenn die Tests kompiliert werden sollen!

@@ -24,10 +24,4 @@
 #define GPIO_SET_REGISTER(base) (uintptr_t)base + 0x194
 #define GPIO_CLEAR_REGISTER(base) (uintptr_t)base + 0x190
 
-
-
-
-
-
-
 #endif /* SRC_MAIN_HAL_ADDRESSES_H_ */

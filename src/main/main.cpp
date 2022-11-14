@@ -14,6 +14,16 @@
 #include "hal/Sensor.h"
 #include "hal/ADC.h"
 
+#include "ISR/ISR.h"
+
+
+#include <sys/mman.h>
+#include <hw/inout.h>
+#include <sys/neutrino.h>
+
+
+
+
 
 using namespace std;
 
@@ -30,54 +40,58 @@ int main(int argc, char** args) {
 	Actuator a;
 	Sensor s;
 	ADC ad;
+	ISR isr;
 
 
 	// read height
 
-	uint32_t height = ad.readHeight();
-	printf("Height is %d\n", height);
+//	uint32_t height = ad.readHeight();
+//	printf("Height is %d\n", height);
+//
+//	// Move Assambly Left
+//	a.assamblyMoveLeftOn();
+//	wait(3);
+//	a.assamblyMoveLeftOff();
+//
+//	// Move Assambly Right
+//	a.assamblyMoveRightOn();
+//	wait(3);
+//	a.assamblyMoveRightOff();
+//
+//	// Move Assambly Slow
+//	a.assamblyMoveRightOn();
+//	a.assamblyMoveSlowOn();
+//	wait(3);
+//	a.assamblyMoveSlowOff();
+//	a.assamblyMoveRightOff();
+//
+//	// Open Switch
+//	a.switchOn();
+//	wait(3);
+//	a.switchOff();
+//
+//	// LED On
+//	a.redOn();
+//	a.yellowOn();
+//	a.greenOn();
+//	wait(3);
+//	a.redOff();
+//	a.yellowOff();
+//	a.greenOff();
 
-	// Move Assambly Left
-	a.assamblyMoveLeftOn();
-	wait(3);
-	a.assamblyMoveLeftOff();
 
-	// Move Assambly Right
-	a.assamblyMoveRightOn();
-	wait(3);
-	a.assamblyMoveRightOff();
+	// Lese Interrupts raus
+	while(true) {
+		isr.handleInterrupt();
 
-	// Move Assambly Slow
-	a.assamblyMoveRightOn();
-	a.assamblyMoveSlowOn();
-	wait(3);
-	a.assamblyMoveSlowOff();
-	a.assamblyMoveRightOff();
+	}
 
-	// Open Switch
-	a.switchOn();
-	wait(3);
-	a.switchOff();
-
-	// LED On
-	a.redOn();
-	a.yellowOn();
-	a.greenOn();
-	wait(3);
-	a.redOff();
-	a.yellowOff();
-	a.greenOff();
-
-	// Read Sensorpins 0-31
-	for (int pin = 0; pin < 32; pin++) {
-			int outpin = s.getValueAtPin(pin);
-			printf("Value on pin %d is %d\n", pin, outpin);
-		}
-
-	printf("Read Height Sensor");
 
 
 	return EXIT_SUCCESS;
 }
+
+
+
 
 #endif
