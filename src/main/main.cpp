@@ -8,9 +8,12 @@
 #ifndef RUN_TESTS
 
 #include <iostream>
-#include "hal/Actuator.h"
 #include <stdio.h>
 #include <iostream>
+#include "hal/Actuator.h"
+#include "hal/Sensor.h"
+#include "hal/ADC.h"
+
 
 using namespace std;
 
@@ -26,9 +29,13 @@ int main(int argc, char** args) {
 	// Init Actuator
 	Actuator a;
 	Sensor s;
+	ADC ad;
 
-	unsigned int test = s.getLSA1();
-	cout << test << endl;
+
+	// read height
+
+	uint32_t height = ad.readHeight();
+	printf("Height is %d\n", height);
 
 	// Move Assambly Left
 	a.assamblyMoveLeftOn();
@@ -61,16 +68,14 @@ int main(int argc, char** args) {
 	a.yellowOff();
 	a.greenOff();
 
-	// read height
-	uint32_t heightData = s.readHeight();
-
-	cout << heightData << endl;
-
 	// Read Sensorpins 0-31
 	for (int pin = 0; pin < 32; pin++) {
-			int outputPin = (in32((uintptr_t) gpioBase + GPIO_DATAIN) >> pin) & 0x1;
-			printf("Value on pin %d is %d\n", pin, outputPin);
+			int outpin = s.getValueAtPin(pin);
+			printf("Value on pin %d is %d\n", pin, outpin);
 		}
+
+	printf("Read Height Sensor");
+
 
 	return EXIT_SUCCESS;
 }

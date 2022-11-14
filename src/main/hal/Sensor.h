@@ -10,6 +10,10 @@
 #ifndef SRC_MAIN_HAL_Sensor_H_
 #define SRC_MAIN_HAL_Sensor_H_
 
+#include "Addresses.h"
+#include "stdint.h"
+
+
 
 class Sensor  {
 
@@ -17,8 +21,7 @@ public:
 	Sensor();
 	virtual ~Sensor();
 
-	int getValueAtPin(void);
-	uint32_t readHeight(void);
+	int getValueAtPin(int pin);
 };
 
 #endif /* SRC_MAIN_HAL_Sensor_H_ */

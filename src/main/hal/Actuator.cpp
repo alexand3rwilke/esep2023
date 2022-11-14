@@ -14,13 +14,6 @@
 #include <sys/neutrino.h>
 
 
-#define GPIO1_ADDRESS_START (uint64_t)0x4804C000
-#define GPIO1_ADDRESS_LENGTH 0x1000
-#define GPIO_SET_REGISTER(base) (uintptr_t)base + 0x194
-#define GPIO_CLEAR_REGISTER(base) (uintptr_t)base + 0x190
-
-
-
 
 
 uintptr_t gpio_bank_1;
