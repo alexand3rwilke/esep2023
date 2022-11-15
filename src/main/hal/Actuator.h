@@ -11,13 +11,15 @@
 
 
 #include "../Imports.h"
+#include "../Dispatcher/Dispatcher.h"
+
 
 
 
 class Actuator  {
 
 public:
-	Actuator();
+	Actuator(Dispatcher *dispatcher);
 	virtual ~Actuator();
 
 	void assamblyMoveRightOn(void);

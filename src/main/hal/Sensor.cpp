@@ -18,7 +18,7 @@
 
 uintptr_t gpioBase;
 
-Sensor::Sensor() {
+Sensor::Sensor(Dispatcher * dispatcher) {
 
 	ThreadCtl( _NTO_TCTL_IO, 0);
 	gpioBase = mmap_device_io(GPIO_REGISTER_LENGHT, GPIO_PORT0);

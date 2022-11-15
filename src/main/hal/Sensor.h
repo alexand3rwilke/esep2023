@@ -12,13 +12,13 @@
 
 #include "../Imports.h"
 #include "stdint.h"
-
+#include "../Dispatcher/Dispatcher.h"
 
 
 class Sensor  {
 
 public:
-	Sensor();
+	Sensor(Dispatcher * dispatcher);
 	virtual ~Sensor();
 
 	int getValueAtPin(int pin);

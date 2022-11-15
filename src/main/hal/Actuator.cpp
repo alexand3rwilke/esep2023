@@ -18,7 +18,7 @@
 
 uintptr_t gpio_bank_1;
 
-Actuator::Actuator() {
+Actuator::Actuator(Dispatcher *dispatcher) {
 
 	ThreadCtl( _NTO_TCTL_IO, 0);
 	gpio_bank_1 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO1_ADDRESS_START);

@@ -16,6 +16,7 @@
 #include "ADC/TSCADC.h"
 
 #include "ISR/ISR.h"
+#include "Dispatcher/Dispatcher.h"
 
 #include <sys/mman.h>
 #include <hw/inout.h>
@@ -39,12 +40,22 @@ int main(int argc, char** args) {
 	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
 	bool aktorikDemo = false;
 
-	// Init Actuator
-	Actuator a;
-	Sensor s;
-	ISR isr;
+
+	// Händelt alle Evets
+	Dispatcher dispatcher;
+
+	// Muss keine Events verschicken, nur annehmen
+	Actuator *actuator = new Actuator(&dispatcher);
+
+	// Nur Events verschicken
+	Sensor *sensor = new Sensor(&dispatcher);
+
+	// Verschcikt nur events
+	ISR *isr = new ISR(&dispatcher);
+
+	// Init Höhenmesser
 	TSCADC tscadc;
-	ADC* adc = new ADC(tscadc);
+	ADC* adc = new ADC(tscadc); // ADC soll Events verschicken wenn Sample gemessen wurde
 
 
 	// Sample misst das signal bei aufrud der methode
@@ -57,41 +68,41 @@ int main(int argc, char** args) {
 
 	 if(aktorikDemo){
 		 // Move Assambly Left
-		 	a.assamblyMoveLeftOn();
+		 	actuator->assamblyMoveLeftOn();
 		 	wait(3);
-		 	a.assamblyMoveLeftOff();
+		 	actuator->assamblyMoveLeftOff();
 
 		 	// Move Assambly Right
-		 	a.assamblyMoveRightOn();
+		 	actuator->assamblyMoveRightOn();
 		 	wait(3);
-		 	a.assamblyMoveRightOff();
+		 	actuator->assamblyMoveRightOff();
 
 		 	// Move Assambly Slow
-		 	a.assamblyMoveRightOn();
-		 	a.assamblyMoveSlowOn();
+		 	actuator->assamblyMoveRightOn();
+		 	actuator->assamblyMoveSlowOn();
 		 	wait(3);
-		 	a.assamblyMoveSlowOff();
-		 	a.assamblyMoveRightOff();
+		 	actuator->assamblyMoveSlowOff();
+		 	actuator->assamblyMoveRightOff();
 
 		 	// Open Switch
-		 	a.switchOn();
+		 	actuator->switchOn();
 		 	wait(3);
-		 	a.switchOff();
+		 	actuator->switchOff();
 
 		 	// LED On
-		 	a.redOn();
-		 	a.yellowOn();
-		 	a.greenOn();
+		 	actuator->redOn();
+		 	actuator->yellowOn();
+		 	actuator->greenOn();
 		 	wait(3);
-		 	a.redOff();
-		 	a.yellowOff();
-		 	a.greenOff();
+		 	actuator->redOff();
+		 	actuator->yellowOff();
+		 	actuator->greenOff();
 
 	 }
 
 	// Lese Interrupts aus und gebe auf pins aus
 	while(true) {
-		isr.handleInterrupt();
+		isr->handleInterrupt();
 	}
 
 

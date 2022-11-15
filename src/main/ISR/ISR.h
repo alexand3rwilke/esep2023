@@ -10,7 +10,8 @@
 #ifndef SRC_MAIN_HAL_ISR_H_
 #define SRC_MAIN_HAL_ISR_H_
 
-
+#include "../Imports.h"
+#include "../Dispatcher/Dispatcher.h"
 #include <thread>
 
 
@@ -20,7 +21,7 @@
 class ISR  {
 
 public:
-	ISR();
+	ISR(Dispatcher *dispatcher);
 	virtual ~ISR();
 	void handleInterrupt(void);
 	void recieveInterruptRoutine();
