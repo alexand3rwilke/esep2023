@@ -8,12 +8,7 @@
 #ifndef RUN_TESTS
 
 #include <iostream>
-<<<<<<< HEAD
-#include "hal/Actuator.h"
-#include <stdio.h>
-#include <iostream>
-#include "hal/Sensor.h"
-=======
+
 #include <stdio.h>
 #include <iostream>
 #include "hal/Actuator.h"
@@ -27,11 +22,6 @@
 #include <sys/mman.h>
 #include <hw/inout.h>
 #include <sys/neutrino.h>
-
-
-
->>>>>>> alex_development
-
 
 using namespace std;
 
