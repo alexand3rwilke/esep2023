@@ -29,8 +29,8 @@ int main(int argc, char** args) {
 	Actuator a;
 	Sensor s;
 
-	unsigned int test = s.getLSA1();
-	cout << test << endl;
+	//unsigned int test = s.getLSA1();
+	//cout << test << endl;
 
 //	 Move Assambly Left
 //	a.assamblyMoveLeftOn();
@@ -64,6 +64,7 @@ int main(int argc, char** args) {
 //	a.greenOff();
 
 	// Read Sensorpins 0-31
+
 	for (int pin = 0; pin < 32; pin++) {
 			int outputPin = (in32((uintptr_t) gpioBase + GPIO_DATAIN) >> pin) & 0x1;
 			printf("Value on pin %d is %d\n", pin, outputPin);
