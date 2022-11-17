@@ -8,10 +8,29 @@
 #ifndef RUN_TESTS
 
 #include <iostream>
+<<<<<<< HEAD
 #include "hal/Actuator.h"
 #include <stdio.h>
 #include <iostream>
 #include "hal/Sensor.h"
+=======
+#include <stdio.h>
+#include <iostream>
+#include "hal/Actuator.h"
+#include "hal/Sensor.h"
+#include "ADC/ADC.h"
+#include "ADC/TSCADC.h"
+
+#include "ISR/ISR.h"
+#include "Dispatcher/Dispatcher.h"
+
+#include <sys/mman.h>
+#include <hw/inout.h>
+#include <sys/neutrino.h>
+
+
+
+>>>>>>> alex_development
 
 
 using namespace std;
@@ -25,51 +44,80 @@ int main(int argc, char** args) {
 
 	cout << "Starting Festo Test" << endl;
 
-	// Init Actuator
-	Actuator a;
-	Sensor s;
+	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
+	bool aktorikDemo = false;
 
-	unsigned int test = s.getLSA1();
-	cout << test << endl;
 
-//	 Move Assambly Left
-//	a.assamblyMoveLeftOn();
-//	wait(3);
-//	a.assamblyMoveLeftOff();
+	// Händelt alle Evets
+	Dispatcher dispatcher;
 
-	// Move Assambly Right
-//	a.assamblyMoveRightOn();
-//	wait(3);
-//	a.assamblyMoveRightOff();
-//
-//	// Move Assambly Slow
-//	a.assamblyMoveRightOn();
-//	a.assamblyMoveSlowOn();
-//	wait(3);
-//	a.assamblyMoveSlowOff();
-//	a.assamblyMoveRightOff();
-//
-//	// Open Switch
-//	a.switchOn();
-//	wait(3);
-//	a.switchOff();
-//
-//	// LED On
-//	a.redOn();
-//	a.yellowOn();
-//	a.greenOn();
-//	wait(3);
-//	a.redOff();
-//	a.yellowOff();
-//	a.greenOff();
+	// Muss keine Events verschicken, nur annehmen
+	Actuator *actuator = new Actuator(&dispatcher);
 
-	// Read Sensorpins 0-31
-	for (int pin = 0; pin < 32; pin++) {
-			int outputPin = (in32((uintptr_t) gpioBase + GPIO_DATAIN) >> pin) & 0x1;
-			printf("Value on pin %d is %d\n", pin, outputPin);
-		}
+	// Nur Events verschicken
+	Sensor *sensor = new Sensor(&dispatcher);
+
+	// Verschcikt nur events
+	ISR *isr = new ISR(&dispatcher);
+
+	// Init Höhenmesser
+	TSCADC tscadc;
+	ADC* adc = new ADC(tscadc); // ADC soll Events verschicken wenn Sample gemessen wurde
+
+
+	// Sample misst das signal bei aufrud der methode
+	 adc->sample();
+
+	 // Lese höhe aus dem Register aus
+	 uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
+	 printf("Value from adc with value %d!\n",heightData);
+
+
+	 if(aktorikDemo){
+		 // Move Assambly Left
+		 	actuator->assamblyMoveLeftOn();
+		 	wait(3);
+		 	actuator->assamblyMoveLeftOff();
+
+		 	// Move Assambly Right
+		 	actuator->assamblyMoveRightOn();
+		 	wait(3);
+		 	actuator->assamblyMoveRightOff();
+
+		 	// Move Assambly Slow
+		 	actuator->assamblyMoveRightOn();
+		 	actuator->assamblyMoveSlowOn();
+		 	wait(3);
+		 	actuator->assamblyMoveSlowOff();
+		 	actuator->assamblyMoveRightOff();
+
+		 	// Open Switch
+		 	actuator->switchOn();
+		 	wait(3);
+		 	actuator->switchOff();
+
+		 	// LED On
+		 	actuator->redOn();
+		 	actuator->yellowOn();
+		 	actuator->greenOn();
+		 	wait(3);
+		 	actuator->redOff();
+		 	actuator->yellowOff();
+		 	actuator->greenOff();
+
+	 }
+
+	// Lese Interrupts aus und gebe auf pins aus
+	while(true) {
+		isr->handleInterrupt();
+	}
+
+
 
 	return EXIT_SUCCESS;
 }
+
+
+
 
 #endif

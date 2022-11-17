@@ -10,10 +10,16 @@
 #define SRC_MAIN_HAL_ACTUATOR_H_
 
 
+#include "../Imports.h"
+#include "../Dispatcher/Dispatcher.h"
+
+
+
+
 class Actuator  {
 
 public:
-	Actuator();
+	Actuator(Dispatcher *dispatcher);
 	virtual ~Actuator();
 
 	void assamblyMoveRightOn(void);
