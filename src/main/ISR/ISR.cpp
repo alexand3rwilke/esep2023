@@ -80,116 +80,141 @@ void ISR::recieveInterruptRoutine() {
 
 
 			// Enable interrupts on pins.
-			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LIGHTBARRIER_FRONT_PIN));
-			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LIGHTBARRIER_BACK_PIN));
-			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LIGHTBARRIER_SLIDE_PIN));
-			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(BUTTON_START_PIN));
-			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(BUTTON_STOP_PIN));
-			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(BUTTON_RESET_PIN));
-			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(BUTTON_ESTOP_PIN));
-			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(METALL_DET_PIN));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LSA1));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LSE1));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LSR1));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(SRT));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(STP));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(RST));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(ESTP));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(MTD1));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LSS1));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(HMS1));
+
+
 
 
 			// Set irq event types.
 			unsigned int temp;
 
-				// Lichtschranke Ausgang
-				//	Rising Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(LIGHTBARRIER_BACK_PIN) | BIT_MASK(LIGHTBARRIER_BACK_PIN));//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
+			// Lichtschranke Ausgang
+			//	Rising Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(LSE1) | BIT_MASK(LSE1));//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
 
-				//	Falling Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(LIGHTBARRIER_BACK_PIN) | BIT_MASK(LIGHTBARRIER_BACK_PIN));//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
-
-
-				// Lichtschranke Eingang
-				//	Rising Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(LIGHTBARRIER_FRONT_PIN) | BIT_MASK(LIGHTBARRIER_FRONT_PIN));//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
-
-				//	Falling Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(LIGHTBARRIER_FRONT_PIN) | BIT_MASK(LIGHTBARRIER_FRONT_PIN));//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
+			//	Falling Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(LSE1) | BIT_MASK(LSE1));//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
 
 
-				 //Lichtschranke Rampe
-				//	Rising Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(LIGHTBARRIER_SLIDE_PIN) | BIT_MASK(LIGHTBARRIER_SLIDE_PIN));//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
+			// Lichtschranke Eingang
+			//	Rising Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(LSA1) | BIT_MASK(LSA1));//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
 
-				//	Falling Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(LIGHTBARRIER_SLIDE_PIN) | BIT_MASK(LIGHTBARRIER_SLIDE_PIN));//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
-
-
-				// Sensor Metall Detector
-				//	Rising Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(METALL_DET_PIN) | BIT_MASK(METALL_DET_PIN));//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
-
-				//	Falling Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(METALL_DET_PIN) | BIT_MASK(METALL_DET_PIN));//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
+			//	Falling Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(LSA1) | BIT_MASK(LSA1));//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
 
 
+			 //Lichtschranke Rampe
+			//	Rising Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(LSR1) | BIT_MASK(LSR1));//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
 
-				// BUTTONS
+			//	Falling Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(LSR1) | BIT_MASK(LSR1));//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
 
+			// NEW
+			 //Lichtschranke Am Sortierer
+			//	Rising Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(LSS1) | BIT_MASK(LSS1));//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
 
-				//Reset Button
-				//	Rising Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(BUTTON_RESET_PIN) | BIT_MASK(BUTTON_RESET_PIN));		//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
-
-				//	Falling Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(BUTTON_RESET_PIN) | BIT_MASK(BUTTON_RESET_PIN));		//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
-
-
-				// ESTOP Button
-				//	Rising Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(BUTTON_ESTOP_PIN) | BIT_MASK(BUTTON_ESTOP_PIN));		//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
-
-				//	Falling Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(BUTTON_ESTOP_PIN) | BIT_MASK(BUTTON_ESTOP_PIN));		//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
-
-				// BUTTON_STOP_PIN
-				//	Rising Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(BUTTON_STOP_PIN) | BIT_MASK(BUTTON_STOP_PIN));		//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
-
-				//	Falling Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(BUTTON_STOP_PIN) | BIT_MASK(BUTTON_STOP_PIN));		//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
+			//	Falling Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(LSS1) | BIT_MASK(LSS1));//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
 
 
-				// Start Button
-				//	Rising Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(BUTTON_START_PIN) | BIT_MASK(BUTTON_START_PIN));		//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
+			// Sensor Metall Detector
+			//	Rising Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(MTD1) | BIT_MASK(MTD1));//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
 
-								//	Falling Edge
-				temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-				temp |= (BIT_MASK(BUTTON_START_PIN) | BIT_MASK(BUTTON_START_PIN));		//Add desired pins.
-				out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
+			//	Falling Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(MTD1) | BIT_MASK(MTD1));//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
+
+
+			// WS in Höhenmesser
+			//	Rising Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(HMS1) | BIT_MASK(HMS1));//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
+
+			//	Falling Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(HMS1) | BIT_MASK(HMS1));//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
+
+
+
+			//Reset Button
+			//	Rising Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(BUTTON_RESET_PIN) | BIT_MASK(RST));		//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
+
+			//	Falling Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(RST) | BIT_MASK(RST));		//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
+
+
+			// ESTOP Button
+			//	Rising Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(ESTP) | BIT_MASK(ESTP));		//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
+
+			//	Falling Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(BUTTON_ESTOP_PIN) | BIT_MASK(ESTP));		//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
+
+			// STP
+			//	Rising Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(STP) | BIT_MASK(STP));		//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
+
+			//	Falling Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(STP) | BIT_MASK(BUTTON_STOP_PIN));		//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
+
+
+			// Start Button
+			//	Rising Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(SRT) | BIT_MASK(SRT));		//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
+
+							//	Falling Edge
+			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
+			temp |= (BIT_MASK(SRT) | BIT_MASK(SRT));		//Add desired pins.
+			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
 
 
 

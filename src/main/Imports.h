@@ -58,18 +58,20 @@
 
 
 // Lichtschranken
-#define LIGHTBARRIER_FRONT_PIN 2	//active low
-#define LIGHTBARRIER_BACK_PIN 20
-#define LIGHTBARRIER_SLIDE_PIN 15
+#define LSA1 2	//active low
+#define LSE1 20
+#define LSR1 15
+#define LSS1 5
+# define HMS1 3
 
 
 //Buttons
-#define BUTTON_START_PIN 22			//active high
-#define BUTTON_STOP_PIN 23
-#define BUTTON_RESET_PIN 26
-#define BUTTON_ESTOP_PIN 27
+#define SRT 22			//active high
+#define STP 23
+#define RST 26
+#define ESTP 27
 
 //Metall Detector
-#define METALL_DET_PIN 7
+#define MTD1 7
 
 #define ADC_DONE 21
