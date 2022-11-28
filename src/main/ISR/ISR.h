@@ -22,6 +22,8 @@ class ISR  {
 
 public:
 	ISR(Dispatcher *dispatcher);
+	Dispatcher disp;
+	int dispId;
 	virtual ~ISR();
 	void handleInterrupt(void);
 	void recieveInterruptRoutine();

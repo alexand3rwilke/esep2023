@@ -30,11 +30,3 @@ Sensor::~Sensor() {
  // mainLogik-->InterruptHandler--> Dispatcher --> Hal.readPin
 
 	//Get value at pin x
-int Sensor::getValueAtPin(int pin) {
-	if(pin > 0  && pin < 32) {
-		return (in32((uintptr_t) gpioBase + GPIO_DATAIN) >> pin) & 0x1;
-
-	}
-	// just read pins from 0-31, else out of range
-	return 0;
-}

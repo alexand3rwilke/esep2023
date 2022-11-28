@@ -36,6 +36,7 @@
 
 ISR::ISR(Dispatcher *dispatcher) {
 
+	dispId  = dispatcher->conIDDispatcher;
 	ISRRoutineThread  = new std::thread([this]() {recieveInterruptRoutine();});
 
 }
@@ -173,7 +174,7 @@ void ISR::recieveInterruptRoutine() {
 			//Reset Button
 			//	Rising Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(BUTTON_RESET_PIN) | BIT_MASK(RST));		//Add desired pins.
+			temp |= (BIT_MASK(RST) | BIT_MASK(RST));		//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
 
 			//	Falling Edge
@@ -190,7 +191,7 @@ void ISR::recieveInterruptRoutine() {
 
 			//	Falling Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(BUTTON_ESTOP_PIN) | BIT_MASK(ESTP));		//Add desired pins.
+			temp |= (BIT_MASK(ESTP) | BIT_MASK(ESTP));		//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
 
 			// STP
@@ -201,7 +202,7 @@ void ISR::recieveInterruptRoutine() {
 
 			//	Falling Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(STP) | BIT_MASK(BUTTON_STOP_PIN));		//Add desired pins.
+			temp |= (BIT_MASK(STP) | BIT_MASK(STP));		//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
 
 
@@ -239,6 +240,7 @@ void ISR::handleInterrupt(void) {
 		unsigned int mask = (uint32_t) BIT_MASK(pin);
 		if (intrStatusReg == mask) {
 			int current_level = (in32((uintptr_t) gpioBase + GPIO_DATAIN) >> pin) & 0x1;
+			MsgSendPulse(dispId, -1, pin,current_level );
 			printf("Interrupt on pin %d, now %d\n", pin, current_level);
 		}
 	}
