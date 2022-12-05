@@ -7,7 +7,11 @@
 
 #include "Context.h"
 #include "BasicState.h"
-#include "RZ.h"
+#include "RZ/RZ.h"
+#include "BZ/BZ.h"
+#include "ESZ/ESz.h"
+#include "SMZ/SMZ.h"
+#include "FZ/FZ.h"
 
 Context::Context() {
 	state = new RZ(); // Idle State

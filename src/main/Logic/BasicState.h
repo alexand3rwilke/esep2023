@@ -1,5 +1,5 @@
 /*
- * BasicStade.h
+ * BasicState.h
  *
  *  Created on: 30.11.2022
  *      Author: Jobut
@@ -17,7 +17,6 @@ public:
 	virtual void estp() = 0;
 	virtual void doAction() = 0;
 	//
-
 };
 
 
