@@ -62,7 +62,7 @@
 #define LSE1 20
 #define LSR1 15
 #define LSS1 5
-# define HMS1 3
+#define HMS1 3
 
 
 //Buttons
@@ -75,3 +75,16 @@
 #define MTD1 7
 
 #define ADC_DONE 21
+
+//Die aktion die die Aktorik durchführen soll
+#define START_FB 50
+#define STOP_FB 51
+#define MOVE_FASTER 52
+#define MOVE_SLOWER 53
+#define GREEN_ON 54
+#define GREEN_OFF 55
+#define YELLOW_ON 56
+#define YELLOW_OFF 57
+#define RED_ON 58
+#define RED_OFF 59
+

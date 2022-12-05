@@ -1,16 +1,16 @@
 /*
- * BasicState.h
+ * BaseStade.h
  *
  *  Created on: 30.11.2022
  *      Author: Jobut
  */
 
-#ifndef SRC_MAIN_LOGIC_BASICSTATE_H_
-#define SRC_MAIN_LOGIC_BASICSTATE_H_
+#ifndef SRC_MAIN_LOGIC_BASESTATE_H_
+#define SRC_MAIN_LOGIC_BASESTATE_H_
 
-class BasicState {
+class BaseState {
 public:
-	virtual ~BasicState(){
+	virtual ~BaseState(){
 	};
 	virtual void entry() = 0;
 	virtual void exit() = 0;
@@ -21,4 +21,4 @@ public:
 
 
 
-#endif /* SRC_MAIN_LOGIC_BASICSTATE_H_ */
+#endif /* SRC_MAIN_LOGIC_BASESTATE_H_ */
