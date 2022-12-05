@@ -7,6 +7,7 @@
 
 #include "Context.h"
 
+
 #include "BaseState.h"
 #include "RZ/RZ.h"
 #include "BZ/BZ.h"
@@ -15,10 +16,12 @@
 #include "FZ/FZ.h"
 
 
-Context::Context(Dispatcher dispatcher) {
+Context::Context(Dispatcher *dispatcher, Actions *actions) {
 
 	state = new RZ(); // Idle State
-	dispa = dispatcher;
+	disp = dispatcher;
+	this->actions = actions;
+
 
 	ContextThread = new std::thread([this]() {eventHandler();});
 
@@ -26,10 +29,10 @@ Context::Context(Dispatcher dispatcher) {
 
 Context::~Context() {
 	delete state;
-	delete dispa;
+	delete disp;
 }
 
-Context::eventHandler(){
+void Context::eventHandler(){
 	printf("Context wurde gestartet");
 
 
@@ -37,7 +40,6 @@ Context::eventHandler(){
 		int chanID = ChannelCreate(0);//Create channel to receive interrupt pulse messages.
 		if (chanID < 0) {
 			perror("Could not create a channel!\n");
-
 		}
 
 		int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
@@ -49,98 +51,67 @@ Context::eventHandler(){
 				INT_LS_RMP, INT_LS_WEI, INT_LS_MET,
 				INT_T_EST, INT_T_RES, INT_T_STP, INT_T_STR};
 				*/
-		event
+		//events={1,2,3};
 
-		disp->registerEventAndConnection(events, coID);
+		disp->registerForEventWIthConnection(events, conID);
 
 		while (true) {
 
 			_pulse msg;
 
-			int recvid = MsgReceivePulse(chid, &msg, sizeof(_pulse), nullptr);
+			int recvid = MsgReceivePulse(chanID, &msg, sizeof(_pulse), nullptr);
 
 			   if (recvid < 0) {
 			   			perror("MsgReceivePulse failed!");
-			   			exit(EXIT_FAILURE);
+			   			//exit(EXIT_FAILURE);
+			   			exit();
 			   		}
 
 			   switch(msg.code) {
 
-			   case INT_LS_AUS:
-				   if (msg.value.sival_int == 1) {
-					   MsgSendPulse(disp->conIDDispatcher, -1, WK_AUS_NDURCH, 0);
-				   }	else {
-					   MsgSendPulse(disp->conIDDispatcher, -1, WK_AUS_DURCH, 0);
-				   } break;
+			   case 1:
+				   //if (msg.value.sival_int == 1) { !!!!!!!!!!!!!!
+					   actions->startFB();
+				   //}
+				   break;
 
-			   case INT_LS_EIN:
-				   if (msg.value.sival_int == 1) {
-					   MsgSendPulse(disp->conIDDispatcher, -1, WK_EIN_NDURCH, 0);
-				   }	else {
-					   MsgSendPulse(disp->conIDDispatcher, -1, WK_EIN_DURCH, 0);
-				   } break;
+			   case 2:
+				   actions->stopFB();
 
-			   case INT_LS_HOE:
-				   if (msg.value.sival_int == 1) {
-					   MsgSendPulse(disp->conIDDispatcher, -1, WK_HE_NDURCH, 0);
-				   }	else {
-					   MsgSendPulse(disp->conIDDispatcher, -1, WK_HE_DURCH, 0);
-				   } break;
+				   break;
 
-			   case	INT_LS_RMP:
-				   if (msg.value.sival_int == 1) {
-					   MsgSendPulse(disp->conIDDispatcher, -1, WK_RMP_NDURCH, 0);
-				   }	else {
-					   MsgSendPulse(disp->conIDDispatcher, -1, WK_RMP_DURCH, 0);
-				   } break;
+			   case 3:
+				   actions->moveFaster();
+				   break;
 
-			   case	INT_LS_WEI:
-				   if (msg.value.sival_int == 1) {
-					   MsgSendPulse(disp->conIDDispatcher, -1, WK_WEI_NDURCH, 0);
-					   break;
-				   }	else {
-					   MsgSendPulse(disp->conIDDispatcher, -1, WK_WEI_DURCH, 0);
-					   break;
-				   }
+			   case	4:
+				   actions->moveSlower();
+				   break;
 
-			   case	INT_LS_MET:
-				   if (msg.value.sival_int == 1) {
-					   MsgSendPulse(disp->conIDDispatcher, -1, WK_METAL, 0);
-					   break;
-				   }	else {
-
-					   break;
-				   }
-
-			   case	INT_T_EST:
-			   	   if (msg.value.sival_int == 1) {
-			   		MsgSendPulse(disp->conIDDispatcher, -1, T_EST_NGDR, 0);
-				   }	else {
-					   MsgSendPulse(disp->conIDDispatcher, -1, T_EST_GDR, 0);
-				   } break;
-
-			   case INT_T_RES:
-			   	   if (msg.value.sival_int == 1) {
-			   		 MsgSendPulse(disp->conIDDispatcher, -1, T_RES_GDR, 0);
-				   }	else {
-					  MsgSendPulse(disp->conIDDispatcher, -1, T_RES_NGDR, 0);
-				   } break;
-
-			   case INT_T_STP:
-				   if (msg.value.sival_int == 1) {
-					   MsgSendPulse(disp->conIDDispatcher, -1, T_STP_NGDR, 0);
-				   }	else {
-					   MsgSendPulse(disp->conIDDispatcher, -1, T_STP_GDR, 0);
-				   } break;
-
-			   case INT_T_STR:
-				   if (msg.value.sival_int == 1) {
-					   MsgSendPulse(disp->conIDDispatcher, -1, T_STR_GDR, 0);
-				   }	else {
-					   MsgSendPulse(disp->conIDDispatcher, -1, T_STR_NGDR, 0);
-				   } break;
+			   case	5:
+				   actions->greenOn();
+				   break;
 
 
+			   case	6:
+				   actions->greenOff();
+				   break;
+
+			   case	7:
+				   actions->yellowOn();
+				   break;
+
+			   case 8:
+				   actions->yellowOff();
+			   	   break;
+
+			   case 9:
+				   actions->redOn();
+				   break;
+
+			   case 10:
+				   actions->redOff();
+				   break;
 			   }
 
 

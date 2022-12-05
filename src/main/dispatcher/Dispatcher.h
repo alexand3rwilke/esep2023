@@ -24,17 +24,21 @@
 #include <thread>
 
 
+
 class Dispatcher {
 public:
 	Dispatcher();
-	void registerForEventWIthConnection(int event, int conI);
-	int conIDDispatcher;
+	virtual ~Dispatcher();
+	void registerForEventWIthConnection(std::vector<int8_t> events, int conID);
+	int getConnectionID();
 
 private:
 	std::thread* DispThread;
 	int chanID;
 	void DispatchMessageToSubscriber(int8_t code, int value);
 	void ListenForEvents();
+	int conIDDispatcher;
+
 };
 
 #endif

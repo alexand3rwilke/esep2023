@@ -8,7 +8,7 @@
 #ifndef SRC_MAIN_LOGIC_BZ_BZ_H_
 #define SRC_MAIN_LOGIC_BZ_BZ_H_
 
-#include "../BasicState.h"
+#include "../BaseState.h"
 #include "../../hal/Actuator.h"
 #include "../Context.h"
 
@@ -17,7 +17,7 @@ using namespace std;
 /**
  * Erbt von Basic_State
  */
-class BZ : public BasicState{
+class BZ : public BaseState{
 private:
 	int myChannel;
 	int myConnection;

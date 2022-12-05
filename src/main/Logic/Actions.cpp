@@ -8,56 +8,58 @@
 #include "Actions.h"
 
 Actions::Actions(int dispID) {
-	coID = dispID
+	coID = dispID;
 }
 
 Actions::~Actions() {
-	delete coID;
+	//delete coID;
 }
 
 
 
 
-Actions::startFB(){
+void Actions::startFB(){
 	MsgSendPulse(coID,-1,START_FB,0);
 }
 
-Actions::stopFB(){
+void Actions::stopFB(){
 	MsgSendPulse(coID,-1,STOP_FB,0);
 
 }
 
-Actions::moveFaster(){
+void Actions::moveFaster(){
 	MsgSendPulse(coID,-1,MOVE_FASTER,0);
 }
 
-Actions::moveSlower(){
+void Actions::moveSlower(){
 	MsgSendPulse(coID,-1,MOVE_SLOWER,0);
 }
 
-Actions::greenOn(){
+void Actions::greenOn(){
 	MsgSendPulse(coID,-1,GREEN_ON,0);
 }
 
-Actions::greenOff(){
+void Actions::greenOff(){
 	MsgSendPulse(coID,-1,GREEN_OFF,0);
 }
 
-Actions::yellowOn(){
+void Actions::yellowOn(){
 	MsgSendPulse(coID,-1,YELLOW_ON,0);
 }
 
-Actions::yellowOff(){
+void Actions::yellowOff(){
 	MsgSendPulse(coID,-1,YELLOW_OFF,0);
 }
 
-Actions::redOn(){
+void Actions::redOn(){
 	MsgSendPulse(coID,-1,RED_ON,0);
 }
 
-Actions::redOff(){
+void Actions::redOff(){
 	MsgSendPulse(coID,-1,RED_OFF,0);
 }
+
+
 
 
 
