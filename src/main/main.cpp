@@ -16,7 +16,8 @@
 #include "ADC/TSCADC.h"
 
 #include "ISR/ISR.h"
-#include "Dispatcher/Dispatcher.h"
+#include "dispatcher/Dispatcher.h"
+#include "Logic/Context.h"
 
 #include <sys/mman.h>
 #include <hw/inout.h>
@@ -43,6 +44,7 @@ int main(int argc, char** args) {
 
 	// Händelt alle Evets
 	Dispatcher dispatcher;
+	//int dispConID = dispatcher-
 
 	// Muss keine Events verschicken, nur annehmen
 	Actuator *actuator = new Actuator(&dispatcher);
@@ -56,6 +58,8 @@ int main(int argc, char** args) {
 	// Init Höhenmesser
 	TSCADC tscadc;
 	ADC* adc = new ADC(tscadc); // ADC soll Events verschicken wenn Sample gemessen wurde
+
+	Context *context = new Context(&dispatcher,dispatcher->getConnectionID); //---------------------------- Da ist ein Error den ich nicht behoben bekomme
 
 
 	// Sample misst das signal bei aufrud der methode

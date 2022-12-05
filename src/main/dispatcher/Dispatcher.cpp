@@ -12,13 +12,17 @@ Dispatcher::Dispatcher() {
 
 		DispThread = new std::thread([this]() {ListenForEvents();});
 }
+Dispatcher::~Dispatcher() {
+
+
+}
 
 void Dispatcher::DispatchMessageToSubscriber(int8_t code, int value) {
 
 	// Send Value x to all subscribers of the code
 
 }
-void Dispatcher::registerForEventWIthConnection(int event, int conId) {
+void Dispatcher::registerForEventWIthConnection(std::vector<int8_t> events, int conId) {
 
 
 	// register to get events, puit connectionId in the subscribers list for an event code
@@ -59,10 +63,13 @@ int pid = getpid();
 		 			DispatchMessageToSubscriber(pulse.code, pulse.value.sival_int);
 		 			// Sende Message weiter an alle subscriber
 		 		}
-
 		 			// Do not ignore OS pulses!
-
 	 }
+
+}
+
+int Dispatcher::getConnectionID(){
+	 return conIDDispatcher;
 }
 
 

@@ -36,7 +36,7 @@
 
 ISR::ISR(Dispatcher *dispatcher) {
 
-	dispId  = dispatcher->conIDDispatcher;
+	dispId  = dispatcher->getConnectionID();
 	ISRRoutineThread  = new std::thread([this]() {recieveInterruptRoutine();});
 
 }
