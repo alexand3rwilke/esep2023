@@ -7,11 +7,12 @@
 
 #ifndef SRC_MAIN_LOGIC_CONTEXT_H_
 #define SRC_MAIN_LOGIC_CONTEXT_H_
-#include "BasicState.h"
+#include "BaseState.h"
 
 class Context {
 private:
-	BasicState *state;
+	BaseState *state;
+
 public:
 	Context();
 	virtual ~Context();
@@ -19,6 +20,8 @@ public:
 	void exit();
 	void estp();
 	void doAction();
+
+	Dispatcher *dispa = NULL;
 };
 
 #endif /* SRC_MAIN_LOGIC_CONTEXT_H_ */
