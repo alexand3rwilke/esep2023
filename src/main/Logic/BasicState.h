@@ -9,6 +9,16 @@
 #define SRC_MAIN_LOGIC_BASICSTATE_H_
 
 class BasicState {
+
+	//Befehle der HAL
+	Action *actions;
+
+	//Input den Context bekommen hat
+	ContextData *data;
+
+	int myChannel;
+	int myConnection;
+
 public:
 	virtual ~BasicState(){
 	};

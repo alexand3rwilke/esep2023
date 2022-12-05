@@ -5,8 +5,8 @@
  *      Author: Jobut, Marquahe
  */
 
-#ifndef SRC_MAIN_LOGIC_BZ_H_
-#define SRC_MAIN_LOGIC_BZ_H_
+#ifndef SRC_MAIN_LOGIC_BZ_BZ_H_
+#define SRC_MAIN_LOGIC_BZ_BZ_H_
 
 #include "../BasicState.h"
 #include "../../hal/Actuator.h"
