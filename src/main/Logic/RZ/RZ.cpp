@@ -8,27 +8,18 @@
 #include "RZ.h"
 
 
-RZ::RZ(
+void RZ::entry() {
 
-		) {
-
-	}
-
-RZ::~RZ() {
 
 }
-
-
-void entry() {
-
-}
-    void exit() {
+    void RZ::exit() {
 
     }
-    void estp() {
+    void RZ::estp() {
+
 
     }
-    void doAction() {
+    void RZ::doAction(){
 
 
     }

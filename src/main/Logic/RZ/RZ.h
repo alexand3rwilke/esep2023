@@ -14,9 +14,6 @@
 class RZ: public Basestate {
 public:
 
-	RZ();
-	virtual ~RZ(){
-		};
     void entry() override;
     void exit() override;
     void estp() override;
