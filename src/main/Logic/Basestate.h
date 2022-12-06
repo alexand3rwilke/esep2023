@@ -8,24 +8,30 @@
 #ifndef SRC_MAIN_LOGIC_BASESTATE_H_
 #define SRC_MAIN_LOGIC_BASESTATE_H_
 
+
 #include "Actions.h"
 
 class Basestate {
 private:
 	//Befehle der HAL
 
+
+	Actions *actions;
 	int myChannel;
 	int myConnection;
-	//Actions *actions;
+
+
 
 public:
 
 	virtual ~Basestate(){
 	};
-	virtual void entry() = 0;
-	virtual void exit() = 0;
-	virtual void estp() = 0;
-	virtual void doAction() = 0;
+
+	virtual void entry() {};
+	virtual void exit() {};
+	virtual void estp() {};
+	virtual void doAction() {};
+
 	//
 };
 

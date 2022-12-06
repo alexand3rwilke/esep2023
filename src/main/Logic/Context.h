@@ -9,8 +9,9 @@
 #define SRC_MAIN_LOGIC_CONTEXT_H_
 
 #include "../dispatcher/Dispatcher.h"
-#include "Basestate.h"
 #include "Actions.h"
+#include "Basestate.h"
+
 
 
 class Context {

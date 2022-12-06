@@ -5,13 +5,14 @@
  *      Author: Jobut
  */
 
+#include "../dispatcher/Dispatcher.h"
 #include "Actions.h"
 
 Actions::Actions(
-		Dispatcher *dispatcher
+		//Dispatcher *dispatcher
 		) {
-	disp = dispatcher;
-	coID = dispatcher->getConnectionID();
+	//disp = dispatcher;
+	//coID = dispatcher->getConnectionID();
 	}
 
 Actions::~Actions() {
@@ -21,44 +22,44 @@ Actions::~Actions() {
 
 
 
-void Actions::startFB(){
+void Actions::startFB(int coID){
 	MsgSendPulse(coID,-1,START_FB,0);
 }
 
-void Actions::stopFB(){
+void Actions::stopFB(int coID){
 	MsgSendPulse(coID,-1,STOP_FB,0);
 
 }
 
-void Actions::moveFaster(){
+void Actions::moveFaster(int coID){
 	MsgSendPulse(coID,-1,MOVE_FASTER,0);
 }
 
-void Actions::moveSlower(){
+void Actions::moveSlower(int coID){
 	MsgSendPulse(coID,-1,MOVE_SLOWER,0);
 }
 
-void Actions::greenOn(){
+void Actions::greenOn(int coID){
 	MsgSendPulse(coID,-1,GREEN_ON,0);
 }
 
-void Actions::greenOff(){
+void Actions::greenOff(int coID){
 	MsgSendPulse(coID,-1,GREEN_OFF,0);
 }
 
-void Actions::yellowOn(){
+void Actions::yellowOn(int coID){
 	MsgSendPulse(coID,-1,YELLOW_ON,0);
 }
 
-void Actions::yellowOff(){
+void Actions::yellowOff(int coID){
 	MsgSendPulse(coID,-1,YELLOW_OFF,0);
 }
 
-void Actions::redOn(){
+void Actions::redOn(int coID){
 	MsgSendPulse(coID,-1,RED_ON,0);
 }
 
-void Actions::redOff(){
+void Actions::redOff(int coID){
 	MsgSendPulse(coID,-1,RED_OFF,0);
 }
 

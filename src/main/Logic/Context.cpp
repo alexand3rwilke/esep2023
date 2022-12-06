@@ -71,46 +71,46 @@ void Context::eventHandler(){
 
 			   case 1:
 				   //if (msg.value.sival_int == 1) { !!!!!!!!!!!!!!
-					   actions->startFB();
+					   actions->startFB(conID);
 				   //}
 				   break;
 
 			   case 2:
-				   actions->stopFB();
+				   actions->stopFB(conID);
 
 				   break;
 
 			   case 3:
-				   actions->moveFaster();
+				   actions->moveFaster(conID);
 				   break;
 
 			   case	4:
-				   actions->moveSlower();
+				   actions->moveSlower(conID);
 				   break;
 
 			   case	5:
-				   actions->greenOn();
+				   actions->greenOn(conID);
 				   break;
 
 
 			   case	6:
-				   actions->greenOff();
+				   actions->greenOff(conID);
 				   break;
 
 			   case	7:
-				   actions->yellowOn();
+				   actions->yellowOn(conID);
 				   break;
 
 			   case 8:
-				   actions->yellowOff();
+				   actions->yellowOff(conID);
 			   	   break;
 
 			   case 9:
-				   actions->redOn();
+				   actions->redOn(conID);
 				   break;
 
 			   case 10:
-				   actions->redOff();
+				   actions->redOff(conID);
 				   break;
 			   }
 

@@ -11,7 +11,8 @@
 #include "../Imports.h"
 #include <sys/neutrino.h>
 #include "../dispatcher/Dispatcher.h"
-#include "Basestate.h"
+
+
 
 //#include <iostream>
 //#include <stdint.h>
@@ -30,22 +31,24 @@
 
 class Actions {
 private:
-	int coID;
-	Dispatcher *disp = NULL;
+	//int coID;
+	//Dispatcher *disp = NULL;
 public:
-	Actions(Dispatcher *dispatcher);
+	Actions(
+			//Dispatcher *dispatcher
+			);
 	virtual ~Actions();
 
-	void startFB();
-	void stopFB(void);
-	void moveFaster(void);
-	void moveSlower(void);
-	void greenOn(void);
-	void greenOff(void);
-	void yellowOn(void);
-	void yellowOff(void);
-	void redOn(void);
-	void redOff(void);
+	void startFB(int coID);
+	void stopFB(int coID);
+	void moveFaster(int coID);
+	void moveSlower(int coID);
+	void greenOn(int coID);
+	void greenOff(int coID);
+	void yellowOn(int coID);
+	void yellowOff(int coID);
+	void redOn(int coID);
+	void redOff(int coID);
 
 
 
