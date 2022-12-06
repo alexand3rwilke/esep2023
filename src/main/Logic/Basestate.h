@@ -1,17 +1,17 @@
 /*
- * BasicState.h
+ * Basestate.h
  *
  *  Created on: 05.12.2022
  *      Author: Hendrik Marquardt
  */
 
-#ifndef SRC_MAIN_LOGIC_BASICSTATE_H_
-#define SRC_MAIN_LOGIC_BASICSTATE_H_
+#ifndef SRC_MAIN_LOGIC_BASESTATE_H_
+#define SRC_MAIN_LOGIC_BASESTATE_H_
 
 #include "Actions.h"
 
-class BasicState {
-
+class Basestate {
+private:
 	//Befehle der HAL
 	Actions *actions;
 
@@ -20,7 +20,7 @@ class BasicState {
 	int myConnection;
 
 public:
-	virtual ~BasicState(){
+	virtual ~Basestate(){
 	};
 	virtual void entry() = 0;
 	virtual void exit() = 0;
@@ -31,4 +31,4 @@ public:
 
 
 
-#endif /* SRC_MAIN_LOGIC_BASICSTATE_H_ */
+#endif /* SRC_MAIN_LOGIC_BASESTATE_H_ */

@@ -18,6 +18,7 @@
 #include "ISR/ISR.h"
 #include "dispatcher/Dispatcher.h"
 #include "Logic/Context.h"
+#include "Logic/Actions.h"
 
 #include <sys/mman.h>
 #include <hw/inout.h>
@@ -44,7 +45,9 @@ int main(int argc, char** args) {
 
 	// Händelt alle Evets
 	Dispatcher dispatcher;
-	//int dispConID = dispatcher-
+
+
+	Actions *action = new Actions(&dispatcher);
 
 	// Muss keine Events verschicken, nur annehmen
 	Actuator *actuator = new Actuator(&dispatcher);
@@ -59,7 +62,7 @@ int main(int argc, char** args) {
 	TSCADC tscadc;
 	ADC* adc = new ADC(tscadc); // ADC soll Events verschicken wenn Sample gemessen wurde
 
-	Context *context = new Context(&dispatcher,dispatcher->getConnectionID); //---------------------------- Da ist ein Error den ich nicht behoben bekomme
+	Context *context = new Context(&dispatcher, action); //---------------------------- Da ist ein Error den ich nicht behoben bekomme
 
 
 	// Sample misst das signal bei aufrud der methode

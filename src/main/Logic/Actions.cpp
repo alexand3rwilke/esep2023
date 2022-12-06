@@ -7,8 +7,9 @@
 
 #include "Actions.h"
 
-Actions::Actions(int dispID) {
-	coID = dispID;
+Actions::Actions(Dispatcher *dispatcher) {
+	disp = dispatcher;
+	coID = dispatcher->getConnectionID();
 }
 
 Actions::~Actions() {

@@ -7,8 +7,8 @@
 
 #include "Context.h"
 
+#include "Basestate.h"
 
-#include "BasicState.h"
 #include "RZ/RZ.h"
 #include "BZ/BZ.h"
 #include "ESZ/ESz.h"
@@ -51,7 +51,7 @@ void Context::eventHandler(){
 				INT_LS_RMP, INT_LS_WEI, INT_LS_MET,
 				INT_T_EST, INT_T_RES, INT_T_STP, INT_T_STR};
 				*/
-		//events={1,2,3};
+		events={1,2,3};
 
 		disp->registerForEventWIthConnection(events, conID);
 

@@ -9,11 +9,12 @@
 #include "Dispatcher.h"
 
 
-std::map<int8_t, vector<int>> connectionMap;
-mutex connectionMutex;
+
 
 Dispatcher::Dispatcher() {
 		DispThread = new std::thread([this]() {ListenForEvents();});
+
+		//mutex connectionMutex;
 }
 
 Dispatcher::~Dispatcher() {
@@ -37,8 +38,8 @@ void Dispatcher::registerForEventWIthConnection(std::vector<int8_t> events, int 
 	connectionMutex.lock();
 
 	// register to get events, puit connectionId in the subscribers list for an event code
-	for (u_int i = 0; i < EventListe.size(); i++) {
-		connectionMap[EventListe.at(i)].push_back(ConID);
+	for (u_int i = 0; i < events.size(); i++) {
+		//connectionMap[events.at(i)].push_back(conId);
 	}
 	connectionMutex.unlock();
 }

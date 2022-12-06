@@ -10,6 +10,8 @@
 
 #include "../Imports.h"
 #include <sys/neutrino.h>
+#include "../dispatcher/Dispatcher.h"
+#include "Basestate.h"
 
 //#include <iostream>
 //#include <stdint.h>
@@ -29,8 +31,9 @@
 class Actions {
 private:
 	int coID;
+	Dispatcher *disp = NULL;
 public:
-	Actions(int coId);
+	Actions(Dispatcher *dispatcher);
 	virtual ~Actions();
 
 	void startFB();

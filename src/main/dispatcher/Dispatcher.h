@@ -23,8 +23,9 @@
 #include <sys/mman.h>
 #include <thread>
 #include <vector>
-#include<map>
-#include<list>
+#include <map>
+#include <list>
+#include <mutex>
 
 
 class Dispatcher {
@@ -34,10 +35,14 @@ public:
 	void registerForEventWIthConnection(std::vector<int8_t> events, int conID);
 	int getConnectionID();
 
+
+
 private:
 	std::thread* DispThread;
 	int chanID;
 	std::vector<int> connections;
+	std::mutex connectionMutex;
+	std::map<int8_t, vector<int8_t>> connectionMap;
 	void DispatchMessageToSubscriber(int8_t code, int value);
 	void ListenForEvents();
 	int conIDDispatcher;

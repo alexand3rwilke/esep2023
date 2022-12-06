@@ -8,22 +8,26 @@
 #ifndef SRC_MAIN_LOGIC_CONTEXT_H_
 #define SRC_MAIN_LOGIC_CONTEXT_H_
 
-#include "BasicState.h"
 #include "../dispatcher/Dispatcher.h"
+#include "Basestate.h"
 
 class Context {
 private:
-	BasicState *state;
+	Basestate *state;
+	std::thread* ContextThread = NULL;
+	std::vector<int8_t> events;
+	void eventHandler();
 
 public:
-	Context();
+	Context(Dispatcher *dispatcher, Actions *actions);
 	virtual ~Context();
 	void entry();
 	void exit();
 	void estp();
 	void doAction();
 
-	Dispatcher *dispa = NULL;
+	Dispatcher *disp = NULL;
+	Actions *actions = NULL;
 };
 
 #endif /* SRC_MAIN_LOGIC_CONTEXT_H_ */
