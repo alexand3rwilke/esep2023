@@ -37,32 +37,25 @@ void wait(int seconds) {
 
 int main(int argc, char** args) {
 
-	cout << "Starting Festo Test" << endl;
+	//cout << "Starting Festo Test" << endl;
 
 	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
-	bool aktorikDemo = false;
+
+		Dispatcher dispatcher;
+		ISR *isr = new ISR(&dispatcher);
+		Sensor *sensor = new Sensor(&dispatcher);
+		TSCADC tscadc;
+		ADC* adc = new ADC(tscadc);
+		Actions *actions = new Actions();
+		Actuator *actuator = new Actuator(&dispatcher);
+
+		Context *context = new Context(&dispatcher, actions);
 
 
-	// Händelt alle Evets
-	Dispatcher dispatcher;
 
 
-	Actions *action = new Actions();
 
-	// Muss keine Events verschicken, nur annehmen
-	Actuator *actuator = new Actuator(&dispatcher);
 
-	// Nur Events verschicken
-	Sensor *sensor = new Sensor(&dispatcher);
-
-	// Verschcikt nur events
-	ISR *isr = new ISR(&dispatcher);
-
-	// Init Höhenmesser
-	TSCADC tscadc;
-	ADC* adc = new ADC(tscadc); // ADC soll Events verschicken wenn Sample gemessen wurde
-
-	Context *context = new Context(&dispatcher, action); //---------------------------- Da ist ein Error den ich nicht behoben bekomme
 
 
 	// Sample misst das signal bei aufrud der methode
@@ -73,48 +66,56 @@ int main(int argc, char** args) {
 	 printf("Value from adc with value %d!\n",heightData);
 
 
-	 if(aktorikDemo){
-		 // Move Assambly Left
-		 	actuator->assamblyMoveLeftOn();
-		 	wait(3);
-		 	actuator->assamblyMoveLeftOff();
 
-		 	// Move Assambly Right
-		 	actuator->assamblyMoveRightOn();
-		 	wait(3);
-		 	actuator->assamblyMoveRightOff();
 
-		 	// Move Assambly Slow
-		 	actuator->assamblyMoveRightOn();
-		 	actuator->assamblyMoveSlowOn();
-		 	wait(3);
-		 	actuator->assamblyMoveSlowOff();
-		 	actuator->assamblyMoveRightOff();
 
-		 	// Open Switch
-		 	actuator->switchOn();
-		 	wait(3);
-		 	actuator->switchOff();
 
-		 	// LED On
-		 	actuator->redOn();
-		 	actuator->yellowOn();
-		 	actuator->greenOn();
-		 	wait(3);
-		 	actuator->redOff();
-		 	actuator->yellowOff();
-		 	actuator->greenOff();
 
-	 }
-
-	// Lese Interrupts aus und gebe auf pins aus
-	while(true) {
-		isr->handleInterrupt();
-	}
 
 
 
 	return EXIT_SUCCESS;
+}
+void playDemo() {
+
+
+				Dispatcher dispatcher;
+
+
+				// Muss keine Events verschicken, nur annehmen
+				Actuator *actuator = new Actuator(&dispatcher);
+
+				// Move Assambly Left
+			 	actuator->assamblyMoveLeftOn();
+			 	wait(3);
+			 	actuator->assamblyMoveLeftOff();
+
+			 	// Move Assambly Right
+			 	actuator->assamblyMoveRightOn();
+			 	wait(3);
+			 	actuator->assamblyMoveRightOff();
+
+			 	// Move Assambly Slow
+			 	actuator->assamblyMoveRightOn();
+			 	actuator->assamblyMoveSlowOn();
+			 	wait(3);
+			 	actuator->assamblyMoveSlowOff();
+			 	actuator->assamblyMoveRightOff();
+
+			 	// Open Switch
+			 	actuator->switchOn();
+			 	wait(3);
+			 	actuator->switchOff();
+
+			 	// LED On
+			 	actuator->redOn();
+			 	actuator->yellowOn();
+			 	actuator->greenOn();
+			 	wait(3);
+			 	actuator->redOff();
+			 	actuator->yellowOff();
+			 	actuator->greenOff();
+
 }
 
 

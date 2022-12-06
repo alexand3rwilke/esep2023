@@ -18,7 +18,7 @@ class Context {
 private:
 	Basestate *state;
 	std::thread* ContextThread = NULL;
-	std::vector<int8_t> events;
+	std::vector<int8_t>* events;
 	void eventHandler();
 
 public:
