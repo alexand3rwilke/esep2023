@@ -39,7 +39,8 @@ void Dispatcher::registerForEventWIthConnection(std::vector<int8_t> events, int 
 
 	// register to get events, puit connectionId in the subscribers list for an event code
 	for (u_int i = 0; i < events.size(); i++) {
-		//connectionMap[events.at(i)].push_back(conId);
+		// put connection id in every event map it wants to regsiter
+		connectionMap[events.at(i)].push_back(conId);
 	}
 	connectionMutex.unlock();
 }

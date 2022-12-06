@@ -20,8 +20,6 @@ Actions::~Actions() {
 }
 
 
-
-
 void Actions::startFB(int coID){
 	MsgSendPulse(coID,-1,START_FB,0);
 }
