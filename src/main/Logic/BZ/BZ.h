@@ -12,6 +12,7 @@
 #include "../../hal/Actuator.h"
 #include "../Context.h"
 
+
 using namespace std;
 
 /**
@@ -25,6 +26,8 @@ private:
 
 public:
 	void entry()override;
+	void exit() override;
+	void doAction() override;
 };
 
 #endif /* SRC_MAIN_LOGIC_BZ_H_ */

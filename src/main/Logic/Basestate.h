@@ -12,9 +12,8 @@
 #include "Actions.h"
 
 class Basestate {
-private:
+protected:
 	//Befehle der HAL
-
 
 	Actions *actions;
 	int myChannel;
