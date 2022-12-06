@@ -10,6 +10,8 @@
 
 #include "../dispatcher/Dispatcher.h"
 #include "Basestate.h"
+#include "Actions.h"
+
 
 class Context {
 private:

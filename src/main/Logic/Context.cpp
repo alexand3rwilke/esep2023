@@ -64,7 +64,7 @@ void Context::eventHandler(){
 			   if (recvid < 0) {
 			   			perror("MsgReceivePulse failed!");
 			   			//exit(EXIT_FAILURE);
-			   			exit();
+			   			//exit();
 			   		}
 
 			   switch(msg.code) {

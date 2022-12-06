@@ -13,13 +13,13 @@
 class Basestate {
 private:
 	//Befehle der HAL
-	Actions *actions;
-
 
 	int myChannel;
 	int myConnection;
+	//Actions *actions;
 
 public:
+
 	virtual ~Basestate(){
 	};
 	virtual void entry() = 0;

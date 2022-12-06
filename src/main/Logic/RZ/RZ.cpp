@@ -8,3 +8,27 @@
 #include "RZ.h"
 
 
+RZ::RZ(
+
+		) {
+
+	}
+
+RZ::~RZ() {
+
+}
+
+
+void entry() {
+
+}
+    void exit() {
+
+    }
+    void estp() {
+
+    }
+    void doAction() {
+
+
+    }

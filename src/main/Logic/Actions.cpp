@@ -7,10 +7,12 @@
 
 #include "Actions.h"
 
-Actions::Actions(Dispatcher *dispatcher) {
+Actions::Actions(
+		Dispatcher *dispatcher
+		) {
 	disp = dispatcher;
 	coID = dispatcher->getConnectionID();
-}
+	}
 
 Actions::~Actions() {
 	//delete coID;

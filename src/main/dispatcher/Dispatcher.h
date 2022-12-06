@@ -28,6 +28,9 @@
 #include <mutex>
 
 
+
+using namespace std;
+
 class Dispatcher {
 public:
 	Dispatcher();
@@ -40,7 +43,7 @@ public:
 private:
 	std::thread* DispThread;
 	int chanID;
-	std::vector<int> connections;
+	std::vector<int8_t> connections;
 	std::mutex connectionMutex;
 	std::map<int8_t, vector<int8_t>> connectionMap;
 	void DispatchMessageToSubscriber(int8_t code, int value);
