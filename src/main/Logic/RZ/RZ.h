@@ -9,9 +9,9 @@
 #define SRC_MAIN_LOGIC_RZ_H_
 
 
-#include "../BaseState.h"
+#include "../BasicState.h"
 
-class RZ: public BaseState {
+class RZ: public BasicState {
 public:
     void entry() override;
     void exit() override;

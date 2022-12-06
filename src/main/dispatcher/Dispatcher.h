@@ -3,7 +3,7 @@
  * ADC.ch
  *
  *  Created on: 25.10.22
- *      Author: Alexander Wilke
+ *      Author: Alexander Wilke, Marquahe
  */
 
 
@@ -22,7 +22,9 @@
 #include <stdint.h>
 #include <sys/mman.h>
 #include <thread>
-
+#include <vector>
+#include<map>
+#include<list>
 
 
 class Dispatcher {
@@ -35,6 +37,7 @@ public:
 private:
 	std::thread* DispThread;
 	int chanID;
+	std::vector<int> connections;
 	void DispatchMessageToSubscriber(int8_t code, int value);
 	void ListenForEvents();
 	int conIDDispatcher;

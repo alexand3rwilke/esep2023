@@ -3,29 +3,44 @@
  * DispatcherC.cpp
  *
  *  Created on: 15.11.22
- *      Author: Alexander Wilke
+ *      Author: Alexander Wilke; Marquahe
  *
  */
 #include "Dispatcher.h"
 
-Dispatcher::Dispatcher() {
 
+std::map<int8_t, vector<int>> connectionMap;
+mutex connectionMutex;
+
+Dispatcher::Dispatcher() {
 		DispThread = new std::thread([this]() {ListenForEvents();});
 }
+
 Dispatcher::~Dispatcher() {
-
-
 }
 
 void Dispatcher::DispatchMessageToSubscriber(int8_t code, int value) {
 
-	// Send Value x to all subscribers of the code
+	connectionMutex.lock();
 
+		connections = connectionMap[code];
+		// Send Value x to all subscribers of the code
+		for (u_int j = 0; j < connections.size(); j++) {
+			//cout << "sending Mail\n" <<endl;
+			MsgSendPulse(connections.at(j), -1, code, value);
+		}
+	connectionMutex.unlock();
 }
+
 void Dispatcher::registerForEventWIthConnection(std::vector<int8_t> events, int conId) {
 
+	connectionMutex.lock();
 
 	// register to get events, puit connectionId in the subscribers list for an event code
+	for (u_int i = 0; i < EventListe.size(); i++) {
+		connectionMap[EventListe.at(i)].push_back(ConID);
+	}
+	connectionMutex.unlock();
 }
 
 

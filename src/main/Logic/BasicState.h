@@ -8,13 +8,13 @@
 #ifndef SRC_MAIN_LOGIC_BASICSTATE_H_
 #define SRC_MAIN_LOGIC_BASICSTATE_H_
 
+#include "Actions.h"
+
 class BasicState {
 
 	//Befehle der HAL
-	Action *actions;
+	Actions *actions;
 
-	//Input den Context bekommen hat
-	ContextData *data;
 
 	int myChannel;
 	int myConnection;
