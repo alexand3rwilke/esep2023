@@ -37,8 +37,6 @@ void wait(int seconds) {
 
 int main(int argc, char** args) {
 
-	cout << "Starting Festo Test" << endl;
-
 	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
 //
 		Dispatcher dispatcher;
@@ -64,8 +62,8 @@ int main(int argc, char** args) {
 	 //adc->sample();
 
 	 // Lese höhe aus dem Register aus
-	 uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
-	 printf("Value from adc with value %d!\n",heightData);
+	 //uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
+	 //printf("Value from adc with value %d!\n",heightData);
 
 		cout << "Starting Festo Test" << endl;
 	 while(true){
@@ -75,7 +73,6 @@ int main(int argc, char** args) {
 		 //printf("Value from adc with value %d!\n",heightData);
 		 //sleep(1);
 		 isr->handleInterruptAndSend(1);
-
 	 }
 
 
