@@ -27,7 +27,7 @@ public:
 	Dispatcher disp;
 	int dispId;
 	virtual ~ISR();
-	void handleInterruptAndSend(void);
+	void handleInterruptAndSend(int interruptID);
 	void recieveInterruptRoutine();
 
 
