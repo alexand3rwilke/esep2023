@@ -18,10 +18,13 @@
 class Sensor  {
 
 public:
+	std::thread* SensorRoutineThread;
+	Dispatcher *disp;
+	int dispId;
 	Sensor(Dispatcher * dispatcher);
 	virtual ~Sensor();
+	void sensorRoutine();
 
-	int getValueAtPin(int pin);
 };
 
 #endif /* SRC_MAIN_HAL_Sensor_H_ */
