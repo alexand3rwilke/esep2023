@@ -40,13 +40,11 @@ void Sensor::sensorRoutine() {
 				int chanID = ChannelCreate(0);//Create channel to receive interrupt pulse messages.
 				if (chanID < 0) {
 					perror("Could not create a channel!\n");
-
 				}
 
 				int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
 				if (conID < 0) {
 					perror("Could not connect to channel!");
-
 				}
 
 					_pulse pulse;
@@ -61,21 +59,41 @@ void Sensor::sensorRoutine() {
 							   			exit(EXIT_FAILURE);
 							   		}
 
+						// Untersuche und Sende event an Dispatcher
 						 switch(pulse.code) {
 
 						   case LSA1:
 							   if (pulse.value.sival_int == 0) {
 								   MsgSendPulse(dispID, -1, LSAnotInterrupted, 0);
 								   break;
-							   }	else {
+							   } else {
 								   MsgSendPulse(dispID, -1, LSAinterrupted, 0);
 							   } break;
-
+						   case LSE1:
+							   if (pulse.value.sival_int == 0) {
+								   MsgSendPulse(dispID, -1, LSEnotInterrupted, 0);
+								   break;
+							   } else {
+								   MsgSendPulse(dispID, -1, LSEinterrupted, 0);
+							   } break;
+						   case LSS1:
+							   if (pulse.value.sival_int == 0) {
+								   MsgSendPulse(dispID, -1, LSSnotInterrupted, 0);
+								   break;
+							   } else {
+								   MsgSendPulse(dispID, -1, LSSinterrupted, 0);
+							   } break;
+						   case LSE1:
+							   if (pulse.value.sival_int == 0) {
+								   MsgSendPulse(dispID, -1, LSEnotInterrupted, 0);
+								   break;
+							   } else {
+								   MsgSendPulse(dispID, -1, LSEinterrupted, 0);
+							   } break;
+						   case HSM1:
+								   MsgSendPulse(dispID, -1, HMSinterrupted, 0);
+							   break;
 						 	// Do not ignore OS pulses!
+							   }
 					 }
 }
-}
-
- // mainLogik-->InterruptHandler--> Dispatcher --> Hal.readPin
-
-	//Get value at pin x
