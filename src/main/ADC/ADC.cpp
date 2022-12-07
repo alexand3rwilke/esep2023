@@ -78,6 +78,15 @@ void ADC::unregisterAdcISR(void){
 	cleanUpInterrupts();
 }
 
+uint32_t ADC::getData(void) {
+
+	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
+
+	return in32((uintptr_t) adcBaseAddr + ADC_DATA);
+}
+
+
+
 void ADC::init(void) {
 	/* Configures ADC to 3Mhz */
 	tscadc->configureAFEClock(24000000, 3000000);

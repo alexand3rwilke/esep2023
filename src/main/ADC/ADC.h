@@ -20,6 +20,13 @@
 #include <sys/siginfo.h>
 #include "../ADC/TSCADC.h"
 
+#include <sys/mman.h>
+#include <hw/inout.h>
+#include <sys/neutrino.h>
+
+#include "../Imports.h"
+
+
 #define ADC_TYPE   16
 
 class ADC{
@@ -41,6 +48,7 @@ private:
 	void stepConfigure(unsigned int stepSel, Fifo fifo, PositiveInput positiveInpChannel);
 	void cleanUpInterrupts(void);
 	void adcEnableSequence(unsigned int steps);
+	uint32_t getData(void);
 private:
 	TSCADC* tscadc;
 	struct sigevent event;
