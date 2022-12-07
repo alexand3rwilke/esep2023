@@ -20,14 +20,32 @@ uintptr_t gpio_bank_1;
 
 Actuator::Actuator(Dispatcher *dispatcher) {
 
+	disp = dispatcher;
 	ThreadCtl( _NTO_TCTL_IO, 0);
 	gpio_bank_1 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO1_ADDRESS_START);
+
+
 
 }
 
 Actuator::~Actuator() {
 
 }
+
+void Actuator::handleEvents(void){
+
+
+	int chanID = ChannelCreate(0);
+	int ConID = ConnectAttach(0,0,chanID,_NTO_SIDE_CHANNEL,0);
+	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON, YELLOW_OFF, RED_ON, RED_OFF};
+
+	disp->registerForEventWIthConnection(actuatorEvents, ConID);
+
+
+
+}
+
+
 
 // ASSAMBLY LINE
 void Actuator::assamblyMoveRightOn(void) {

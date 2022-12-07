@@ -46,7 +46,7 @@ int main(int argc, char** args) {
 		Sensor *sensor = new Sensor(&dispatcher);
 		TSCADC tscadc;
 		ADC* adc = new ADC(tscadc);
-		Actions *actions = new Actions();
+		Actions *actions = new Actions(&dispatcher);
 		Actuator *actuator = new Actuator(&dispatcher);
 
 		Context *context = new Context(&dispatcher, actions);
@@ -61,14 +61,20 @@ int main(int argc, char** args) {
 
 
 	// Sample misst das signal bei aufrud der methode
-	 adc->sample();
+	 //adc->sample();
 
 	 // Lese höhe aus dem Register aus
 	 uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
 	 printf("Value from adc with value %d!\n",heightData);
 
 
-
+	 while(true){
+		 //adc->sample();
+		 //uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
+		 //printf("Value from adc with value %d!\n",heightData);
+		 //sleep(1);
+		 isr->handleInterrupt();
+	 }
 
 
 

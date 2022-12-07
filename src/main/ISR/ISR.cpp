@@ -33,6 +33,8 @@
 #define PULSE_STOP_THREAD _PULSE_CODE_MINAVAIL + 1
 #define PULSE_INTR_ON_PORT0 _PULSE_CODE_MINAVAIL + 2
 
+//ISR::ISR(Sensor *sensor) {
+//	dispId  = sensorik->getConnectionID();
 
 ISR::ISR(Dispatcher *dispatcher) {
 
