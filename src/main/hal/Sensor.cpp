@@ -59,6 +59,8 @@ void Sensor::sensorRoutine() {
 						 int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
 
 
+						 	 // switch case here
+
 						 			// Do not ignore OS pulses!
 					 }
 

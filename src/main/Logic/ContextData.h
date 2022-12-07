@@ -14,6 +14,8 @@ public:
     void incErrorCounter();
     void clearErrorcounter();
     void show();
+
+    int conIDDis = 0;
 };
 
 
