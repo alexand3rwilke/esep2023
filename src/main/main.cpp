@@ -56,6 +56,8 @@ int main(int argc, char** args) {
 
 
 
+
+
 	// Sample misst das signal bei aufrud der methode
 	 //adc->sample();
 
@@ -70,7 +72,7 @@ int main(int argc, char** args) {
 		 //printf("Value from adc with value %d!\n",heightData);
 		 //sleep(1);
 		 printf("Was geht");
-		 isr->handleInterrupt();
+		 isr->handleInterruptAndSend(1);
 	 }
 
 

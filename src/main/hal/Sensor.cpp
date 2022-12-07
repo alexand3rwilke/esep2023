@@ -49,7 +49,6 @@ void Sensor::sensorRoutine() {
 
 				}
 
-
 					_pulse pulse;
 
 					// run 4ever
