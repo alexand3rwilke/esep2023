@@ -83,14 +83,7 @@ void Sensor::sensorRoutine() {
 							   } else {
 								   MsgSendPulse(dispID, -1, LSSinterrupted, 0);
 							   } break;
-						   case LSE1:
-							   if (pulse.value.sival_int == 0) {
-								   MsgSendPulse(dispID, -1, LSEnotInterrupted, 0);
-								   break;
-							   } else {
-								   MsgSendPulse(dispID, -1, LSEinterrupted, 0);
-							   } break;
-						   case HSM1:
+						   case HMS1:
 								   MsgSendPulse(dispID, -1, HMSinterrupted, 0);
 							   break;
 						 	// Do not ignore OS pulses!

@@ -38,16 +38,16 @@ void wait(int seconds) {
 int main(int argc, char** args) {
 
 	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
-
+//
 		Dispatcher dispatcher;
 		ISR *isr = new ISR(&dispatcher);
-		Sensor *sensor = new Sensor(&dispatcher);
-		TSCADC tscadc;
-		ADC* adc = new ADC(tscadc);
-		Actions *actions = new Actions(&dispatcher);
-		Actuator *actuator = new Actuator(&dispatcher);
-
-		Context *context = new Context(&dispatcher, actions);
+//		Sensor *sensor = new Sensor(&dispatcher);
+//		TSCADC tscadc;
+//		ADC* adc = new ADC(tscadc);
+//		Actions *actions = new Actions(&dispatcher);
+//		Actuator *actuator = new Actuator(&dispatcher);
+//
+//		Context *context = new Context(&dispatcher, actions);
 
 
 
@@ -65,13 +65,13 @@ int main(int argc, char** args) {
 	 //uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
 	 //printf("Value from adc with value %d!\n",heightData);
 
-
+		cout << "Starting Festo Test" << endl;
 	 while(true){
+
 		 //adc->sample();
 		 //uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
 		 //printf("Value from adc with value %d!\n",heightData);
 		 //sleep(1);
-		 printf("Was geht");
 		 isr->handleInterruptAndSend(1);
 	 }
 
