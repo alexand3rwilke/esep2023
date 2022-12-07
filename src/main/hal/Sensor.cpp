@@ -58,52 +58,48 @@ void Sensor::sensorRoutine() {
 						 	 //
 						 int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
 
-//						 switch(pulse.code) {
-//
-//						 	   case INT_LS_AUS:
-//						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_AUS_NDURCH, 0);
-//						 		   break;
-//
-//						 	   case INT_LS_EIN:
-//						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_EIN_DURCH, 0);
-//						 		   break;
-//
-//						 	   case INT_LS_HOE:
-//						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_HE_DURCH, 0);
-//						 		   break;
-//
-//						 	   case	INT_LS_RMP:
-//						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_RMP_DURCH, 0);
-//						 		   break;
-//
-//						 	   case	INT_LS_WEI:
-//						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_WEI_DURCH, 0);
-//						 			   break;
-//
-//						 	   case	INT_LS_MET:
-//						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_METAL, 0);
-//						 			   break;
-//
-//						 	   case	INT_T_EST:
-//						 			   MsgSendPulse(disp->conIDDispatcher, -1, T_EST_GDR, 0);
-//						 			   break;
-//
-//						 	   case INT_T_RES:
-//						 			  MsgSendPulse(disp->conIDDispatcher, -1, T_RES_NGDR, 0);
-//						 			  break;
-//
-//						 	   case INT_T_STP:
-//						 			   MsgSendPulse(disp->conIDDispatcher, -1, T_STP_GDR, 0);
-//						 			   break;
-//
-//						 	   case INT_T_STR:
-//						 			   MsgSendPulse(disp->conIDDispatcher, -1, T_STR_NGDR, 0);
-//						 			   break;
-//						 	   }
-//
-//						 	 // switch case here
-//
-//						 			// Do not ignore OS pulses!
+						 switch(pulse.code) {
+
+						 	   case LSAinterrupted:
+						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_AUS_NDURCH, 0);
+						 		   break;
+
+						 	   case LSAnotInterrupted:
+						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_EIN_DURCH, 0);
+						 		   break;
+
+						 	   case LSSinterrupted:
+						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_HE_DURCH, 0);
+						 		   break;
+
+						 	   case	LSSnotInterrupted:
+						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_RMP_DURCH, 0);
+						 		   break;
+
+						 	   case	LSRinterrupted:
+						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_WEI_DURCH, 0);
+						 			   break;
+
+						 	   case	LSRnotInterrupted:
+						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_METAL, 0);
+						 			   break;
+
+						 	   case	LSEinterrupted:
+						 			   MsgSendPulse(disp->conIDDispatcher, -1, T_EST_GDR, 0);
+						 			   break;
+
+						 	   case LSEnotInterrupted:
+						 			  MsgSendPulse(disp->conIDDispatcher, -1, T_RES_NGDR, 0);
+						 			  break;
+
+						 	   case HMSinterrupted:
+						 			   MsgSendPulse(disp->conIDDispatcher, -1, T_STP_GDR, 0);
+						 			   break;
+						 	   }
+
+						 	 // switch case here
+
+						 			// Do not ignore OS pulses!
 					 }
 
 
