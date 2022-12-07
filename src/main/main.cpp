@@ -47,7 +47,7 @@ int main(int argc, char** args) {
 	Dispatcher dispatcher;
 
 
-	Actions *action = new Actions();
+	Actions *action = new Actions(&dispatcher);
 
 	// Muss keine Events verschicken, nur annehmen
 	Actuator *actuator = new Actuator(&dispatcher);

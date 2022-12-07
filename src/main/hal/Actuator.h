@@ -13,7 +13,7 @@
 #include "../Imports.h"
 #include "../Dispatcher/Dispatcher.h"
 
-
+using namespace std;
 
 
 class Actuator  {
@@ -21,6 +21,10 @@ class Actuator  {
 public:
 	Actuator(Dispatcher *dispatcher);
 	virtual ~Actuator();
+
+	vector<int8_t> actuatorEvents;
+	void handleEvents(void);
+
 
 	void assamblyMoveRightOn(void);
 	void assamblyMoveRightOff(void);
