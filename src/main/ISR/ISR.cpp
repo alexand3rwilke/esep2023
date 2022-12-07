@@ -237,7 +237,7 @@ void ISR::recieveInterruptRoutine() {
 					 		}
 
 					 		if (pulse.code == PULSE_INTR_ON_PORT0){
-					 			handleInterruptAndSend();
+					 			handleInterruptAndSend(interruptID);
 					 			//	cout <<"Message send! \n"<<endl;
 
 					 					}
@@ -252,7 +252,7 @@ void ISR::recieveInterruptRoutine() {
  // mainLogik-->InterruptHandler--> Dispatcher --> Hal.readPin
 
 	//Get value at pin x
-void ISR::handleInterruptAndSend(void) {
+void ISR::handleInterruptAndSend(int interruptID) {
 
 	//printf("Im in handle interrupt");
 	uintptr_t gpioBase = mmap_device_io(GPIO_REGISTER_LENGHT, GPIO_PORT0);
@@ -260,7 +260,7 @@ void ISR::handleInterruptAndSend(void) {
 	unsigned int intrStatusReg = in32(uintptr_t(gpioBase + GPIO_IRQSTATUS_1));
 
 	out32(uintptr_t(gpioBase + GPIO_IRQSTATUS_1), 0xffffffff);	//clear all interrupts.
-	//InterruptUnmask(INTR_GPIO_PORT0, interruptID);				//unmask interrupt.
+	InterruptUnmask(INTR_GPIO_PORT0, interruptID);				//delete interrupt.
 
 	for (int pin = 0; pin < 32; pin++) {
 		unsigned int mask = (uint32_t) BIT_MASK(pin);
