@@ -10,12 +10,15 @@
 
 
 #include "Actions.h"
+#include "ContextData.h"
+
 
 class Basestate {
 protected:
 	//Befehle der HAL
 
 	Actions *actions;
+	ContextData *data;
 	int myChannel;
 	int myConnection;
 
