@@ -269,10 +269,10 @@ void ISR::handleInterruptAndSend(void) {
 			// TODO bis jetzt nur Beispiel MsgSendPulse, muss noch richtiger pin und richtiges event verschicht werden
 			switch(pin) {
 
-			case 1 : MsgSendPulse(dispId, -1, pin,current_level);
+			case 2 : MsgSendPulse(dispId, -1, pin,current_level);
 			break;
 
-			case 2 : MsgSendPulse(dispId, -1, pin,current_level);
+			case 21 : MsgSendPulse(dispId, -1, pin,current_level);
 			break;
 
 			case 3 : MsgSendPulse(dispId, -1, pin,current_level);

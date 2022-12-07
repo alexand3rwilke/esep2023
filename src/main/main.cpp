@@ -49,6 +49,7 @@ int main(int argc, char** args) {
 		Actions *actions = new Actions();
 		Actuator *actuator = new Actuator(&dispatcher);
 
+		printf("In main");
 		ContextData *contextData = new ContextData(&dispatcher);
 		Context *context = new Context(&dispatcher, actions,contextData);
 
@@ -59,14 +60,18 @@ int main(int argc, char** args) {
 
 
 
+		while(true){
+					this_thread::sleep_for(chrono::hours(999999));
+				}
+
 
 
 	// Sample misst das signal bei aufrud der methode
-	 adc->sample();
+	 //adc->sample();
 
 	 // Lese höhe aus dem Register aus
-	 uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
-	 printf("Value from adc with value %d!\n",heightData);
+	 //uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
+	// printf("Value from adc with value %d!\n",heightData);
 
 
 

@@ -15,9 +15,14 @@
 #include "SMZ/SMZ.h"
 #include "FZ/FZ.h"
 
+#include <stdio.h>
+#include <iostream>
+
 
 Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *contextData) {
 
+
+	printf("bin in context");
 	state = new RZ(); // Setze state auf ruhezustand
 	disp = dispatcher;
 	this->contextData = contextData;

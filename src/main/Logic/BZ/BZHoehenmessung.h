@@ -5,7 +5,7 @@
 #include "../Basestate.h"
 
 
-class BZHoehenmessung: public Basestate {
+class BZHoehenmessung : public Basestate {
 public:
 
     void entry() override;
