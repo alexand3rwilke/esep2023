@@ -31,12 +31,10 @@
 
 class Actions {
 private:
-	//int coID;
-	//Dispatcher *disp = NULL;
+	int conID;
+	Dispatcher *disp = NULL;
 public:
-	Actions(
-			//Dispatcher *dispatcher
-			);
+	Actions(Dispatcher *dispatcher);
 	virtual ~Actions();
 
 	void startFB(int coID);
@@ -49,6 +47,8 @@ public:
 	void yellowOff(int coID);
 	void redOn(int coID);
 	void redOff(int coID);
+
+
 
 
 

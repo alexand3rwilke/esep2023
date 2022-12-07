@@ -46,7 +46,7 @@ int main(int argc, char** args) {
 		Sensor *sensor = new Sensor(&dispatcher);
 		TSCADC tscadc;
 		ADC* adc = new ADC(tscadc);
-		Actions *actions = new Actions();
+		Actions *actions = new Actions(&dispatcher);
 		Actuator *actuator = new Actuator(&dispatcher);
 
 		Context *context = new Context(&dispatcher, actions);

@@ -23,9 +23,19 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 	ThreadCtl( _NTO_TCTL_IO, 0);
 	gpio_bank_1 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO1_ADDRESS_START);
 
+
+
 }
 
 Actuator::~Actuator() {
+
+}
+
+void Actuator::handleEvents(void){
+
+
+
+	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON, YELLOW_OFF, RED_ON, RED_OFF};
 
 }
 
