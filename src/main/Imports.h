@@ -25,6 +25,11 @@
 
 #endif /* SRCIMPORTS_H_ */
 
+#define ADC_SAMLING_FINISHED 120
+#define ADC_START_SAMPLE 121
+#define ADC_SAMPLE_VALUE 122
+
+
 
 /* Interrupt numbers  (spruh73l.pdf S.465 ff.) */
 #define INTR_GPIO_PORT0 97
