@@ -49,7 +49,8 @@ int main(int argc, char** args) {
 		Actions *actions = new Actions();
 		Actuator *actuator = new Actuator(&dispatcher);
 
-		Context *context = new Context(&dispatcher, actions);
+		ContextData *contextData = new ContextData(&dispatcher);
+		Context *context = new Context(&dispatcher, actions,contextData);
 
 
 

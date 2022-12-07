@@ -5,7 +5,7 @@
 #include "../Basestate.h"
 
 
-class BZAussortierer: public Basestate {
+class BZAussortierer : public Basestate {
 public:
 
     void entry() override;

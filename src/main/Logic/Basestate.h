@@ -20,7 +20,7 @@ protected:
 	Basestate *substate;
 
 	Actions *actions;
-	ContextData *data;
+	ContextData *contextData;
 	int myChannel;
 	int myConnection;
 

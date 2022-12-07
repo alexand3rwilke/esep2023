@@ -6,7 +6,7 @@
  */
 
 #include "Context.h"
-
+#include "ContextData.h"
 #include "Basestate.h"
 
 #include "RZ/RZ.h"
@@ -16,10 +16,11 @@
 #include "FZ/FZ.h"
 
 
-Context::Context(Dispatcher *dispatcher, Actions *actions) {
+Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *contextData) {
 
 	state = new RZ(); // Setze state auf ruhezustand
 	disp = dispatcher;
+	this->contextData = contextData;
 	this->actions = actions;
 	this-> events = nullptr;
 	ContextThread = new std::thread([this]() {eventHandler();});

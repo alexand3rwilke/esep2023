@@ -25,16 +25,16 @@ private:
 	void eventHandler();
 
 public:
-	Context(Dispatcher *dispatcher, Actions *actions);
-	ContextData contextData;
+	Context(Dispatcher *dispatcher, Actions *actions, ContextData  * contextData);
+
 	virtual ~Context();
 	void entry();
 	void exit();
 	void estp();
 	void doAction();
-
-	Dispatcher *disp = NULL;
-	Actions *actions = NULL;
+	ContextData *contextData;
+	Dispatcher *disp;
+	Actions *actions;
 };
 
 #endif /* SRC_MAIN_LOGIC_CONTEXT_H_ */

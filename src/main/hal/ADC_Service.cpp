@@ -75,7 +75,7 @@ void ADC_Service::adcService() {
 					 		case ADC_START_SAMPLE:		adc.sample();
 					 									break;
 
-					 				}
+					 		}
 
 
 					 			// Do not ignore OS pulses!

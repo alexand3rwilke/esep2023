@@ -9,6 +9,17 @@
 
 using namespace std;
 
+ContextData::ContextData(Dispatcher *dispatcher) {
+disp = dispatcher;
+
+}
+
+
+ContextData::~ContextData() {
+	//delete coID;
+}
+
+
 void ContextData::clearErrorcounter() {
     errorCounter = 0;
 }

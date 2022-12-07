@@ -7,7 +7,7 @@
 
 
 
-class BZAuslauf: public Basestate {
+class BZAuslauf : public Basestate {
 public:
 
     void entry() override;

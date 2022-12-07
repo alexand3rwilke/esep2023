@@ -17,9 +17,9 @@ void RZ::entry() {
 
 
 
-	actions->greenOff(data->conIDDis);
-	actions->yellowOff(data->conIDDis);
-	actions->redOff(data->conIDDis);
+	actions->greenOff(contextData->conIDDis);
+	actions->yellowOff(contextData->conIDDis);
+	actions->redOff(contextData->conIDDis);
 	doAction();
 
 }
