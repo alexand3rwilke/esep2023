@@ -37,24 +37,38 @@ void wait(int seconds) {
 
 int main(int argc, char** args) {
 
-	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
-//
+
+	cout << "Starting Festo Test" << endl;
+
+//	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
+
+		printf("In main");
+
 		Dispatcher dispatcher;
 		ISR *isr = new ISR(&dispatcher);
-//		Sensor *sensor = new Sensor(&dispatcher);
-//		TSCADC tscadc;
-//		ADC* adc = new ADC(tscadc);
-//		Actions *actions = new Actions(&dispatcher);
-//		Actuator *actuator = new Actuator(&dispatcher);
+		Sensor *sensor = new Sensor(&dispatcher);
+		TSCADC tscadc;
+		ADC* adc = new ADC(tscadc);
+		Actions *actions = new Actions();
+		Actuator *actuator = new Actuator(&dispatcher);
+
+
+		ContextData *contextData = new ContextData(&dispatcher);
+		Context *context = new Context(&dispatcher, actions,contextData);
+
+
+
+		cout << "ende festo" << endl;
+
+
+		this_thread::sleep_for(chrono::minutes(5));
+
+
+
 //
-//		Context *context = new Context(&dispatcher, actions);
-
-
-
-
-
-
-
+//		while(true){
+//					this_thread::sleep_for(chrono::hours(999999));
+//				}
 
 
 
@@ -63,9 +77,10 @@ int main(int argc, char** args) {
 
 	 // Lese höhe aus dem Register aus
 	 //uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
+
 	 //printf("Value from adc with value %d!\n",heightData);
 
-		cout << "Starting Festo Test" << endl;
+
 	 while(true){
 
 		 //adc->sample();
@@ -74,6 +89,7 @@ int main(int argc, char** args) {
 		 //sleep(1);
 		 isr->handleInterruptAndSend(1);
 	 }
+
 
 
 

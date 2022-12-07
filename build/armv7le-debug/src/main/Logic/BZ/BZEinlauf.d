@@ -13,4 +13,4 @@ build/armv7le-debug/src/main/Logic/BZ/BZEinlauf.o: \
  src/main/Logic/BZ/../BZ/../Actions.h \
  src/main/Logic/BZ/../BZ/../Basestate.h \
  src/main/Logic/BZ/../BZ/../ContextData.h \
- src/main/Logic/BZ/BZHoehenmessung.h
+ src/main/Logic/BZ/BZHoehenmessung.h src/main/Logic/BZ/../Actions.h

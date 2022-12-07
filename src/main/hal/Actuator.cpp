@@ -44,6 +44,8 @@ void Actuator::handleEvents(void){
 	while(true){
 		 int newPulse = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
 
+//		 printf("in actuator thread");
+
 		 switch(pulse.code){
 			 case START_FB: assamblyMoveRightOn();
 			 break;
@@ -139,13 +141,5 @@ void Actuator::switchOn(void) {
 void Actuator::switchOff(void) {
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
 }
-
-
-
-
-
-
-
-
 
 

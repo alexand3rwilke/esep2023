@@ -8,18 +8,22 @@
 #include "../dispatcher/Dispatcher.h"
 #include "Actions.h"
 
-Actions::Actions(Dispatcher *dispatcher) {
-	disp = dispatcher;
-	conID = disp->getConnectionID();
+Actions::Actions() {
+//	disp = dispatcher;
+//	conID = disp->getConnectionID();
 	}
 
 Actions::~Actions() {
 	//delete coID;
 }
 
+void Actions::setConId(int conId){
 
-void Actions::startFB(int conID){
-	MsgSendPulse(conID,-1,START_FB,0);
+	coID = conId;
+}
+void Actions::startFB(int conId){
+	MsgSendPulse(coID,-1,START_FB,0);
+
 }
 
 void Actions::stopFB(int conID){

@@ -31,12 +31,15 @@
 
 class Actions {
 private:
-	int conID;
-	Dispatcher *disp = NULL;
+
+	int coID;
+	//Dispatcher *disp = NULL;
+
 public:
-	Actions(Dispatcher *dispatcher);
+	Actions();
 	virtual ~Actions();
 
+	void setConId(int conId);
 	void startFB(int coID);
 	void stopFB(int coID);
 	void moveFaster(int coID);
