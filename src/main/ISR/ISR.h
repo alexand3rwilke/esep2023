@@ -13,6 +13,7 @@
 #include "../Imports.h"
 #include "../Dispatcher/Dispatcher.h"
 #include <thread>
+#include "../hal/Sensor.h"
 
 
 
@@ -22,6 +23,7 @@ class ISR  {
 
 public:
 	ISR(Dispatcher *dispatcher);
+	//ISR(Sensor *sensor);
 	Dispatcher disp;
 	int dispId;
 	virtual ~ISR();
