@@ -11,18 +11,23 @@
 #include "../dispatcher/Dispatcher.h"
 #include "Actions.h"
 #include "Basestate.h"
+#include "ContextData.h"
+
 
 
 
 class Context {
 private:
 	Basestate *state;
+
+
 	std::thread* ContextThread = NULL;
-	std::vector<int8_t> events;
+	std::vector<int8_t>* events;
 	void eventHandler();
 
 public:
 	Context(Dispatcher *dispatcher, Actions *actions);
+	ContextData contextData;
 	virtual ~Context();
 	void entry();
 	void exit();

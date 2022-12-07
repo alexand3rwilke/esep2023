@@ -11,6 +11,11 @@
 void RZ::entry() {
 
 
+	new(this) BZ;
+
+
+
+
 }
     void RZ::exit() {
 

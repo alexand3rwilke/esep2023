@@ -10,6 +10,8 @@
 
 
 #include "../Basestate.h"
+#include "../BZ/BZ.h"
+
 
 class RZ: public Basestate {
 public:
