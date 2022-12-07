@@ -243,7 +243,7 @@ void ISR::handleInterrupt(void) {
 		if (intrStatusReg == mask) {
 			int current_level = (in32((uintptr_t) gpioBase + GPIO_DATAIN) >> pin) & 0x1;
 			MsgSendPulse(dispId, -1, pin,current_level);
-			//printf("Interrupt on pin %d, now %d\n", pin, current_level);
+			printf("Interrupt on pin %d, now %d\n", pin, current_level);
 		}
 	}
 }
