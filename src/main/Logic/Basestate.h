@@ -17,6 +17,8 @@ class Basestate {
 protected:
 	//Befehle der HAL
 
+	Basestate *substate;
+
 	Actions *actions;
 	ContextData *data;
 	int myChannel;

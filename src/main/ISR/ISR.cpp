@@ -222,13 +222,37 @@ void ISR::recieveInterruptRoutine() {
 
 
 
+
+			_pulse pulse;
+
+				// run 4ever
+				 while (true) {
+
+					 	 //
+					 int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
+
+					 		if (recvid < 0) {
+					 			perror("MsgReceivePulse failed!");
+					 			exit(EXIT_FAILURE);
+					 		}
+
+					 		if (pulse.code == PULSE_INTR_ON_PORT0){
+					 			handleInterruptAndSend();
+					 			//	cout <<"Message send! \n"<<endl;
+
+					 					}
+
+
+					 			// Do not ignore OS pulses!
+				 }
+
 			/* ### Start thread for handling interrupt messages. */
 			//thread receivingThread = thread(&receivingRoutine, chanID);
 }
  // mainLogik-->InterruptHandler--> Dispatcher --> Hal.readPin
 
 	//Get value at pin x
-void ISR::handleInterrupt(void) {
+void ISR::handleInterruptAndSend(void) {
 
 	//printf("Im in handle interrupt");
 	uintptr_t gpioBase = mmap_device_io(GPIO_REGISTER_LENGHT, GPIO_PORT0);
@@ -242,8 +266,37 @@ void ISR::handleInterrupt(void) {
 		unsigned int mask = (uint32_t) BIT_MASK(pin);
 		if (intrStatusReg == mask) {
 			int current_level = (in32((uintptr_t) gpioBase + GPIO_DATAIN) >> pin) & 0x1;
+
 			MsgSendPulse(dispId, -1, pin,current_level);
 			printf("Interrupt on pin %d, now %d\n", pin, current_level);
+
+
+//			// TODO bis jetzt nur Beispiel MsgSendPulse, muss noch richtiger pin und richtiges event verschicht werden
+//			switch(pin) {
+//
+//			case LSA : MsgSendPulse(dispId, -1, pin,current_level);
+//			break;
+//
+//			case LSE1 : MsgSendPulse(dispId, -1, pin,current_level);
+//			break;
+//
+//			case LSS1 : MsgSendPulse(dispId, -1, pin,current_level);
+//			break;
+//
+//			case LSR1: MsgSendPulse(dispId, -1, pin,current_level);
+//			break;
+//
+//			case RST: MsgSendPulse(dispId, -1, pin,current_level);
+//			break;
+//
+//			case SRT: MsgSendPulse(dispId, -1, pin,current_level);
+//			break;
+//			case STP: MsgSendPulse(dispId, -1, pin,current_level);
+//			break;
+
+//			case LSR1: MsgSendPulse(dispId, -1, pin,current_level);
+//			break;
+//			}
 		}
 	}
 }

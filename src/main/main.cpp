@@ -58,6 +58,8 @@ int main(int argc, char** args) {
 
 
 
+
+
 	// Sample misst das signal bei aufrud der methode
 	 //adc->sample();
 
@@ -72,7 +74,7 @@ int main(int argc, char** args) {
 		 //uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
 		 //printf("Value from adc with value %d!\n",heightData);
 		 //sleep(1);
-		 isr->handleInterrupt();
+		 isr->handleInterruptAndSend();
 
 	 }
 
