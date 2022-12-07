@@ -58,6 +58,8 @@ int main(int argc, char** args) {
 
 
 
+
+
 	// Sample misst das signal bei aufrud der methode
 	 adc->sample();
 

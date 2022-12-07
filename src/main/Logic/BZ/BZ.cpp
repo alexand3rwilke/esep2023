@@ -7,9 +7,14 @@
 
 #include "BZ.h"
 
+#include "../ESZ/ESZ.h"
+#include "../ESZ/ESZ.h"
+
+
 void BZ::entry(){
 	// grünes licht an entry
 	actions->greenOn(1);
+	substate = NULL;
 	doAction();
 }
 
@@ -34,7 +39,14 @@ void BZ::doAction () {
 
 				switch (msg.code) {
 
-				case 1 : new(this) BZ;
+				// TODO  change case
+				case 1 :	new(this) BZ;
+							entry();
+							break;
+
+				case 2:	new(this) ESZ;
+						entry();
+						break;
 				}
 			}
 		}
