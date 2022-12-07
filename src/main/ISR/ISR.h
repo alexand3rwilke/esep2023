@@ -27,6 +27,7 @@ public:
 	Dispatcher disp;
 	int dispId;
 	virtual ~ISR();
+	void recieveInterruptRoutine(void);
 	void handleInterruptAndSend(int interruptID);
 	std::thread* ISRRoutineThread;
 };
