@@ -20,7 +20,7 @@ class Sensor  {
 public:
 	std::thread* SensorRoutineThread;
 	Dispatcher *disp;
-	int dispId;
+	int dispID;
 	Sensor(Dispatcher * dispatcher);
 	virtual ~Sensor();
 	void sensorRoutine();

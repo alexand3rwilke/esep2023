@@ -20,7 +20,7 @@
 
 Sensor::Sensor(Dispatcher * dispatcher) {
 	disp = dispatcher;
-	dispId  = dispatcher->getConnectionID();
+	dispID  = dispatcher->getConnectionID();
 	SensorRoutineThread = new std::thread([this]() {sensorRoutine();});
 
 
@@ -55,54 +55,26 @@ void Sensor::sensorRoutine() {
 					// run 4ever
 					 while (true) {
 
-						 	 //
-						 int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
+							int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
+
+							   if (recvid < 0) {
+							   			perror("MsgReceivePulse failed!");
+							   			exit(EXIT_FAILURE);
+							   		}
 
 						 switch(pulse.code) {
 
-						 	   case LSAinterrupted:
-						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_AUS_NDURCH, 0);
-						 		   break;
+						   case LSA1:
+							   if (pulse.value.sival_int == 0) {
+								   MsgSendPulse(dispID, -1, LSAnotInterrupted, 0);
+								   break;
+							   }	else {
+								   MsgSendPulse(dispID, -1, LSAinterrupted, 0);
+							   } break;
 
-						 	   case LSAnotInterrupted:
-						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_EIN_DURCH, 0);
-						 		   break;
-
-						 	   case LSSinterrupted:
-						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_HE_DURCH, 0);
-						 		   break;
-
-						 	   case	LSSnotInterrupted:
-						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_RMP_DURCH, 0);
-						 		   break;
-
-						 	   case	LSRinterrupted:
-						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_WEI_DURCH, 0);
-						 			   break;
-
-						 	   case	LSRnotInterrupted:
-						 			   MsgSendPulse(disp->conIDDispatcher, -1, WK_METAL, 0);
-						 			   break;
-
-						 	   case	LSEinterrupted:
-						 			   MsgSendPulse(disp->conIDDispatcher, -1, T_EST_GDR, 0);
-						 			   break;
-
-						 	   case LSEnotInterrupted:
-						 			  MsgSendPulse(disp->conIDDispatcher, -1, T_RES_NGDR, 0);
-						 			  break;
-
-						 	   case HMSinterrupted:
-						 			   MsgSendPulse(disp->conIDDispatcher, -1, T_STP_GDR, 0);
-						 			   break;
-						 	   }
-
-						 	 // switch case here
-
-						 			// Do not ignore OS pulses!
+						 	// Do not ignore OS pulses!
 					 }
-
-
+}
 }
 
  // mainLogik-->InterruptHandler--> Dispatcher --> Hal.readPin
