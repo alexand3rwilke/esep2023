@@ -19,8 +19,11 @@ Actions::~Actions() {
 	//delete coID;
 }
 
+void Actions::setConId(int conId){
 
-void Actions::startFB(int coID){
+	coID = conId;
+}
+void Actions::startFB(int conId){
 	MsgSendPulse(coID,-1,START_FB,0);
 }
 

@@ -37,9 +37,11 @@ void wait(int seconds) {
 
 int main(int argc, char** args) {
 
-	//cout << "Starting Festo Test" << endl;
+	cout << "Starting Festo Test" << endl;
 
-	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
+//	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
+
+		printf("In main");
 
 		Dispatcher dispatcher;
 		ISR *isr = new ISR(&dispatcher);
@@ -49,20 +51,24 @@ int main(int argc, char** args) {
 		Actions *actions = new Actions();
 		Actuator *actuator = new Actuator(&dispatcher);
 
-		printf("In main");
+
 		ContextData *contextData = new ContextData(&dispatcher);
 		Context *context = new Context(&dispatcher, actions,contextData);
 
 
 
 
+		cout << "ende festo" << endl;
+
+
+		this_thread::sleep_for(chrono::minutes(5));
 
 
 
-
-		while(true){
-					this_thread::sleep_for(chrono::hours(999999));
-				}
+//
+//		while(true){
+//					this_thread::sleep_for(chrono::hours(999999));
+//				}
 
 
 

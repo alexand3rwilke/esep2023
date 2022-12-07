@@ -31,7 +31,7 @@
 
 class Actions {
 private:
-	//int coID;
+	int coID;
 	//Dispatcher *disp = NULL;
 public:
 	Actions(
@@ -39,6 +39,7 @@ public:
 			);
 	virtual ~Actions();
 
+	void setConId(int conId);
 	void startFB(int coID);
 	void stopFB(int coID);
 	void moveFaster(int coID);

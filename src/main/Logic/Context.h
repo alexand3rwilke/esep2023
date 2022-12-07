@@ -20,7 +20,7 @@ class Context {
 private:
 	Basestate *state;
 
-	std::thread* ContextThread = NULL;
+	std::thread* ContextThread;
 	std::vector<int8_t>* events;
 	void eventHandler();
 

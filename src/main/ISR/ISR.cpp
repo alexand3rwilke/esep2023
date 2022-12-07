@@ -264,21 +264,18 @@ void ISR::handleInterruptAndSend(void) {
 		unsigned int mask = (uint32_t) BIT_MASK(pin);
 		if (intrStatusReg == mask) {
 			int current_level = (in32((uintptr_t) gpioBase + GPIO_DATAIN) >> pin) & 0x1;
-
+			printf("Interrupt at pin %d", pin);
 
 			// TODO bis jetzt nur Beispiel MsgSendPulse, muss noch richtiger pin und richtiges event verschicht werden
 			switch(pin) {
 
-			case 2 : MsgSendPulse(dispId, -1, pin,current_level);
+			case LSE1 : MsgSendPulse(dispId, -1, LSE1,current_level);
 			break;
 
-			case 21 : MsgSendPulse(dispId, -1, pin,current_level);
+			case SRT : MsgSendPulse(dispId, -1, SRT,current_level);
 			break;
 
-			case 3 : MsgSendPulse(dispId, -1, pin,current_level);
-			break;
-
-			case 4 : MsgSendPulse(dispId, -1, pin,current_level);
+			case ESTP : MsgSendPulse(dispId, -1, ESTP,current_level);
 			break;
 
 			}

@@ -24,6 +24,8 @@ protected:
 	int myChannel;
 	int myConnection;
 
+	int dispId;
+
 
 
 public:
@@ -35,6 +37,10 @@ public:
 	virtual void exit() {};
 	virtual void estp() {};
 	virtual void doAction() {};
+
+	void setActions(Actions *actions) {this->actions = actions;};
+	void setContextData(ContextData *contextData) {this->contextData = contextData;};
+	void setDispId(int dispId) {this->dispId = dispId;};
 
 	//
 };

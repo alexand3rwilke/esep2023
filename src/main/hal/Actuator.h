@@ -12,15 +12,26 @@
 
 #include "../Imports.h"
 #include "../Dispatcher/Dispatcher.h"
+#include <Thread>
 
 
+using namespace std;
 
 
 class Actuator  {
+private:
+	Dispatcher *disp;
 
 public:
 	Actuator(Dispatcher *dispatcher);
 	virtual ~Actuator();
+
+	_pulse pulse;
+
+	vector<int8_t> actuatorEvents;
+	void handleEvents(void);
+	thread* aktuatorThread;
+
 
 	void assamblyMoveRightOn(void);
 	void assamblyMoveRightOff(void);

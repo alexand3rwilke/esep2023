@@ -12,8 +12,9 @@
 class ContextData{
 private:
     int errorCounter = 0;
-    Dispatcher *disp;
+
 public:
+    Dispatcher *disp;
     ContextData(Dispatcher *dispatcher);
     ~ContextData();
     void incErrorCounter();

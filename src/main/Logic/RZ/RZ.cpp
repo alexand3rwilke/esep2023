@@ -11,16 +11,12 @@
 
 void RZ::entry() {
 
-
-
-
-
-
-
-	actions->greenOff(contextData->conIDDis);
-	actions->yellowOff(contextData->conIDDis);
-	actions->redOff(contextData->conIDDis);
+	actions->greenOn(contextData->disp->getConnectionID());
+	actions->yellowOff(contextData->disp->getConnectionID());
+	actions->redOff(contextData->disp->getConnectionID());
+	printf("---in rz entry");
 	doAction();
+
 
 }
     void RZ::exit() {
@@ -33,10 +29,14 @@ void RZ::entry() {
     void RZ::doAction(){
 
     	_pulse msg;
-    	int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);
+
+    	int chanID = ChannelCreate(0);
+    	int ConID = ConnectAttach(0,0,chanID,_NTO_SIDE_CHANNEL,0);
+
+    	int recvid = MsgReceivePulse(contextData->disp->getConnectionID(), &msg, sizeof(_pulse), nullptr);
 
     	if (recvid < 0) {
-    				perror("MsgReceivePulse failed!");
+    				perror("MsgReceivePulse failed in RZ State!");
     			}
 
     			if (recvid == 0) {

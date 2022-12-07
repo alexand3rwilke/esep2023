@@ -25,8 +25,9 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 	printf("bin in context");
 	state = new RZ(); // Setze state auf ruhezustand
 	disp = dispatcher;
-	this->contextData = contextData;
-	this->actions = actions;
+	//state->setDispId(disp->getConnectionID());
+	state->setContextData(contextData);
+	state->setActions(actions);
 	this-> events = nullptr;
 	ContextThread = new std::thread([this]() {eventHandler();});
 
@@ -38,13 +39,32 @@ Context::~Context() {
 }
 
 
-
 void Context::eventHandler(){
 
 
 	// Gehe in die Entry methode die von Ruhezustand implementiert wird
-	state -> entry();
+
+	//state->entry();
+
+
+//	int chanID = ChannelCreate(0);//Create channel to receive interrupt pulse messages.
+//				if (chanID < 0) {
+//					perror("Could not create a channel!\n");
+//
+//				}
+//
+//				int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
+//				if (conID < 0) {
+//					perror("Could not connect to channel!");
+//
+//				}
+
+	//actions->greenOn(disp->getConnectionID());
+
+	printf("bin in eventHandler");
 //	printf("Context wurde gestartet");
+
+
 //
 //
 //	/* ### Create channel ### */
@@ -68,6 +88,7 @@ void Context::eventHandler(){
 //
 //		while (true) {
 //
+//		}
 //			_pulse msg;
 //
 //			int recvid = MsgReceivePulse(chanID, &msg, sizeof(_pulse), nullptr);

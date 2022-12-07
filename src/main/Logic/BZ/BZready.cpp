@@ -38,7 +38,7 @@ void BZready::entry() {
 
 
     		// check ob LSE interrupt bekommt
-    		case 2 :	new(this) BZEinlauf;
+    		case LSE1 :	new(this) BZEinlauf;
     					entry();
     					break;
 
