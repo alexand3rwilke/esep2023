@@ -17,6 +17,8 @@ using namespace std;
 
 
 class Actuator  {
+private:
+	Dispatcher *disp;
 
 public:
 	Actuator(Dispatcher *dispatcher);

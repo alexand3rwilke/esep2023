@@ -88,3 +88,19 @@
 #define RED_ON 58
 #define RED_OFF 59
 
+
+//Sensorik
+#define LSAinterrupted 100
+#define LSAnotInterrupted 101
+#define LSSinterrupted 102
+#define LSSnotInterrupted 103
+#define LSRinterrupted 104
+#define LSRnotInterrupted 105
+#define LSEinterrupted 106
+#define LSEnotInterrupted 107
+
+#define HMSinterrupted 108
+
+
+
+

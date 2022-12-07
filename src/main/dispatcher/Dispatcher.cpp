@@ -78,6 +78,7 @@ int pid = getpid();
 
 		 		else {
 		 			DispatchMessageToSubscriber(pulse.code, pulse.value.sival_int);
+		 			printf("Dispatcher got Msg on pin %d, with %d\n",pulse.code, pulse.value.sival_int);
 		 			// Sende Message weiter an alle subscriber
 		 		}
 		 			// Do not ignore OS pulses!
