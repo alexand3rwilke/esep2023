@@ -22,8 +22,9 @@ class ADC_Service  {
 public:
 
 	ADC_Service(Dispatcher *disp);
-	Dispatcher disp;
+	Dispatcher *disp;
 	std::thread* ADCServiceThread;
+	std::vector<int8_t> events;
 	int dispId;
 	virtual ~ADC_Service();
 	void adcService();

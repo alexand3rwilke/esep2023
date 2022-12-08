@@ -81,7 +81,7 @@ void Context::eventHandler(){
 			perror("Could not connect to channel!");
 		}
 
-		events = {LSAinterrupted,LSEinterrupted,STRinterrupted};
+		events = {LSAinterrupted,LSEinterrupted,STRinterrupted,ADC_WK_IN_HM};
 
 
 
@@ -114,9 +114,9 @@ void Context::eventHandler(){
 
 				   break;
 
-//			   case 3:
-//				   actions->moveFaster(dispID);
-//				   break;
+			   case ADC_WK_IN_HM:
+				   printf("#####  WK ist im Einlauf\n");
+				   break;
 //
 //			   case	4:
 //				   actions->moveSlower(dispID);

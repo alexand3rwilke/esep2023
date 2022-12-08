@@ -29,6 +29,7 @@
 #define ADC_SAMLING_FINISHED 120
 #define ADC_START_SAMPLE 121
 #define ADC_SAMPLE_VALUE 122
+#define ADC_WK_IN_HM 123
 
 
 
@@ -118,8 +119,6 @@
 //#define RSTnotInterrupted 114
 #define ESTPinterrupted 115
 #define ESTPnotInterrupted 116
-
-
 
 
 

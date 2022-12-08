@@ -17,6 +17,8 @@ ADC adc(tsc);
 
 ADC_Service::ADC_Service(Dispatcher *dispatcher) {
 
+	disp = dispatcher;
+
 	dispId  = dispatcher->getConnectionID();
 	ADCServiceThread  = new std::thread([this]() {adcService();});
 
@@ -50,6 +52,10 @@ void ADC_Service::adcService() {
 			// schicke pulse mit sampling don wenn sampling fertig ist an adc_service selber
 			adc.registerAdcISR(conID,ADC_SAMLING_FINISHED);
 
+			events = {ADC_START_SAMPLE};
+			disp->registerForEventWIthConnection(events, conID);
+
+
 
 			_pulse pulse;
 
@@ -64,10 +70,18 @@ void ADC_Service::adcService() {
 					 			exit(EXIT_FAILURE);
 					 		}
 
+					 		adc.sample();
+
 
 					 		// send adc value to dispathcer
 					 		switch(pulse.code){
 					 		case ADC_SAMLING_FINISHED:  MsgSendPulse(dispId, -1, ADC_SAMPLE_VALUE, pulse.value.sival_int);
+
+
+					 									if(pulse.value.sival_int < 2700) {
+					 									MsgSendPulse(dispId, -1, ADC_WK_IN_HM, pulse.value.sival_int);
+
+					 									}
 					 									break;
 
 
@@ -77,8 +91,6 @@ void ADC_Service::adcService() {
 
 					 		}
 
-
-					 			// Do not ignore OS pulses!
 				 }
 
 }
