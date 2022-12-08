@@ -17,12 +17,15 @@
 
 
 uintptr_t gpio_bank_1;
+uintptr_t gpio_bank_2;
+
 
 Actuator::Actuator(Dispatcher *dispatcher) {
 
 	disp = dispatcher;
 	//ThreadCtl( _NTO_TCTL_IO, 0);
 	gpio_bank_1 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO1_ADDRESS_START);
+	gpio_bank_2 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO2_ADDRESS_START);
 	aktuatorThread = new thread([this]() {handleEvents();});
 
 
@@ -140,6 +143,26 @@ void Actuator::switchOn(void) {
 
 void Actuator::switchOff(void) {
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
+}
+
+void Actuator::startLED_ON(void){
+
+}
+void Actuator::startLED_OFF(void){
+
+}
+
+void Actuator::stopLED_ON(void){
+
+}
+void Actuator::stopLED_OFF(void){
+
+}
+void Actuator::q1LED_ON(void){
+
+}
+void Actuator::q1LED_OFF(void){
+
 }
 
 

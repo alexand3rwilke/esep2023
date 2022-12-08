@@ -9,6 +9,7 @@
 #define SRCIMPORTS_H_
 
 // Sensorik
+#define GPIO2_ADDRESS_START (uint64_t)0x481AC000
 #define GPIO_REGISTER_LENGHT 0x1000
 #define GPIO_DATAIN 0x138
 
@@ -75,6 +76,9 @@
 #define STP 23
 #define RST 26
 #define ESTP 27
+
+//LEDs pin
+
 
 //Metall Detector
 #define MTD1 7
