@@ -23,7 +23,7 @@ void BZ::exit(){
 	actions->greenOff(1);
 }
 
-void BZ::doAction () {
+void BZ::doAction (/*int event*/) {
 
 
 

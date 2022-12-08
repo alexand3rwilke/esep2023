@@ -71,7 +71,6 @@ void Actuator::handleEvents(void){
 			case MOVE_SLOWER:assamblyMoveSlowOn();
 			break;
 			case GREEN_ON:greenOn();
-			printf("Aktuator green On super  -------- \n");
 			break;
 			case GREEN_OFF: greenOff();
 			break;
