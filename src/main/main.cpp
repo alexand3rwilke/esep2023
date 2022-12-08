@@ -12,6 +12,7 @@
 #include <iostream>
 #include "hal/Actuator.h"
 #include "hal/Sensor.h"
+#include "hal/ADC_Service.h"
 #include "ADC/ADC.h"
 #include "ADC/TSCADC.h"
 
@@ -51,6 +52,7 @@ int main(int argc, char** args) {
 		ADC* adc = new ADC(tscadc);
 		Actions *actions = new Actions();
 		Actuator *actuator = new Actuator(&dispatcher);
+		ADC_Service *adcService = new ADC_Service(&dispatcher);
 
 
 		ContextData *contextData = new ContextData(&dispatcher);

@@ -62,7 +62,8 @@ void ADC_Service::adcService() {
 				// run 4ever
 				 while (true) {
 
-					 	 //
+
+					 adc.sample();
 					 int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
 
 					 		if (recvid < 0) {
@@ -70,7 +71,7 @@ void ADC_Service::adcService() {
 					 			exit(EXIT_FAILURE);
 					 		}
 
-					 		adc.sample();
+
 
 
 					 		// send adc value to dispathcer
@@ -79,6 +80,8 @@ void ADC_Service::adcService() {
 
 
 					 									if(pulse.value.sival_int < 2700) {
+
+					 									printf("werkstueck in hoehenmessung");
 					 									MsgSendPulse(dispId, -1, ADC_WK_IN_HM, pulse.value.sival_int);
 
 					 									}

@@ -150,7 +150,7 @@ void Actuator::greenOff(void) {
 }
 
 void Actuator::switchOn(void) {
-	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00080000);
+	window
 }
 
 void Actuator::switchOff(void) {
