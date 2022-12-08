@@ -43,9 +43,9 @@ public:
 private:
 	std::thread* DispThread;
 	int chanID;
-	std::vector<int8_t> connections;
+	std::vector<int> connections;
 	std::mutex connectionMutex;
-	std::map<int8_t, vector<int8_t>> connectionMap;
+	std::map<int8_t, vector<int>> connectionMap;
 	void DispatchMessageToSubscriber(int8_t code, int value);
 	void ListenForEvents();
 	int conIDDispatcher;

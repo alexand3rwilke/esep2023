@@ -38,11 +38,11 @@ void wait(int seconds) {
 int main(int argc, char** args) {
 
 
-	cout << "Starting Festo Test" << endl;
+	cout << "Starting Festo Test \n" << endl;
 
 //	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
 
-		printf("In main");
+		//printf("In main");
 
 		Dispatcher dispatcher;
 		ISR *isr = new ISR(&dispatcher);
@@ -58,10 +58,10 @@ int main(int argc, char** args) {
 
 
 
-		cout << "ende festo" << endl;
+		//cout << "ende festo" << endl;
 
 
-		this_thread::sleep_for(chrono::minutes(5));
+
 
 
 
@@ -87,8 +87,9 @@ int main(int argc, char** args) {
 		 //uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
 		 //printf("Value from adc with value %d!\n",heightData);
 		 //sleep(1);
-		 isr->handleInterruptAndSend(1);
+		 //isr->handleInterruptAndSend(1);
 	 }
+	 //this_thread::sleep_for(chrono::minutes(5));
 
 
 
@@ -99,6 +100,13 @@ int main(int argc, char** args) {
 
 	return EXIT_SUCCESS;
 }
+
+
+
+
+
+
+
 void playDemo() {
 
 

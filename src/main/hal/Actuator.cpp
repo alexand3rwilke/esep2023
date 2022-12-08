@@ -26,6 +26,13 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 	//ThreadCtl( _NTO_TCTL_IO, 0);
 	gpio_bank_1 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO1_ADDRESS_START);
 	gpio_bank_2 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO2_ADDRESS_START);
+
+	assamblyMoveRightOff();
+
+	redOff();
+	greenOff();
+	redOn();
+	//greenOn();
 	aktuatorThread = new thread([this]() {handleEvents();});
 
 
@@ -41,17 +48,21 @@ void Actuator::handleEvents(void){
 
 	int chanID = ChannelCreate(0);
 	int ConID = ConnectAttach(0,0,chanID,_NTO_SIDE_CHANNEL,0);
+	//printf("Aktorik conID: %d \n", ConID);
 	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON, YELLOW_OFF, RED_ON, RED_OFF};
+
 
 	disp->registerForEventWIthConnection(actuatorEvents, ConID);
 	while(true){
+
 		 int newPulse = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
 
 //		 printf("in actuator thread");
 
 		 switch(pulse.code){
-			 case START_FB: assamblyMoveRightOn();
-			 break;
+
+			case START_FB: assamblyMoveRightOn();
+			break;
 			 case STOP_FB: assamblyMoveRightOff();
 			break;
 			case MOVE_FASTER: assamblyMoveSlowOff();
@@ -59,6 +70,7 @@ void Actuator::handleEvents(void){
 			case MOVE_SLOWER:assamblyMoveSlowOn();
 			break;
 			case GREEN_ON:greenOn();
+			printf("Aktuator green On super  -------- \n");
 			break;
 			case GREEN_OFF: greenOff();
 			break;
@@ -68,7 +80,7 @@ void Actuator::handleEvents(void){
 			break;
 			case RED_ON:redOn();
 			break;
-			case RED_OFF: redOn();
+			case RED_OFF:redOn();
 			break;
 		 }
 	}
@@ -144,25 +156,25 @@ void Actuator::switchOn(void) {
 void Actuator::switchOff(void) {
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
 }
-
-void Actuator::startLED_ON(void){
-
-}
-void Actuator::startLED_OFF(void){
-
-}
-
-void Actuator::stopLED_ON(void){
-
-}
-void Actuator::stopLED_OFF(void){
-
-}
-void Actuator::q1LED_ON(void){
-
-}
-void Actuator::q1LED_OFF(void){
-
-}
+//
+//void Actuator::startLED_ON(void){
+//
+//}
+//void Actuator::startLED_OFF(void){
+//
+//}
+//
+//void Actuator::stopLED_ON(void){
+//
+//}
+//void Actuator::stopLED_OFF(void){
+//
+//}
+//void Actuator::q1LED_ON(void){
+//
+//}
+//void Actuator::q1LED_OFF(void){
+//
+//}
 
 

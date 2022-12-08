@@ -274,19 +274,20 @@ void ISR::handleInterruptAndSend(int interruptID) {
 			switch(pin) {
 
 
-			case LSA1 : MsgSendPulse(dispId, -1, pin,current_level);
+			case LSA1 : MsgSendPulse(dispId, -1, LSA1,current_level);
 			break;
 
-			case LSE1 : MsgSendPulse(dispId, -1, pin,current_level);
+			case LSE1 : MsgSendPulse(dispId, -1, LSE1,current_level);
 			break;
 
-			case LSS1 : MsgSendPulse(dispId, -1, pin,current_level);
+			case LSS1 : MsgSendPulse(dispId, -1, LSS1,current_level);
 			break;
 
-			case LSR1: MsgSendPulse(dispId, -1, pin,current_level);
-
+			case LSR1: MsgSendPulse(dispId, -1, LSR1,current_level);
+			break;
 
 			case SRT : MsgSendPulse(dispId, -1, SRT,current_level);
+			printf("STR Taste -------- \n");
 			break;
 
 			case ESTP : MsgSendPulse(dispId, -1, ESTP,current_level);

@@ -17,12 +17,13 @@ Actions::~Actions() {
 	//delete coID;
 }
 
-void Actions::setConId(int conId){
+//void Actions::setConId(int conID){
+//
+//	coID = conID;
+//}
+void Actions::startFB(int conID){
 
-	coID = conId;
-}
-void Actions::startFB(int conId){
-	MsgSendPulse(coID,-1,START_FB,0);
+	MsgSendPulse(conID,-1,START_FB,0);
 
 }
 
@@ -40,6 +41,7 @@ void Actions::moveSlower(int conID){
 }
 
 void Actions::greenOn(int conID){
+	printf("Actions green on los-------- \n");
 	MsgSendPulse(conID,-1,GREEN_ON,0);
 }
 

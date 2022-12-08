@@ -27,10 +27,11 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 	printf("bin in context");
 	state = new RZ(); // Setze state auf ruhezustand
 	disp = dispatcher;
+	dispID = disp->getConnectionID();
 	//state->setDispId(disp->getConnectionID());
 	state->setContextData(contextData);
 	state->setActions(actions);
-	this-> events = nullptr;
+
 	ContextThread = new std::thread([this]() {eventHandler();});
 
 }
@@ -63,94 +64,93 @@ void Context::eventHandler(){
 
 	//actions->greenOn(disp->getConnectionID());
 
-	printf("bin in eventHandler");
+	//printf("bin in eventHandler\n");
 //	printf("Context wurde gestartet");
 
 
 //
 //
-//	/* ### Create channel ### */
-//		int chanID = ChannelCreate(0);//Create channel to receive interrupt pulse messages.
-//		if (chanID < 0) {
-//			perror("Could not create a channel!\n");
-//		}
-//
-//		int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
-//		if (conID < 0) {
-//			perror("Could not connect to channel!");
-//		}
-//
-//		/*events = {INT_LS_AUS, INT_LS_EIN, INT_LS_HOE,
-//				INT_LS_RMP, INT_LS_WEI, INT_LS_MET,
-//				INT_T_EST, INT_T_RES, INT_T_STP, INT_T_STR};
-//				*/
-//		events={1,2,3};
-//
-//		disp->registerForEventWIthConnection(events, conID);
-//
-//		while (true) {
-//
-//		}
-//			_pulse msg;
-//
-//			int recvid = MsgReceivePulse(chanID, &msg, sizeof(_pulse), nullptr);
-//
-//			   if (recvid < 0) {
-//			   			perror("MsgReceivePulse failed!");
-//			   			//exit(EXIT_FAILURE);
-//			   			//exit();
-//			   		}
-//
-//			   switch(msg.code) {
-//
-//			   case 1:
-//				   //if (msg.value.sival_int == 1) { !!!!!!!!!!!!!!
-//					   actions->startFB(conID);
-//				   //}
-//				   break;
-//
-//			   case 2:
-//				   actions->stopFB(conID);
-//
-//				   break;
-//
+	/* ### Create channel ### */
+		int chanID = ChannelCreate(0);//Create channel to receive interrupt pulse messages.
+		if (chanID < 0) {
+			perror("Could not create a channel!\n");
+		}
+
+		int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
+		if (conID < 0) {
+			perror("Could not connect to channel!");
+		}
+
+		events = {LSAinterrupted,LSEinterrupted,STRinterrupted};
+
+
+
+		disp->registerForEventWIthConnection(events, conID);
+
+			_pulse msg;
+
+			while(true){
+
+			int recvid = MsgReceivePulse(chanID, &msg, sizeof(_pulse), nullptr);
+
+			   if (recvid < 0) {
+			   			perror("MsgReceivePulse failed!");
+			   			//exit(EXIT_FAILURE);
+			   			//exit();
+			   		}
+
+
+			   switch(msg.code) {
+
+			   case LSAinterrupted:
+				   //printf("Context -------- \n");
+				   //if (msg.value.sival_int == 1) { !!!!!!!!!!!!!!
+					   actions->startFB(dispID);
+				   //}
+				   break;
+
+			   case LSEinterrupted:
+				   actions->stopFB(dispID);
+
+				   break;
+
 //			   case 3:
-//				   actions->moveFaster(conID);
+//				   actions->moveFaster(dispID);
 //				   break;
 //
 //			   case	4:
-//				   actions->moveSlower(conID);
+//				   actions->moveSlower(dispID);
 //				   break;
-//
-//			   case	5:
-//				   actions->greenOn(conID);
-//				   break;
-//
-//
-//			   case	6:
-//				   actions->greenOff(conID);
-//				   break;
-//
-//			   case	7:
-//				   actions->yellowOn(conID);
-//				   break;
-//
-//			   case 8:
-//				   actions->yellowOff(conID);
-//			   	   break;
-//
-//			   case 9:
-//				   actions->redOn(conID);
-//				   break;
-//
-//			   case 10:
-//				   actions->redOff(conID);
-//				   break;
-//			   }
-//
-//
-//		//		printf("SENSORIK HAT INTERRUPT EHRALTEN!\n");
-//		}
+
+			   case	STRinterrupted:
+				   actions->greenOn(dispID);
+				   break;
+
+
+			   case	6:
+				   actions->greenOff(dispID);
+				   break;
+
+			   case	7:
+				   actions->yellowOn(dispID);
+				   break;
+
+			   case 8:
+				   actions->yellowOff(dispID);
+			   	   break;
+
+			   case 9:
+				   actions->redOn(dispID);
+				   break;
+
+			   case 10:
+				   actions->redOff(dispID);
+				   break;
+			   }
+
+
+		//		printf("SENSORIK HAT INTERRUPT EHRALTEN!\n");
+		}
 //
 //
 }

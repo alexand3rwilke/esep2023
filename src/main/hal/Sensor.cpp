@@ -42,42 +42,49 @@ void Sensor::sensorRoutine() {
 					perror("Could not create a channel!\n");
 				}
 
+
 				int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
 				if (conID < 0) {
 					perror("Could not connect to channel!");
 				}
 
-					_pulse pulse;
+				//printf("Sensorik conID: %d \n", conID);
+				senorEvents={LSA1, LSE1, LSS1, HMS1};
+
+				disp->registerForEventWIthConnection(senorEvents, conID);
+
+				_pulse pulse;
 
 					// run 4ever
-					 while (true) {
+				while (true) {
 
-							int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
+					int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
 
-							   if (recvid < 0) {
-							   			perror("MsgReceivePulse failed!");
-							   			exit(EXIT_FAILURE);
-							   		}
-
+					if (recvid < 0) {
+							perror("MsgReceivePulse failed!");
+							exit(EXIT_FAILURE);
+					}
+					//printf("Sensorik vor dem Switch Case");
 						// Untersuche und Sende event an Dispatcher
 						 switch(pulse.code) {
 
 						   case LSA1:
-							   if (pulse.value.sival_int == 0) {
+							   //printf("Sensorik hat Lichtschranke 1 - signal erhalten \n ");
+							   if (pulse.value.sival_int == 1) {
 								   MsgSendPulse(dispID, -1, LSAnotInterrupted, 0);
 								   break;
 							   } else {
 								   MsgSendPulse(dispID, -1, LSAinterrupted, 0);
 							   } break;
 						   case LSE1:
-							   if (pulse.value.sival_int == 0) {
+							   if (pulse.value.sival_int == 1) {
 								   MsgSendPulse(dispID, -1, LSEnotInterrupted, 0);
 								   break;
 							   } else {
 								   MsgSendPulse(dispID, -1, LSEinterrupted, 0);
 							   } break;
 						   case LSS1:
-							   if (pulse.value.sival_int == 0) {
+							   if (pulse.value.sival_int == 1) {
 								   MsgSendPulse(dispID, -1, LSSnotInterrupted, 0);
 								   break;
 							   } else {
@@ -86,7 +93,29 @@ void Sensor::sensorRoutine() {
 						   case HMS1:
 								   MsgSendPulse(dispID, -1, HMSinterrupted, 0);
 							   break;
-						 	// Do not ignore OS pulses!
+
+
+						   case SRT:
+							   printf("Sensro STR Taste -------- \n");
+								   MsgSendPulse(dispID, -1, STRinterrupted, 0);
+							   break;
+
+
+							case STP:
+								   MsgSendPulse(dispID, -1, STPinterrupted, 0);
+							   break;
+
+
+							case ESTP:
+								   MsgSendPulse(dispID, -1,ESTPinterrupted, 0);
+							   break;
+
+							   case RST:
+								   MsgSendPulse(dispID, -1, RSTinterrupted, 0);
+							   break;
+
 							   }
+
+
 					 }
 }

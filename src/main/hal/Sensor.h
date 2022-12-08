@@ -16,6 +16,8 @@
 
 
 class Sensor  {
+private:
+	vector<int8_t> senorEvents;
 
 public:
 	std::thread* SensorRoutineThread;

@@ -12,6 +12,8 @@
 #include "Actions.h"
 #include "Basestate.h"
 #include "ContextData.h"
+#include "../Imports.h"
+
 
 
 
@@ -21,8 +23,9 @@ private:
 	Basestate *state;
 
 	std::thread* ContextThread;
-	std::vector<int8_t>* events;
+	std::vector<int8_t> events;
 	void eventHandler();
+	int dispID;
 
 public:
 	Context(Dispatcher *dispatcher, Actions *actions, ContextData  * contextData);

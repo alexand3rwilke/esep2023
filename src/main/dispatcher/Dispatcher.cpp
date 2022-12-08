@@ -20,18 +20,7 @@ Dispatcher::Dispatcher() {
 Dispatcher::~Dispatcher() {
 }
 
-void Dispatcher::DispatchMessageToSubscriber(int8_t code, int value) {
 
-	connectionMutex.lock();
-
-		connections = connectionMap[code];
-		// Send Value x to all subscribers of the code
-		for (u_int j = 0; j < connections.size(); j++) {
-			//cout << "sending Mail\n" <<endl;
-			MsgSendPulse(connections.at(j), -1, code, value);
-		}
-	connectionMutex.unlock();
-}
 
 void Dispatcher::registerForEventWIthConnection(std::vector<int8_t> events, int conId) {
 
@@ -54,7 +43,7 @@ void Dispatcher::ListenForEvents() {
 		perror("Could not create a channel!\n");
 
 	}
-int pid = getpid();
+	int pid = getpid();
 	int conID = ConnectAttach(0, pid, channelID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
 	if (conID < 0) {
 		perror("Could not connect to channel!");
@@ -78,12 +67,26 @@ int pid = getpid();
 
 		 		else {
 		 			DispatchMessageToSubscriber(pulse.code, pulse.value.sival_int);
-		 			printf("Dispatcher got Msg on pin %d, with %d\n",pulse.code, pulse.value.sival_int);
+		 			//printf("Dispatcher got Msg on pin %d, with %d\n",pulse.code, pulse.value.sival_int);
 		 			// Sende Message weiter an alle subscriber
 		 		}
 		 			// Do not ignore OS pulses!
 	 }
+}
 
+void Dispatcher::DispatchMessageToSubscriber(int8_t code, int value) {
+
+	//connectionMutex.lock();
+
+		connections = connectionMap[code];
+		// Send Value x to all subscribers of the code
+		//printf(" Map Anzahl der Connection: %d\n",connections.size());
+		for (u_int j = 0; j < connections.size(); j++) {
+			//cout << "sending Mail\n" <<endl;
+			//printf(" An die Conection %d\n",connections.at(j));
+			MsgSendPulse(connections.at(j), -1, code, value);
+		}
+	//connectionMutex.unlock();
 }
 
 int Dispatcher::getConnectionID(){

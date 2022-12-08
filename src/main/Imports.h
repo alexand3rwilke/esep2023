@@ -110,6 +110,16 @@
 
 #define HMSinterrupted 108
 
+#define STRinterrupted 109
+#define STRnotInterrupted 110
+#define STPinterrupted 111
+//#define STPnotInterrupted 112
+#define RSTinterrupted 113
+//#define RSTnotInterrupted 114
+#define ESTPinterrupted 115
+#define ESTPnotInterrupted 116
+
+
 
 
 
