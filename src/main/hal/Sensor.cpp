@@ -20,7 +20,7 @@
 
 Sensor::Sensor(Dispatcher * dispatcher) {
 	disp = dispatcher;
-	dispID  = dispatcher->getConnectionID();
+	dispID  = disp->getConnectionID();
 	SensorRoutineThread = new std::thread([this]() {sensorRoutine();});
 
 
@@ -49,7 +49,7 @@ void Sensor::sensorRoutine() {
 				}
 
 				//printf("Sensorik conID: %d \n", conID);
-				senorEvents={LSA1, LSE1, LSS1, HMS1};
+				senorEvents={LSA1, LSE1, LSS1, HMS1, SRT, ESTP, RST, STP};
 
 				disp->registerForEventWIthConnection(senorEvents, conID);
 
@@ -99,6 +99,7 @@ void Sensor::sensorRoutine() {
 							   printf("Sensro STR Taste -------- \n");
 								   MsgSendPulse(dispID, -1, STRinterrupted, 0);
 							   break;
+							   //TODO STR release
 
 
 							case STP:

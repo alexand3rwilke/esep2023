@@ -28,19 +28,19 @@ void RZ::entry() {
     }
     void RZ::doAction(){
 
-    	_pulse msg;
-
-    	int chanID = ChannelCreate(0);
-    	int ConID = ConnectAttach(0,0,chanID,_NTO_SIDE_CHANNEL,0);
-
-    	int recvid = MsgReceivePulse(contextData->disp->getConnectionID(), &msg, sizeof(_pulse), nullptr);
-
-    	if (recvid < 0) {
-    				perror("MsgReceivePulse failed in RZ State!");
-    			}
-
-    			if (recvid == 0) {
-    			while(true) {
+//    	_pulse msg;
+//
+//    	int chanID = ChannelCreate(0);
+//    	int ConID = ConnectAttach(0,0,chanID,_NTO_SIDE_CHANNEL,0);
+//
+//    	int recvid = MsgReceivePulse(contextData->disp->getConnectionID(), &msg, sizeof(_pulse), nullptr);
+//
+//    	if (recvid < 0) {
+//    				perror("MsgReceivePulse failed in RZ State!");
+//    			}
+//
+//    			if (recvid == 0) {
+//    			while(true) {
 
     		switch (msg.code) {
 

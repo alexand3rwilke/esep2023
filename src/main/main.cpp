@@ -46,6 +46,7 @@ int main(int argc, char** args) {
 		//printf("In main");
 
 		Dispatcher dispatcher;
+
 		ISR *isr = new ISR(&dispatcher);
 		Sensor *sensor = new Sensor(&dispatcher);
 		TSCADC tscadc;
