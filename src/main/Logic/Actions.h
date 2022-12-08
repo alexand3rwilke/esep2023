@@ -50,6 +50,8 @@ public:
 	void yellowOff(int coID);
 	void redOn(int coID);
 	void redOff(int coID);
+	void switchOn(int coID);
+
 
 
 

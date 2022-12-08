@@ -80,8 +80,8 @@ void Context::eventHandler(){
 		if (conID < 0) {
 			perror("Could not connect to channel!");
 		}
-
-		events = {LSAinterrupted,LSEinterrupted,STRinterrupted,ADC_WK_IN_HM};
+		//TODO alle sensorsignale einfügen
+		events = {LSAinterrupted,LSEinterrupted,STRinterrupted,LSSinterrupted};
 
 
 
@@ -114,9 +114,9 @@ void Context::eventHandler(){
 
 				   break;
 
-			   case ADC_WK_IN_HM:
-				   printf("#####  WK ist im Einlauf\n");
-				   break;
+//			   case 3:
+//				   actions->moveFaster(dispID);
+//				   break;
 //
 //			   case	4:
 //				   actions->moveSlower(dispID);
@@ -125,27 +125,29 @@ void Context::eventHandler(){
 			   case	STRinterrupted:
 				   actions->greenOn(dispID);
 				   break;
-
-
-			   case	6:
-				   actions->greenOff(dispID);
+			   case	LSSinterrupted:
+				   actions->switchOn(dispID);
 				   break;
 
-			   case	7:
-				   actions->yellowOn(dispID);
-				   break;
-
-			   case 8:
-				   actions->yellowOff(dispID);
-			   	   break;
-
-			   case 9:
-				   actions->redOn(dispID);
-				   break;
-
-			   case 10:
-				   actions->redOff(dispID);
-				   break;
+//			   case	6:
+//				   actions->greenOff(dispID);
+//				   break;
+//
+//			   case	7:
+//				   actions->yellowOn(dispID);
+//				   break;
+//
+//			   case 8:
+//				   actions->yellowOff(dispID);
+//			   	   break;
+//
+//			   case 9:
+//				   actions->redOn(dispID);
+//				   break;
+//
+//			   case 10:
+//				   actions->redOff(dispID);
+//				   break;
 			   }
 
 

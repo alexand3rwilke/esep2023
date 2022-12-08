@@ -11,4 +11,5 @@ build/armv7le-debug/src/main/Logic/RZ/RZ.o: src/main/Logic/RZ/RZ.cpp \
  src/main/Logic/RZ/../BZ/../../dispatcher/Dispatcher.h \
  src/main/Logic/RZ/../BZ/../Actions.h \
  src/main/Logic/RZ/../BZ/../Basestate.h \
- src/main/Logic/RZ/../BZ/../ContextData.h
+ src/main/Logic/RZ/../BZ/../ContextData.h \
+ src/main/Logic/RZ/../BZ/../../Imports.h

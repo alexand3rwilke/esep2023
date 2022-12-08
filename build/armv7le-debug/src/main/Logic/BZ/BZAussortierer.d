@@ -13,4 +13,5 @@ build/armv7le-debug/src/main/Logic/BZ/BZAussortierer.o: \
  src/main/Logic/BZ/../BZ/../Actions.h \
  src/main/Logic/BZ/../BZ/../Basestate.h \
  src/main/Logic/BZ/../BZ/../ContextData.h \
+ src/main/Logic/BZ/../BZ/../../Imports.h \
  src/main/Logic/BZ/BZAussortierer.h

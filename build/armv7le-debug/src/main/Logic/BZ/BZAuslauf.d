@@ -12,4 +12,5 @@ build/armv7le-debug/src/main/Logic/BZ/BZAuslauf.o: \
  src/main/Logic/BZ/../BZ/../../dispatcher/Dispatcher.h \
  src/main/Logic/BZ/../BZ/../Actions.h \
  src/main/Logic/BZ/../BZ/../Basestate.h \
- src/main/Logic/BZ/../BZ/../ContextData.h
+ src/main/Logic/BZ/../BZ/../ContextData.h \
+ src/main/Logic/BZ/../BZ/../../Imports.h

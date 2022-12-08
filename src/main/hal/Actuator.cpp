@@ -31,7 +31,8 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 
 	redOff();
 	greenOff();
-	redOn();
+	//switchOn();
+	//redOn();
 	//greenOn();
 	aktuatorThread = new thread([this]() {handleEvents();});
 
@@ -49,7 +50,7 @@ void Actuator::handleEvents(void){
 	int chanID = ChannelCreate(0);
 	int ConID = ConnectAttach(0,0,chanID,_NTO_SIDE_CHANNEL,0);
 	//printf("Aktorik conID: %d \n", ConID);
-	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON, YELLOW_OFF, RED_ON, RED_OFF};
+	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON, YELLOW_OFF, RED_ON, RED_OFF,ACTIVTE_AUSSORTIERER};
 
 
 	disp->registerForEventWIthConnection(actuatorEvents, ConID);
@@ -81,6 +82,8 @@ void Actuator::handleEvents(void){
 			case RED_ON:redOn();
 			break;
 			case RED_OFF:redOn();
+			break;
+			case ACTIVTE_AUSSORTIERER:switchOn();
 			break;
 		 }
 	}
@@ -150,7 +153,9 @@ void Actuator::greenOff(void) {
 }
 
 void Actuator::switchOn(void) {
-	window
+	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00080000);
+	usleep(1000 * (2 * 1000 ));
+	switchOff();
 }
 
 void Actuator::switchOff(void) {

@@ -64,6 +64,10 @@ void Actions::redOn(int conID){
 void Actions::redOff(int conID){
 	MsgSendPulse(conID,-1,RED_OFF,0);
 }
+void Actions::switchOn(int conID){
+	MsgSendPulse(conID,-1,ACTIVTE_AUSSORTIERER,0);
+}
+
 
 
 
