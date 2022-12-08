@@ -28,6 +28,7 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 	gpio_bank_2 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO2_ADDRESS_START);
 
 	assamblyMoveRightOff();
+	assamblyMoveSlowOff();
 
 	redOff();
 	greenOff();
@@ -111,6 +112,7 @@ void Actuator::assamblyMoveLeftOff(void) {
 
 void Actuator::assamblyMoveSlowOn(void) {
 	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00004000);
+
 }
 
 void Actuator::assamblyMoveSlowOff(void) {

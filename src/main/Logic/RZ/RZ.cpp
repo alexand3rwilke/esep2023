@@ -42,19 +42,19 @@ void RZ::entry() {
 //    			if (recvid == 0) {
 //    			while(true) {
 
-    		switch (msg.code) {
-
-    		case 12 : new(this) BZ; entry(); break;
-
-
-
-
-
-    		}
-
-
-    		}
-    			}
+//    		switch (msg.code) {
+//
+//    		case 12 : new(this) BZ; entry(); break;
+//
+//
+//
+//
+//
+//    		}
+//
+//
+//    		}
+//    			}
 
     	}
 

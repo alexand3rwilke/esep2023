@@ -81,7 +81,7 @@ void Context::eventHandler(){
 			perror("Could not connect to channel!");
 		}
 		//TODO alle sensorsignale einfügen
-		events = {LSAinterrupted,LSEinterrupted,STRinterrupted,LSSinterrupted};
+		events = {LSAinterrupted,LSEinterrupted,STRinterrupted,LSSinterrupted,ADC_WK_IN_HM,ADC_WK_NIN_HM};
 
 
 
@@ -114,13 +114,14 @@ void Context::eventHandler(){
 
 				   break;
 
-//			   case 3:
-//				   actions->moveFaster(dispID);
-//				   break;
-//
-//			   case	4:
-//				   actions->moveSlower(dispID);
-//				   break;
+			   case ADC_WK_IN_HM:
+				//  printf("Werkstuekc in hoehenmesser!!! \n");
+				   actions->moveSlower(dispID);
+				   break;
+
+			   case	ADC_WK_NIN_HM:
+				   actions->moveFaster(dispID);
+				   break;
 
 			   case	STRinterrupted:
 				   actions->greenOn(dispID);

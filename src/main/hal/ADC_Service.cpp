@@ -14,6 +14,9 @@ using namespace std;
 TSCADC tsc;
 ADC adc(tsc);
 
+int counter = 0;
+bool isInterrupted = false;
+
 
 ADC_Service::ADC_Service(Dispatcher *dispatcher) {
 
@@ -79,11 +82,18 @@ void ADC_Service::adcService() {
 					 		case ADC_SAMLING_FINISHED:  MsgSendPulse(dispId, -1, ADC_SAMPLE_VALUE, pulse.value.sival_int);
 
 
-					 									if(pulse.value.sival_int < 2700) {
-
-					 									printf("werkstueck in hoehenmessung");
+					 									if(pulse.value.sival_int < 2700 && !isInterrupted) {
+					 									isInterrupted = true;
+					 									counter++;
+					 									printf("werkstueck in hoehenmessung  \n");
+//					 									printf("wTotal counter %d  \n",counter);
 					 									MsgSendPulse(dispId, -1, ADC_WK_IN_HM, pulse.value.sival_int);
 
+					 									}
+
+					 									else if(pulse.value.sival_int > 2700 && isInterrupted){
+					 										isInterrupted = false;
+					 										MsgSendPulse(dispId, -1, ADC_WK_NIN_HM, pulse.value.sival_int);
 					 									}
 					 									break;
 

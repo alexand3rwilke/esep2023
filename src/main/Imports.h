@@ -30,6 +30,8 @@
 #define ADC_START_SAMPLE 121
 #define ADC_SAMPLE_VALUE 122
 #define ADC_WK_IN_HM 123
+#define ADC_WK_NIN_HM 124
+
 
 
 
