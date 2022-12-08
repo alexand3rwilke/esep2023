@@ -80,8 +80,8 @@ void Context::eventHandler(){
 		if (conID < 0) {
 			perror("Could not connect to channel!");
 		}
-
-		events = {LSAinterrupted,LSEinterrupted,STRinterrupted};
+		//TODO alle sensorsignale einfügen
+		events = {LSAinterrupted,LSEinterrupted,STRinterrupted,LSSinterrupted};
 
 
 
@@ -125,27 +125,29 @@ void Context::eventHandler(){
 			   case	STRinterrupted:
 				   actions->greenOn(dispID);
 				   break;
-
-
-			   case	6:
-				   actions->greenOff(dispID);
+			   case	LSSinterrupted:
+				   actions->switchOn(dispID);
 				   break;
 
-			   case	7:
-				   actions->yellowOn(dispID);
-				   break;
-
-			   case 8:
-				   actions->yellowOff(dispID);
-			   	   break;
-
-			   case 9:
-				   actions->redOn(dispID);
-				   break;
-
-			   case 10:
-				   actions->redOff(dispID);
-				   break;
+//			   case	6:
+//				   actions->greenOff(dispID);
+//				   break;
+//
+//			   case	7:
+//				   actions->yellowOn(dispID);
+//				   break;
+//
+//			   case 8:
+//				   actions->yellowOff(dispID);
+//			   	   break;
+//
+//			   case 9:
+//				   actions->redOn(dispID);
+//				   break;
+//
+//			   case 10:
+//				   actions->redOff(dispID);
+//				   break;
 			   }
 
 
