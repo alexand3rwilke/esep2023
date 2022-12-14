@@ -11,7 +11,6 @@
 #define SRC_MAIN_HAL_Sensor_H_
 
 #include "../Imports.h"
-#include "stdint.h"
 #include "../Dispatcher/Dispatcher.h"
 
 

@@ -9,25 +9,7 @@
 #define SRC_MAIN_LOGIC_ACTIONS_H_
 
 #include "../Imports.h"
-#include <sys/neutrino.h>
 #include "../dispatcher/Dispatcher.h"
-
-
-
-//#include <iostream>
-//#include <stdint.h>
-//#include <sys/mman.h>
-//#include <hw/inout.h>
-
-
-//#include <errno.h>
-//#include <sys/procmgr.h>//
-//#include <iostream>
-//#include <thread>
-//#include <chrono>
-
-
-
 
 class Actions {
 private:

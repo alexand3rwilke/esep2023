@@ -6,30 +6,10 @@
  *      Author: Alexander Wilke, Marquahe
  */
 
+#include "../Imports.h"
 
 #ifndef SRC_MAIN_HAL_ADC_H_
 #define SRC_MAIN_HAL_ADC_H_
-
-#include <stdio.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/dispatch.h>
-#include <sys/types.h>
-#include <sys/procmgr.h>
-#include <unistd.h>
-#include <iostream>
-#include <stdint.h>
-#include <sys/mman.h>
-#include <thread>
-#include <vector>
-#include <map>
-#include <list>
-#include <mutex>
-
-
-
-using namespace std;
 
 class Dispatcher {
 public:

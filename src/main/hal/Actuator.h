@@ -12,11 +12,6 @@
 
 #include "../Imports.h"
 #include "../Dispatcher/Dispatcher.h"
-#include <Thread>
-
-
-using namespace std;
-
 
 class Actuator  {
 private:

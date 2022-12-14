@@ -15,7 +15,6 @@
 #include "../ADC/ADC.h"
 #include "../ADC/Util.h"
 #include "../ADC/tscadc_hw.h"
-#include <thread>
 
 class ADC_Service  {
 

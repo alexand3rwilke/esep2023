@@ -14,10 +14,6 @@
 #include "ContextData.h"
 #include "../Imports.h"
 
-
-
-
-
 class Context {
 private:
 	Basestate *state;
