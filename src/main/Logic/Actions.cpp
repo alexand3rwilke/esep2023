@@ -67,6 +67,12 @@ void Actions::redOff(int conID){
 void Actions::switchOn(int conID){
 	MsgSendPulse(conID,-1,ACTIVTE_AUSSORTIERER,0);
 }
+void Actions::greenLightBlinking(int coID){
+	//MsgSendPulse(conID,-1,xxx,0);
+}
+void Actions::greenLightBlinkingOff(int coID){
+	//MsgSendPulse(conID,-1,xxx,0);
+}
 
 
 

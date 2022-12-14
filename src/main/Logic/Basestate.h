@@ -11,6 +11,7 @@
 
 #include "Actions.h"
 #include "ContextData.h"
+#include "../WSAData.h"
 
 
 class Basestate {
@@ -20,6 +21,7 @@ protected:
 	Basestate *substate;
 
 	Actions *actions;
+	WSAData *wsa_data;
 	ContextData *contextData;
 	int myChannel;
 	int myConnection;

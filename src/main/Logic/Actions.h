@@ -51,12 +51,8 @@ public:
 	void redOn(int coID);
 	void redOff(int coID);
 	void switchOn(int coID);
-
-
-
-
-
-
+	void greenLightBlinking(int coID);
+	void greenLightBlinkingOff(int coID);
 };
 
 #endif /* SRC_MAIN_LOGIC_ACTIONS_H_ */

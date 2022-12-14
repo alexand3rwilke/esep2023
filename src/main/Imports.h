@@ -124,5 +124,8 @@
 
 #define ACTIVTE_AUSSORTIERER 117
 
+//SMZ
+#define STR_SMZ 118
+
 
 

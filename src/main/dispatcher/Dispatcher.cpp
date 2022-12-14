@@ -13,8 +13,6 @@
 
 Dispatcher::Dispatcher() {
 		DispThread = new std::thread([this]() {ListenForEvents();});
-
-		//mutex connectionMutex;
 }
 
 Dispatcher::~Dispatcher() {
@@ -76,7 +74,7 @@ void Dispatcher::ListenForEvents() {
 
 void Dispatcher::DispatchMessageToSubscriber(int8_t code, int value) {
 
-	//connectionMutex.lock();
+	connectionMutex.lock();
 
 		connections = connectionMap[code];
 		// Send Value x to all subscribers of the code
@@ -86,7 +84,7 @@ void Dispatcher::DispatchMessageToSubscriber(int8_t code, int value) {
 			//printf(" An die Conection %d\n",connections.at(j));
 			MsgSendPulse(connections.at(j), -1, code, value);
 		}
-	//connectionMutex.unlock();
+	connectionMutex.unlock();
 }
 
 int Dispatcher::getConnectionID(){
