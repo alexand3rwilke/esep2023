@@ -159,5 +159,7 @@ using namespace std;
 //Aktion für SMZ
 #define STR_SMZ 119
 
+//TODO: events laufen bei 128 über weil int_8 auf int alles ändern ?
+
 
 #endif /* SRC_IMPORTS_H */

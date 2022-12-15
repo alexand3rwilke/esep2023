@@ -15,10 +15,8 @@ class Dispatcher {
 public:
 	Dispatcher();
 	virtual ~Dispatcher();
-	void registerForEventWIthConnection(std::vector<int8_t> events, int conID);
+	void registerForEventWIthConnection(vector<int8_t> events, int conID);
 	int getConnectionID();
-
-
 
 private:
 	std::thread* DispThread;
@@ -29,7 +27,6 @@ private:
 	void DispatchMessageToSubscriber(int8_t code, int value);
 	void ListenForEvents();
 	int conIDDispatcher;
-
 };
 
 #endif

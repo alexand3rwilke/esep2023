@@ -7,15 +7,6 @@
 
 #include "Actuator.h"
 
-#include <iostream>
-#include <stdint.h>
-#include <sys/mman.h>
-#include <hw/inout.h>
-#include <sys/neutrino.h>
-
-
-
-
 uintptr_t gpio_bank_1;
 uintptr_t gpio_bank_2;
 
@@ -31,34 +22,22 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 	assamblyMoveSlowOff();
 
 	ampOff();
-
-
-
 	aktuatorThread = new thread([this]() {handleEvents();});
-
-
-
 }
 
 Actuator::~Actuator() {
-
 }
 
 void Actuator::handleEvents(void){
 
-
 	int chanID = ChannelCreate(0);
 	int ConID = ConnectAttach(0,0,chanID,_NTO_SIDE_CHANNEL,0);
-	//printf("Aktorik conID: %d \n", ConID);
-	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON, YELLOW_OFF, RED_ON, RED_OFF,ACTIVTE_AUSSORTIERER};
-
+	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON, YELLOW_OFF, RED_ON, RED_OFF, ACTIVTE_AUSSORTIERER, Q1On, Q1Off, Q2On};
 
 	disp->registerForEventWIthConnection(actuatorEvents, ConID);
 	while(true){
 
 		 int newPulse = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
-
-//		 printf("in actuator thread");
 
 		 switch(pulse.code){
 
@@ -84,12 +63,17 @@ void Actuator::handleEvents(void){
 			break;
 			case ACTIVTE_AUSSORTIERER:switchOn();
 			break;
+			case Q1On:q1_LedOn();
+			break;
+			case Q2On:q2_LedOn();
+			break;
+			case Q1Off:q1_LedOff();
+			break;
+			case Q2Off:q2_LedOff();
+			break;
 		 }
 	}
-
-
 }
-
 
 
 // ASSAMBLY LINE
@@ -199,28 +183,3 @@ void Actuator::q2_LedOn(void) {
 void Actuator::q2_LedOff(void) {
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_2), (0x1 << 2));
 }
-
-
-
-//
-//void Actuator::startLED_ON(void){
-//
-//}
-//void Actuator::startLED_OFF(void){
-//
-//}
-//
-//void Actuator::stopLED_ON(void){
-//
-//}
-//void Actuator::stopLED_OFF(void){
-//
-//}
-//void Actuator::q1LED_ON(void){
-//
-//}
-//void Actuator::q1LED_OFF(void){
-//
-//}
-
-

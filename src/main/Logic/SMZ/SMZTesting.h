@@ -9,9 +9,11 @@
 #define SRC_MAIN_LOGIC_SMZ_SMZTESTING_H_
 
 #include "SMZ.h"
+#include "../Basestate.h"
+#include "../../hal/Actuator.h"
+#include "../Context.h"
+#include "../../WSAData.h"
 #include "../../Imports.h"
-
-using namespace std;
 
 class SMZTesting : public Basestate{
 private:

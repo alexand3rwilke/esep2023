@@ -15,8 +15,6 @@
 #include "SMZDistanceMeasurementADCFB.h"
 #include "../../Imports.h"
 
-using namespace std;
-
 class SMZCalibration : public Basestate{
 private:
 	int myChannel;
