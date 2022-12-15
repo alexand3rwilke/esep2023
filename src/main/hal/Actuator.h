@@ -33,12 +33,12 @@ public:
 	thread* aktuatorThread;
 
 
-	void assamblyMoveRightOn(void);
-	void assamblyMoveRightOff(void);
+	void FB_moveRightOn(void);
+	void FB_moveRightOff(void);
 	void assamblyMoveLeftOn(void);
 	void assamblyMoveLeftOff(void);
-	void assamblyMoveSlowOn(void);
-	void assamblyMoveSlowOff(void);
+	void FB_moveSlowOn(void);
+	void FB_moveSlowOff(void);
 	void assamblyStopOn(void);
 	void assamblyStopOff(void);
 

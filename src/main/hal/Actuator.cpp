@@ -31,8 +31,8 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 	gpio_bank_1 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO1_ADDRESS_START);
 	gpio_bank_2 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO2_ADDRESS_START);
 
-	assamblyMoveRightOff();
-	assamblyMoveSlowOff();
+	FB_moveRightOff();
+	FB_moveSlowOff();
 	amp->ampOff();
 	printf("Aktorik startz \n  ---- \n");
 	int tmp = getAussortierer();
@@ -53,7 +53,8 @@ void Actuator::handleEvents(void){
 	int chanID = ChannelCreate(0);
 	int ConID = ConnectAttach(0,0,chanID,_NTO_SIDE_CHANNEL,0);
 	//printf("Aktorik conID: %d \n", ConID);
-	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON, YELLOW_OFF, RED_ON, RED_OFF,ACTIVTE_AUSSORTIERER};
+	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON,
+			YELLOW_OFF, RED_ON, RED_OFF,ACTIVTE_AUSSORTIERER,ESTPinterrupted};
 
 
 	disp->registerForEventWIthConnection(actuatorEvents, ConID);
@@ -65,25 +66,45 @@ void Actuator::handleEvents(void){
 
 		 switch(pulse.code){
 
-			case START_FB: assamblyMoveRightOn();
+			case START_FB: FB_moveRightOn();
 			break;
-			 case STOP_FB: assamblyMoveRightOff();
+
+			 case STOP_FB: FB_moveRightOff();
 			break;
-			case MOVE_FASTER: assamblyMoveSlowOff();
+
+			case MOVE_FASTER: FB_moveSlowOff();
 			break;
-			case MOVE_SLOWER:assamblyMoveSlowOn();
+
+			case MOVE_SLOWER:FB_moveSlowOn();
 			break;
+
 			case GREEN_ON:amp->greenOn();
 			break;
+
 			case GREEN_OFF: amp->greenOff();
 			break;
+
 			case YELLOW_ON:amp->yellowOn();
 			break;
+
 			case YELLOW_OFF:amp->yellowOff();
 			break;
+
 			case RED_ON:amp->redOn();
 			break;
+
 			case RED_OFF:amp->redOn();
+			break;
+
+			case ESTPinterrupted:
+				amp->ampOff();
+				amp->flashinLight(RED,1);
+				switchOff();
+				FB_moveSlowOff();
+				FB_moveRightOff();
+				q2_LedOn();
+
+
 			break;
 			case ACTIVTE_AUSSORTIERER:switchOn();
 			break;
@@ -99,28 +120,28 @@ void Actuator::handleEvents(void){
 
 
 // ASSAMBLY LINE
-void Actuator::assamblyMoveRightOn(void) {
+void Actuator::FB_moveRightOn(void) {
 	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00001000);
 }
 
-void Actuator::assamblyMoveRightOff(void) {
+void Actuator::FB_moveRightOff(void) {
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00001000);
 }
 
-void Actuator::assamblyMoveLeftOn(void) {
-	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00002000);
-}
+//void Actuator::assamblyMoveLeftOn(void) {
+//	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00002000);
+//}
+//
+//void Actuator::assamblyMoveLeftOff(void) {
+//	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00002000);
+//}
 
-void Actuator::assamblyMoveLeftOff(void) {
-	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00002000);
-}
-
-void Actuator::assamblyMoveSlowOn(void) {
+void Actuator::FB_moveSlowOn(void) {
 	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00004000);
 
 }
 
-void Actuator::assamblyMoveSlowOff(void) {
+void Actuator::FB_moveSlowOff(void) {
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00004000);
 }
 

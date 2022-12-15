@@ -12,8 +12,8 @@
 #include "../Imports.h"
 using namespace std;
 
-enum Farbe {
-    GRUEN, GELB, ROT,
+enum TrafficColer {
+    GREEN, YELLOW, RED,
 };
 
 class Amp {
@@ -22,16 +22,16 @@ private:
 	uintptr_t gpio_bank_1;
 
 
-	std::thread* Rot_BlinkenT;
-	std::thread* Gelb_BlinkenT;
-	std::thread* Gruen_BlinkenT;
+	std::thread* red_thread;
+	std::thread* yellow_thread;
+	std::thread* green_thread;
 	bool redIsFlashing;
 	bool yellowIsFlashing;
 	bool greenIsFlashing;
 
-	void StartRotBlinken(int);
-	void StartGelbBlinken(int);
-	void StartGruenBlinken(int);
+	void redFlashing(int);
+	void yellowFlashing(int);
+	void greenFlashing(int);
 public:
 	Amp();
 	virtual ~Amp();
@@ -46,7 +46,7 @@ public:
 	void greenBlinken(int);
 
 
-	 void Ampel_Blinken(Farbe, int);
+	 void flashinLight(TrafficColer, int);
 };
 
 

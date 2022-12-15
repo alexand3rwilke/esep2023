@@ -22,8 +22,6 @@ Sensor::Sensor(Dispatcher * dispatcher) {
 	disp = dispatcher;
 	dispID  = disp->getConnectionID();
 	SensorRoutineThread = new std::thread([this]() {sensorRoutine();});
-
-
 }
 
 Sensor::~Sensor() {
@@ -110,20 +108,24 @@ void Sensor::sensorRoutine() {
 
 
 							case STP:
-								   MsgSendPulse(dispID, -1, STPinterrupted, 0);
-							   break;
+								if (pulse.value.sival_int == 0) {
+									MsgSendPulse(dispID, -1, STPinterrupted, 0);
+								}
+								break;
 
 
 							case ESTP:
-								   MsgSendPulse(dispID, -1,ESTPinterrupted, 0);
-							   break;
-
-							   case RST:
+							   if (pulse.value.sival_int == 1) {
+								   MsgSendPulse(dispID, -1, ESTPNotinterrupted, 0);
+								   break;
+							   } else {
+								   MsgSendPulse(dispID, -1, ESTPinterrupted, 0);
+							   } break;
+						   case RST:
+							   if (pulse.value.sival_int == 0) {
 								   MsgSendPulse(dispID, -1, RSTinterrupted, 0);
-							   break;
-
 							   }
-
-
+						   break;
+						   }
 					 }
 }
