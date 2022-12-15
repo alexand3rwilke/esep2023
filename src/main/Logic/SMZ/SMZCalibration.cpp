@@ -21,23 +21,23 @@ void SMZCalibration::doAction(){
 	clearThresholds();
 	wsa_data->distance_FB_ADC = distanceMeasurementFB();
 	wsa_data->sorterTyp = determineSorter();
+//
+//	switch (pulseMsg.code) {
+//		case LSA1 : if(wsa_data->distance_FWS_ADC != 0){
+//			wsa_data->distance_FWS_ADC = distanceMeasurementWS();
+//			break;
+//		}else{
+//							wsa_data->distance_WS_ADC = distanceMeasurementWS();
+//							break;
+//						}
+//						case LSS1 :
+//							break;
+//
+//						case LSE1:
+//							break;
+//						}
+//
 
-	switch (pulseMsg.code) {
-		case LSA1 : if(wsa_data->distance_FWS_ADC != 0){
-			wsa_data->distance_FWS_ADC = distanceMeasurementWS();
-			break;
-		}else{
-							wsa_data->distance_WS_ADC = distanceMeasurementWS();
-							break;
-						}
-						case LSS1 :
-							break;
-
-						case LSE1:
-							break;
-						}
-					}
-				}
 }
 
 /**

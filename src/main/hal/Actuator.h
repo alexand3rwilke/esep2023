@@ -44,6 +44,25 @@ public:
 	void greenOff(void);
 	void switchOn(void);
 	void switchOff(void);
+	void ampOff(void);
+
+
+	void start_LedOn(void);
+
+	void start_LedOff(void);
+	void stop_LedOn(void);
+
+	void stop_LedOff(void);
+
+	void q1_LedOn(void);
+
+	void q1_LedOff(void);
+
+	void q2_LedOn(void);
+
+	void q2_LedOff(void);
+
+
 };
 
 #endif /* SRC_MAIN_HAL_ACTUATOR_H_ */
