@@ -121,6 +121,8 @@
 #define ESTPnotInterrupted 116
 
 #define ACTIVTE_AUSSORTIERER 117
+#define WS_DURCHLASSEN 118
+#define WS_AUSSORTIEREN 119
 
 
 

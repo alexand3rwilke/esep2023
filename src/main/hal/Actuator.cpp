@@ -29,11 +29,10 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 
 	assamblyMoveRightOff();
 
-	redOff();
-	greenOff();
-	//switchOn();
-	//redOn();
-	//greenOn();
+	ampOff();
+
+
+
 	aktuatorThread = new thread([this]() {handleEvents();});
 
 
@@ -160,6 +159,47 @@ void Actuator::switchOn(void) {
 void Actuator::switchOff(void) {
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
 }
+
+void Actuator::ampOff(void) {
+	greenOff();
+	yellowOff();
+	redOff();
+}
+
+void Actuator::start_LedOn(void) {
+	out32(GPIO_SET_REGISTER(gpio_bank_2), (0x1 << 2));
+}
+
+void Actuator::start_LedOff(void) {
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_2), (0x1 << 2));
+}
+
+void Actuator::stop_LedOn(void) {
+	out32(GPIO_SET_REGISTER(gpio_bank_2), (0x1 << 3));
+}
+
+void Actuator::stop_LedOff(void) {
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_2), (0x1 << 2));
+}
+
+void Actuator::q1_LedOn(void) {
+	out32(GPIO_SET_REGISTER(gpio_bank_2), (0x1 << 4));
+}
+
+void Actuator::q1_LedOff(void) {
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_2), (0x1 << 2));
+}
+
+void Actuator::q2_LedOn(void) {
+	out32(GPIO_SET_REGISTER(gpio_bank_2), (0x1 << 5));
+}
+
+void Actuator::q2_LedOff(void) {
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_2), (0x1 << 2));
+}
+
+
+
 //
 //void Actuator::startLED_ON(void){
 //

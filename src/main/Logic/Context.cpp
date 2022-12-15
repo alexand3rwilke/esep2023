@@ -47,7 +47,7 @@ void Context::eventHandler(){
 
 	// Gehe in die Entry methode die von Ruhezustand implementiert wird
 
-	state->entry();
+	//state->entry();
 
 
 //	int chanID = ChannelCreate(0);//Create channel to receive interrupt pulse messages.
@@ -105,6 +105,7 @@ void Context::eventHandler(){
 			   case LSAinterrupted:
 				   //printf("Context -------- \n");
 				   //if (msg.value.sival_int == 1) { !!!!!!!!!!!!!!
+				   //state->doaction(LSAinterrupted);
 					   actions->startFB(dispID);
 				   //}
 				   break;
