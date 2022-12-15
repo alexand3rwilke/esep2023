@@ -20,7 +20,7 @@ public:
     void entry() override;
     void exit() override;
     void estp() override;
-    void doAction() override;
+    void doAction(int) override;
     //void showState() override;
 };
 

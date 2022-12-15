@@ -8,36 +8,18 @@
 #include "SMZCalibration.h"
 
 void SMZCalibration::entry(){
-	doAction();
-
+	clearThresholds();
+	//TODO: Sortierer von Joshua abrufen
+	//wsa_data->sorterTyp = doKrassenScheiß();
+	exit();
+	new (this) SMZDistanceMeasurement_ADC_FB;
+	entry();
 }
 
 void SMZCalibration::exit(){
-
 }
 
-void SMZCalibration::doAction(){
-
-	clearThresholds();
-	wsa_data->distance_FB_ADC = distanceMeasurementFB();
-	wsa_data->sorterTyp = determineSorter();
-//
-//	switch (pulseMsg.code) {
-//		case LSA1 : if(wsa_data->distance_FWS_ADC != 0){
-//			wsa_data->distance_FWS_ADC = distanceMeasurementWS();
-//			break;
-//		}else{
-//							wsa_data->distance_WS_ADC = distanceMeasurementWS();
-//							break;
-//						}
-//						case LSS1 :
-//							break;
-//
-//						case LSE1:
-//							break;
-//						}
-//
-
+void SMZCalibration::doAction(int event){
 }
 
 /**
@@ -53,34 +35,4 @@ void SMZCalibration::clearThresholds(){
 	wsa_data->distance_ADC_LSS = 0;
 	wsa_data->distance_LSS_LSE = 0;
 
-}
-
-/**
- * Abstand FB und ADC bestimmen
- */
-int SMZCalibration::distanceMeasurementFB(){
-	int measurement;
-
-	return measurement;
-}
-
-/**
- * Ermittle den Aussortierertyp
- */
-int SMZCalibration::determineSorter(){
-	int sorter;
-
-	return sorter;
-}
-
-/**
- * Abstand WS und ADC bestimmen
- */
-int SMZCalibration::distanceMeasurementWS(){
-
-
-
-
-	//Zurück in den RZ
-	//new(this)RZ;
 }

@@ -8,19 +8,21 @@
 #include "../dispatcher/Dispatcher.h"
 #include "Actions.h"
 
-Actions::Actions() {
-//	disp = dispatcher;
-//	conID = disp->getConnectionID();
+Actions::Actions(Dispatcher *dispatcher) {
+	disp = dispatcher;
+	conID = disp->getConnectionID();
 	}
 
 Actions::~Actions() {
 	//delete coID;
 }
 
-//void Actions::setConId(int conID){
-//
-//	coID = conID;
-//}
+/*------------------Aktorik----------------------*/
+
+void Actions::switchOn(int conID){
+	MsgSendPulse(conID,-1,ACTIVTE_AUSSORTIERER,0);
+}
+
 void Actions::startFB(int conID){
 
 	MsgSendPulse(conID,-1,START_FB,0);
@@ -39,6 +41,16 @@ void Actions::moveFaster(int conID){
 void Actions::moveSlower(int conID){
 	MsgSendPulse(conID,-1,MOVE_SLOWER,0);
 }
+
+// muss noch eingebaut werden
+void Actions::durchlassen(int conID){
+	MsgSendPulse(conID,-1,WS_DURCHLASSEN,0);
+}
+void Actions::aussortieren(int conID){
+	MsgSendPulse(conID,-1,WS_AUSSORTIEREN,0);
+}
+
+/*------------------------Ampel--------------------------*/
 
 void Actions::greenOn(int conID){
 	printf("Actions green on los-------- \n");
@@ -64,28 +76,28 @@ void Actions::redOn(int conID){
 void Actions::redOff(int conID){
 	MsgSendPulse(conID,-1,RED_OFF,0);
 }
-void Actions::switchOn(int conID){
-	MsgSendPulse(conID,-1,ACTIVTE_AUSSORTIERER,0);
-}
+
 void Actions::greenLightBlinking(int coID){
 	//MsgSendPulse(conID,-1,xxx,0);
 }
 void Actions::greenLightBlinkingOff(int coID){
 	//MsgSendPulse(conID,-1,xxx,0);
 }
+/*----------------LED---------------------*/
 
-
-// muss noch eingebaut werden
-void Actions::durchlassen(int conID){
-	MsgSendPulse(conID,-1,WS_DURCHLASSEN,0);
-}
-void Actions::aussortieren(int conID){
-	MsgSendPulse(conID,-1,WS_AUSSORTIEREN,0);
+void Actions::ledQ1On(int coID){
+	MsgSendPulse(coID,-1,Q1On,0);
 }
 
+void Actions::ledQ2On(int coID){
+	MsgSendPulse(coID,-1,Q2On,0);
+}
 
+void Actions::ledQ1Off(int coID){
+	MsgSendPulse(coID,-1,Q1On,0);
+}
 
-
-
-
+void Actions::ledQ2Off(int coID){
+	MsgSendPulse(coID,-1,Q2Off,0);
+}
 

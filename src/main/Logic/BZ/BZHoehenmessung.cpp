@@ -13,8 +13,6 @@
 void BZHoehenmessung::entry() {
 
 
-	doAction();
-
 }
     void BZHoehenmessung::exit() {
 
@@ -23,7 +21,7 @@ void BZHoehenmessung::entry() {
 
 
     }
-    void BZHoehenmessung::doAction(){
+    void BZHoehenmessung::doAction(int event){
 
     	_pulse msg;
     	int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);

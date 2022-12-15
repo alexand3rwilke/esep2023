@@ -12,6 +12,8 @@
 #include "../../hal/Actuator.h"
 #include "../Context.h"
 #include "../../WSAData.h"
+#include "SMZDistanceMeasurementADCFB.h"
+#include "../../Imports.h"
 
 using namespace std;
 
@@ -24,7 +26,7 @@ private:
 public:
 	void entry()override;
 	void exit() override;
-	void doAction() override;
+	void doAction(int) override;
 
 	void clearThresholds(void);
 	int distanceMeasurementFB(void);

@@ -7,9 +7,6 @@
 
 #ifndef RUN_TESTS
 
-#include <iostream>
-#include <stdio.h>
-#include <iostream>
 #include "hal/Actuator.h"
 #include "hal/Sensor.h"
 #include "hal/ADC_Service.h"
@@ -20,12 +17,7 @@
 #include "dispatcher/Dispatcher.h"
 #include "Logic/Context.h"
 #include "Logic/Actions.h"
-
-#include <sys/mman.h>
-#include <hw/inout.h>
-#include <sys/neutrino.h>
-
-
+#include "Imports.h"
 
 
 
@@ -43,65 +35,23 @@ int main(int argc, char** args) {
 
 //	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
 
-		//printf("In main");
-
 		Dispatcher dispatcher;
 
 		ISR *isr = new ISR(&dispatcher);
 		Sensor *sensor = new Sensor(&dispatcher);
 		TSCADC tscadc;
 		ADC* adc = new ADC(tscadc);
-		Actions *actions = new Actions();
+		Actions *actions = new Actions(&dispatcher);
 		Actuator *actuator = new Actuator(&dispatcher);
 		ADC_Service *adcService = new ADC_Service(&dispatcher);
-		//WSAData *wsa_data = new WSAData();
-
-
+		WSAData *wsa_data = new WSAData(&dispatcher);
 
 		ContextData *contextData = new ContextData(&dispatcher);
 		Context *context = new Context(&dispatcher, actions,contextData);
 
-
-
-		//cout << "ende festo" << endl;
-
-
-
-
-
-
-//
-//		while(true){
-//					this_thread::sleep_for(chrono::hours(999999));
-//				}
-
-
-
-	// Sample misst das signal bei aufrud der methode
-	 //adc->sample();
-
-	 // Lese höhe aus dem Register aus
-	 //uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
-
-	 //printf("Value from adc with value %d!\n",heightData);
-
-
+	//TODO: Besseres warten
 	 while(true){
-
-		 //adc->sample();
-		 //uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
-		 //printf("Value from adc with value %d!\n",heightData);
-		 //sleep(1);
-		 //isr->handleInterruptAndSend(1);
 	 }
-	 //this_thread::sleep_for(chrono::minutes(5));
-
-
-
-
-
-
-
 
 	return EXIT_SUCCESS;
 }

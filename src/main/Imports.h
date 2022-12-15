@@ -24,6 +24,9 @@
 #include <hw/inout.h>
 #include <sys/neutrino.h>
 #include <mutex>
+#include <ctime>
+#include <time.h>
+
 
 using namespace std;
 
@@ -41,6 +44,7 @@ using namespace std;
 #define ADC_BASE 0x44E0D000
 #define ADC_LENGTH 0x2000
 #define ADC_DATA 0x100
+#define ADC_DONE 21
 
 //Aktuator
 #define GPIO1_ADDRESS_START (uint64_t)0x4804C000
@@ -89,12 +93,11 @@ using namespace std;
 #define ESTP 27
 
 //LEDs pin
-
+#define Q1 gpio_bank_2 + 0x194; //Wir müssen
+#define Q2 gpio_bank_2 + 0x190; //noch getestet werden !!
 
 //Metall Detector
 #define MTD1 7
-
-#define ADC_DONE 21
 
 /* ------------------------Aktionen ------------------------*/
 
@@ -122,7 +125,6 @@ using namespace std;
 
 //Aktion ADC
 #define HMSinterrupted 108
-
 #define ADC_SAMLING_FINISHED 120
 #define ADC_START_SAMPLE 121
 #define ADC_SAMPLE_VALUE 122
@@ -138,6 +140,12 @@ using namespace std;
 //#define RSTnotInterrupted 114
 #define ESTPinterrupted 115
 #define ESTPnotInterrupted 116
+
+//Aktionen der LED
+#define Q1On 125
+#define Q1Off 126
+#define Q2On 127
+#define Q2Off 128
 
 //Aktionen alles weitere
 #define ACTIVTE_AUSSORTIERER 117

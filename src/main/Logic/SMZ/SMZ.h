@@ -14,9 +14,7 @@
 #include "SMZCalibration.h"
 #include "SMZTesting.h"
 #include "../../WSAData.h"
-
-
-using namespace std;
+#include "../../Imports.h"
 
 class SMZ : public Basestate{
 private:
@@ -27,7 +25,7 @@ private:
 public:
 	void entry()override;
 	void exit() override;
-	void doAction() override;
+	void doAction(int) override;
 };
 
 #endif /* SRC_MAIN_LOGIC_SMZ_H_ */

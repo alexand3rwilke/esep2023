@@ -13,8 +13,6 @@
 void BZAussortierer::entry() {
 
 
-	doAction();
-
 }
     void BZAussortierer::exit() {
 
@@ -23,7 +21,7 @@ void BZAussortierer::entry() {
 
 
     }
-    void BZAussortierer::doAction(){
+    void BZAussortierer::doAction(int event){
 
     	_pulse msg;
     	int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);

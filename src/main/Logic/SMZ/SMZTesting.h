@@ -9,6 +9,7 @@
 #define SRC_MAIN_LOGIC_SMZ_SMZTESTING_H_
 
 #include "SMZ.h"
+#include "../../Imports.h"
 
 using namespace std;
 
@@ -21,7 +22,7 @@ private:
 public:
 	void entry()override;
 	void exit() override;
-	void doAction() override;
+	void doAction(int) override;
 };
 
 #endif /* SRC_MAIN_LOGIC_SMZ_SMZTESTING_H_ */

@@ -6,7 +6,7 @@
  */
 
 #include "RZ.h"
-
+#include "../SMZ/SMZ.h"
 
 
 void RZ::entry() {
@@ -15,7 +15,6 @@ void RZ::entry() {
 	actions->yellowOff(contextData->disp->getConnectionID());
 	actions->redOff(contextData->disp->getConnectionID());
 	printf("---in rz entry");
-	doAction();
 
 
 }
@@ -26,34 +25,27 @@ void RZ::estp() {
 
 
 }
-void RZ::doAction(){
 
-//    	_pulse msg;
-//
-//    	int chanID = ChannelCreate(0);
-//    	int ConID = ConnectAttach(0,0,chanID,_NTO_SIDE_CHANNEL,0);
-//
-//
-//
-//    	if (recvid < 0) {
-//    				perror("MsgReceivePulse failed in RZ State!");
-//    			}
-//
-//    			if (recvid == 0) {
-//    			while(true) {
+/**
+ * Ruhezustand
+ */
+void RZ::doAction(int event){
 
+	switch (event) {
+		//Starte Betriebszustand
+		case STRinterrupted:
+			exit();
+			new(this) BZ;
+			entry();
+			break;
+		//Starte Servicemode
+		case STR_SMZ:
+			exit();
+			new (this) SMZ;
+			entry();
+			break;
 
-//		switch () {
-//
-//		case LSAinterrupted:
-//			exit();
-//			new(this) BZ;
-//			entry();
-//			break;
-//
-//		}
-
-
+		}
 }
 
 

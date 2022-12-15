@@ -8,38 +8,30 @@
 #include "SMZ.h"
 
 void SMZ :: entry(){
-	actions->greenLightBlinking(1);
+	actions->greenLightBlinking(wsa_data->dispID);
 	substate = NULL;
-	doAction();
 }
 
 void SMZ :: exit(){
-	actions->greenLightBlinkingOff(1);
 }
 
-void SMZ :: doAction(){
+/**
+ * Wahl Kalibrieren oder Testen
+ */
+void SMZ :: doAction(int event){
 
-	_pulse pulseMsg;
-			while(true){
-				int recvid = MsgReceivePulse(myChannel, &pulseMsg, sizeof(_pulse), nullptr);
-
-				if (recvid < 0) {
-					perror("MsgReceivePulse failed!");
-				}
-
-				if (recvid == 0) {
-
-					switch (pulseMsg.code) {
+					switch (event) {
 					//Choose calibrationmode
-					case SRT:	new(this)SMZCalibration;
-								entry();
-								break;
+					case STRinterrupted:
+						exit();
+						new (this)SMZCalibration;
+						break;
 
 					//Choose testmode
-					case STP:	new(this)SMZTesting;
-								entry();
-								break;
+					case STPinterrupted:
+						exit();
+						new(this)SMZTesting;
+						entry();
+						break;
 					}
 				}
-			}
-}

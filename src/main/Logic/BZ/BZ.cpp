@@ -15,7 +15,6 @@ void BZ::entry(){
 	// grünes licht an entry
 	actions->greenOn(1);
 	substate = NULL;
-	doAction();
 }
 
 void BZ::exit(){
@@ -23,7 +22,7 @@ void BZ::exit(){
 	actions->greenOff(1);
 }
 
-void BZ::doAction (/*int event*/) {
+void BZ::doAction (int event) {
 
 
 

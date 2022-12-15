@@ -8,13 +8,18 @@
 #ifndef SRC_MAIN_WSADATA_H_
 #define SRC_MAIN_WSADATA_H_
 
+#include "dispatcher/Dispatcher.h"
+
 /**
  * Daten zur WSA
  */
 class WSAData{
 public:
-	WSAData();
+	WSAData(Dispatcher *dispatcher);
 	virtual~WSAData();
+
+	Dispatcher *disp;
+	int dispID;
 
 	int sorterTyp;
 	int distance_FB_ADC;

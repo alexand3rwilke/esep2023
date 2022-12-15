@@ -27,7 +27,7 @@ private:
 public:
 	void entry()override;
 	void exit() override;
-	void doAction() override;
+	void doAction(int) override;
 };
 
 #endif /* SRC_MAIN_LOGIC_BZ_H_ */

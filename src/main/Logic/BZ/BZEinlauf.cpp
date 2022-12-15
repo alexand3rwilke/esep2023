@@ -15,9 +15,6 @@
 void BZEinlauf::entry() {
 	actions->startFB(contextData->conIDDis);
 
-
-	doAction();
-
 }
     void BZEinlauf::exit() {
 
@@ -26,7 +23,7 @@ void BZEinlauf::entry() {
 
 
     }
-    void BZEinlauf::doAction(){
+    void BZEinlauf::doAction(int event){
 
     	_pulse msg;
     	int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);

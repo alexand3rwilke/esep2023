@@ -13,8 +13,6 @@
 void BZAuslauf::entry() {
 
 
-	doAction();
-
 }
     void BZAuslauf::exit() {
 
@@ -23,7 +21,7 @@ void BZAuslauf::entry() {
 
 
     }
-    void BZAuslauf::doAction(){
+    void BZAuslauf::doAction(int event){
 
     	_pulse msg;
     	int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);

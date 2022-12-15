@@ -5,6 +5,16 @@
  *      Author: Hendrik Marquardt
  */
 
+#include "WSAData.h"
+
+WSAData::WSAData(Dispatcher *dispatcher){
+	disp = dispatcher;
+	dispID  = disp->getConnectionID();
+}
+
+WSAData::~WSAData(){
+
+}
 
 
 
