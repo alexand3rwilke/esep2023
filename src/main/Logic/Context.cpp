@@ -81,7 +81,7 @@ void Context::eventHandler(){
 			perror("Could not connect to channel!");
 		}
 		//TODO alle sensorsignale einfügen
-		events = {LSAinterrupted,LSEinterrupted,STRinterrupted,LSSinterrupted,ADC_WK_IN_HM,ADC_WK_NIN_HM};
+		events = {LSAinterrupted,LSEinterrupted,STRinterrupted, STPinterrupted,LSSinterrupted,ADC_WK_IN_HM,ADC_WK_NIN_HM};
 
 
 
