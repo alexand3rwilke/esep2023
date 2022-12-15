@@ -141,7 +141,12 @@ using namespace std;
 
 //Aktionen alles weitere
 #define ACTIVTE_AUSSORTIERER 117
+
 #define TimerTimeout 118
+
+#define WS_DURCHLASSEN 120
+#define WS_AUSSORTIEREN 121
+
 
 //Aktion für SMZ
 #define STR_SMZ 119
