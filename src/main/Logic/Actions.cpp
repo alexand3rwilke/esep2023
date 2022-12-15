@@ -75,6 +75,15 @@ void Actions::greenLightBlinkingOff(int coID){
 }
 
 
+// muss noch eingebaut werden
+void Actions::durchlassen(int conID){
+	MsgSendPulse(conID,-1,WS_DURCHLASSEN,0);
+}
+void Actions::aussortieren(int conID){
+	MsgSendPulse(conID,-1,WS_AUSSORTIEREN,0);
+}
+
+
 
 
 

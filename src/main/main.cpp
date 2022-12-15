@@ -54,7 +54,7 @@ int main(int argc, char** args) {
 		Actions *actions = new Actions();
 		Actuator *actuator = new Actuator(&dispatcher);
 		ADC_Service *adcService = new ADC_Service(&dispatcher);
-		WSAData *wsa_data = new WSAData();
+		//WSAData *wsa_data = new WSAData();
 
 
 

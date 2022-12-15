@@ -33,8 +33,13 @@ public:
 	void redOn(int coID);
 	void redOff(int coID);
 	void switchOn(int coID);
+
 	void greenLightBlinking(int coID);
 	void greenLightBlinkingOff(int coID);
+
+	void durchlassen(int conID);
+	void aussortieren(int conID);
+
 };
 
 #endif /* SRC_MAIN_LOGIC_ACTIONS_H_ */
