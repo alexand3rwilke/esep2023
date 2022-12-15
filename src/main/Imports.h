@@ -42,6 +42,8 @@ using namespace std;
 #define ADC_LENGTH 0x2000
 #define ADC_DATA 0x100
 
+#define GPIO0_ADDRESS_START (uint64_t) 0x44E07000
+
 //Aktuator
 #define GPIO1_ADDRESS_START (uint64_t)0x4804C000
 #define GPIO1_ADDRESS_LENGTH 0x1000
@@ -83,7 +85,7 @@ using namespace std;
 #define HMS1 3
 
 //Buttons
-#define SRT 22			//active high
+#define STR 22			//active high
 #define STP 23
 #define RST 26
 #define ESTP 27
@@ -150,6 +152,9 @@ using namespace std;
 
 //Aktion für SMZ
 #define STR_SMZ 119
+
+
+//enum WS{FWS, WSMB, WSMM, WSO}
 
 
 #endif /* SRC_IMPORTS_H */

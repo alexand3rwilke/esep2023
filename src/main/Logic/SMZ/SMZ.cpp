@@ -31,7 +31,7 @@ void SMZ :: doAction(){
 
 					switch (pulseMsg.code) {
 					//Choose calibrationmode
-					case SRT:	new(this)SMZCalibration;
+					case STR:	new(this)SMZCalibration;
 								entry();
 								break;
 

@@ -86,7 +86,7 @@ void ISR::recieveInterruptRoutine() {
 			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LSA1));
 			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LSE1));
 			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LSR1));
-			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(SRT));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(STR));
 			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(STP));
 			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(RST));
 			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(ESTP));
@@ -211,12 +211,12 @@ void ISR::recieveInterruptRoutine() {
 			// Start Button
 			//	Rising Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(SRT) | BIT_MASK(SRT));		//Add desired pins.
+			temp |= (BIT_MASK(STR) | BIT_MASK(STR));		//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
 
 							//	Falling Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(SRT) | BIT_MASK(SRT));		//Add desired pins.
+			temp |= (BIT_MASK(STR) | BIT_MASK(STR));		//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
 
 
@@ -269,36 +269,38 @@ void ISR::handleInterruptAndSend(int interruptID) {
 
 			//printf("Interrupt on pin %d, now %d\n", pin, current_level);
 
+			if(pin != ESTP || !istESZ){
+				// TODO bis jetzt nur Beispiel MsgSendPulse, muss noch richtiger pin und richtiges event verschicht werden
+				switch(pin) {
+				case LSA1 : MsgSendPulse(dispId, -1, LSA1,current_level);
+				break;
 
-			// TODO bis jetzt nur Beispiel MsgSendPulse, muss noch richtiger pin und richtiges event verschicht werden
-			switch(pin) {
+				case LSE1 : MsgSendPulse(dispId, -1, LSE1,current_level);
+				break;
 
+				case LSS1 : MsgSendPulse(dispId, -1, LSS1,current_level);
+				break;
 
-			case LSA1 : MsgSendPulse(dispId, -1, LSA1,current_level);
-			break;
+				case LSR1: MsgSendPulse(dispId, -1, LSR1,current_level);
+				break;
 
-			case LSE1 : MsgSendPulse(dispId, -1, LSE1,current_level);
-			break;
+				case STR : MsgSendPulse(dispId, -1, STR,current_level);
+				printf("STR Taste -------- \n");
+				break;
 
-			case LSS1 : MsgSendPulse(dispId, -1, LSS1,current_level);
-			break;
+				case RST: MsgSendPulse(dispId, -1, pin,current_level);
+				break;
 
-			case LSR1: MsgSendPulse(dispId, -1, LSR1,current_level);
-			break;
-
-			case SRT : MsgSendPulse(dispId, -1, SRT,current_level);
-			printf("STR Taste -------- \n");
-			break;
-
-			case ESTP : MsgSendPulse(dispId, -1, ESTP,current_level);
-
-			break;
-
-			case RST: MsgSendPulse(dispId, -1, pin,current_level);
-			break;
-
-			case STP: MsgSendPulse(dispId, -1, pin,current_level);
-			break;
+				case STP: MsgSendPulse(dispId, -1, pin,current_level);
+				break;
+				}
+			} else{
+				if(istESZ){
+				//TODO Sensoren alles aus
+				} else {
+				istESZ = true;
+				MsgSendPulse(dispId, -1, ESTP,current_level);
+				}
 			}
 		}
 	}

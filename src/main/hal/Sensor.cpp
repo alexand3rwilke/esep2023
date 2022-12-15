@@ -49,7 +49,7 @@ void Sensor::sensorRoutine() {
 				}
 
 				//printf("Sensorik conID: %d \n", conID);
-				senorEvents={LSA1, LSE1, LSS1, HMS1, SRT, ESTP, RST, STP};
+				senorEvents={LSA1, LSE1, LSS1, HMS1, STR, ESTP, RST, STP};
 
 				disp->registerForEventWIthConnection(senorEvents, conID);
 
@@ -95,9 +95,16 @@ void Sensor::sensorRoutine() {
 							   break;
 
 
-						   case SRT:
+						   case STR:
 							   printf("Sensro STR Taste -------- \n");
+							   if (pulse.value.sival_int == 1) {
+								   // Start timer
+								   //Timer timer_SRT = new Timer();
+							   } else {
+								   // stop timer
 								   MsgSendPulse(dispID, -1, STRinterrupted, 0);
+							   }
+
 							   break;
 							   //TODO STR release
 

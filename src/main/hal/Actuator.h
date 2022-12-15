@@ -12,14 +12,19 @@
 
 #include "../Imports.h"
 #include "../Dispatcher/Dispatcher.h"
+#include "Amp.h"
 
 class Actuator  {
 private:
 	Dispatcher *disp;
+	Amp *amp;
 
 public:
+
+
 	Actuator(Dispatcher *dispatcher);
 	virtual ~Actuator();
+
 
 	_pulse pulse;
 
@@ -36,12 +41,7 @@ public:
 	void assamblyMoveSlowOff(void);
 	void assamblyStopOn(void);
 	void assamblyStopOff(void);
-	void redOn(void);
-	void redOff(void);
-	void yellowOn(void);
-	void yellowOff(void);
-	void greenOn(void);
-	void greenOff(void);
+
 	void switchOn(void);
 	void switchOff(void);
 	void ampOff(void);
@@ -61,6 +61,13 @@ public:
 	void q2_LedOn(void);
 
 	void q2_LedOff(void);
+
+
+	int getAussortierer(void);
+
+	uintptr_t gpio_bank_0;
+	uintptr_t gpio_bank_1;
+	uintptr_t gpio_bank_2;
 
 
 };

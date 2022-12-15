@@ -16,27 +16,30 @@
 
 
 
-uintptr_t gpio_bank_1;
-uintptr_t gpio_bank_2;
+//uintptr_t gpio_bank_0;
+//uintptr_t gpio_bank_1;
+//uintptr_t gpio_bank_2;
 
 
 Actuator::Actuator(Dispatcher *dispatcher) {
 
 	disp = dispatcher;
+	amp = new Amp();
 	//ThreadCtl( _NTO_TCTL_IO, 0);
+
+	gpio_bank_0 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO0_ADDRESS_START);
 	gpio_bank_1 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO1_ADDRESS_START);
 	gpio_bank_2 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO2_ADDRESS_START);
 
 	assamblyMoveRightOff();
 	assamblyMoveSlowOff();
+	amp->ampOff();
+	printf("Aktorik startz \n  ---- \n");
+	int tmp = getAussortierer();
 
-	ampOff();
 
-
-
+	cout << "\n Cout Aktorik\n" << endl;
 	aktuatorThread = new thread([this]() {handleEvents();});
-
-
 
 }
 
@@ -70,20 +73,23 @@ void Actuator::handleEvents(void){
 			break;
 			case MOVE_SLOWER:assamblyMoveSlowOn();
 			break;
-			case GREEN_ON:greenOn();
+			case GREEN_ON:amp->greenOn();
 			break;
-			case GREEN_OFF: greenOff();
+			case GREEN_OFF: amp->greenOff();
 			break;
-			case YELLOW_ON:yellowOn();
+			case YELLOW_ON:amp->yellowOn();
 			break;
-			case YELLOW_OFF:yellowOff();
+			case YELLOW_OFF:amp->yellowOff();
 			break;
-			case RED_ON:redOn();
+			case RED_ON:amp->redOn();
 			break;
-			case RED_OFF:redOn();
+			case RED_OFF:amp->redOn();
 			break;
 			case ACTIVTE_AUSSORTIERER:switchOn();
 			break;
+
+//			case GREEN_FLASCHING: amp->Ampel_Blinken(GRUEN, 1)
+//			break;
 		 }
 	}
 
@@ -127,30 +133,7 @@ void Actuator::assamblyStopOff(void) {
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00008000);
 }
 
-void Actuator::redOn(void) {
 
-	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00010000);
-}
-
-void Actuator::redOff(void) {
-	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00010000);
-}
-
-void Actuator::yellowOn(void) {
-	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00020000);
-}
-
-void Actuator::yellowOff(void) {
-	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00020000);
-}
-
-void Actuator::greenOn(void) {
-	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00040000);
-}
-
-void Actuator::greenOff(void) {
-	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00040000);
-}
 
 void Actuator::switchOn(void) {
 	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00080000);
@@ -163,9 +146,9 @@ void Actuator::switchOff(void) {
 }
 
 void Actuator::ampOff(void) {
-	greenOff();
-	yellowOff();
-	redOff();
+	amp->greenOff();
+	amp->yellowOff();
+	amp->redOff();
 }
 
 void Actuator::start_LedOn(void) {
@@ -198,6 +181,15 @@ void Actuator::q2_LedOn(void) {
 
 void Actuator::q2_LedOff(void) {
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_2), (0x1 << 2));
+}
+
+int Actuator::getAussortierer(void){
+
+		 int tmp = in32((uintptr_t) (gpio_bank_1 + GPIO_DATAIN));
+		 uint32_t bit = 14;
+		 tmp = tmp & (1<<bit);
+		 printf("/n Weichen wert: %d",tmp);
+		 return tmp;
 }
 
 

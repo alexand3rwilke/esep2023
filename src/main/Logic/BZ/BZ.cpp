@@ -40,7 +40,7 @@ void BZ::doAction (/*int event*/) {
 				switch (msg.code) {
 
 				// TODO  change case
-				case SRT :	new(this) BZ;
+				case STR :	new(this) BZ;
 							entry();
 							break;
 

@@ -12,7 +12,7 @@
 
 #include "../Imports.h"
 #include "../Dispatcher/Dispatcher.h"
-
+#include "../Timer.h"
 
 class Sensor  {
 private:
