@@ -19,9 +19,6 @@ Actions::~Actions() {
 
 /*------------------Aktorik----------------------*/
 
-void Actions::switchOn(){
-	MsgSendPulse(conID,-1,ACTIVTE_AUSSORTIERER,0);
-}
 
 void Actions::startFB(){
 

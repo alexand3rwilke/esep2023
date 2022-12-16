@@ -10,7 +10,14 @@
 
 
 void RZ::entry() {
-	printf("RZ entry");
+
+
+	printf("---in rz entry");
+	actions->greenOff();
+	actions->yellowOff();
+	actions->redOff();
+
+
 }
 
 void RZ::exit() {

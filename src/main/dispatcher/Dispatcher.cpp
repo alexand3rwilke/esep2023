@@ -59,7 +59,7 @@ void Dispatcher::ListenForEvents() {
 		 int recvid = MsgReceivePulse(channelID, &pulse, sizeof(_pulse), nullptr);
 
 		 		if (recvid < 0) {
-		 			perror("MsgReceivePulse failed!");
+		 			perror("MsgReceivePulse failed! - Dispatcher");
 		 			exit(EXIT_FAILURE);
 		 		}
 

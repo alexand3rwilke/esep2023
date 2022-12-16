@@ -70,7 +70,7 @@ void ADC_Service::adcService() {
 					 int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
 
 					 		if (recvid < 0) {
-					 			perror("MsgReceivePulse failed!");
+					 			perror("MsgReceivePulse failed! - ADC_Service");
 					 			exit(EXIT_FAILURE);
 					 		}
 

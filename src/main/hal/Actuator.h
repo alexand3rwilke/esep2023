@@ -27,7 +27,7 @@ public:
 	Actuator(Dispatcher *dispatcher);
 	virtual ~Actuator();
 
-	int getSorter();
+	int istWeiche;
 	_pulse pulse;
 
 	vector<int8_t> actuatorEvents;
@@ -35,8 +35,8 @@ public:
 	thread* aktuatorThread;
 
 
-	void FB_moveRightOn(void);
-	void FB_moveRightOff(void);
+	void FB_start(void);
+	void FB_stop(void);
 	void assamblyMoveLeftOn(void);
 	void assamblyMoveLeftOff(void);
 	void FB_moveSlowOn(void);
@@ -44,8 +44,8 @@ public:
 	void assamblyStopOn(void);
 	void assamblyStopOff(void);
 
-	void switchOn(void);
-	void switchOff(void);
+	void durchlassen(void);
+	void aussortieren(void);
 	void ampOff(void);
 
 	void start_LedOn(void);
@@ -56,9 +56,10 @@ public:
 	void q1_LedOff(void);
 	void q2_LedOn(void);
 	void q2_LedOff(void);
+	void estp(void);
 
 
-
+	void flashinLight(TrafficColer);
 	int getAussortierer(void);
 
 	uintptr_t gpio_bank_0;

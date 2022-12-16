@@ -32,7 +32,7 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 	disp = dispatcher;
 	amp = new Amp();
 	//ThreadCtl( _NTO_TCTL_IO, 0);
-	FB_moveRightOff();
+	FB_stop();
 	FB_moveSlowOff();
 	amp->ampOff();
 	q1_LedOff();
@@ -40,11 +40,11 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 	start_LedOn();
 	stop_LedOff();
 
-	//printf("Aktorik startz \n  ---- \n");
-	int istWeiche = getAussortierer();
+	printf("Aktorik startz \n  ---- \n");
+	istWeiche = getAussortierer();
 
 
-	//cout << "\n Cout Aktorik\n" << endl;
+	cout << "\n Cout Aktorik\n" << endl;
 	aktuatorThread = new thread([this]() {handleEvents();});
 
 
@@ -62,21 +62,25 @@ void Actuator::handleEvents(void){
 
 	//printf("Aktorik conID: %d \n", ConID);
 	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON,
-			YELLOW_OFF, RED_ON, RED_OFF,ACTIVTE_AUSSORTIERER,ESTPinterrupted, GREEN_BLINKING_ON};
+			YELLOW_OFF, RED_ON, RED_OFF,WS_DURCHLASSEN,WS_DURCHLASSEN,ESTPinterrupted};
 
 
 
 	disp->registerForEventWIthConnection(actuatorEvents, ConID);
 	while(true){
 
-		 int newPulse = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
+		 int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
+		 if (recvid < 0) {
+		 							perror("MsgReceivePulse failed!- in Actuator");
+		 							exit(EXIT_FAILURE);
+		 					}
 
 		 switch(pulse.code){
 
-			case START_FB: FB_moveRightOn();
+			case START_FB: FB_start();
 			break;
 
-			 case STOP_FB: FB_moveRightOff();
+			 case STOP_FB: FB_stop();
 			break;
 
 			case MOVE_FASTER: FB_moveSlowOff();
@@ -100,16 +104,11 @@ void Actuator::handleEvents(void){
 			case RED_ON:amp->redOn();
 			break;
 
-			case RED_OFF:amp->redOn();
+			case RED_OFF:amp->redOff();
 			break;
 
 			case ESTPinterrupted:
-				amp->ampOff();
-				amp->flashinLight(RED,1);
-				switchOff();
-				FB_moveSlowOff();
-				FB_moveRightOff();
-				q2_LedOn();
+
 			break;
 			case GREEN_BLINKING_ON: amp->flashinLight(GREEN,1);
 			break;
@@ -118,7 +117,7 @@ void Actuator::handleEvents(void){
 			case RED_BLINKING_ON: amp->flashinLight(RED,1);
 			break;
 
-			case ACTIVTE_AUSSORTIERER:switchOn();
+			case WS_DURCHLASSEN:durchlassen();
 			break;
 
 			case Q1On:q1_LedOn();
@@ -136,11 +135,11 @@ void Actuator::handleEvents(void){
 
 
 // ASSAMBLY LINE
-void Actuator::FB_moveRightOn(void) {
+void Actuator::FB_start(void) {
 	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00001000);
 }
 
-void Actuator::FB_moveRightOff(void) {
+void Actuator::FB_stop(void) {
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00001000);
 }
 
@@ -172,14 +171,33 @@ void Actuator::assamblyStopOff(void) {
 
 
 
-void Actuator::switchOn(void) {
-	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00080000);
-	usleep(1000 * (2 * 1000 ));
-	switchOff();
+void Actuator::durchlassen(void) {
+	if(istWeiche==0){
+		out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00080000);
+			usleep(1000 * (1 * 1000 ));
+			//weiche wieder zu machen
+			out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
+	}
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
 }
 
-void Actuator::switchOff(void) {
+void Actuator::aussortieren(void) {
+	if(istWeiche!=0){
+			out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00080000);
+				usleep(1000 * (1 * 1000 ));
+				//Auswerfer zruückfahren
+				out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
+	}
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
+}
+
+void Actuator::estp(void) {
+	FB_stop();
+	amp->ampOff();
+	amp->flashinLight(RED,1);
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
+
+
 }
 
 void Actuator::ampOff(void) {
@@ -228,10 +246,6 @@ int Actuator::getAussortierer(void){
 		 tmp = tmp & (1<<bit);
 		 printf(" Weichen wert: %d",tmp);
 		 return tmp;
-}
-
-int Actuator::getSorter(){
-	return Actuator::getAussortierer();
 }
 
 
