@@ -290,7 +290,6 @@ void ISR::handleInterruptAndSend(int interruptID) {
 				break;
 
 				case STR : MsgSendPulse(dispId, -1, STR,current_level);
-				printf("STR Taste -------- \n");
 				break;
 
 				case RST: MsgSendPulse(dispId, -1, pin,current_level);

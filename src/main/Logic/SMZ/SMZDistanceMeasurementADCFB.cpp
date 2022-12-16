@@ -21,7 +21,7 @@ void SMZDistanceMeasurement_ADC_FB::doAction(int event){
 
 		case ADC_SAMPLE_VALUE:
 			//TODO: ADC auslesen und in wsaData abspeichern
-			//adc->sample();
+			//wsa_data->distance_FB_ADC = adc->sample();
 			exit();
 			new (this) SMZDistanceMeasurement_ADC_WS;
 			entry();

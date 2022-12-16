@@ -11,10 +11,6 @@
 void BZ::entry(){
 	// grünes licht an entry
 	actions->greenOn();
-
-	substate = NULL;
-
-
 }
 
 void BZ::exit(){
