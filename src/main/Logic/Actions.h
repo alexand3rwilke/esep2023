@@ -37,6 +37,9 @@ public:
 	void greenLightBlinking(int coID);
 	void greenLightBlinkingOff(int coID);
 
+	void yellowLightBlinking(int coID);
+	void redLightBlinking(int coID);
+
 	void durchlassen(int conID);
 	void aussortieren(int conID);
 

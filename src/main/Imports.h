@@ -111,6 +111,9 @@ using namespace std;
 #define YELLOW_OFF 57
 #define RED_ON 58
 #define RED_OFF 59
+#define GREEN_BLINKING_ON 60
+#define YELLOW_BLINKING_ON 61
+#define RED_BLINKING_ON 62
 
 //Aktionen der Sensorik
 #define LSAinterrupted 100
@@ -136,22 +139,22 @@ using namespace std;
 #define STRnotInterrupted 110
 #define STPinterrupted 111
 //#define STPnotInterrupted 112
-#define RSTinterrupted 113
+#define RSTinterrupted 112
 //#define RSTnotInterrupted 114
-#define ESTPinterrupted 115
-#define ESTPnotInterrupted 116
+#define ESTPinterrupted 114
+#define ESTPnotInterrupted 115
 
 //Aktionen alles weitere
-#define ACTIVTE_AUSSORTIERER 117
+#define ACTIVTE_AUSSORTIERER 116
 
-#define TimerTimeout 118
+#define TimerTimeout 117
 
-#define WS_DURCHLASSEN 120
-#define WS_AUSSORTIEREN 121
+#define WS_DURCHLASSEN 118
+#define WS_AUSSORTIEREN 119
 
 
 //Aktion für SMZ
-#define STR_SMZ 119
+#define STR_SMZ 120
 
 
 //enum WS{FWS, WSMB, WSMM, WSO}

@@ -14,14 +14,18 @@
 #include <sys/neutrino.h>
 
 
-uintptr_t gpio_bank_0 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO0_ADDRESS_START);
-uintptr_t gpio_bank_1 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO1_ADDRESS_START);
-uintptr_t gpio_bank_2 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO2_ADDRESS_START);
+uintptr_t gpio_bank_0;
+uintptr_t gpio_bank_1;
+uintptr_t gpio_bank_2;
 
 
 
 
 Actuator::Actuator(Dispatcher *dispatcher) {
+	gpio_bank_0 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO0_ADDRESS_START);
+	gpio_bank_1 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO1_ADDRESS_START);
+	gpio_bank_2 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO2_ADDRESS_START);
+
 
 	disp = dispatcher;
 	amp = new Amp();
@@ -35,7 +39,7 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 	stop_LedOff();
 
 	printf("Aktorik startz \n  ---- \n");
-	int tmp = getAussortierer();
+	int istWeiche = getAussortierer();
 
 
 	cout << "\n Cout Aktorik\n" << endl;
@@ -103,6 +107,12 @@ void Actuator::handleEvents(void){
 				FB_moveSlowOff();
 				FB_moveRightOff();
 				q2_LedOn();
+			break;
+			case GREEN_BLINKING_ON: amp->flashinLight(GREEN,1);
+			break;
+			case YELLOW_BLINKING_ON: amp->flashinLight(YELLOW,1);
+			break;
+			case RED_BLINKING_ON: amp->flashinLight(RED,1);
 			break;
 
 			case ACTIVTE_AUSSORTIERER:switchOn();
@@ -205,10 +215,11 @@ void Actuator::q2_LedOff(void) {
 
 int Actuator::getAussortierer(void){
 
-		 int tmp = in32((uintptr_t) (gpio_bank_1 + GPIO_DATAIN));
+//		 int tmp = in32((uintptr_t) (gpio_bank_1 + GPIO_DATAIN));
+		int tmp = in32((uintptr_t) (gpio_bank_0 + 0x138));
 		 uint32_t bit = 14;
 		 tmp = tmp & (1<<bit);
-		 printf("/n Weichen wert: %d",tmp);
+		 printf(" Weichen wert: %d",tmp);
 		 return tmp;
 }
 

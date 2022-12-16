@@ -14,7 +14,7 @@ void SMZ :: entry(){
 }
 
 void SMZ :: exit(){
-	actions->greenLightBlinkingOff(1);
+//	actions->greenLightBlinkingOff(1);
 }
 
 void SMZ :: doAction(){
