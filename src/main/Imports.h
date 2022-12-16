@@ -151,5 +151,6 @@ using namespace std;
 //Aktion für SMZ
 #define STR_SMZ 119
 
+#define HELLO 125
 
 #endif /* SRC_IMPORTS_H */

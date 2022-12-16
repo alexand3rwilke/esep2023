@@ -49,7 +49,9 @@ void Sensor::sensorRoutine() {
 				}
 
 				//printf("Sensorik conID: %d \n", conID);
-				senorEvents={LSA1, LSE1, LSS1, HMS1, SRT, ESTP, RST, STP};
+				//senorEvents={LSA1, LSE1, LSS1, HMS1, SRT, ESTP, RST, STP};
+				//nur zum Testen
+				senorEvents={LSA1, LSS1, HMS1, SRT, ESTP, RST, STP};
 
 				disp->registerForEventWIthConnection(senorEvents, conID);
 

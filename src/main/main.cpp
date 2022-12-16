@@ -20,6 +20,8 @@
 #include "dispatcher/Dispatcher.h"
 #include "Logic/Context.h"
 #include "Logic/Actions.h"
+#include "Qnet/QnetClient/QnetClient.h"
+#include "Qnet/QnetServer/QnetServer.h"
 
 #include <sys/mman.h>
 #include <hw/inout.h>
@@ -37,9 +39,6 @@ void wait(int seconds) {
 }
 
 int main(int argc, char** args) {
-
-
-	cout << "Starting Festo Test \n" << endl;
 
 //	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
 
@@ -60,6 +59,19 @@ int main(int argc, char** args) {
 
 		ContextData *contextData = new ContextData(&dispatcher);
 		Context *context = new Context(&dispatcher, actions,contextData);
+
+		if (strcmp(args[1], "-FBM1") == 0) {
+
+			cout << "Starting Festo FBM1 \n" << endl;
+			QnetServer *server = new QnetServer("FBM1",&dispatcher);
+			QnetClient *client = new QnetClient("FBM2",&dispatcher);
+		}
+		else if (strcmp(args[1], "-FBM2") == 0) {
+
+			cout << "Starting Festo FBM2 \n" << endl;
+			QnetServer *server = new QnetServer("FBM2",&dispatcher);
+			QnetClient *client = new QnetClient("FBM1",&dispatcher);
+		}
 
 
 
