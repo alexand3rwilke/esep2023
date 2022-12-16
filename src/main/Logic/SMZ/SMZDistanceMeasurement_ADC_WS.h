@@ -14,6 +14,7 @@
 #include "../../WSAData.h"
 #include "../Actions.h"
 #include "../../Imports.h"
+#include "../../ADC/ADC.h"
 
 class SMZDistanceMeasurement_ADC_WS : public Basestate{
 private:
@@ -21,6 +22,7 @@ private:
 	int myConnection;
 	Dispatcher *disp;
 	double time1, tstart;
+	ADC *adc;
 
 public:
 	void entry()override;

@@ -45,7 +45,7 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event){
 	   actions->moveSlower();
 	   //TODO: ADC auslesen
 	   if(wsa_data->distance_FWS_ADC != 0){
-		   //wsa_data->distance_WS_ADC = ADCAuslesen();
+		   //wsa_data->distance_WS_ADC = adc->sample();
 	   }else{
 		   //wsa_data->distance_FWS_ADC = ADCAuslesen();
 	   }

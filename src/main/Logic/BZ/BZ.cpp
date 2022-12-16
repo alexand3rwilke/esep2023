@@ -11,9 +11,6 @@
 void BZ::entry(){
 	// grünes licht an entry
 	actions->greenOn();
-	sleep(2);
-	actions->greenOff();
-	new (this) RZ;
 }
 
 void BZ::exit(){
