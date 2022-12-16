@@ -8,6 +8,8 @@
 #ifndef SRC_MAIN_WSADATA_H_
 #define SRC_MAIN_WSADATA_H_
 
+#include "dispatcher/Dispatcher.h"
+
 /**
  * Daten zur WSA
  */

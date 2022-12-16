@@ -9,8 +9,11 @@
 #define SRC_MAIN_LOGIC_SMZ_SMZTESTING_H_
 
 #include "SMZ.h"
-
-using namespace std;
+#include "../Basestate.h"
+#include "../../hal/Actuator.h"
+#include "../Context.h"
+#include "../../WSAData.h"
+#include "../../Imports.h"
 
 class SMZTesting : public Basestate{
 private:
@@ -21,7 +24,7 @@ private:
 public:
 	void entry()override;
 	void exit() override;
-	void doAction() override;
+	void doAction(int) override;
 };
 
 #endif /* SRC_MAIN_LOGIC_SMZ_SMZTESTING_H_ */

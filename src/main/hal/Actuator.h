@@ -12,14 +12,21 @@
 
 #include "../Imports.h"
 #include "../Dispatcher/Dispatcher.h"
+#include "Amp.h"
 
 class Actuator  {
 private:
 	Dispatcher *disp;
+	Amp *amp;
+
+
 
 public:
+
+
 	Actuator(Dispatcher *dispatcher);
 	virtual ~Actuator();
+
 
 	_pulse pulse;
 
@@ -28,39 +35,36 @@ public:
 	thread* aktuatorThread;
 
 
-	void assamblyMoveRightOn(void);
-	void assamblyMoveRightOff(void);
+	void FB_moveRightOn(void);
+	void FB_moveRightOff(void);
 	void assamblyMoveLeftOn(void);
 	void assamblyMoveLeftOff(void);
-	void assamblyMoveSlowOn(void);
-	void assamblyMoveSlowOff(void);
+	void FB_moveSlowOn(void);
+	void FB_moveSlowOff(void);
 	void assamblyStopOn(void);
 	void assamblyStopOff(void);
-	void redOn(void);
-	void redOff(void);
-	void yellowOn(void);
-	void yellowOff(void);
-	void greenOn(void);
-	void greenOff(void);
+
 	void switchOn(void);
 	void switchOff(void);
 	void ampOff(void);
 
-
 	void start_LedOn(void);
-
 	void start_LedOff(void);
 	void stop_LedOn(void);
-
 	void stop_LedOff(void);
-
 	void q1_LedOn(void);
-
 	void q1_LedOff(void);
-
 	void q2_LedOn(void);
-
 	void q2_LedOff(void);
+
+
+
+	int getAussortierer(void);
+
+	uintptr_t gpio_bank_0;
+	uintptr_t gpio_bank_1;
+	uintptr_t gpio_bank_2;
+
 
 
 };

@@ -15,6 +15,8 @@
 #include "../hal/Sensor.h"
 
 class ISR  {
+private:
+	bool istESZ = false;
 
 public:
 	ISR(Dispatcher *dispatcher);

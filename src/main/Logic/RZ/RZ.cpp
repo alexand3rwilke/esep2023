@@ -6,53 +6,77 @@
  */
 
 #include "RZ.h"
-
+#include "../SMZ/SMZ.h"
 
 
 void RZ::entry() {
-
-	actions->greenOn(contextData->disp->getConnectionID());
-	actions->yellowOff(contextData->disp->getConnectionID());
-	actions->redOff(contextData->disp->getConnectionID());
 	printf("---in rz entry");
-	doAction();
-
+	actions->greenOn();
+	actions->yellowOff();
+	actions->redOff();
 
 }
+
 void RZ::exit() {
 
 }
-void RZ::estp() {
 
 
-}
-void RZ::doAction(){
+/**
+ * Ruhezustand
+ */
+void RZ::doAction(int event){
 
-//    	_pulse msg;
+	switch (event) {
+		//Starte Betriebszustand
+		case STRinterrupted:
+			exit();
+			new(this) BZ;
+			entry();
+			break;
+		//Starte Servicemode
+		case STR_SMZ:
+			exit();
+			new (this) SMZ;
+			entry();
+			break;
+	}
+//			 * Hier wird die Taste Start geprüft, on die lange gedrückt oder schnell gedrückt
+//							 * Zeit: 2 Sekunden
+//							 * >= : Kalibierung
+//							 * < : Betriebzuistand
+//							 */
+//							if (recvid == 0) {	//pulse received.
+//								if(msg.code == T_STR_GDR || msg.code == FBM2_STR_GDR){
 //
-//    	int chanID = ChannelCreate(0);
-//    	int ConID = ConnectAttach(0,0,chanID,_NTO_SIDE_CHANNEL,0);
+//									time_t start_time;
+//									time_t end_time;
+//
+//									start_time = time(NULL);
+//
+//									while(true) {
+//										int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);
 //
 //
+//										if (msg.code == T_STR_NGDR || msg.code == FBM2_STR_NGDR) {
 //
-//    	if (recvid < 0) {
-//    				perror("MsgReceivePulse failed in RZ State!");
-//    			}
+//											end_time = time(NULL);
 //
-//    			if (recvid == 0) {
-//    			while(true) {
-
-
-//		switch () {
+//											double time_diff = difftime(end_time,start_time);
 //
-//		case LSAinterrupted:
-//			exit();
-//			new(this) BZ;
-//			entry();
-//			break;
+//											if(time_diff >= 2){
+//												new(this) KalibrierungIdle;
+//												 entry();
 //
+//											}
 //		}
+}
 
+
+void RZ::estp(){
+	exit();
+	new(this) ESZ;
+	entry();
 
 }
 

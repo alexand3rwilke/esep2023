@@ -10,10 +10,6 @@
 
 
 void BZready::entry() {
-
-
-	doAction();
-
 }
     void BZready::exit() {
 
@@ -22,7 +18,7 @@ void BZready::entry() {
 
 
     }
-    void BZready::doAction(){
+    void BZready::doAction(int event){
 
     	_pulse msg;
     	int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);

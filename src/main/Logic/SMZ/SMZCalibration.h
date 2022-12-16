@@ -12,8 +12,8 @@
 #include "../../hal/Actuator.h"
 #include "../Context.h"
 #include "../../WSAData.h"
-
-using namespace std;
+#include "SMZDistanceMeasurementADCFB.h"
+#include "../../Imports.h"
 
 class SMZCalibration : public Basestate{
 private:
@@ -24,7 +24,7 @@ private:
 public:
 	void entry()override;
 	void exit() override;
-	void doAction() override;
+	void doAction(int) override;
 
 	void clearThresholds(void);
 	int distanceMeasurementFB(void);

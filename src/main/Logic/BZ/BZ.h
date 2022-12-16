@@ -11,9 +11,9 @@
 #include "../Basestate.h"
 #include "../../hal/Actuator.h"
 #include "../Context.h"
-
-
-using namespace std;
+#include "../../WSAData.h"
+#include "../ESZ/ESZ.h"
+#include "../ESZ/ESZ.h"
 
 /**
  * Erbt von Basic_State
@@ -27,7 +27,7 @@ private:
 public:
 	void entry()override;
 	void exit() override;
-	void doAction() override;
+	void doAction(int) override;
 };
 
 #endif /* SRC_MAIN_LOGIC_BZ_H_ */

@@ -38,7 +38,7 @@ public:
 	virtual void entry() {};
 	virtual void exit() {};
 	virtual void estp() {};
-	virtual void doAction() {};
+	virtual void doAction(int) {};
 
 	void setActions(Actions *actions) {this->actions = actions;};
 	void setContextData(ContextData *contextData) {this->contextData = contextData;};

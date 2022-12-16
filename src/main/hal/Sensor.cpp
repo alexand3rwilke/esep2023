@@ -22,8 +22,6 @@ Sensor::Sensor(Dispatcher * dispatcher) {
 	disp = dispatcher;
 	dispID  = disp->getConnectionID();
 	SensorRoutineThread = new std::thread([this]() {sensorRoutine();});
-
-
 }
 
 Sensor::~Sensor() {
@@ -42,16 +40,21 @@ void Sensor::sensorRoutine() {
 					perror("Could not create a channel!\n");
 				}
 
-
-				int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
+				//Connect to channel
+				int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0);
 				if (conID < 0) {
 					perror("Could not connect to channel!");
 				}
 
+				senorEvents={LSA1, LSE1, LSS1, HMS1, STR, ESTP, RST, STP, STR_SMZ};
+
+
 				//printf("Sensorik conID: %d \n", conID);
+
 				//senorEvents={LSA1, LSE1, LSS1, HMS1, SRT, ESTP, RST, STP};
-				//nur zum Testen
-				senorEvents={LSA1, LSS1, HMS1, SRT, ESTP, RST, STP};
+				//nur zum Testen von Qnet m
+				//senorEvents={LSA1, LSS1, HMS1, SRT, ESTP, RST, STP};
+
 
 				disp->registerForEventWIthConnection(senorEvents, conID);
 
@@ -66,12 +69,10 @@ void Sensor::sensorRoutine() {
 							perror("MsgReceivePulse failed!");
 							exit(EXIT_FAILURE);
 					}
-					//printf("Sensorik vor dem Switch Case");
 						// Untersuche und Sende event an Dispatcher
 						 switch(pulse.code) {
 
 						   case LSA1:
-							   //printf("Sensorik hat Lichtschranke 1 - signal erhalten \n ");
 							   if (pulse.value.sival_int == 1) {
 								   MsgSendPulse(dispID, -1, LSAnotInterrupted, 0);
 								   break;
@@ -97,28 +98,41 @@ void Sensor::sensorRoutine() {
 							   break;
 
 
-						   case SRT:
+						   case STR:
 							   printf("Sensro STR Taste -------- \n");
+							   if (pulse.value.sival_int == 1) {
+								   // Start timer
+								   //Timer timer_SRT = new Timer();
+							   } else {
+								   // stop timer
+
 								   MsgSendPulse(dispID, -1, STRinterrupted, 0);
+							   }
+
 							   break;
-							   //TODO STR release
-
-
 							case STP:
-								   MsgSendPulse(dispID, -1, STPinterrupted, 0);
-							   break;
+
+								if (pulse.value.sival_int == 0) {
+									MsgSendPulse(dispID, -1, STPinterrupted, 0);
+								}
+								break;
+
 
 
 							case ESTP:
-								   MsgSendPulse(dispID, -1,ESTPinterrupted, 0);
-							   break;
-
-							   case RST:
-								   MsgSendPulse(dispID, -1, RSTinterrupted, 0);
-							   break;
-
+							   if (pulse.value.sival_int == 1) {
+								   MsgSendPulse(dispID, -1, ESTPnotInterrupted, 0);
+								   break;
+							   } else {
+								   MsgSendPulse(dispID, -1, ESTPinterrupted, 0);
 							   }
-
+							   break;
+						   case RST:
+							   if (pulse.value.sival_int == 0) {
+								   MsgSendPulse(dispID, -1, RSTinterrupted, 0);
+							   }
+							   break;
+						   }
 
 					 }
 }

@@ -7,23 +7,22 @@
 
 #include "BZ.h"
 
-#include "../ESZ/ESZ.h"
-#include "../ESZ/ESZ.h"
-
-
 void BZ::entry(){
 	// grünes licht an entry
-	actions->greenOn(1);
+	actions->greenOn();
 	substate = NULL;
-	doAction();
+	sleep(5);
+	exit();
 }
 
 void BZ::exit(){
 	// grünes licht aus exit
-	actions->greenOff(1);
+	actions->greenOff();
 }
 
-void BZ::doAction (/*int event*/) {
+
+void BZ::doAction (int event) {
+
 
 
 
@@ -40,7 +39,7 @@ void BZ::doAction (/*int event*/) {
 				switch (msg.code) {
 
 				// TODO  change case
-				case SRT :	new(this) BZ;
+				case STR :	new(this) BZ;
 							entry();
 							break;
 
@@ -51,3 +50,4 @@ void BZ::doAction (/*int event*/) {
 			}
 		}
 }
+

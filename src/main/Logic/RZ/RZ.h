@@ -11,6 +11,11 @@
 
 #include "../Basestate.h"
 #include "../BZ/BZ.h"
+#include "../ESZ/ESZ.h"
+#include "../FZ/FZ.h"
+#include "../SMZ/SMZ.h"
+
+
 
 
 
@@ -19,9 +24,15 @@ public:
 
     void entry() override;
     void exit() override;
+
+    //void estp() override;
+    void doAction(int) override;
+
     void estp() override;
-    void doAction() override;
-    //void showState() override;
+
+    //void estop();
+
+
 };
 
 #endif /* SRC_MAIN_LOGIC_RZ_H_ */

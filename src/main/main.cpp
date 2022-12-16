@@ -7,9 +7,6 @@
 
 #ifndef RUN_TESTS
 
-#include <iostream>
-#include <stdio.h>
-#include <iostream>
 #include "hal/Actuator.h"
 #include "hal/Sensor.h"
 #include "hal/ADC_Service.h"
@@ -27,6 +24,7 @@
 #include <hw/inout.h>
 #include <sys/neutrino.h>
 
+#include "Imports.h"
 
 
 
@@ -34,15 +32,14 @@
 using namespace std;
 
 void wait(int seconds) {
-
 	usleep(1000 * (seconds * 1000 ));
 }
 
 int main(int argc, char** args) {
 
-//	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
 
-		//printf("In main");
+
+	cout << "Starting Festo Test \n" << endl;
 
 		Dispatcher dispatcher;
 
@@ -50,12 +47,12 @@ int main(int argc, char** args) {
 		Sensor *sensor = new Sensor(&dispatcher);
 		TSCADC tscadc;
 		ADC* adc = new ADC(tscadc);
-		Actions *actions = new Actions();
+		Actions *actions = new Actions(&dispatcher);
 		Actuator *actuator = new Actuator(&dispatcher);
+		//cout << "Aktorik lvl1 \n \n" << endl;
+		//printf("Aktorik lvl1 /n  ---- /n");
 		ADC_Service *adcService = new ADC_Service(&dispatcher);
-		//WSAData *wsa_data = new WSAData();
-
-
+		WSAData *wsa_data = new WSAData();
 
 		ContextData *contextData = new ContextData(&dispatcher);
 		Context *context = new Context(&dispatcher, actions,contextData);
@@ -98,22 +95,10 @@ int main(int argc, char** args) {
 	 //printf("Value from adc with value %d!\n",heightData);
 
 
+
+	//TODO: Besseres warten
 	 while(true){
-
-		 //adc->sample();
-		 //uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
-		 //printf("Value from adc with value %d!\n",heightData);
-		 //sleep(1);
-		 //isr->handleInterruptAndSend(1);
 	 }
-	 //this_thread::sleep_for(chrono::minutes(5));
-
-
-
-
-
-
-
 
 	return EXIT_SUCCESS;
 }
@@ -127,42 +112,42 @@ int main(int argc, char** args) {
 void playDemo() {
 
 
-				Dispatcher dispatcher;
-
-
-				// Muss keine Events verschicken, nur annehmen
-				Actuator *actuator = new Actuator(&dispatcher);
-
-				// Move Assambly Left
-			 	actuator->assamblyMoveLeftOn();
-			 	wait(3);
-			 	actuator->assamblyMoveLeftOff();
-
-			 	// Move Assambly Right
-			 	actuator->assamblyMoveRightOn();
-			 	wait(3);
-			 	actuator->assamblyMoveRightOff();
-
-			 	// Move Assambly Slow
-			 	actuator->assamblyMoveRightOn();
-			 	actuator->assamblyMoveSlowOn();
-			 	wait(3);
-			 	actuator->assamblyMoveSlowOff();
-			 	actuator->assamblyMoveRightOff();
-
-			 	// Open Switch
-			 	actuator->switchOn();
-			 	wait(3);
-			 	actuator->switchOff();
-
-			 	// LED On
-			 	actuator->redOn();
-			 	actuator->yellowOn();
-			 	actuator->greenOn();
-			 	wait(3);
-			 	actuator->redOff();
-			 	actuator->yellowOff();
-			 	actuator->greenOff();
+//				Dispatcher dispatcher;
+//
+//
+//				// Muss keine Events verschicken, nur annehmen
+//				Actuator *actuator = new Actuator(&dispatcher);
+//
+//				// Move Assambly Left
+//			 	actuator->assamblyMoveLeftOn();
+//			 	wait(3);
+//			 	actuator->assamblyMoveLeftOff();
+//
+//			 	// Move Assambly Right
+//			 	actuator->assamblyMoveRightOn();
+//			 	wait(3);
+//			 	actuator->assamblyMoveRightOff();
+//
+//			 	// Move Assambly Slow
+//			 	actuator->assamblyMoveRightOn();
+//			 	actuator->assamblyMoveSlowOn();
+//			 	wait(3);
+//			 	actuator->assamblyMoveSlowOff();
+//			 	actuator->assamblyMoveRightOff();
+//
+//			 	// Open Switch
+//			 	actuator->switchOn();
+//			 	wait(3);
+//			 	actuator->switchOff();
+//
+//			 	// LED On
+//			 	actuator->redOn();
+//			 	actuator->yellowOn();
+//			 	actuator->greenOn();
+//			 	wait(3);
+//			 	actuator->redOff();
+//			 	actuator->yellowOff();
+//			 	actuator->greenOff();
 
 }
 
