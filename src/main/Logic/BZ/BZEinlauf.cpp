@@ -13,7 +13,7 @@
 
 
 void BZEinlauf::entry() {
-	actions->startFB(contextData->conIDDis);
+	actions->startFB();
 
 }
     void BZEinlauf::exit() {

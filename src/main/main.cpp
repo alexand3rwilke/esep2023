@@ -31,7 +31,7 @@ int main(int argc, char** args) {
 
 
 	cout << "Starting Festo Test \n" << endl;
-printf("j");
+
 		Dispatcher dispatcher;
 
 		ISR *isr = new ISR(&dispatcher);
@@ -43,7 +43,7 @@ printf("j");
 		//cout << "Aktorik lvl1 \n \n" << endl;
 		//printf("Aktorik lvl1 /n  ---- /n");
 		ADC_Service *adcService = new ADC_Service(&dispatcher);
-		WSAData *wsa_data = new WSAData(&dispatcher);
+		WSAData *wsa_data = new WSAData();
 
 		ContextData *contextData = new ContextData(&dispatcher);
 		Context *context = new Context(&dispatcher, actions,contextData);

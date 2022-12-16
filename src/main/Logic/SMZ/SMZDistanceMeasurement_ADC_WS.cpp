@@ -8,11 +8,11 @@
 #include "SMZDistanceMeasurement_ADC_WS.h"
 
 void  SMZDistanceMeasurement_ADC_WS::entry(){
-	actions->ledQ1On(wsa_data->dispID);
+	actions->ledQ1On();
 }
 
 void SMZDistanceMeasurement_ADC_WS::exit(){
-	actions->greenOff(wsa_data->dispID);
+	actions->greenOff();
 }
 
 void SMZDistanceMeasurement_ADC_WS::doAction(int event){
@@ -24,8 +24,8 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event){
 		tstart = 0.0;
 		tstart = clock();
 
-		actions->startFB(wsa_data->dispID);
-		actions->ledQ1Off(wsa_data->dispID);
+		actions->startFB();
+		actions->ledQ1Off();
 		break;
 
    case ADC_WK_IN_HM:
@@ -35,14 +35,14 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event){
 	   time1 = time1/CLOCKS_PER_SEC;
 
 	   wsa_data->distance_LSA_ADC = time1;
-	   actions->ledQ1On(wsa_data->dispID);
+	   actions->ledQ1On();
 
 	   //Zeitmessung ADC zu LSS
 	   time1 = 0;
 	   tstart = 0.0;
 	   tstart = clock();
 
-	   actions->moveSlower(wsa_data->dispID);
+	   actions->moveSlower();
 	   //TODO: ADC auslesen
 	   if(wsa_data->distance_FWS_ADC != 0){
 		   //wsa_data->distance_WS_ADC = ADCAuslesen();
@@ -52,7 +52,7 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event){
 	   break;
 
    case	ADC_WK_NIN_HM:
-	   actions->moveFaster(wsa_data->dispID);
+	   actions->moveFaster();
 	   break;
 
    case LSSinterrupted:
@@ -71,7 +71,7 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event){
 	   time1 = time1/CLOCKS_PER_SEC;
 
 	   wsa_data->distance_LSS_LSE = time1;
-	   actions->stopFB(wsa_data->dispID);
+	   actions->stopFB();
 
 	   //Wenn erst ein WS gemessen wurde, dann mach noch eine Messung
 	   if(wsa_data->distance_WS_ADC != 0){

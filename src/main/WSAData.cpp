@@ -7,9 +7,7 @@
 
 #include "WSAData.h"
 
-WSAData::WSAData(Dispatcher *dispatcher){
-	disp = dispatcher;
-	dispID  = disp->getConnectionID();
+WSAData::WSAData(){
 	sorterTyp = 0;
 	distance_FB_ADC = 0;
 	distance_FWS_ADC = 0;

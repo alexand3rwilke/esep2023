@@ -20,11 +20,11 @@ void SMZDistanceMeasurement_ADC_FB::doAction(int event){
 	switch(event){
 
 	   case ADC_WK_IN_HM:
-		   actions->moveSlower(wsa_data->dispID);
+		   actions->moveSlower();
 		   break;
 
 	   case	ADC_WK_NIN_HM:
-		   actions->moveFaster(wsa_data->dispID);
+		   actions->moveFaster();
 		   break;
 
 		case ADC_SAMPLE_VALUE:

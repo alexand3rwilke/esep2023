@@ -8,7 +8,7 @@
 #include "SMZ.h"
 
 void SMZ :: entry(){
-	actions->greenLightBlinking(wsa_data->dispID);
+	actions->greenLightBlinking();
 	substate = NULL;
 }
 
