@@ -8,14 +8,11 @@
 #include "SMZ.h"
 
 void SMZ :: entry(){
+	printf("SMZ entry");
 	actions->greenLightBlinking();
-	substate = NULL;
 }
 
 void SMZ :: exit(){
-
-//	actions->greenLightBlinkingOff(1);
-
 }
 
 /**

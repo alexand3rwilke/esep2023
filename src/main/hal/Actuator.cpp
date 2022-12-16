@@ -40,11 +40,11 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 	start_LedOn();
 	stop_LedOff();
 
-	printf("Aktorik startz \n  ---- \n");
+	//printf("Aktorik startz \n  ---- \n");
 	int istWeiche = getAussortierer();
 
 
-	cout << "\n Cout Aktorik\n" << endl;
+	//cout << "\n Cout Aktorik\n" << endl;
 	aktuatorThread = new thread([this]() {handleEvents();});
 
 
@@ -62,7 +62,7 @@ void Actuator::handleEvents(void){
 
 	//printf("Aktorik conID: %d \n", ConID);
 	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON,
-			YELLOW_OFF, RED_ON, RED_OFF,ACTIVTE_AUSSORTIERER,ESTPinterrupted};
+			YELLOW_OFF, RED_ON, RED_OFF,ACTIVTE_AUSSORTIERER,ESTPinterrupted, GREEN_BLINKING_ON};
 
 
 
@@ -228,6 +228,10 @@ int Actuator::getAussortierer(void){
 		 tmp = tmp & (1<<bit);
 		 printf(" Weichen wert: %d",tmp);
 		 return tmp;
+}
+
+int Actuator::getSorter(){
+	return Actuator::getAussortierer();
 }
 
 

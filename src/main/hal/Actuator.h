@@ -27,7 +27,7 @@ public:
 	Actuator(Dispatcher *dispatcher);
 	virtual ~Actuator();
 
-
+	int getSorter();
 	_pulse pulse;
 
 	vector<int8_t> actuatorEvents;

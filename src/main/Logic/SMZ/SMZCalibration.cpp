@@ -9,8 +9,7 @@
 
 void SMZCalibration::entry(){
 	clearThresholds();
-	//TODO: Sortierer von Joshua abrufen
-	//wsa_data->sorterTyp = doKrassenScheiß();
+	wsa_data->sorterTyp = act->getSorter();
 	exit();
 	new (this) SMZDistanceMeasurement_ADC_FB;
 	entry();
