@@ -9,16 +9,15 @@
 
 void BZ::entry(){
 	// grünes licht an entry
-	int x = wsa_data->dispID;
-	actions->greenOn(wsa_data->dispID);
+	actions->greenOn();
 	substate = NULL;
-	sleep(1);
+	sleep(5);
 	exit();
 }
 
 void BZ::exit(){
 	// grünes licht aus exit
-	actions->greenOff(wsa_data->dispID);
+	actions->greenOff();
 }
 
 void BZ::doAction (int event) {

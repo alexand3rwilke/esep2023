@@ -29,8 +29,9 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 	dispID = disp->getConnectionID();
 	state->setContextData(contextData);
 	state->setActions(actions);
-
 	ContextThread = new std::thread([this]() {eventHandler();});
+
+	state->entry();
 }
 
 Context::~Context() {

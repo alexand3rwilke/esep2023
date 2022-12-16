@@ -15,11 +15,8 @@
  */
 class WSAData{
 public:
-	WSAData(Dispatcher *dispatcher);
+	WSAData();
 	virtual~WSAData();
-
-	Dispatcher *disp;
-	int dispID;
 
 	int sorterTyp;
 	int distance_FB_ADC;
