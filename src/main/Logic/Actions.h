@@ -21,12 +21,11 @@ public:
 	virtual ~Actions();
 
 	//Aktorik
-	void setConId(void);
+	//void setConId(void);
 	void startFB(void);
 	void stopFB(void);
 	void moveFaster(void);
 	void moveSlower(void);
-	void switchOn(void);
 
 	void durchlassen(void);
 	void aussortieren(void);

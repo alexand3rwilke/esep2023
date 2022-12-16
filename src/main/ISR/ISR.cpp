@@ -232,7 +232,7 @@ void ISR::recieveInterruptRoutine() {
 					 int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
 
 					 		if (recvid < 0) {
-					 			perror("MsgReceivePulse failed!");
+					 			perror("MsgReceivePulse failed! - in ISR");
 					 			exit(EXIT_FAILURE);
 					 		}
 

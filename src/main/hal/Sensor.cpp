@@ -55,14 +55,14 @@ void Sensor::sensorRoutine() {
 				disp->registerForEventWIthConnection(senorEvents, conID);
 
 				_pulse pulse;
-
+				//TODO Estop vor dem Start
 					// run 4ever
 				while (true) {
 
 					int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
 
 					if (recvid < 0) {
-							perror("MsgReceivePulse failed!");
+							perror("MsgReceivePulse failed!- in Sensorik");
 							exit(EXIT_FAILURE);
 					}
 						// Untersuche und Sende event an Dispatcher

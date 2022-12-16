@@ -11,7 +11,7 @@
 
 void RZ::entry() {
 	printf("---in rz entry");
-	actions->greenOn();
+	actions->greenOff();
 	actions->yellowOff();
 	actions->redOff();
 

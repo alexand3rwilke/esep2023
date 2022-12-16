@@ -64,7 +64,7 @@ void Context::eventHandler(){
 			int recvid = MsgReceivePulse(chanID, &msg, sizeof(_pulse), nullptr);
 
 			   if (recvid < 0) {
-			   			perror("MsgReceivePulse failed!");
+			   			perror("MsgReceivePulse failed! - in Context");
 			   			//exit(EXIT_FAILURE);
 			   			//exit();
 			   		}
@@ -99,8 +99,13 @@ void Context::eventHandler(){
 
 			  case STR_SMZ:
 				  state->doAction(STR_SMZ);
+				  break;
 
+			  case STPinterrupted:
+				  // if keine Warning
+				  state->doAction(STPinterrupted);
 			   }
+
 		}
 }
 

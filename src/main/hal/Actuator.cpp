@@ -41,7 +41,7 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 	stop_LedOff();
 
 	printf("Aktorik startz \n  ---- \n");
-	int istWeiche = getAussortierer();
+	istWeiche = getAussortierer();
 
 
 	cout << "\n Cout Aktorik\n" << endl;
@@ -62,14 +62,18 @@ void Actuator::handleEvents(void){
 
 	//printf("Aktorik conID: %d \n", ConID);
 	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON,
-			YELLOW_OFF, RED_ON, RED_OFF,ACTIVTE_AUSSORTIERER,ESTPinterrupted};
+			YELLOW_OFF, RED_ON, RED_OFF,WS_DURCHLASSEN,WS_DURCHLASSEN,ESTPinterrupted};
 
 
 
 	disp->registerForEventWIthConnection(actuatorEvents, ConID);
 	while(true){
 
-		 int newPulse = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
+		 int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
+		 if (recvid < 0) {
+		 							perror("MsgReceivePulse failed!- in Actuator");
+		 							exit(EXIT_FAILURE);
+		 					}
 
 		 switch(pulse.code){
 
@@ -100,13 +104,13 @@ void Actuator::handleEvents(void){
 			case RED_ON:amp->redOn();
 			break;
 
-			case RED_OFF:amp->redOn();
+			case RED_OFF:amp->redOff();
 			break;
 
 			case ESTPinterrupted:
 				amp->ampOff();
 				amp->flashinLight(RED,1);
-				switchOff();
+				aussortieren();
 				FB_moveSlowOff();
 				FB_moveRightOff();
 				q2_LedOn();
@@ -118,7 +122,7 @@ void Actuator::handleEvents(void){
 			case RED_BLINKING_ON: amp->flashinLight(RED,1);
 			break;
 
-			case ACTIVTE_AUSSORTIERER:switchOn();
+			case WS_DURCHLASSEN:durchlassen();
 			break;
 
 			case Q1On:q1_LedOn();
@@ -172,13 +176,22 @@ void Actuator::assamblyStopOff(void) {
 
 
 
-void Actuator::switchOn(void) {
-	out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00080000);
-	usleep(1000 * (2 * 1000 ));
-	switchOff();
+void Actuator::durchlassen(void) {
+	if(istWeiche==0){
+		out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00080000);
+			usleep(1000 * (1 * 1000 ));
+			aussortieren();
+	}
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
 }
 
-void Actuator::switchOff(void) {
+void Actuator::aussortieren(void) {
+	if(istWeiche!=0){
+			out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00080000);
+				usleep(1000 * (1 * 1000 ));
+				//Auswerfer
+				out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
+	}
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
 }
 
