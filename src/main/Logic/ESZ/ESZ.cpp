@@ -21,6 +21,13 @@ void ESZ::entry(){
 	//Was bereits in Aktorik direkt gemacht wird
 	//AMP Rot
 	//FB Stopp
+}
+
+void ESZ::exit(){
+
+}
+
+void ESZ::doAction(){
 
 }
 
