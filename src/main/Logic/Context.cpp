@@ -57,7 +57,6 @@ void Context::eventHandler(){
 		disp->registerForEventWIthConnection(events, conID);
 
 			_pulse msg;
-
 			//Verschicke events an den aktuellen State
 			while(true){
 
@@ -89,6 +88,7 @@ void Context::eventHandler(){
 				   break;
 
 			   case	STRinterrupted:
+				   printf("Hallo");
 				   state->doAction(STRinterrupted);
 				   break;
 

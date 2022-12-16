@@ -32,9 +32,7 @@ int main(int argc, char** args) {
 
 
 	cout << "Starting Festo Test \n" << endl;
-
-//	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
-
+printf("j");
 		Dispatcher dispatcher;
 
 		ISR *isr = new ISR(&dispatcher);

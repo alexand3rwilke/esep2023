@@ -42,14 +42,12 @@ void Sensor::sensorRoutine() {
 					perror("Could not create a channel!\n");
 				}
 
-
-				int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
+				//Connect to channel
+				int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0);
 				if (conID < 0) {
 					perror("Could not connect to channel!");
 				}
-
-				//printf("Sensorik conID: %d \n", conID);
-				senorEvents={LSA1, LSE1, LSS1, HMS1, SRT, ESTP, RST, STP};
+				senorEvents={LSA1, LSE1, LSS1, HMS1, SRT, ESTP, RST, STP, STR_SMZ};
 
 				disp->registerForEventWIthConnection(senorEvents, conID);
 
@@ -64,12 +62,10 @@ void Sensor::sensorRoutine() {
 							perror("MsgReceivePulse failed!");
 							exit(EXIT_FAILURE);
 					}
-					//printf("Sensorik vor dem Switch Case");
 						// Untersuche und Sende event an Dispatcher
 						 switch(pulse.code) {
 
 						   case LSA1:
-							   //printf("Sensorik hat Lichtschranke 1 - signal erhalten \n ");
 							   if (pulse.value.sival_int == 1) {
 								   MsgSendPulse(dispID, -1, LSAnotInterrupted, 0);
 								   break;
@@ -93,20 +89,12 @@ void Sensor::sensorRoutine() {
 						   case HMS1:
 								   MsgSendPulse(dispID, -1, HMSinterrupted, 0);
 							   break;
-
-
 						   case SRT:
-							   printf("Sensro STR Taste -------- \n");
 								   MsgSendPulse(dispID, -1, STRinterrupted, 0);
 							   break;
-							   //TODO STR release
-
-
 							case STP:
 								   MsgSendPulse(dispID, -1, STPinterrupted, 0);
 							   break;
-
-
 							case ESTP:
 								   MsgSendPulse(dispID, -1,ESTPinterrupted, 0);
 							   break;
@@ -116,7 +104,5 @@ void Sensor::sensorRoutine() {
 							   break;
 
 							   }
-
-
 					 }
 }

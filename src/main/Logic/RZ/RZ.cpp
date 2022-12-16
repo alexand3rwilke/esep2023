@@ -15,14 +15,9 @@ void RZ::entry() {
 	actions->yellowOff(contextData->disp->getConnectionID());
 	actions->redOff(contextData->disp->getConnectionID());
 	printf("---in rz entry");
-
-
 }
+
 void RZ::exit() {
-
-}
-void RZ::estp() {
-
 
 }
 
@@ -44,7 +39,6 @@ void RZ::doAction(int event){
 			new (this) SMZ;
 			entry();
 			break;
-
 		}
 }
 

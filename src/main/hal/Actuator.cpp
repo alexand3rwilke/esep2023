@@ -33,7 +33,7 @@ void Actuator::handleEvents(void){
 	int chanID = ChannelCreate(0);
 	int ConID = ConnectAttach(0,0,chanID,_NTO_SIDE_CHANNEL,0);
 	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON, YELLOW_OFF, RED_ON, RED_OFF, ACTIVTE_AUSSORTIERER, Q1On, Q1Off, Q2On};
-
+//Q2Off muss noch in die event liste wenn zahlengröße geupdatet wurde
 	disp->registerForEventWIthConnection(actuatorEvents, ConID);
 	while(true){
 

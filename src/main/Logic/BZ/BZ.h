@@ -11,9 +11,9 @@
 #include "../Basestate.h"
 #include "../../hal/Actuator.h"
 #include "../Context.h"
-
-
-using namespace std;
+#include "../../WSAData.h"
+#include "../ESZ/ESZ.h"
+#include "../ESZ/ESZ.h"
 
 /**
  * Erbt von Basic_State
