@@ -77,11 +77,20 @@ void Actions::redOff(int conID){
 	MsgSendPulse(conID,-1,RED_OFF,0);
 }
 
-void Actions::greenLightBlinking(int coID){
-	//MsgSendPulse(conID,-1,xxx,0);
+
+void Actions::greenLightBlinking(int conID){
+	MsgSendPulse(conID,-1,GREEN_BLINKING_ON,0);
+
 }
-void Actions::greenLightBlinkingOff(int coID){
-	//MsgSendPulse(conID,-1,xxx,0);
+//void Actions::greenLightBlinkingOff(int coID){
+//	//MsgSendPulse(conID,-1,xxx,0);
+//}
+
+void Actions::yellowLightBlinking(int conID){
+	MsgSendPulse(conID,-1,YELLOW_BLINKING_ON,0);
+}
+void Actions::redLightBlinking(int conID){
+	MsgSendPulse(conID,-1,RED_BLINKING_ON,0);
 }
 /*----------------LED---------------------*/
 

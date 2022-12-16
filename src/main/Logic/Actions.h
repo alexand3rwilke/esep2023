@@ -28,9 +28,6 @@ public:
 	void moveSlower(int coID);
 	void switchOn(int coID);
 
-	void durchlassen(int conID);
-	void aussortieren(int conID);//doppelt ? wegen switch on ?
-
 	//Ampel
 	void greenOn(int coID);
 	void greenOff(int coID);
@@ -42,11 +39,20 @@ public:
 	void greenLightBlinking(int coID);
 	void greenLightBlinkingOff(int coID);
 
+
 	//LED
 	void ledQ1On(int coID);
 	void ledQ2On(int coID);
 	void ledQ1Off(int coID);
 	void ledQ2Off(int coID);
+
+	void yellowLightBlinking(int coID);
+	void redLightBlinking(int coID);
+
+	void durchlassen(int conID);
+	void aussortieren(int conID);
+
+
 };
 
 #endif /* SRC_MAIN_LOGIC_ACTIONS_H_ */

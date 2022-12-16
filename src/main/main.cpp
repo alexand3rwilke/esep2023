@@ -24,7 +24,6 @@
 using namespace std;
 
 void wait(int seconds) {
-
 	usleep(1000 * (seconds * 1000 ));
 }
 
@@ -41,6 +40,8 @@ printf("j");
 		ADC* adc = new ADC(tscadc);
 		Actions *actions = new Actions(&dispatcher);
 		Actuator *actuator = new Actuator(&dispatcher);
+		//cout << "Aktorik lvl1 \n \n" << endl;
+		//printf("Aktorik lvl1 /n  ---- /n");
 		ADC_Service *adcService = new ADC_Service(&dispatcher);
 		WSAData *wsa_data = new WSAData(&dispatcher);
 
@@ -63,42 +64,42 @@ printf("j");
 void playDemo() {
 
 
-				Dispatcher dispatcher;
-
-
-				// Muss keine Events verschicken, nur annehmen
-				Actuator *actuator = new Actuator(&dispatcher);
-
-				// Move Assambly Left
-			 	actuator->assamblyMoveLeftOn();
-			 	wait(3);
-			 	actuator->assamblyMoveLeftOff();
-
-			 	// Move Assambly Right
-			 	actuator->assamblyMoveRightOn();
-			 	wait(3);
-			 	actuator->assamblyMoveRightOff();
-
-			 	// Move Assambly Slow
-			 	actuator->assamblyMoveRightOn();
-			 	actuator->assamblyMoveSlowOn();
-			 	wait(3);
-			 	actuator->assamblyMoveSlowOff();
-			 	actuator->assamblyMoveRightOff();
-
-			 	// Open Switch
-			 	actuator->switchOn();
-			 	wait(3);
-			 	actuator->switchOff();
-
-			 	// LED On
-			 	actuator->redOn();
-			 	actuator->yellowOn();
-			 	actuator->greenOn();
-			 	wait(3);
-			 	actuator->redOff();
-			 	actuator->yellowOff();
-			 	actuator->greenOff();
+//				Dispatcher dispatcher;
+//
+//
+//				// Muss keine Events verschicken, nur annehmen
+//				Actuator *actuator = new Actuator(&dispatcher);
+//
+//				// Move Assambly Left
+//			 	actuator->assamblyMoveLeftOn();
+//			 	wait(3);
+//			 	actuator->assamblyMoveLeftOff();
+//
+//			 	// Move Assambly Right
+//			 	actuator->assamblyMoveRightOn();
+//			 	wait(3);
+//			 	actuator->assamblyMoveRightOff();
+//
+//			 	// Move Assambly Slow
+//			 	actuator->assamblyMoveRightOn();
+//			 	actuator->assamblyMoveSlowOn();
+//			 	wait(3);
+//			 	actuator->assamblyMoveSlowOff();
+//			 	actuator->assamblyMoveRightOff();
+//
+//			 	// Open Switch
+//			 	actuator->switchOn();
+//			 	wait(3);
+//			 	actuator->switchOff();
+//
+//			 	// LED On
+//			 	actuator->redOn();
+//			 	actuator->yellowOn();
+//			 	actuator->greenOn();
+//			 	wait(3);
+//			 	actuator->redOff();
+//			 	actuator->yellowOff();
+//			 	actuator->greenOff();
 
 }
 

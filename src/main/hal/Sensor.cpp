@@ -22,8 +22,6 @@ Sensor::Sensor(Dispatcher * dispatcher) {
 	disp = dispatcher;
 	dispID  = disp->getConnectionID();
 	SensorRoutineThread = new std::thread([this]() {sensorRoutine();});
-
-
 }
 
 Sensor::~Sensor() {
@@ -47,7 +45,12 @@ void Sensor::sensorRoutine() {
 				if (conID < 0) {
 					perror("Could not connect to channel!");
 				}
-				senorEvents={LSA1, LSE1, LSS1, HMS1, SRT, ESTP, RST, STP, STR_SMZ};
+
+				senorEvents={LSA1, LSE1, LSS1, HMS1, STR, ESTP, RST, STP, STR_SMZ};
+
+
+				//printf("Sensorik conID: %d \n", conID);
+
 
 				disp->registerForEventWIthConnection(senorEvents, conID);
 
@@ -89,20 +92,43 @@ void Sensor::sensorRoutine() {
 						   case HMS1:
 								   MsgSendPulse(dispID, -1, HMSinterrupted, 0);
 							   break;
-						   case SRT:
+
+
+						   case STR:
+							   printf("Sensro STR Taste -------- \n");
+							   if (pulse.value.sival_int == 1) {
+								   // Start timer
+								   //Timer timer_SRT = new Timer();
+							   } else {
+								   // stop timer
+
 								   MsgSendPulse(dispID, -1, STRinterrupted, 0);
+							   }
+
 							   break;
 							case STP:
-								   MsgSendPulse(dispID, -1, STPinterrupted, 0);
-							   break;
+
+								if (pulse.value.sival_int == 0) {
+									MsgSendPulse(dispID, -1, STPinterrupted, 0);
+								}
+								break;
+
+
+
 							case ESTP:
-								   MsgSendPulse(dispID, -1,ESTPinterrupted, 0);
-							   break;
-
-							   case RST:
-								   MsgSendPulse(dispID, -1, RSTinterrupted, 0);
-							   break;
-
+							   if (pulse.value.sival_int == 1) {
+								   MsgSendPulse(dispID, -1, ESTPnotInterrupted, 0);
+								   break;
+							   } else {
+								   MsgSendPulse(dispID, -1, ESTPinterrupted, 0);
 							   }
+							   break;
+						   case RST:
+							   if (pulse.value.sival_int == 0) {
+								   MsgSendPulse(dispID, -1, RSTinterrupted, 0);
+							   }
+							   break;
+						   }
+
 					 }
 }

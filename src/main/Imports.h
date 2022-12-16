@@ -46,6 +46,8 @@ using namespace std;
 #define ADC_DATA 0x100
 #define ADC_DONE 21
 
+#define GPIO0_ADDRESS_START (uint64_t) 0x44E07000
+
 //Aktuator
 #define GPIO1_ADDRESS_START (uint64_t)0x4804C000
 #define GPIO1_ADDRESS_LENGTH 0x1000
@@ -87,7 +89,7 @@ using namespace std;
 #define HMS1 3
 
 //Buttons
-#define SRT 22			//active high
+#define STR 22			//active high
 #define STP 23
 #define RST 26
 #define ESTP 27
@@ -112,6 +114,9 @@ using namespace std;
 #define YELLOW_OFF 57
 #define RED_ON 58
 #define RED_OFF 59
+#define GREEN_BLINKING_ON 60
+#define YELLOW_BLINKING_ON 61
+#define RED_BLINKING_ON 62
 
 //Aktionen der Sensorik
 #define LSAinterrupted 100
@@ -136,10 +141,10 @@ using namespace std;
 #define STRnotInterrupted 110
 #define STPinterrupted 111
 //#define STPnotInterrupted 112
-#define RSTinterrupted 113
+#define RSTinterrupted 112
 //#define RSTnotInterrupted 114
-#define ESTPinterrupted 115
-#define ESTPnotInterrupted 116
+#define ESTPinterrupted 114
+#define ESTPnotInterrupted 115
 
 //Aktionen der LED
 #define Q1On 125
@@ -148,16 +153,19 @@ using namespace std;
 #define Q2Off 128
 
 //Aktionen alles weitere
-#define ACTIVTE_AUSSORTIERER 117
+#define ACTIVTE_AUSSORTIERER 116
 
-#define TimerTimeout 118
+#define TimerTimeout 117
 
-#define WS_DURCHLASSEN 120
-#define WS_AUSSORTIEREN 121
+#define WS_DURCHLASSEN 118
+#define WS_AUSSORTIEREN 119
 
 
 //Aktion für SMZ
-#define STR_SMZ 119
+#define STR_SMZ 120
+
+
+//enum WS{FWS, WSMB, WSMM, WSO}
 
 //TODO: events laufen bei 128 über weil int_8 auf int alles ändern ?
 

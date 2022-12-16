@@ -12,7 +12,7 @@ void  SMZDistanceMeasurement_ADC_WS::entry(){
 }
 
 void SMZDistanceMeasurement_ADC_WS::exit(){
-	actions->greenLightBlinkingOff(wsa_data->dispID);
+	actions->greenOff(wsa_data->dispID);
 }
 
 void SMZDistanceMeasurement_ADC_WS::doAction(int event){

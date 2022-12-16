@@ -21,6 +21,34 @@ void BZ::exit(){
 	actions->greenOff(wsa_data->dispID);
 }
 
+
 void BZ::doAction (int event) {
+
+
+
+
+	_pulse msg;
+		while(true){
+			int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);
+
+			if (recvid < 0) {
+				perror("MsgReceivePulse failed!");
+			}
+
+			if (recvid == 0) {
+
+				switch (msg.code) {
+
+				// TODO  change case
+				case STR :	new(this) BZ;
+							entry();
+							break;
+
+				case ESTP:	new(this) ESZ;
+						entry();
+						break;
+				}
+			}
+		}
 }
 

@@ -13,6 +13,9 @@ void SMZ :: entry(){
 }
 
 void SMZ :: exit(){
+
+//	actions->greenLightBlinkingOff(1);
+
 }
 
 /**
@@ -22,6 +25,7 @@ void SMZ :: doAction(int event){
 
 					switch (event) {
 					//Choose calibrationmode
+
 					case STRinterrupted:
 						exit();
 						new (this)SMZCalibration;

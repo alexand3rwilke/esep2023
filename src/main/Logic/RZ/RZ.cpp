@@ -21,6 +21,7 @@ void RZ::exit() {
 
 }
 
+
 /**
  * Ruhezustand
  */
@@ -40,6 +41,14 @@ void RZ::doAction(int event){
 			entry();
 			break;
 		}
+}
+
+
+void RZ::estp(){
+	exit();
+	new(this) ESZ;
+	entry();
+
 }
 
 
