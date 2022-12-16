@@ -48,13 +48,11 @@ void Sensor::sensorRoutine() {
 
 				senorEvents={LSA1, LSE1, LSS1, HMS1, STR, ESTP, RST, STP, STR_SMZ};
 
-
 				//printf("Sensorik conID: %d \n", conID);
 
 				//senorEvents={LSA1, LSE1, LSS1, HMS1, SRT, ESTP, RST, STP};
 				//nur zum Testen von Qnet m
 				//senorEvents={LSA1, LSS1, HMS1, SRT, ESTP, RST, STP};
-
 
 				disp->registerForEventWIthConnection(senorEvents, conID);
 
@@ -99,16 +97,11 @@ void Sensor::sensorRoutine() {
 
 
 						   case STR:
-							   printf("Sensro STR Taste -------- \n");
 							   if (pulse.value.sival_int == 1) {
-								   // Start timer
-								   //Timer timer_SRT = new Timer();
-							   } else {
-								   // stop timer
-
 								   MsgSendPulse(dispID, -1, STRinterrupted, 0);
+							   } else {
+								   MsgSendPulse(dispID, -1, STRnotInterrupted, 0);
 							   }
-
 							   break;
 							case STP:
 

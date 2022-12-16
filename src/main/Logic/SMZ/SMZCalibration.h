@@ -20,6 +20,7 @@ private:
 	int myChannel;
 	int myConnection;
 	Dispatcher *disp;
+	Actuator *act;
 
 public:
 	void entry()override;

@@ -6,13 +6,14 @@
  */
 
 #include "BZ.h"
+#include "../RZ/RZ.h"
 
 void BZ::entry(){
 	// grünes licht an entry
 	actions->greenOn();
-	substate = NULL;
-	sleep(5);
-	exit();
+	sleep(2);
+	actions->greenOff();
+	new (this) RZ;
 }
 
 void BZ::exit(){
