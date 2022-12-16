@@ -116,7 +116,7 @@ void Sensor::sensorRoutine() {
 
 							case ESTP:
 							   if (pulse.value.sival_int == 1) {
-								   MsgSendPulse(dispID, -1, ESTPNotinterrupted, 0);
+								   MsgSendPulse(dispID, -1, ESTPnotInterrupted, 0);
 								   break;
 							   } else {
 								   MsgSendPulse(dispID, -1, ESTPinterrupted, 0);
@@ -125,7 +125,7 @@ void Sensor::sensorRoutine() {
 							   if (pulse.value.sival_int == 0) {
 								   MsgSendPulse(dispID, -1, RSTinterrupted, 0);
 							   }
-						   break;
+							   break;
 						   }
 					 }
 }

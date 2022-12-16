@@ -130,6 +130,7 @@ void Amp::ampOff(void){
 	greenOff();
 	yellowOff();
 	redOff();
+
 }
 
 

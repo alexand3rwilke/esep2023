@@ -11,6 +11,11 @@
 
 #include "../Basestate.h"
 #include "../BZ/BZ.h"
+#include "../ESZ/ESZ.h"
+#include "../FZ/FZ.h"
+#include "../SMZ/SMZ.h"
+
+
 
 
 
@@ -21,6 +26,7 @@ public:
     void exit() override;
     void estp() override;
     void doAction() override;
+    void estop();
     //void showState() override;
 };
 

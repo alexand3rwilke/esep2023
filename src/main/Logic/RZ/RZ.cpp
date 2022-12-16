@@ -26,7 +26,8 @@ void RZ::estp() {
 
 
 }
-void RZ::doAction(){
+void RZ::doAction(/*int msg*/){
+
 
 //    	_pulse msg;
 //
@@ -43,17 +44,25 @@ void RZ::doAction(){
 //    			while(true) {
 
 
-//		switch () {
+//		switch (msg) {
 //
-//		case LSAinterrupted:
+//		case STRinterrupted:
 //			exit();
 //			new(this) BZ;
 //			entry();
 //			break;
 //
+//		//TODO
+//		case ESTPinterrupted:
+//			estop();
 //		}
 
+}
 
+void RZ::estop(){
+	exit();
+	new(this) ESZ;
+	entry();
 }
 
 

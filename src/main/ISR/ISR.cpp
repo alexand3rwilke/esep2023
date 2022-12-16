@@ -269,9 +269,14 @@ void ISR::handleInterruptAndSend(int interruptID) {
 
 			//printf("Interrupt on pin %d, now %d\n", pin, current_level);
 
-			if(pin != ESTP || !istESZ){
-				// TODO bis jetzt nur Beispiel MsgSendPulse, muss noch richtiger pin und richtiges event verschicht werden
+			//if(pin != ESTP || !istESZ){
+
 				switch(pin) {
+
+				case ESTP :
+					MsgSendPulse(dispId, -1, ESTP,current_level);
+					break;
+
 				case LSA1 : MsgSendPulse(dispId, -1, LSA1,current_level);
 				break;
 
@@ -294,14 +299,14 @@ void ISR::handleInterruptAndSend(int interruptID) {
 				case STP: MsgSendPulse(dispId, -1, pin,current_level);
 				break;
 				}
-			} else{
-				if(istESZ){
-				//TODO Sensoren alles aus
-				} else {
-				istESZ = true;
-				MsgSendPulse(dispId, -1, ESTP,current_level);
-				}
+//			} else{
+//				if(istESZ){
+//				//TODO Sensoren alles aus
+//				} else {
+//				istESZ = true;
+//				MsgSendPulse(dispId, -1, ESTP,current_level);
+//				}
 			}
 		}
 	}
-}
+

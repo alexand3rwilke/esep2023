@@ -7,12 +7,20 @@
 
 #include "ESZ.h"
 
-ESZ::ESZ() {
-	// TODO Auto-generated constructor stub
+//ESZ::ESZ() {
+//
+//	// TODO Auto-generated constructor stub
+//
+//}
+//
+//ESZ::~ESZ() {
+//	// TODO Auto-generated destructor stub
+//}
 
-}
+void ESZ::entry(){
+	//Was bereits in Aktorik direkt gemacht wird
+	//AMP Rot
+	//FB Stopp
 
-ESZ::~ESZ() {
-	// TODO Auto-generated destructor stub
 }
 

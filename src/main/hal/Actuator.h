@@ -19,6 +19,8 @@ private:
 	Dispatcher *disp;
 	Amp *amp;
 
+
+
 public:
 
 

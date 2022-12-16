@@ -14,11 +14,11 @@
 #include <sys/neutrino.h>
 
 
+uintptr_t gpio_bank_0 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO0_ADDRESS_START);
+uintptr_t gpio_bank_1 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO1_ADDRESS_START);
+uintptr_t gpio_bank_2 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO2_ADDRESS_START);
 
 
-//uintptr_t gpio_bank_0;
-//uintptr_t gpio_bank_1;
-//uintptr_t gpio_bank_2;
 
 
 Actuator::Actuator(Dispatcher *dispatcher) {
@@ -26,14 +26,14 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 	disp = dispatcher;
 	amp = new Amp();
 	//ThreadCtl( _NTO_TCTL_IO, 0);
-
-	gpio_bank_0 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO0_ADDRESS_START);
-	gpio_bank_1 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO1_ADDRESS_START);
-	gpio_bank_2 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO2_ADDRESS_START);
-
 	FB_moveRightOff();
 	FB_moveSlowOff();
 	amp->ampOff();
+	q1_LedOff();
+	q2_LedOff();
+	start_LedOn();
+	stop_LedOff();
+
 	printf("Aktorik startz \n  ---- \n");
 	int tmp = getAussortierer();
 
@@ -103,9 +103,8 @@ void Actuator::handleEvents(void){
 				FB_moveSlowOff();
 				FB_moveRightOff();
 				q2_LedOn();
-
-
 			break;
+
 			case ACTIVTE_AUSSORTIERER:switchOn();
 			break;
 
@@ -214,26 +213,5 @@ int Actuator::getAussortierer(void){
 }
 
 
-
-//
-//void Actuator::startLED_ON(void){
-//
-//}
-//void Actuator::startLED_OFF(void){
-//
-//}
-//
-//void Actuator::stopLED_ON(void){
-//
-//}
-//void Actuator::stopLED_OFF(void){
-//
-//}
-//void Actuator::q1LED_ON(void){
-//
-//}
-//void Actuator::q1LED_OFF(void){
-//
-//}
 
 
