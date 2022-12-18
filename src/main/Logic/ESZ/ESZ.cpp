@@ -27,7 +27,7 @@ void ESZ::exit(){
 
 }
 
-void ESZ::doAction(int msg){
+void ESZ::doAction(int event, _pulse msg){
 
 }
 

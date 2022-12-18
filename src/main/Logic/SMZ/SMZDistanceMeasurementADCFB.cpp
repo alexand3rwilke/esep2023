@@ -15,7 +15,7 @@ void SMZDistanceMeasurement_ADC_FB::exit(){
 
 }
 
-void SMZDistanceMeasurement_ADC_FB::doAction(int event){
+void SMZDistanceMeasurement_ADC_FB::doAction(int event, _pulse msg){
 	//Höhe FB zu ADC messen
 	switch(event){
 

@@ -20,20 +20,7 @@ void BZ::exit(){
 }
 
 
-void BZ::doAction (int event) {
-
-
-
-
-//	_pulse msg;
-//		while(true){
-//			int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);
-//
-//			if (recvid < 0) {
-//				perror("MsgReceivePulse failed!");
-//			}
-
-
+void BZ::doAction (int event, _pulse msg) {
 
 				switch (event) {
 

@@ -21,34 +21,11 @@ void BZAussortierer::entry() {
 
 
     }
-    void BZAussortierer::doAction(int event){
-
-    	_pulse msg;
-    	int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);
-
-    	if (recvid < 0) {
-    				perror("MsgReceivePulse failed!");
-    			}
-
-    			if (recvid == 0) {
-    			while(true) {
-
-    		switch (msg.code) {
-
-
-    		// wenn fertig dann in Auslauf
-    		case 12 :	new(this) BZAuslauf;
-    					entry();
-    					break;
-
-
-
-
+    void BZAussortierer::doAction(int event, _pulse msg){
+//
+//    		// wenn fertig dann in Auslauf
+//    		case 12 :	new(this) BZAuslauf;
+//    					entry();
+//    					break;
 
     		}
-
-
-    		}
-    			}
-
-    	}

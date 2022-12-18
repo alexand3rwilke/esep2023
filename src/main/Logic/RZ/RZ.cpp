@@ -28,7 +28,7 @@ void RZ::exit() {
 /**
  * Ruhezustand
  */
-void RZ::doAction(int event){
+void RZ::doAction(int event, _pulse msg){
 
 	switch (event) {
 		//Starte Betriebszustand

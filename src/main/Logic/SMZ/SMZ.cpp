@@ -18,7 +18,7 @@ void SMZ :: exit(){
 /**
  * Wahl Kalibrieren oder Testen
  */
-void SMZ :: doAction(int event){
+void SMZ :: doAction(int event, _pulse msg){
 
 					switch (event) {
 					//Choose calibrationmode

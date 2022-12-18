@@ -27,7 +27,7 @@ private:
 public:
 	void entry()override;
 	void exit() override;
-	void doAction(int) override;
+	void doAction(int, _pulse) override;
 };
 
 

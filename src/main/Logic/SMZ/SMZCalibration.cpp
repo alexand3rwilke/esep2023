@@ -18,7 +18,7 @@ void SMZCalibration::entry(){
 void SMZCalibration::exit(){
 }
 
-void SMZCalibration::doAction(int event){
+void SMZCalibration::doAction(int event, _pulse msg){
 }
 
 /**

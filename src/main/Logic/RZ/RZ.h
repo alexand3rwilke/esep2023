@@ -26,7 +26,7 @@ public:
     void exit() override;
 
     //void estp() override;
-    void doAction(int) override;
+    void doAction(int, _pulse) override;
 
     void estp() override;
 

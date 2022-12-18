@@ -15,6 +15,6 @@ void SMZTesting::exit(){
 
 }
 
-void SMZTesting::doAction(int event){
+void SMZTesting::doAction(int event, _pulse msg){
 
 }

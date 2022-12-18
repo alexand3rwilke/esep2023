@@ -18,34 +18,13 @@ void BZready::entry() {
 
 
     }
-    void BZready::doAction(int event){
-
-    	_pulse msg;
-    	int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);
-
-    	if (recvid < 0) {
-    				perror("MsgReceivePulse failed!");
-    			}
-
-    			if (recvid == 0) {
-    			while(true) {
-
-    		switch (msg.code) {
-
-
+    void BZready::doAction(int event, _pulse msg){
+    	switch(event){
     		// check ob LSE interrupt bekommt
     		case LSE1 :	new(this) BZEinlauf;
     					entry();
     					break;
 
-
-
-
-
     		}
-
-
-    		}
-    			}
 
     	}

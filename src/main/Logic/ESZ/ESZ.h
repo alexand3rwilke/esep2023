@@ -19,7 +19,7 @@ public:
 
 	void entry()override;
 	void exit() override;
-	void doAction(int) override;
+	void doAction(int, _pulse) override;
 };
 
 #endif /* SRC_MAIN_LOGIC_ESZ_H_ */

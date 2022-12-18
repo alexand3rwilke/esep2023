@@ -73,19 +73,19 @@ void Context::eventHandler(){
 			   switch(msg.code) {
 
 			   case LSAinterrupted:
-				   state->doAction(LSAinterrupted);
+				   state->doAction(LSAinterrupted, msg);
 				   break;
 
 			   case LSEinterrupted:
-				   state->doAction(LSEinterrupted);
+				   state->doAction(LSEinterrupted, msg);
 				   break;
 
 			   case ADC_WK_IN_HM:
-				   state->doAction(ADC_WK_IN_HM);
+				   state->doAction(ADC_WK_IN_HM, msg);
 				   break;
 
 			   case	ADC_WK_NIN_HM:
-				   state->doAction(ADC_WK_NIN_HM);
+				   state->doAction(ADC_WK_NIN_HM, msg);
 				   break;
 
 			   case	STRinterrupted:
@@ -101,27 +101,27 @@ void Context::eventHandler(){
 
 						//Taster länger als 2 Sekunden betätigt, dann SMZ
 						if(time_diff >= 2){
-							state->doAction(STR_SMZ);
+							state->doAction(STR_SMZ ,msg);
 							break;
 						//Taster weniger als 2 Sekunden, dann BZ
 						}else{
-							state->doAction(STRinterrupted);
+							state->doAction(STRinterrupted, msg);
 							break;
 						}
 					}
 				   break;
 
 			   case	LSSinterrupted:
-				   state->doAction(LSSinterrupted);
+				   state->doAction(LSSinterrupted , msg);
 				   break;
 
 			  case STR_SMZ:
-				  state->doAction(STR_SMZ);
+				  state->doAction(STR_SMZ, msg);
 				  break;
 
 			  case STPinterrupted:
 				  // if keine Warning
-				  state->doAction(STPinterrupted);
+				  state->doAction(STPinterrupted, msg);
 			   }
 
 		}
