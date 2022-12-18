@@ -127,6 +127,7 @@ using namespace std;
 #define LSRnotInterrupted 105
 #define LSEinterrupted 106
 #define LSEnotInterrupted 107
+#define MTDinterrupted 99
 
 //Aktion ADC
 #define HMSinterrupted 108
@@ -145,29 +146,21 @@ using namespace std;
 //#define RSTnotInterrupted 114
 #define ESTPinterrupted 114
 #define ESTPnotInterrupted 115
+#define STR_SMZ 120
 
 //Aktionen der LED
-#define Q1On 125
-#define Q1Off 126
-#define Q2On 127
-#define Q2Off 128
+#define Q1On 98
+#define Q1Off 97
+#define Q2On 96
+#define Q2Off 95
 
 //Aktionen alles weitere
 #define ACTIVTE_AUSSORTIERER 116
-
 #define TimerTimeout 117
-
 #define WS_DURCHLASSEN 118
 #define WS_AUSSORTIEREN 119
 
-
-//Aktion für SMZ
-#define STR_SMZ 120
-
-
 //enum WS{FWS, WSMB, WSMM, WSO}
-
-//TODO: events laufen bei 128 über weil int_8 auf int alles ändern ?
 
 #define HELLO 125
 

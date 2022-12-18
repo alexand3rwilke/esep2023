@@ -12,7 +12,6 @@ void  SMZDistanceMeasurement_ADC_WS::entry(){
 }
 
 void SMZDistanceMeasurement_ADC_WS::exit(){
-	actions->greenOff();
 }
 
 void SMZDistanceMeasurement_ADC_WS::doAction(int event, _pulse msg){

@@ -30,102 +30,91 @@ Sensor::~Sensor() {
 
 void Sensor::sensorRoutine() {
 
-
-	// Hier signale weiterleiten
-
 	//channel erstellen
-	/* ### Create channel ### */
-				int chanID = ChannelCreate(0);//Create channel to receive interrupt pulse messages.
-				if (chanID < 0) {
-					perror("Could not create a channel!\n");
-				}
+	int chanID = ChannelCreate(0);
+	if (chanID < 0) {
+		perror("Could not create a channel!\n");
+	}
 
-				//Connect to channel
-				int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0);
-				if (conID < 0) {
-					perror("Could not connect to channel!");
-				}
+	//Connect to channel
+	int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0);
+	if (conID < 0) {
+		perror("Could not connect to channel!");
+	}
 
-				senorEvents={LSA1, LSE1, LSS1, HMS1, STR, ESTP, RST, STP, STR_SMZ};
+	senorEvents={LSA1, LSE1, LSS1, HMS1, STR, ESTP, RST, STP, STR_SMZ};
 
-				//printf("Sensorik conID: %d \n", conID);
+	//nur zum Testen von Qnet m
+	//senorEvents={LSA1, LSS1, HMS1, SRT, ESTP, RST, STP};
 
-				//senorEvents={LSA1, LSE1, LSS1, HMS1, SRT, ESTP, RST, STP};
-				//nur zum Testen von Qnet m
-				//senorEvents={LSA1, LSS1, HMS1, SRT, ESTP, RST, STP};
+	disp->registerForEventWIthConnection(senorEvents, conID);
 
-				disp->registerForEventWIthConnection(senorEvents, conID);
+	_pulse pulse;
+	//TODO Estop vor dem Start
+		// run 4ever
+	while (true) {
 
-				_pulse pulse;
-				//TODO Estop vor dem Start
-					// run 4ever
-				while (true) {
+		int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
 
-					int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
+		if (recvid < 0) {
+				perror("MsgReceivePulse failed!- in Sensorik");
+				exit(EXIT_FAILURE);
+		}
+			// Untersuche und Sende event an Dispatcher
+			 switch(pulse.code) {
 
-					if (recvid < 0) {
-							perror("MsgReceivePulse failed!- in Sensorik");
-							exit(EXIT_FAILURE);
+			   case LSA1:
+				   if (pulse.value.sival_int == 1) {
+					   MsgSendPulse(dispID, -1, LSAnotInterrupted, 0);
+					   break;
+				   } else {
+					   MsgSendPulse(dispID, -1, LSAinterrupted, 0);
+				   } break;
+			   case LSE1:
+				   if (pulse.value.sival_int == 1) {
+					   MsgSendPulse(dispID, -1, LSEnotInterrupted, 0);
+					   break;
+				   } else {
+					   MsgSendPulse(dispID, -1, LSEinterrupted, 0);
+				   } break;
+			   case LSS1:
+				   if (pulse.value.sival_int == 1) {
+					   MsgSendPulse(dispID, -1, LSSnotInterrupted, 0);
+					   break;
+				   } else {
+					   MsgSendPulse(dispID, -1, LSSinterrupted, 0);
+				   } break;
+			   case HMS1:
+					   MsgSendPulse(dispID, -1, HMSinterrupted, 0);
+				   break;
+			   case STR:
+				   if (pulse.value.sival_int == 1) {
+					   MsgSendPulse(dispID, -1, STRinterrupted, 0);
+				   } else {
+					   MsgSendPulse(dispID, -1, STRnotInterrupted, 0);
+				   }
+				   break;
+				case STP:
+					if (pulse.value.sival_int == 0) {
+						MsgSendPulse(dispID, -1, STPinterrupted, 0);
 					}
-						// Untersuche und Sende event an Dispatcher
-						 switch(pulse.code) {
+					break;
+				case ESTP:
+				   if (pulse.value.sival_int == 1) {
+					   MsgSendPulse(dispID, -1, ESTPnotInterrupted, 0);
+					   break;
+				   } else {
+					   MsgSendPulse(dispID, -1, ESTPinterrupted, 0);
+				   }
+				   break;
+			   case RST:
+				   if (pulse.value.sival_int == 0) {
+					   MsgSendPulse(dispID, -1, RSTinterrupted, 0);
+				   }
+				   break;
+			   case MTD1:
+				   MsgSendPulse(dispID, -1, MTDinterrupted, 0);
+			   }
 
-						   case LSA1:
-							   if (pulse.value.sival_int == 1) {
-								   MsgSendPulse(dispID, -1, LSAnotInterrupted, 0);
-								   break;
-							   } else {
-								   MsgSendPulse(dispID, -1, LSAinterrupted, 0);
-							   } break;
-						   case LSE1:
-							   if (pulse.value.sival_int == 1) {
-								   MsgSendPulse(dispID, -1, LSEnotInterrupted, 0);
-								   break;
-							   } else {
-								   MsgSendPulse(dispID, -1, LSEinterrupted, 0);
-							   } break;
-						   case LSS1:
-							   if (pulse.value.sival_int == 1) {
-								   MsgSendPulse(dispID, -1, LSSnotInterrupted, 0);
-								   break;
-							   } else {
-								   MsgSendPulse(dispID, -1, LSSinterrupted, 0);
-							   } break;
-						   case HMS1:
-								   MsgSendPulse(dispID, -1, HMSinterrupted, 0);
-							   break;
-
-
-						   case STR:
-							   if (pulse.value.sival_int == 1) {
-								   MsgSendPulse(dispID, -1, STRinterrupted, 0);
-							   } else {
-								   MsgSendPulse(dispID, -1, STRnotInterrupted, 0);
-							   }
-							   break;
-							case STP:
-
-								if (pulse.value.sival_int == 0) {
-									MsgSendPulse(dispID, -1, STPinterrupted, 0);
-								}
-								break;
-
-
-
-							case ESTP:
-							   if (pulse.value.sival_int == 1) {
-								   MsgSendPulse(dispID, -1, ESTPnotInterrupted, 0);
-								   break;
-							   } else {
-								   MsgSendPulse(dispID, -1, ESTPinterrupted, 0);
-							   }
-							   break;
-						   case RST:
-							   if (pulse.value.sival_int == 0) {
-								   MsgSendPulse(dispID, -1, RSTinterrupted, 0);
-							   }
-							   break;
-						   }
-
-					 }
+		 }
 }

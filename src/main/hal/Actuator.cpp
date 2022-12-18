@@ -58,13 +58,8 @@ void Actuator::handleEvents(void){
 	int chanID = ChannelCreate(0);
 	int ConID = ConnectAttach(0,0,chanID,_NTO_SIDE_CHANNEL,0);
 
-	//actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON, YELLOW_OFF, RED_ON, RED_OFF, ACTIVTE_AUSSORTIERER, Q1On, Q1Off, Q2On};
-
-	//printf("Aktorik conID: %d \n", ConID);
 	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON,
-			YELLOW_OFF, RED_ON, RED_OFF,WS_DURCHLASSEN,WS_DURCHLASSEN,ESTPinterrupted};
-
-
+			YELLOW_OFF, RED_ON, RED_OFF,WS_DURCHLASSEN,WS_DURCHLASSEN,ESTPinterrupted, Q1On, Q2On, Q1Off, Q2Off};
 
 	disp->registerForEventWIthConnection(actuatorEvents, ConID);
 	while(true){
@@ -108,12 +103,14 @@ void Actuator::handleEvents(void){
 			break;
 
 			case ESTPinterrupted:
-
 			break;
+
 			case GREEN_BLINKING_ON: amp->flashinLight(GREEN,1);
 			break;
+
 			case YELLOW_BLINKING_ON: amp->flashinLight(YELLOW,1);
 			break;
+
 			case RED_BLINKING_ON: amp->flashinLight(RED,1);
 			break;
 
@@ -122,17 +119,19 @@ void Actuator::handleEvents(void){
 
 			case Q1On:q1_LedOn();
 			break;
+
 			case Q2On:q2_LedOn();
 			break;
+
 			case Q1Off:q1_LedOff();
 			break;
+
 			case Q2Off:q2_LedOff();
 			break;
 
 		 }
 	}
 }
-
 
 // ASSAMBLY LINE
 void Actuator::FB_start(void) {
@@ -168,8 +167,6 @@ void Actuator::assamblyStopOn(void) {
 void Actuator::assamblyStopOff(void) {
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00008000);
 }
-
-
 
 void Actuator::durchlassen(void) {
 	if(istWeiche==0){
