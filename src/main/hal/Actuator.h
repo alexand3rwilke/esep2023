@@ -61,6 +61,7 @@ public:
 
 	void flashinLight(TrafficColer);
 	int getAussortierer(void);
+	int getSorter(void);
 
 	uintptr_t gpio_bank_0;
 	uintptr_t gpio_bank_1;

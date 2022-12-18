@@ -43,11 +43,14 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event, _pulse msg){
 	   tstart = clock();
 
 	   actions->moveSlower();
-	   //TODO: ADC auslesen
+	   break;
+
+   case ADC_SAMPLE_VALUE:
+	   //ADC auslesen und abspeichern
 	   if(wsa_data->distance_FWS_ADC != 0){
-		   //wsa_data->distance_WS_ADC = adc->sample();
+		   wsa_data->distance_WS_ADC = msg.value.sival_int;
 	   }else{
-		   //wsa_data->distance_FWS_ADC = ADCAuslesen();
+		   wsa_data->distance_FWS_ADC = msg.value.sival_int;
 	   }
 	   break;
 
@@ -73,7 +76,7 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event, _pulse msg){
 	   wsa_data->distance_LSS_LSE = time1;
 	   actions->stopFB();
 
-	   //Wenn erst ein WS gemessen wurde, dann mach noch eine Messung
+	   //Wenn 2 WS gemessen wurde, Abbruch
 	   if(wsa_data->distance_WS_ADC != 0){
 		   exit();
 	   }else{

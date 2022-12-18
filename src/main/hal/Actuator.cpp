@@ -248,6 +248,10 @@ int Actuator::getAussortierer(void){
 		 return tmp;
 }
 
+int Actuator::getSorter(){
+	return istWeiche;
+}
+
 
 
 

@@ -126,30 +126,3 @@ void Context::eventHandler(){
 
 		}
 }
-
-//			 * Hier wird die Taste Start geprüft, on die lange gedrückt oder schnell gedrückt
-//							 * Zeit: 2 Sekunden
-//							 * >= : Kalibierung
-//							 * < : Betriebzuistand
-//							 */
-//							if (recvid == 0) {	//pulse received.
-//								if(msg.code == T_STR_GDR || msg.code == FBM2_STR_GDR){
-//
-
-//
-//									while(true) {
-//										int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);
-//
-//
-//										if (msg.code == T_STR_NGDR || msg.code == FBM2_STR_NGDR) {
-//
-//											end_time = time(NULL);
-//
-//											double time_diff = difftime(end_time,start_time);
-//
-//											if(time_diff >= 2){
-//												new(this) KalibrierungIdle;
-//												 entry();
-//
-//											}
-//		}

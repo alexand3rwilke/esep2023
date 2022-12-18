@@ -15,6 +15,7 @@
 #include "../ADC/ADC.h"
 #include "../ADC/Util.h"
 #include "../ADC/tscadc_hw.h"
+#include "../WSAData.h"
 
 class ADC_Service  {
 
@@ -22,11 +23,12 @@ public:
 
 	ADC_Service(Dispatcher *disp);
 	Dispatcher *disp;
-	std::thread* ADCServiceThread;
-	std::vector<int8_t> events;
+	thread* ADCServiceThread;
+	vector<int8_t> events;
 	int dispId;
 	virtual ~ADC_Service();
 	void adcService();
+	WSAData *wsa_data;
 
 };
 
