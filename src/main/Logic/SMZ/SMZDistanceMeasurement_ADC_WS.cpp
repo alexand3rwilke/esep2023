@@ -76,7 +76,7 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event, _pulse msg){
 	   wsa_data->distance_LSS_LSE = time1;
 	   actions->stopFB();
 
-	   //Wenn 2 WS gemessen wurde, Abbruch
+	   //Wenn 2 WS gemessen wurde, State Machine fertig
 	   if(wsa_data->distance_WS_ADC != 0){
 		   exit();
 	   }else{
