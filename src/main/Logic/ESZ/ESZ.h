@@ -11,9 +11,14 @@
 #include "../Basestate.h"
 #include "../../hal/Actuator.h"
 #include "../Context.h"
+#include "../RZ/RZ.h"
+#include "../BZ/BZ.h"
+
 
 class ESZ: public Basestate {
 private:
+	int resetCounter;
+	bool schalteRaus;
 
 public:
 

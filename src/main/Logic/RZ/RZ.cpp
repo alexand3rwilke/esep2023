@@ -14,7 +14,7 @@ void RZ::entry() {
 	cout << "\n  rz entry\n" << endl;
 	//actions->greenOff();
 	//actions->yellowOff();
-	actions->redOff();
+	actions->ampAllOff();
 }
 
 void RZ::exit() {
@@ -39,6 +39,12 @@ void RZ::doAction(int event, _pulse msg){
 		case STR_SMZ:
 			exit();
 			new (this) SMZ;
+			entry();
+			break;
+		case ESTPinterrupted:
+			cout << "Estp in RZ \n" << endl;
+			exit();
+			new(this) ESZ;
 			entry();
 			break;
 	}

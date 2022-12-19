@@ -115,6 +115,7 @@ using namespace std;
 #define GREEN_BLINKING_ON 60
 #define YELLOW_BLINKING_ON 61
 #define RED_BLINKING_ON 62
+#define AMP_ALL_OFF 63
 
 //Aktionen der Sensorik
 #define LSAinterrupted 100

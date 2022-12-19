@@ -18,7 +18,8 @@ class Actuator  {
 private:
 	Dispatcher *disp;
 	Amp *amp;
-
+	thread *aussortiererThread;
+	bool istESTP;
 
 
 public:

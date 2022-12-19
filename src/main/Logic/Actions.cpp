@@ -107,3 +107,7 @@ void Actions::ledQ2Off(){
 	MsgSendPulse(conID,-1,Q2Off,0);
 }
 
+void Actions::ampAllOff(){
+	MsgSendPulse(conID,-1,AMP_ALL_OFF,0);
+}
+

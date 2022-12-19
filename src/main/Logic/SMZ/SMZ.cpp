@@ -35,5 +35,11 @@ void SMZ :: doAction(int event, _pulse msg){
 		new(this)SMZTestingWS;
 		entry();
 		break;
+
+	case ESTPinterrupted:
+		exit();
+		new(this) ESZ;
+		entry();
+		break;
 	}
 }

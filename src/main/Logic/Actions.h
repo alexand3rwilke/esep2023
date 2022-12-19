@@ -38,6 +38,7 @@ public:
 	void yellowOff(void);
 	void redOn(void);
 	void redOff(void);
+	void ampAllOff(void);
 
 	void greenLightBlinking(void);
 	//void greenLightBlinkingOff(void);
@@ -49,6 +50,8 @@ public:
 	void ledQ2On(void);
 	void ledQ1Off(void);
 	void ledQ2Off(void);
+
+
 };
 
 #endif /* SRC_MAIN_LOGIC_ACTIONS_H_ */
