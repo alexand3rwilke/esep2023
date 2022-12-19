@@ -11,7 +11,7 @@
 
 
 void BZAuslauf::entry() {
-
+	actions->stopFB();
 
 }
     void BZAuslauf::exit() {

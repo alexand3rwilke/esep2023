@@ -12,9 +12,14 @@
 
 void BZ::entry(){
 	// grünes licht an entry
+
 	printf("in BZ");
 	actions->greenOn();
+
+	//actions->greenLightBlinking();
+
 	substate = new BZready();
+	substate->setActions(actions);
 	substate->entry();
 }
 
@@ -31,19 +36,38 @@ void BZ::doAction (int event, _pulse msg) {
 
 
 			   case LSAinterrupted:
-				   //substate->doAction(event,msg);
-				   actions->startFB();
+				   new (substate) BZEinlauf;
+				   substate->entry();
 				   break;
+
+			   case ADC_WK_IN_HM:
+				   new (substate) BZHoehenmessung;
+				   substate->entry();
+				//  printf("Werkstuekc in hoehenmesser!!! \n");
+				   actions->moveSlower();
+				   break;
+
+			   case	ADC_WK_NIN_HM:
+				   substate->exit();
+				   break;
+
 
 			   case LSSinterrupted:
 				   actions->durchlassen();
 				   break;
 
 			   case LSEinterrupted:
-				   actions->stopFB();
+				   new (substate) BZAuslauf;
+				   substate->entry();
+				   break;
+
+			   case LSEnotInterrupted:
+				   new (substate) BZready;
+				   substate->entry();
 				   break;
 
 			   case STPinterrupted:
+
 			  		exit();
 			  		new (this) RZ;
 			  		entry();
