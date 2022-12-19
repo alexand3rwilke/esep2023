@@ -24,10 +24,12 @@ public:
 	ADC_Service(Dispatcher *disp);
 	Dispatcher *disp;
 	thread* ADCServiceThread;
+	thread* ADCInterruptServiceThread;
 	vector<int8_t> events;
 	int dispId;
 	virtual ~ADC_Service();
 	void adcService();
+	void adcInterruptService();
 	WSAData *wsa_data;
 
 };
