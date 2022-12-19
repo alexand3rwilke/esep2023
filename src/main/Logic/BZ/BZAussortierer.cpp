@@ -7,10 +7,15 @@
 
 #include "BZAuslauf.h"
 #include "BZAussortierer.h"
+#include "BZUebergabe.h"
 
 
 
 void BZAussortierer::entry() {
+
+	//TODO MUSS NOCH ANGEPAST WERDEN
+	cout << "\n  BZAussortierer entry\n" << endl;
+	actions->durchlassen();
 
 
 }
@@ -24,8 +29,15 @@ void BZAussortierer::entry() {
     void BZAussortierer::doAction(int event, _pulse msg){
 //
 //    		// wenn fertig dann in Auslauf
-//    		case 12 :	new(this) BZAuslauf;
-//    					entry();
-//    					break;
+
+
+    	switch (event) {
+    		case LSEinterrupted :
+    			exit();
+    			new(this) BZUebergabe;
+    					entry();
+    					break;
 
     		}
+
+	}

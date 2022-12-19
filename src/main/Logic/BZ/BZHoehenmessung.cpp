@@ -11,6 +11,8 @@
 
 
 void BZHoehenmessung::entry() {
+
+	cout << "\n  BZHoehenmessung entry\n" << endl;
 	actions->moveSlower();
 
 }
@@ -31,6 +33,21 @@ void BZHoehenmessung::entry() {
 //    		new (this) BZDurchlassen
 //    	}
 
+
+
+
+
+		switch (event) {
+
+
+
+		case ADC_WK_NIN_HM :
+			exit();
+			new(this) BZAussortierer;
+			entry();
+			break;
+
+		}
 
 
     }
