@@ -43,57 +43,34 @@ int main(int argc, char** args) {
 
 		Dispatcher dispatcher;
 
+		WSAData *wsa_data = new WSAData();
 		ISR *isr = new ISR(&dispatcher);
 		Sensor *sensor = new Sensor(&dispatcher);
 		TSCADC tscadc;
 		ADC* adc = new ADC(tscadc);
 		Actions *actions = new Actions(&dispatcher);
 		Actuator *actuator = new Actuator(&dispatcher);
-		//cout << "Aktorik lvl1 \n \n" << endl;
-		//printf("Aktorik lvl1 /n  ---- /n");
 		ADC_Service *adcService = new ADC_Service(&dispatcher);
-		WSAData *wsa_data = new WSAData();
 
 		ContextData *contextData = new ContextData(&dispatcher);
 		Context *context = new Context(&dispatcher, actions,contextData);
 
-		if (strcmp(args[1], "-FBM1") == 0) {
-
-			cout << "Starting Festo FBM1 \n" << endl;
-			QnetServer *server = new QnetServer("FBM1",&dispatcher);
-			QnetClient *client = new QnetClient("FBM2",&dispatcher);
-		}
-		else if (strcmp(args[1], "-FBM2") == 0) {
-
-			cout << "Starting Festo FBM2 \n" << endl;
-			QnetServer *server = new QnetServer("FBM2",&dispatcher);
-			QnetClient *client = new QnetClient("FBM1",&dispatcher);
-		}
+//		if (strcmp(args[1], "-FBM1") == 0) {
+//
+//			cout << "Starting Festo FBM1 \n" << endl;
+//			QnetServer *server = new QnetServer("FBM1",&dispatcher);
+//			QnetClient *client = new QnetClient("FBM2",&dispatcher);
+//		}
+//		else if (strcmp(args[1], "-FBM2") == 0) {
+//
+//			cout << "Starting Festo FBM2 \n" << endl;
+//			QnetServer *server = new QnetServer("FBM2",&dispatcher);
+//			QnetClient *client = new QnetClient("FBM1",&dispatcher);
+//		}
 
 
 
 		//cout << "ende festo" << endl;
-
-
-
-
-
-
-//
-//		while(true){
-//					this_thread::sleep_for(chrono::hours(999999));
-//				}
-
-
-
-	// Sample misst das signal bei aufrud der methode
-	 //adc->sample();
-
-	 // Lese höhe aus dem Register aus
-	 //uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
-
-	 //printf("Value from adc with value %d!\n",heightData);
-
 
 
 	//TODO: Besseres warten

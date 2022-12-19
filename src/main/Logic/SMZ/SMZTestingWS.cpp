@@ -9,6 +9,13 @@
 
 void SMZTestingWS::entry(){
 	actions->greenOn();
+
+	//LEDs testen
+	actions->ledQ1Off();
+	actions->ledQ2Off();
+	sleep(2);
+	actions->ledQ1On();
+	actions->ledQ2On();
 }
 
 void SMZTestingWS::exit(){
@@ -27,7 +34,7 @@ void SMZTestingWS::doAction(int event, _pulse msg){
 
 	case LSAinterrupted:
 		actions->startFB();
-		actions->ledQ1On();
+		actions->ledQ1Off();
 		wkTest = false;
 		break;
 
@@ -43,11 +50,13 @@ void SMZTestingWS::doAction(int event, _pulse msg){
 		}
 		break;
 
-	case ADC_WK_IN_HM:
-		actions->ledQ1Off();
-		break;
+
+//	case ADC_WK_IN_HM:
+//		actions->ledQ1On();
+//		break;
 
 	case ADC_SAMPLE_VALUE:
+		printf("!!!");
 		//In WS Daten speichern
 		break;
 

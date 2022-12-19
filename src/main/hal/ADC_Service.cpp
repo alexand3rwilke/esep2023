@@ -63,11 +63,13 @@ void ADC_Service::adcService() {
 					 		switch(pulse.code){
 					 		case ADC_SAMLING_FINISHED:
 
-					 			//Wenn noch keine Distanzmessung hinterlegt wurde
-					 			if(wsa_data->distance_FB_ADC == 0){
-					 			MsgSendPulse(dispId, -1, ADC_SAMPLE_VALUE, pulse.value.sival_int);
+//					 			//Wenn noch keine Distanzmessung hinterlegt wurde für FB_ADC Messung
+//					 			if(&wsa_data->distance_FB_ADC == 0){
+//					 			MsgSendPulse(dispId, -1, ADC_SAMPLE_VALUE, pulse.value.sival_int);
+//					 			MsgSendPulse(dispId, -1, ADC_START_SAMPLE, pulse.value.sival_int);
 
-					 			}else if(pulse.value.sival_int < 2700 && !isInterrupted){
+
+					 			if(pulse.value.sival_int < 2700 && !isInterrupted){
 								isInterrupted = true;
 								counter++;
 								printf("werkstueck in hoehenmessung  \n");
@@ -81,9 +83,8 @@ void ADC_Service::adcService() {
 									//TODO: oder Wert kann schon mit erster WS-Erkennung verschickt werden ? Testen und Werte ansehen.
 									//Möglicherweise ist die erste Messung schnell genug um nicht über den rand des WS zu springen.
 									//Versende den Wert der Messung
-									MsgSendPulse(dispId, -1, ADC_SAMPLE_VALUE, pulse.value.sival_int);
 								}
-								break;
+					 			break;
 
 					 		case ADC_START_SAMPLE:		adc.sample();
 					 									break;

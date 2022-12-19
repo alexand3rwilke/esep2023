@@ -20,19 +20,20 @@ void SMZ :: exit(){
  */
 void SMZ :: doAction(int event, _pulse msg){
 
-					switch (event) {
-					//Choose calibrationmode
+	switch (event) {
+	//Choose calibrationmode
 
-					case STRinterrupted:
-						exit();
-						new (this)SMZCalibration;
-						break;
+	case STRinterrupted:
+		exit();
+		new (this)SMZCalibration;
+		entry();
+		break;
 
-					//Choose testmode
-					case STPinterrupted:
-						exit();
-						new(this)SMZTesting;
-						entry();
-						break;
-					}
-				}
+	//Choose testmode
+	case STPinterrupted:
+		exit();
+		new(this)SMZTestingWS;
+		entry();
+		break;
+	}
+}

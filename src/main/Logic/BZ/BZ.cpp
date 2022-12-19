@@ -10,6 +10,7 @@
 
 void BZ::entry(){
 	// grünes licht an entry
+	printf("in BZ");
 	actions->greenOn();
 }
 
