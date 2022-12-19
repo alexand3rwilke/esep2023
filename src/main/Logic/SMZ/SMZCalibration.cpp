@@ -9,7 +9,7 @@
 
 void SMZCalibration::entry(){
 	clearThresholds();
-	wsa_data->sorterTyp = act->getSorter();
+	//wsa_data->sorterTyp = act->getSorter();
 	exit();
 	new (this) SMZDistanceMeasurement_ADC_FB;
 	entry();

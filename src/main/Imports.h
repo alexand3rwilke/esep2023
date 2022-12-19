@@ -134,6 +134,9 @@ using namespace std;
 #define ADC_SAMPLE_VALUE 122
 #define ADC_WK_IN_HM 123
 #define ADC_WK_NIN_HM 124
+#define ADC_SAMLING__VALUE_FINISHED 125
+#define ADC_SINGLE_SAMLING_FINISHED 126
+#define ADC_START_SINGLE_SAMPLE 127
 
 //Aktionen der Buttons
 #define STRinterrupted 109

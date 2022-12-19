@@ -55,7 +55,7 @@ void Context::eventHandler(){
 		}
 		//TODO alle sensorsignale einfügen
 		events = {LSAinterrupted,LSEinterrupted,STRinterrupted, STRnotInterrupted, STPinterrupted,
-				LSSinterrupted, LSRinterrupted,ADC_WK_IN_HM,ADC_WK_NIN_HM,STR_SMZ, MTDinterrupted};
+				LSSinterrupted, LSRinterrupted,ADC_WK_IN_HM,ADC_WK_NIN_HM,STR_SMZ, MTDinterrupted,ADC_START_SINGLE_SAMPLE, ADC_SINGLE_SAMLING_FINISHED};
 
 		disp->registerForEventWIthConnection(events, conID);
 
@@ -83,15 +83,16 @@ void Context::eventHandler(){
 				   break;
 
 			   case ADC_WK_IN_HM:
-				   state->doAction(ADC_WK_IN_HM, msg);
+					MsgSendPulse(chanID, -1, ADC_START_SINGLE_SAMPLE, 0);
+				   //state->doAction(ADC_WK_IN_HM, msg);
 				   break;
 
 			   case	ADC_WK_NIN_HM:
 				   state->doAction(ADC_WK_NIN_HM, msg);
 				   break;
 
-			   case ADC_SAMPLE_VALUE:
-				   state->doAction(ADC_SAMPLE_VALUE, msg);
+			   case ADC_SINGLE_SAMLING_FINISHED:
+				   state->doAction(ADC_SINGLE_SAMLING_FINISHED, msg);
 				   break;
 
 			   case	STRinterrupted:

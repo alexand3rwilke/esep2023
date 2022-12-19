@@ -10,6 +10,8 @@
 
 TSCADC tsc;
 ADC adc(tsc);
+ADC adcSingle(tsc);
+
 
 int counter = 0;
 bool isInterrupted = false;
@@ -47,7 +49,8 @@ void ADC_Service::adcInterruptService() {
 			// schicke pulse mit sampling don wenn sampling fertig ist an adc_service selber
 			adc.registerAdcISR(conID,ADC_SAMLING_FINISHED);
 
-			events = {ADC_START_SAMPLE};
+
+			events = {ADC_START_SAMPLE, ADC_SAMLING_FINISHED};
 			disp->registerForEventWIthConnection(events, conID);
 
 			_pulse pulse;
@@ -87,8 +90,9 @@ void ADC_Service::adcInterruptService() {
 								}
 					 			break;
 
-					 		case ADC_START_SAMPLE:		adc.sample();
-					 									break;
+					 		case ADC_START_SAMPLE:
+					 				adc.sample();
+					 				break;
 					 		}
 				 }
 }
@@ -114,9 +118,9 @@ void ADC_Service::adcService() {
 			}
 
 			// schicke pulse mit sampling don wenn sampling fertig ist an adc_service selber
-			adc.registerAdcISR(conID,ADC_SAMLING_FINISHED);
+			adcSingle.registerAdcISR(conID,ADC_SINGLE_SAMLING_FINISHED);
 
-			events = {ADC_START_SAMPLE};
+			events = {ADC_START_SAMPLE, ADC_START_SINGLE_SAMPLE};
 			disp->registerForEventWIthConnection(events, conID);
 
 			_pulse pulse;
@@ -133,13 +137,13 @@ void ADC_Service::adcService() {
 					 		switch(pulse.code){
 
 
-					 		case ADC_SAMLING_FINISHED:
-
-					 			MsgSendPulse(dispId, -1, ADC_SAMPLE_VALUE, pulse.value.sival_int);
+					 		case ADC_SINGLE_SAMLING_FINISHED:
+					 			MsgSendPulse(dispId, -1, ADC_SAMLING__VALUE_FINISHED, pulse.value.sival_int);
 								break;
 
-					 		case ADC_START_SAMPLE:		adc.sample();
-					 									break;
+					 		case ADC_START_SINGLE_SAMPLE:
+					 				adcSingle.sample();
+					 				break;
 					 		}
 				 }
 }
