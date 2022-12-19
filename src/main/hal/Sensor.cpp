@@ -97,6 +97,7 @@ void Sensor::sensorRoutine() {
 
 
 						   case STR:
+							   printf("STR Taste --------Sensorik \n");
 							   if (pulse.value.sival_int == 1) {
 								   MsgSendPulse(dispID, -1, STRinterrupted, 0);
 							   } else {

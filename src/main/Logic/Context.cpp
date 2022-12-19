@@ -25,13 +25,15 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 
 	// Setze state auf RZ
 	state = new RZ();
+
 	disp = dispatcher;
 	dispID = disp->getConnectionID();
 	state->setContextData(contextData);
 	state->setActions(actions);
+	state->entry();
 	ContextThread = new std::thread([this]() {eventHandler();});
 
-	state->entry();
+
 }
 
 Context::~Context() {
@@ -89,12 +91,15 @@ void Context::eventHandler(){
 				   break;
 
 			   case	STRinterrupted:
+				   //state->doAction(STRinterrupted);
+
 					time_t start_time;
 					time_t end_time;
 					start_time = time(NULL);
 
 					//Schaue ob BZ oder SMZ
 					while(true){
+
 						MsgReceivePulse(chanID, &msg, sizeof(_pulse), nullptr);
 						end_time = time(NULL);
 						double time_diff = difftime(end_time,start_time);
