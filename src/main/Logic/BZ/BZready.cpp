@@ -20,15 +20,14 @@ void BZready::entry() {
     }
     void BZready::doAction(int event, _pulse msg){
 
-    	switch(event){
-    		// check ob LSE interrupt bekommt
-    		case LSAinterrupted :
-    		 	cout << "\n  rz entry\n" << endl;
-    			exit();
-    			new(this) BZEinlauf;
-    			entry();
-    			break;
-
-    		}
+//    	switch(event){
+//    		// check ob LSE interrupt bekommt
+//    		case LSAinterrupted :
+//    		 	cout << "\n  rz entry\n" << endl;
+//    			exit();
+//    			new(this) BZEinlauf;
+//    			entry();
+//    			break;
+//    		}
 
     	}

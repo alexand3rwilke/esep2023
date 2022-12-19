@@ -11,30 +11,17 @@
 
 
 void BZHoehenmessung::entry() {
-
+	actions->moveSlower();
 
 }
     void BZHoehenmessung::exit() {
-
+    	actions->moveFaster();
     }
     void BZHoehenmessung::estp() {
 
 
     }
     void BZHoehenmessung::doAction(int event, _pulse msg){
-    		switch (msg.code) {
 
 
-    		// wenn fertig dann in Auslauf
-    		case 12 :	new(this) BZAussortierer;
-    					entry();
-    					break;
-
-
-
-
-
-    		}
-
-
-    		}
+    }

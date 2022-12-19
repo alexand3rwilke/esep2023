@@ -15,6 +15,12 @@
 #include "../ESZ/ESZ.h"
 #include "../ESZ/ESZ.h"
 #include "BZready.h"
+#include "BZEinlauf.h"
+#include "BZAuslauf.h"
+#include "BZAussortierer.h"
+#include "BZHoehenmessung.h"
+
+
 
 /**
  * Erbt von Basic_State

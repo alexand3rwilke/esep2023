@@ -13,6 +13,7 @@
 
 
 void BZEinlauf::entry() {
+	//cout << "BZEinlauf\n" << endl;
 	actions->startFB();
 
 }
