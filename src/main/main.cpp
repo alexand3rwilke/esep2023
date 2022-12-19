@@ -49,26 +49,26 @@ int main(int argc, char** args) {
 		ADC* adc = new ADC(tscadc);
 		Actions *actions = new Actions(&dispatcher);
 		Actuator *actuator = new Actuator(&dispatcher);
-		//cout << "Aktorik lvl1 \n \n" << endl;
-		//printf("Aktorik lvl1 /n  ---- /n");
+//		cout << "Aktorik lvl1 \n \n" << endl;
+//		printf("Aktorik lvl1 /n  ---- /n");
 		ADC_Service *adcService = new ADC_Service(&dispatcher);
 		WSAData *wsa_data = new WSAData();
 
 		ContextData *contextData = new ContextData(&dispatcher);
 		Context *context = new Context(&dispatcher, actions,contextData);
 
-		if (strcmp(args[1], "-FBM1") == 0) {
-
-			cout << "Starting Festo FBM1 \n" << endl;
-			QnetServer *server = new QnetServer("FBM1",&dispatcher);
-			QnetClient *client = new QnetClient("FBM2",&dispatcher);
-		}
-		else if (strcmp(args[1], "-FBM2") == 0) {
-
-			cout << "Starting Festo FBM2 \n" << endl;
-			QnetServer *server = new QnetServer("FBM2",&dispatcher);
-			QnetClient *client = new QnetClient("FBM1",&dispatcher);
-		}
+//		if (strcmp(args[1], "-FBM1") == 0) {
+//
+//			cout << "Starting Festo FBM1 \n" << endl;
+//			QnetServer *server = new QnetServer("FBM1",&dispatcher);
+//			QnetClient *client = new QnetClient("FBM2",&dispatcher);
+//		}
+//		else if (strcmp(args[1], "-FBM2") == 0) {
+//
+//			cout << "Starting Festo FBM2 \n" << endl;
+//			QnetServer *server = new QnetServer("FBM2",&dispatcher);
+//			QnetClient *client = new QnetClient("FBM1",&dispatcher);
+//		}
 
 
 

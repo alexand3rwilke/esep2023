@@ -11,8 +11,8 @@
 
 void RZ::entry() {
 
-
-	printf("---in rz entry");
+	cout << "\n  rz entry\n" << endl;
+	//printf("---in rz entry");
 	actions->greenOff();
 	actions->yellowOff();
 	actions->redOff();
@@ -28,11 +28,12 @@ void RZ::exit() {
 /**
  * Ruhezustand
  */
-void RZ::doAction(int event, _pulse msg){
 
+void RZ::doAction(int event, _pulse msg){
 	switch (event) {
 		//Starte Betriebszustand
 		case STRinterrupted:
+			printf("\n wechsel zu BZ \n");
 			exit();
 			new(this) BZ;
 			entry();

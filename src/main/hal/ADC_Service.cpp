@@ -64,7 +64,7 @@ void ADC_Service::adcService() {
 					 		case ADC_SAMLING_FINISHED:
 
 					 			//Wenn noch keine Distanzmessung hinterlegt wurde
-					 			if(wsa_data->distance_FB_ADC == 0){
+					 			if(&wsa_data->distance_FB_ADC == 0){
 					 			MsgSendPulse(dispId, -1, ADC_SAMPLE_VALUE, pulse.value.sival_int);
 
 					 			}else if(pulse.value.sival_int < 2700 && !isInterrupted){

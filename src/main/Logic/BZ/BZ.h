@@ -14,6 +14,7 @@
 #include "../../WSAData.h"
 #include "../ESZ/ESZ.h"
 #include "../ESZ/ESZ.h"
+#include "BZready.h"
 
 /**
  * Erbt von Basic_State

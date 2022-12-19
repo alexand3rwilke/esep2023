@@ -25,7 +25,7 @@ void BZEinlauf::entry() {
     }
     void BZEinlauf::doAction(int event, _pulse msg){
 
-    		switch (msg.code) {
+    		switch (event) {
 
 
     		// checke ob höhenmesser interrupt angekommen ist dann next state

@@ -8,9 +8,13 @@
 #include "BZ.h"
 #include "../RZ/RZ.h"
 
+
+
 void BZ::entry(){
 	// grünes licht an entry
 	actions->greenOn();
+	substate = new BZready();
+	substate->entry();
 }
 
 void BZ::exit(){
@@ -26,6 +30,7 @@ void BZ::doAction (int event, _pulse msg) {
 
 
 			   case LSAinterrupted:
+				   //substate->doAction(event,msg);
 				   actions->startFB();
 				   break;
 
@@ -44,9 +49,10 @@ void BZ::doAction (int event, _pulse msg) {
 			  		break;
 
 
-				case ESTP:	new(this) ESZ;
-						entry();
-						break;
+				case ESTP:
+					new(this) ESZ;
+					entry();
+					break;
 				}
 
 }

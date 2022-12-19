@@ -40,7 +40,6 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 	start_LedOn();
 	stop_LedOff();
 
-	printf("Aktorik startz \n  ---- \n");
 	istWeiche = getAussortierer();
 
 
@@ -237,7 +236,6 @@ void Actuator::q2_LedOff(void) {
 
 int Actuator::getAussortierer(void){
 
-//		 int tmp = in32((uintptr_t) (gpio_bank_1 + GPIO_DATAIN));
 		int tmp = in32((uintptr_t) (gpio_bank_0 + 0x138));
 		 uint32_t bit = 14;
 		 tmp = tmp & (1<<bit);

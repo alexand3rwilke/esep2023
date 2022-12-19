@@ -84,6 +84,13 @@ void Sensor::sensorRoutine() {
 				   } else {
 					   MsgSendPulse(dispID, -1, LSSinterrupted, 0);
 				   } break;
+			   case LSR1:
+				   if (pulse.value.sival_int == 1) {
+					   MsgSendPulse(dispID, -1, LSRnotInterrupted, 0);
+					   break;
+				   } else {
+					   MsgSendPulse(dispID, -1, LSRinterrupted, 0);
+				   } break;
 			   case HMS1:
 					   MsgSendPulse(dispID, -1, HMSinterrupted, 0);
 				   break;
@@ -98,6 +105,7 @@ void Sensor::sensorRoutine() {
 					if (pulse.value.sival_int == 0) {
 						MsgSendPulse(dispID, -1, STPinterrupted, 0);
 					}
+
 					break;
 				case ESTP:
 				   if (pulse.value.sival_int == 1) {
@@ -117,4 +125,68 @@ void Sensor::sensorRoutine() {
 			   }
 
 		 }
+//=======
+//						// Untersuche und Sende event an Dispatcher
+//						 switch(pulse.code) {
+//
+//						   case LSA1:
+//							   if (pulse.value.sival_int == 1) {
+//								   MsgSendPulse(dispID, -1, LSAnotInterrupted, 0);
+//								   break;
+//							   } else {
+//								   MsgSendPulse(dispID, -1, LSAinterrupted, 0);
+//							   } break;
+//						   case LSE1:
+//							   if (pulse.value.sival_int == 1) {
+//								   MsgSendPulse(dispID, -1, LSEnotInterrupted, 0);
+//								   break;
+//							   } else {
+//								   MsgSendPulse(dispID, -1, LSEinterrupted, 0);
+//							   } break;
+//						   case LSS1:
+//							   if (pulse.value.sival_int == 1) {
+//								   MsgSendPulse(dispID, -1, LSSnotInterrupted, 0);
+//								   break;
+//							   } else {
+//								   MsgSendPulse(dispID, -1, LSSinterrupted, 0);
+//							   } break;
+//						   case HMS1:
+//								   MsgSendPulse(dispID, -1, HMSinterrupted, 0);
+//							   break;
+//
+//
+//						   case STR:
+//							   printf("STR Taste --------Sensorik \n");
+//							   if (pulse.value.sival_int == 1) {
+//								   MsgSendPulse(dispID, -1, STRinterrupted, 0);
+//							   } else {
+//								   MsgSendPulse(dispID, -1, STRnotInterrupted, 0);
+//							   }
+//							   break;
+//							case STP:
+//
+//								if (pulse.value.sival_int == 0) {
+//									MsgSendPulse(dispID, -1, STPinterrupted, 0);
+//								}
+//								break;
+//
+//
+//
+//							case ESTP:
+//							   if (pulse.value.sival_int == 1) {
+//								   MsgSendPulse(dispID, -1, ESTPnotInterrupted, 0);
+//								   break;
+//							   } else {
+//								   MsgSendPulse(dispID, -1, ESTPinterrupted, 0);
+//							   }
+//							   break;
+//						   case RST:
+//							   if (pulse.value.sival_int == 0) {
+//								   MsgSendPulse(dispID, -1, RSTinterrupted, 0);
+//							   }
+//							   break;
+//						   }
+//
+//					 }
+//>>>>>>> dev
 }
