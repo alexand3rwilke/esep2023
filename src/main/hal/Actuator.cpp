@@ -105,9 +105,7 @@ void Actuator::handleEvents(void){
 			case ESTPinterrupted:
 			break;
 
-			case GREEN_BLINKING_ON:
-				cout << "GREEN \n" << endl;
-				amp->flashinLight(GREEN,1);
+			case GREEN_BLINKING_ON:	amp->flashinLight(GREEN,1);
 			break;
 
 			case YELLOW_BLINKING_ON: amp->flashinLight(YELLOW,1);

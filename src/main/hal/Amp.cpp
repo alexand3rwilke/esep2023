@@ -94,7 +94,6 @@ void Amp::yellowFlashing(int hz) {
 }
 
 void Amp::greenFlashing(int hz) {
-	cout << "Greenflashing\n" << endl;
 	while(greenIsFlashing) {
 		out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00040000);
 		usleep(hz*300000);
@@ -104,7 +103,6 @@ void Amp::greenFlashing(int hz) {
 }
 
 void Amp::flashinLight(TrafficColer coler, int hz) {
-	cout << "GREEN \n" << endl;
 	switch(coler){
 	case RED:
 		if(!redIsFlashing){
@@ -119,7 +117,6 @@ void Amp::flashinLight(TrafficColer coler, int hz) {
 		}
 		break;
 	case GREEN:
-
 		if(!greenIsFlashing){
 			greenIsFlashing = true;
 			green_thread = new std::thread([this, hz]() {greenFlashing(hz);});
