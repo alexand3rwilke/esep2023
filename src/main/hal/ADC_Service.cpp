@@ -87,8 +87,9 @@ void ADC_Service::adcInterruptService() {
 								}
 					 			break;
 
-					 		case ADC_START_SAMPLE:		adc.sample();
-					 									break;
+					 		case ADC_START_SAMPLE:
+					 			adc.sample();
+					 			break;
 					 		}
 				 }
 }

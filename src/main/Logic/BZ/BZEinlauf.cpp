@@ -13,7 +13,7 @@
 
 
 void BZEinlauf::entry() {
-	//cout << "BZEinlauf\n" << endl;
+	cout << "\n  BZEinlauf entry\n" << endl;
 	actions->startFB();
 
 }
@@ -26,13 +26,17 @@ void BZEinlauf::entry() {
     }
     void BZEinlauf::doAction(int event, _pulse msg){
 
+
+
     		switch (event) {
 
 
-    		// checke ob höhenmesser interrupt angekommen ist dann next state
-    		case 12 :	new(this) BZHoehenmessung;
-    					entry();
-    					break;
+
+    		case ADC_WK_IN_HM :
+    			exit();
+    			new(this) BZHoehenmessung;
+    			entry();
+    			break;
 
     		}
 

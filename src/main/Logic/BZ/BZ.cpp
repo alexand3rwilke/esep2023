@@ -7,7 +7,7 @@
 
 #include "BZ.h"
 #include "../RZ/RZ.h"
-
+#include "../ESZ/ESZ.h"
 
 
 void BZ::entry(){
@@ -17,7 +17,6 @@ void BZ::entry(){
 	//actions->greenOn();
 
 	actions->greenLightBlinking();
-
 	substate = new BZready();
 	substate->setActions(actions);
 	substate->entry();
@@ -32,49 +31,37 @@ void BZ::exit(){
 
 void BZ::doAction (int event, _pulse msg) {
 
+	///
+				// gebe event an substate weiter
+				substate->doAction(event, msg);
+
+	//
 				switch (event) {
 
 
-			   case LSAinterrupted:
-				   new (substate) BZEinlauf;
-				   substate->entry();
+			   case ESTPinterrupted:
+				   exit();
+				   new (this) ESZ;
+				   entry();
 				   break;
 
-			   case ADC_WK_IN_HM:
-				   new (substate) BZHoehenmessung;
-				   substate->entry();
-				//  printf("Werkstuekc in hoehenmesser!!! \n");
-				   actions->moveSlower();
-				   break;
-
-			   case	ADC_WK_NIN_HM:
-				   substate->exit();
-				   break;
-
-
-			   case LSSinterrupted:
-				   actions->durchlassen();
-				   break;
-
-			   case LSEinterrupted:
-				   new (substate) BZAuslauf;
-				   substate->entry();
-				   break;
-
-			   case LSEnotInterrupted:
-				   new (substate) BZready;
-				   substate->entry();
-				   break;
 
 			   case STPinterrupted:
-
-			  		exit();
+				   exit();
 			  		new (this) RZ;
 			  		entry();
 			  		break;
 
 
+				case STRinterrupted:
+					  exit();
+					new(this) BZ;
+					entry();
+					break;
+
+
 				case ESTP:
+					  exit();
 					new(this) ESZ;
 					entry();
 					break;
