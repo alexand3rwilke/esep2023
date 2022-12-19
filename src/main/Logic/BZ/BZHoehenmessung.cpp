@@ -23,5 +23,14 @@ void BZHoehenmessung::entry() {
     }
     void BZHoehenmessung::doAction(int event, _pulse msg){
 
+//    	int adcHeight = msg.value.sival_int
+//    	if( contextData->getWerkstueckType() != getWKType(adcHeight) 9 {
+//    		new (this) BZAussortieren;
+//    	} else {
+//
+//    		new (this) BZDurchlassen
+//    	}
+
+
 
     }

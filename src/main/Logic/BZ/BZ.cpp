@@ -13,14 +13,14 @@
 void BZ::entry(){
 	// grünes licht an entry
 
-	printf("in BZ");
-	//actions->greenOn();
-
-	actions->greenLightBlinking();
+	actions->greenOn();
 
 	substate = new BZready();
 	substate->setActions(actions);
+	substate->setContextData(contextData);
 	substate->entry();
+//	substate->contextData
+
 }
 
 void BZ::exit(){
@@ -74,7 +74,8 @@ void BZ::doAction (int event, _pulse msg) {
 			  		break;
 
 
-				case ESTP:
+				case ESTPinterrupted:
+					exit();
 					new(this) ESZ;
 					entry();
 					break;

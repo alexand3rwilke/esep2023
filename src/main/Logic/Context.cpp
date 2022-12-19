@@ -54,8 +54,8 @@ void Context::eventHandler(){
 			perror("Could not connect to channel!");
 		}
 		//TODO alle sensorsignale einfügen
-		events = {LSAinterrupted,LSEinterrupted,STRinterrupted, STRnotInterrupted, STPinterrupted,
-				LSSinterrupted, LSRinterrupted,ADC_WK_IN_HM,ADC_WK_NIN_HM,STR_SMZ, MTDinterrupted};
+		events = {LSAinterrupted,LSEinterrupted,STRinterrupted, STRnotInterrupted, STPinterrupted, RSTinterrupted,
+				LSSinterrupted, LSRinterrupted,ADC_WK_IN_HM,ADC_WK_NIN_HM,STR_SMZ, MTDinterrupted, ESTPinterrupted, ESTPnotInterrupted};
 
 		disp->registerForEventWIthConnection(events, conID);
 
@@ -73,6 +73,22 @@ void Context::eventHandler(){
 
 
 			   switch(msg.code) {
+
+			   //----------------------------------------------------
+			   // EStop
+			   case ESTPinterrupted:
+			 		state->doAction(ESTPinterrupted, msg);
+			 		break;
+
+			   case ESTPnotInterrupted:
+			   		state->doAction(ESTPnotInterrupted, msg);
+			   		break;
+			   case RSTinterrupted:
+			  		state->doAction(RSTinterrupted, msg);
+			  		break;
+
+
+			   	//----------------------------------------------------
 
 			   case LSAinterrupted:
 				   state->doAction(LSAinterrupted, msg);

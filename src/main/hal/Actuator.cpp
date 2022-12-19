@@ -40,6 +40,7 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 	start_LedOn();
 	stop_LedOff();
 
+
 	istWeiche = getAussortierer();
 
 
@@ -59,7 +60,7 @@ void Actuator::handleEvents(void){
 
 	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON,
 			YELLOW_OFF, RED_ON, RED_OFF,WS_DURCHLASSEN,WS_DURCHLASSEN,ESTPinterrupted, Q1On, Q2On, Q1Off, Q2Off, GREEN_BLINKING_ON,
-			RED_BLINKING_ON,YELLOW_BLINKING_ON};
+			RED_BLINKING_ON,YELLOW_BLINKING_ON,AMP_ALL_OFF};
 
 	disp->registerForEventWIthConnection(actuatorEvents, ConID);
 	while(true){
@@ -108,13 +109,17 @@ void Actuator::handleEvents(void){
 			case GREEN_BLINKING_ON:	amp->flashinLight(GREEN,1);
 			break;
 
-			case YELLOW_BLINKING_ON: amp->flashinLight(YELLOW,1);
+			case YELLOW_BLINKING_ON: amp->flashinLight(YELLOW,2);
 			break;
 
 			case RED_BLINKING_ON: amp->flashinLight(RED,1);
 			break;
 
-			case WS_DURCHLASSEN:durchlassen();
+			case WS_DURCHLASSEN:
+				aussortiererThread = new thread([this]() {durchlassen();});
+			break;
+			case WS_AUSSORTIEREN:
+				aussortiererThread = new thread([this]() {aussortieren();});
 			break;
 
 			case Q1On:q1_LedOn();
@@ -129,6 +134,8 @@ void Actuator::handleEvents(void){
 			case Q2Off:q2_LedOff();
 			break;
 
+			case AMP_ALL_OFF: amp->ampOff();
+			break;
 		 }
 	}
 }
@@ -171,7 +178,7 @@ void Actuator::assamblyStopOff(void) {
 void Actuator::durchlassen(void) {
 	if(istWeiche==0){
 		out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00080000);
-			usleep(1000 * (1 * 1000 ));
+			usleep(1000 * (1.2  * 1000 ));
 			//weiche wieder zu machen
 			out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
 	}
@@ -181,12 +188,15 @@ void Actuator::durchlassen(void) {
 void Actuator::aussortieren(void) {
 	if(istWeiche!=0){
 			out32(GPIO_SET_REGISTER(gpio_bank_1), 0x00080000);
-				usleep(1000 * (1 * 1000 ));
+				usleep(1000 * (1.2 * 1000 ));
 				//Auswerfer zruückfahren
 				out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
 	}
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
 }
+//void Actuator::aussortieren(void) {
+//	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
+//}
 
 void Actuator::estp(void) {
 	FB_stop();
@@ -248,6 +258,8 @@ int Actuator::getAussortierer(void){
 int Actuator::getSorter(){
 	return istWeiche;
 }
+
+
 
 
 
