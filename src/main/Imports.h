@@ -95,8 +95,6 @@ using namespace std;
 #define ESTP 27
 
 //LEDs pin
-#define Q1 gpio_bank_2 + 0x194; //Wir müssen
-#define Q2 gpio_bank_2 + 0x190; //noch getestet werden !!
 
 //Metall Detector
 #define MTD1 7

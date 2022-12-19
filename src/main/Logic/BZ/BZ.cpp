@@ -12,6 +12,7 @@
 
 void BZ::entry(){
 	// grünes licht an entry
+	printf("in BZ");
 	actions->greenOn();
 	substate = new BZready();
 	substate->entry();

@@ -223,7 +223,8 @@ void Actuator::q1_LedOn(void) {
 }
 
 void Actuator::q1_LedOff(void) {
-	out32(GPIO_CLEAR_REGISTER(gpio_bank_2), (0x1 << 2));
+	//out32(GPIO_CLEAR_REGISTER(gpio_bank_2), (0x1 << 2));
+	out32((uintptr_t) (gpio_bank_2 + 0x190), 1 << 4);
 }
 
 void Actuator::q2_LedOn(void) {

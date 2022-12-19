@@ -12,12 +12,9 @@
 void RZ::entry() {
 
 	cout << "\n  rz entry\n" << endl;
-	//printf("---in rz entry");
 	actions->greenOff();
 	actions->yellowOff();
 	actions->redOff();
-
-
 }
 
 void RZ::exit() {
