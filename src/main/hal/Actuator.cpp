@@ -58,7 +58,8 @@ void Actuator::handleEvents(void){
 	int ConID = ConnectAttach(0,0,chanID,_NTO_SIDE_CHANNEL,0);
 
 	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON,
-			YELLOW_OFF, RED_ON, RED_OFF,WS_DURCHLASSEN,WS_DURCHLASSEN,ESTPinterrupted, Q1On, Q2On, Q1Off, Q2Off};
+			YELLOW_OFF, RED_ON, RED_OFF,WS_DURCHLASSEN,WS_DURCHLASSEN,ESTPinterrupted, Q1On, Q2On, Q1Off, Q2Off, GREEN_BLINKING_ON,
+			RED_BLINKING_ON,YELLOW_BLINKING_ON};
 
 	disp->registerForEventWIthConnection(actuatorEvents, ConID);
 	while(true){
@@ -106,7 +107,7 @@ void Actuator::handleEvents(void){
 
 			case GREEN_BLINKING_ON:
 				cout << "GREEN \n" << endl;
-				amp->flashinLight(GREEN,2);
+				amp->flashinLight(GREEN,1);
 			break;
 
 			case YELLOW_BLINKING_ON: amp->flashinLight(YELLOW,1);

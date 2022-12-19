@@ -14,9 +14,9 @@ void BZ::entry(){
 	// grünes licht an entry
 
 	printf("in BZ");
-	actions->greenOn();
+	//actions->greenOn();
 
-	//actions->greenLightBlinking();
+	actions->greenLightBlinking();
 
 	substate = new BZready();
 	substate->setActions(actions);

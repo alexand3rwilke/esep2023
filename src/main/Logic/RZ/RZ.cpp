@@ -12,8 +12,8 @@
 void RZ::entry() {
 
 	cout << "\n  rz entry\n" << endl;
-	actions->greenOff();
-	actions->yellowOff();
+	//actions->greenOff();
+	//actions->yellowOff();
 	actions->redOff();
 }
 

@@ -75,6 +75,7 @@ void Actions::redOff(){
 }
 
 void Actions::greenLightBlinking(){
+
 	MsgSendPulse(conID,-1,GREEN_BLINKING_ON,0);
 
 }
