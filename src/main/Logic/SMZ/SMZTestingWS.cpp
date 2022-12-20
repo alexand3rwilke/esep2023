@@ -8,14 +8,13 @@
 #include "SMZTestingWS.h"
 
 void SMZTestingWS::entry(){
-	actions->greenOn();
 
 	//LEDs testen
-	actions->ledQ1Off();
-	actions->ledQ2Off();
+	actions->ledQ1Off();//ist q2 off
+	//actions->ledQ2Off();
 	sleep(2);
 	actions->ledQ1On();
-	actions->ledQ2On();
+	//actions->ledQ2On();
 }
 
 void SMZTestingWS::exit(){
@@ -50,14 +49,12 @@ void SMZTestingWS::doAction(int event, _pulse msg){
 		}
 		break;
 
+	case ADC_WK_IN_HM:
+		actions->ledQ1On();
+		break;
 
-//	case ADC_WK_IN_HM:
-//		actions->ledQ1On();
-//		break;
-
-	case ADC_SAMPLE_VALUE:
+	case ADC_START_SINGLE_SAMPLE:
 		printf("!!!");
-		//In WS Daten speichern
 		break;
 
 	case MTDinterrupted:

@@ -14,6 +14,7 @@
 #include "../../WSAData.h"
 #include "SMZDistanceMeasurementADCFB.h"
 #include "../../Imports.h"
+#include "../RZ/RZ.h"
 
 class SMZCalibration : public Basestate{
 private:
@@ -21,6 +22,7 @@ private:
 	int myConnection;
 	Dispatcher *disp;
 	Actuator *act;
+	WSAData *wsa_data;
 
 public:
 	void entry()override;

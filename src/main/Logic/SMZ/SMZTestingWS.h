@@ -22,6 +22,7 @@ private:
 	int myConnection;
 	Dispatcher *disp;
 	bool wkTest;
+	WSAData *wsa_data;
 
 public:
 	void entry()override;

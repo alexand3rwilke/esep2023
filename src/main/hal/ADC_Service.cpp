@@ -10,6 +10,8 @@
 
 TSCADC tsc;
 ADC adc(tsc);
+ADC adcSingle(tsc);
+
 
 int counter = 0;
 bool isInterrupted = false;
@@ -47,7 +49,8 @@ void ADC_Service::adcInterruptService() {
 			// schicke pulse mit sampling don wenn sampling fertig ist an adc_service selber
 			adc.registerAdcISR(conID,ADC_SAMLING_FINISHED);
 
-			events = {ADC_START_SAMPLE};
+
+			events = {ADC_START_SAMPLE, ADC_SAMLING_FINISHED};
 			disp->registerForEventWIthConnection(events, conID);
 
 			_pulse pulse;
@@ -62,34 +65,31 @@ void ADC_Service::adcInterruptService() {
 					 			exit(EXIT_FAILURE);
 					 		}
 					 		// send adc value to dispathcer
-					 		switch(pulse.code){
-					 		case ADC_SAMLING_FINISHED:
+					 		//switch(pulse.code){
+					 		//case ADC_SAMLING_FINISHED:
 
-//					 			//Wenn noch keine Distanzmessung hinterlegt wurde für FB_ADC Messung
+					 			//Wenn noch keine Distanzmessung hinterlegt wurde für FB_ADC Messung
 //					 			if(&wsa_data->distance_FB_ADC == 0){
-//					 			MsgSendPulse(dispId, -1, ADC_SAMPLE_VALUE, pulse.value.sival_int);
-//					 			MsgSendPulse(dispId, -1, ADC_START_SAMPLE, pulse.value.sival_int);
-
-					 			if(pulse.value.sival_int < 2700 && !isInterrupted){
+//					 			MsgSendPulse(dispId, -1, ADC_WK_IN_HM, pulse.value.sival_int);
+//					 			}
+					 		sleep(2);
+					 			//WS in Höhenmessung
+					 		 if(pulse.value.sival_int < 2700 && !isInterrupted){
 								isInterrupted = true;
 								counter++;
 								printf("werkstueck in hoehenmessung  \n");
 								MsgSendPulse(dispId, -1, ADC_WK_IN_HM, pulse.value.sival_int);
 								}
-
+					 			//WS raus aus Höhenmessung
 								else if(pulse.value.sival_int > 2700 && isInterrupted){
 									isInterrupted = false;
 									MsgSendPulse(dispId, -1, ADC_WK_NIN_HM, pulse.value.sival_int);
-									//TODO: Wert der versendet werden soll, muss hier noch zwischendurch gespeichert und weiterverarbeitet werden
-									//TODO: oder Wert kann schon mit erster WS-Erkennung verschickt werden ? Testen und Werte ansehen.
-									//Möglicherweise ist die erste Messung schnell genug um nicht über den rand des WS zu springen.
-									//Versende den Wert der Messung
 								}
-					 			break;
-
+					 			//break;
+					 			switch(pulse.code){
 					 		case ADC_START_SAMPLE:
-					 			adc.sample();
-					 			break;
+					 				adc.sample();
+					 				break;
 					 		}
 				 }
 }
@@ -115,9 +115,9 @@ void ADC_Service::adcService() {
 			}
 
 			// schicke pulse mit sampling don wenn sampling fertig ist an adc_service selber
-			adc.registerAdcISR(conID,ADC_SAMLING_FINISHED);
+			adcSingle.registerAdcISR(conID,ADC_SINGLE_SAMLING_FINISHED);
 
-			events = {ADC_START_SAMPLE};
+			events = {ADC_START_SAMPLE, ADC_START_SINGLE_SAMPLE};
 			disp->registerForEventWIthConnection(events, conID);
 
 			_pulse pulse;
@@ -134,13 +134,14 @@ void ADC_Service::adcService() {
 					 		switch(pulse.code){
 
 
-					 		case ADC_SAMLING_FINISHED:
-
-					 			MsgSendPulse(dispId, -1, ADC_SAMPLE_VALUE, pulse.value.sival_int);
+					 		case ADC_SINGLE_SAMLING_FINISHED:
+					 			MsgSendPulse(dispId, -1, ADC_SAMLING__VALUE_FINISHED, pulse.value.sival_int);
 								break;
 
-					 		case ADC_START_SAMPLE:		adc.sample();
-					 									break;
+					 		case ADC_START_SINGLE_SAMPLE:
+					 				adcSingle.sample();
+
+					 				break;
 					 		}
 				 }
 }

@@ -12,9 +12,9 @@
 
 void BZ::entry(){
 	// grünes licht an entry
-
 	actions->greenOn();
-
+	printf("in BZ");
+	actions->greenOn();
 	substate = new BZready();
 	substate->setActions(actions);
 	substate->setContextData(contextData);

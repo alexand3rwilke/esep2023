@@ -23,6 +23,7 @@ private:
 	Dispatcher *disp;
 	double time1, tstart;
 	ADC *adc;
+	WSAData *wsa_data;
 
 public:
 	void entry()override;
