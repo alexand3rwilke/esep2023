@@ -50,7 +50,11 @@ void ADC_Service::adcInterruptService() {
 			adc.registerAdcISR(conID,ADC_SAMLING_FINISHED);
 
 
+
 			events = {ADC_START_SAMPLE, ADC_SAMLING_FINISHED};
+
+			//events = {ADC_START_SAMPLE};
+
 			disp->registerForEventWIthConnection(events, conID);
 
 			_pulse pulse;

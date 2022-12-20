@@ -8,6 +8,7 @@
 #include "BZAuslauf.h"
 #include "BZAussortierer.h"
 #include "BZUebergabe.h"
+#include "BZ.h"
 
 
 
@@ -15,7 +16,7 @@ void BZAussortierer::entry() {
 
 	//TODO MUSS NOCH ANGEPAST WERDEN
 	cout << "\n  BZAussortierer entry\n" << endl;
-	actions->durchlassen();
+
 
 
 }
@@ -35,8 +36,22 @@ void BZAussortierer::entry() {
     		case LSEinterrupted :
     			exit();
     			new(this) BZUebergabe;
-    					entry();
-    					break;
+    			entry();
+    			break;
+
+
+    		case LSSinterrupted :
+    			actions->durchlassen();
+    			break;
+
+
+
+    		case LSRinterrupted :
+    		    exit();
+    		    actions->stopFB();
+    		    new (this) BZready;
+    		    entry();
+
 
     		}
 
