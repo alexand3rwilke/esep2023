@@ -14,6 +14,8 @@
 #include "../../WSAData.h"
 #include "SMZDistanceMeasurementADCFB.h"
 #include "../../Imports.h"
+#include "../BZ/BZ.h"
+
 
 class SMZCalibration : public Basestate{
 private:

@@ -8,8 +8,8 @@
 #include "SMZCalibration.h"
 
 void SMZCalibration::entry(){
-	clearThresholds();
-	wsa_data->sorterTyp = act->getSorter();
+//	clearThresholds();
+//	wsa_data->sorterTyp = act->getSorter();
 	exit();
 	new (this) SMZDistanceMeasurement_ADC_FB;
 	entry();

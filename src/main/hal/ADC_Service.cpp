@@ -47,7 +47,7 @@ void ADC_Service::adcInterruptService() {
 			// schicke pulse mit sampling don wenn sampling fertig ist an adc_service selber
 			adc.registerAdcISR(conID,ADC_SAMLING_FINISHED);
 
-			events = {ADC_START_SAMPLE};
+			//events = {ADC_START_SAMPLE};
 			disp->registerForEventWIthConnection(events, conID);
 
 			_pulse pulse;

@@ -60,12 +60,6 @@ void BZ::doAction (int event, _pulse msg) {
 					entry();
 					break;
 
-
-				case ESTPinterrupted:
-					exit();
-					new(this) ESZ;
-					entry();
-					break;
 				}
 
 }
