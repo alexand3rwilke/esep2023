@@ -25,7 +25,7 @@ void SMZ :: doAction(int event, _pulse msg){
 	//Choose calibrationmode
 	case STRinterrupted:
 		exit();
-		new (this)SMZCalibration;
+		new(this)SMZCalibration;
 		entry();
 		break;
 

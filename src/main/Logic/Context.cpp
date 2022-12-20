@@ -83,8 +83,8 @@ void Context::eventHandler(){
 				   break;
 
 			   case ADC_WK_IN_HM:
-					MsgSendPulse(chanID, -1, ADC_START_SINGLE_SAMPLE, 0);
-				   //state->doAction(ADC_WK_IN_HM, msg);
+				   MsgSendPulse(chanID, -1, ADC_START_SINGLE_SAMPLE, 0);
+				   state->doAction(ADC_WK_IN_HM, msg);
 				   break;
 
 			   case	ADC_WK_NIN_HM:

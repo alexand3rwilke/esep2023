@@ -19,7 +19,7 @@ void SMZDistanceMeasurement_ADC_FB::doAction(int event, _pulse msg){
 	//Höhe FB zu ADC messen
 	switch(event){
 
-		case ADC_START_SINGLE_SAMPLE:
+		case ADC_SINGLE_SAMLING_FINISHED:
 			wsa_data->distance_FB_ADC = msg.value.sival_int;
 			exit();
 			new (this) SMZDistanceMeasurement_ADC_WS;
