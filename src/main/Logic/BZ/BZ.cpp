@@ -53,7 +53,6 @@ void BZ::doAction (int event, _pulse msg) {
 			  		entry();
 			  		break;
 
-
 				case STRinterrupted:
 					  exit();
 					new(this) BZ;

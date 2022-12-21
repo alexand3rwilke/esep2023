@@ -26,12 +26,12 @@ void BZUebergabe::entry() {
 
     	switch(event){
     		// check ob LSE interrupt bekommt
-//    		case LSAinterrupted :
-//
-//    			exit();
-//    			new(this) BZEinlauf;
-//    			entry();
-//    			break;
+    		case LSEnotInterrupted:
+
+    			exit();
+    			new(this) BZready;
+    			entry();
+    			break;
     		}
 
     	}

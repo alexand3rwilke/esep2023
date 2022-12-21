@@ -104,6 +104,7 @@ void Actuator::handleEvents(void){
 			break;
 
 			case ESTPinterrupted:
+				clearSorter();
 			break;
 
 			case GREEN_BLINKING_ON:	amp->flashinLight(GREEN,1);
@@ -194,9 +195,9 @@ void Actuator::aussortieren(void) {
 	}
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
 }
-//void Actuator::aussortieren(void) {
-//	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
-//}
+void Actuator::clearSorter(void) {
+	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
+}
 
 void Actuator::estp(void) {
 	FB_stop();
