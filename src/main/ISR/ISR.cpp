@@ -292,10 +292,13 @@ void ISR::handleInterruptAndSend(int interruptID) {
 				case STR : MsgSendPulse(dispId, -1, STR,current_level);
 				break;
 
-				case RST: MsgSendPulse(dispId, -1, pin,current_level);
+				case RST: MsgSendPulse(dispId, -1, RST,current_level);
 				break;
 
-				case STP: MsgSendPulse(dispId, -1, pin,current_level);
+				case STP: MsgSendPulse(dispId, -1, STP,current_level);
+				break;
+
+				case MTD1:MsgSendPulse(dispId, -1, MTD1,current_level);
 				break;
 				}
 //			} else{

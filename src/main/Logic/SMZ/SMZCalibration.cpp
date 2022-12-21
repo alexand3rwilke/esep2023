@@ -8,7 +8,7 @@
 #include "SMZCalibration.h"
 
 void SMZCalibration::entry(){
-	clearThresholds();
+	//clearThresholds();
 	exit();
 	new(this)SMZDistanceMeasurement_ADC_FB;
 	entry();

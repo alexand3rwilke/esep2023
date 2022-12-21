@@ -32,7 +32,7 @@ void SMZ :: doAction(int event, _pulse msg){
 	//Choose testmode
 	case STPinterrupted:
 		exit();
-		new(this)SMZTestingWS;
+		new(this)SMZTesting;
 		entry();
 		break;
 	}

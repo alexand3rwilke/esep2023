@@ -46,11 +46,16 @@ void SMZTestingWS::doAction(int event, _pulse msg){
 			actions->durchlassen();
 		}else{
 			actions->aussortieren();
+			sleep(2);
+			actions->stopFB();
 		}
 		break;
 
 	case ADC_WK_IN_HM:
 		actions->ledQ1On();
+		break;
+
+	case ADC_WK_NIN_HM:
 		break;
 
 	case ADC_START_SINGLE_SAMPLE:
