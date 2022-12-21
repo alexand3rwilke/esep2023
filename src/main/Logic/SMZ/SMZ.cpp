@@ -10,6 +10,7 @@
 void SMZ :: entry(){
 	printf("SMZ entry");
 	actions->greenLightBlinking();
+
 }
 
 void SMZ :: exit(){

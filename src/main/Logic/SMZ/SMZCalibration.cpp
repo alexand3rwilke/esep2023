@@ -9,18 +9,19 @@
 
 void SMZCalibration::entry(){
 
-//	clearThresholds();
-//	wsa_data->sorterTyp = act->getSorter();
+	clearThresholds();
+	wsa_data->sorterTyp = act->getSorter();
+	actions->yellowOn();
 
-	exit();
-	new(this)SMZDistanceMeasurement_ADC_FB;
-	entry();
+
+
 }
 
 void SMZCalibration::exit(){
 }
 
 void SMZCalibration::doAction(int event, _pulse msg){
+
 }
 
 /**
@@ -35,5 +36,9 @@ void SMZCalibration::clearThresholds(){
 	wsa_data->distance_LSA_ADC = 0;
 	wsa_data->distance_ADC_LSS = 0;
 	wsa_data->distance_LSS_LSE = 0;
+
+	exit();
+	new(this)SMZDistanceMeasurement_ADC_FB;
+	entry();
 
 }

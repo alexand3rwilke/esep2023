@@ -18,19 +18,22 @@
 #include "../WSAData.h"
 
 class ADC_Service  {
+private:
+	int aktuelleHoehe;
+	void printSamples();
 
 public:
 
 	ADC_Service(Dispatcher *disp);
 	Dispatcher *disp;
-	thread* ADCServiceThread;
 	thread* ADCInterruptServiceThread;
 	vector<int8_t> events;
+	vector<int> samples;
 	int dispId;
 	virtual ~ADC_Service();
-	void adcService();
 	void adcInterruptService();
 	WSAData *wsa_data;
+
 
 };
 

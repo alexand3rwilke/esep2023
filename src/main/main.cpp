@@ -27,7 +27,8 @@
 #include "Imports.h"
 
 
-
+int MIN_HOEHE = 3580;
+int MAX_HOEHE = 2100;
 
 using namespace std;
 
@@ -40,6 +41,8 @@ int main(int argc, char** args) {
 
 
 	cout << "Starting Festo Test \n" << endl;
+
+
 
 		Dispatcher dispatcher;
 

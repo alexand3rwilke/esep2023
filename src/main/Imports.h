@@ -165,5 +165,9 @@ using namespace std;
 //enum WS{FWS, WSMB, WSMM, WSO}
 
 #define HELLO 125
+extern int MIN_HOEHE;
+extern int MAX_HOEHE;
+
+
 
 #endif /* SRC_IMPORTS_H */
