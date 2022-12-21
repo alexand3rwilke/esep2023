@@ -33,7 +33,7 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event, _pulse msg){
 	   //Scaliere Sekunden
 	   time1 = time1/CLOCKS_PER_SEC;
 
-	   wsa_data->distance_LSA_ADC = time1;
+	   wsa_data->setDistance_LSA_ADC(time1);
 	   actions->ledQ1On();
 
 	   //Zeitmessung ADC zu LSS
@@ -46,10 +46,10 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event, _pulse msg){
 
    case ADC_SAMPLE_VALUE:
 	   //ADC auslesen und abspeichern
-	   if(wsa_data->distance_FWS_ADC != 0){
-		   wsa_data->distance_WS_ADC = msg.value.sival_int;
+	   if(wsa_data->getDistance_FWS_ADC()!= 0){
+		   wsa_data->setDistance_WS_ADC(msg.value.sival_int);
 	   }else{
-		   wsa_data->distance_FWS_ADC = msg.value.sival_int;
+		   wsa_data->setDistance_FWS_ADC(msg.value.sival_int);
 	   }
 	   break;
 
@@ -60,7 +60,7 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event, _pulse msg){
    case LSSinterrupted:
 	   time1 += clock() - tstart;
 	   time1 = time1/CLOCKS_PER_SEC;
-	   wsa_data->distance_ADC_LSS = time1;
+	   wsa_data->setDistance_ADC_LSS(time1);
 
 	   //Zeitmessung LSS zu LSE
 	   time1 = 0;
@@ -72,11 +72,11 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event, _pulse msg){
 	   time1 += clock() - tstart;
 	   time1 = time1/CLOCKS_PER_SEC;
 
-	   wsa_data->distance_LSS_LSE = time1;
+	   wsa_data->setDistance_LSS_LSE(time1);
 	   actions->stopFB();
 
 	   //Wenn 2 WS gemessen wurde, State Machine fertig
-	   if(wsa_data->distance_WS_ADC != 0){
+	   if(wsa_data->getDistance_WS_ADC() != 0 && wsa_data->getDistance_FWS_ADC()){
 		   exit();
 	   }else{
 		   break;
