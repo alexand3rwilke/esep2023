@@ -20,7 +20,7 @@ void SMZDistanceMeasurement_ADC_FB::doAction(int event, _pulse msg){
 	switch(event){
 
 		case ADC_SINGLE_SAMLING_FINISHED:
-			wsa_data->distance_FB_ADC = msg.value.sival_int;
+			wsa_data->setDistance_FB_ADC(msg.value.sival_int);
 			exit();
 			new (this) SMZDistanceMeasurement_ADC_WS;
 			entry();

@@ -8,7 +8,7 @@
 #include "SMZCalibration.h"
 
 void SMZCalibration::entry(){
-	//clearThresholds();
+	clearThresholds();
 	exit();
 	new(this)SMZDistanceMeasurement_ADC_FB;
 	entry();
@@ -24,13 +24,11 @@ void SMZCalibration::doAction(int event, _pulse msg){
  * Gemessene Höhen und Timer zurücksetzen
  */
 void SMZCalibration::clearThresholds(){
-	wsa_data->sorterTyp = 0;
-	wsa_data->distance_FB_ADC = 0;
-	wsa_data->distance_FWS_ADC = 0;
-	wsa_data->distance_WS_ADC = 0;
-
-	wsa_data->distance_LSA_ADC = 0;
-	wsa_data->distance_ADC_LSS = 0;
-	wsa_data->distance_LSS_LSE = 0;
-
+	wsa_data->setSorterTyp(0);
+	wsa_data->setDistance_FB_ADC(0);
+	wsa_data->setDistance_FWS_ADC(0);
+	wsa_data->setDistance_WS_ADC(0);
+	wsa_data->setDistance_LSA_ADC(0);
+	wsa_data->setDistance_ADC_LSS(0);
+	wsa_data->setDistance_LSS_LSE(0);
 }

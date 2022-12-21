@@ -26,6 +26,23 @@ public:
 	int distance_LSA_ADC;
 	int distance_ADC_LSS;
 	int distance_LSS_LSE;
+
+	void setSorterTyp(int);
+	void setDistance_FB_ADC(int);
+	void setDistance_FWS_ADC(int);
+	void setDistance_WS_ADC(int);
+	void setDistance_LSA_ADC(int);
+	void setDistance_ADC_LSS(int);
+	void setDistance_LSS_LSE(int);
+
+	int getSorterTyp(void);
+	int getDistance_FB_ADC(void);
+	int getDistance_FWS_ADC(void);
+	int getDistance_WS_ADC(void);
+	int getDistance_LSA_ADC(void);
+	int getDistance_ADC_LSS(void);
+	int getDistance_LSS_LSE(void);
+
 };
 
 #endif /* SRC_MAIN_WSADATA_H_ */
