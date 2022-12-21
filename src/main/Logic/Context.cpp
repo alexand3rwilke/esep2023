@@ -15,7 +15,7 @@
 #include "BZ/BZ.h"
 #include "ESZ/ESz.h"
 #include "SMZ/SMZ.h"
-#include "FZ/FZ.h"
+#include "FZ/AnstehendQuittiert.h"
 
 #include <stdio.h>
 #include <iostream>
