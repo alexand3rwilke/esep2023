@@ -98,6 +98,14 @@ void Context::eventHandler(){
 				   state->doAction(LSEinterrupted, msg);
 				   break;
 
+			   case LSRinterrupted:
+				   state->doAction(LSRinterrupted, msg);
+				   break;
+
+			   case	LSSinterrupted:
+				   state->doAction(LSSinterrupted , msg);
+				   break;
+
 			   case ADC_WK_IN_HM:
 				   MsgSendPulse(chanID, -1, ADC_START_SINGLE_SAMPLE, 0);
 				   state->doAction(ADC_WK_IN_HM, msg);
@@ -135,10 +143,6 @@ void Context::eventHandler(){
 							break;
 						}
 					}
-				   break;
-
-			   case	LSSinterrupted:
-				   state->doAction(LSSinterrupted , msg);
 				   break;
 
 			  case STR_SMZ:

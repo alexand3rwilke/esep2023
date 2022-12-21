@@ -42,10 +42,7 @@ void Sensor::sensorRoutine() {
 		perror("Could not connect to channel!");
 	}
 
-	senorEvents={LSA1, LSE1, LSS1, HMS1, STR, ESTP, RST, STP, STR_SMZ};
-
-	//nur zum Testen von Qnet m
-	//senorEvents={LSA1, LSS1, HMS1, SRT, ESTP, RST, STP};
+	senorEvents={LSA1, LSE1, LSS1, HMS1, STR, ESTP, RST, STP, STR_SMZ, MTD1};
 
 	disp->registerForEventWIthConnection(senorEvents, conID);
 

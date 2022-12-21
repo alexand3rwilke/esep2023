@@ -8,7 +8,6 @@
 #include "SMZTesting.h"
 
 void SMZTesting::entry(){
-	printf("SMTTestingEntry");
 	//LEDs testen
 	actions->ledQ1Off();
 	actions->ledQ2Off();
