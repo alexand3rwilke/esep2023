@@ -6,13 +6,16 @@
  */
 
 
-#include "BZUebergabe.h".h";
+#include "BZUebergabe.h";
+#include "../../Imports.h"
 
 
 void BZUebergabe::entry() {
 
 	cout << "\n  BZUebergabe entry\n" << endl;
-	actions->stopFB();
+
+
+
 }
     void BZUebergabe::exit() {
 
@@ -25,13 +28,51 @@ void BZUebergabe::entry() {
 
 
     	switch(event){
-    		// check ob LSE interrupt bekommt
+    		// Checke ob WK in LSA von FEsto 2 ist dann stop
     		case LSEnotInterrupted:
-
+    			//actions->stopFB();
     			exit();
     			new(this) BZready;
     			entry();
     			break;
+
+
+
+
+    		case LSA2interrupted:
+  			// TODO delete this thread
+				exit();
+				new(this) BZready;
+				entry();
+				break;
+
+
+
+
+    		case LSE2interrupted:
+    		  			// TODO delete this thread
+    			actions->stopFB();
+    						exit();
+    						new(this) BZready;
+    						entry();
+    						break;
+
+
+
+    		case LSEinterrupted:
+    		    		  			// TODO delete this thread
+    			actions->stopFB();
+    		    						exit();
+    		    						new(this) BZready;
+    		    						entry();
+    		    						break;
     		}
+
+
+
+
+
+
+
 
     	}

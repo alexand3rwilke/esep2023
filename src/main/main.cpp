@@ -32,7 +32,13 @@ void wait(int seconds) {
 	usleep(1000 * (seconds * 1000 ));
 }
 
+
+string FESTO_TYPE;
 int main(int argc, char** args) {
+
+	 FESTO_TYPE = args[1];
+
+	 cout << "Im Festo:" << FESTO_TYPE << endl;
 
 	cout << "Starting Festo Test \n" << endl;
 
@@ -50,18 +56,18 @@ int main(int argc, char** args) {
 		ContextData *contextData = new ContextData(&dispatcher);
 		Context *context = new Context(&dispatcher, actions,contextData);
 
-//		if (strcmp(args[1], "-FBM1") == 0) {
-//
-//			cout << "Starting Festo FBM1 \n" << endl;
-//			QnetServer *server = new QnetServer("FBM1",&dispatcher);
-//			QnetClient *client = new QnetClient("FBM2",&dispatcher);
-//		}
-//		else if (strcmp(args[1], "-FBM2") == 0) {
-//
-//			cout << "Starting Festo FBM2 \n" << endl;
-//			QnetServer *server = new QnetServer("FBM2",&dispatcher);
-//			QnetClient *client = new QnetClient("FBM1",&dispatcher);
-//		}
+		if (strcmp(args[1], "FBM1") == 0) {
+
+			cout << "Starting Festo FBM1 \n" << endl;
+			QnetServer *server = new QnetServer("FBM1",&dispatcher);
+			QnetClient *client = new QnetClient("FBM2",&dispatcher);
+		}
+		else if (strcmp(args[1], "FBM2") == 0) {
+
+			cout << "Starting Festo FBM2 \n" << endl;
+			QnetServer *server = new QnetServer("FBM2",&dispatcher);
+			QnetClient *client = new QnetClient("FBM1",&dispatcher);
+		}
 //
 //			cout << "Starting Festo FBM1 \n" << endl;
 //			QnetServer *server = new QnetServer("FBM1",&dispatcher);

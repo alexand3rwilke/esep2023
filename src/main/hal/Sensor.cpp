@@ -7,6 +7,7 @@
  *
  */
 #include "Sensor.h"
+#include "../Imports.h"
 
 #include <iostream>
 #include <stdint.h>
@@ -65,14 +66,31 @@ void Sensor::sensorRoutine() {
 					   MsgSendPulse(dispID, -1, LSAnotInterrupted, 0);
 					   break;
 				   } else {
-					   MsgSendPulse(dispID, -1, LSAinterrupted, 0);
+
+					   if(FESTO_TYPE.compare("FBM1")) {
+
+						   MsgSendPulse(dispID, -1, LSAinterrupted, 0);
+						   printf("Festo1 LSA interrupt");
+
+					   } else  if(FESTO_TYPE.compare("FBM2")) {
+						   	   printf("Festo2 LSA interrupt");
+						   MsgSendPulse(dispID, -1, LSA2interrupted, 0);
+					   }
+
 				   } break;
 			   case LSE1:
 				   if (pulse.value.sival_int == 1) {
 					   MsgSendPulse(dispID, -1, LSEnotInterrupted, 0);
 					   break;
 				   } else {
-					   MsgSendPulse(dispID, -1, LSEinterrupted, 0);
+					   if(FESTO_TYPE.compare("FBM1")) {
+						   MsgSendPulse(dispID, -1, LSEinterrupted, 0);
+					   } else if(FESTO_TYPE.compare("FBM2")) {
+
+						   MsgSendPulse(dispID, -1, LSE2interrupted, 0);
+					   }
+
+
 				   } break;
 			   case LSS1:
 				   if (pulse.value.sival_int == 1) {

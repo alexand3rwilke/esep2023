@@ -31,6 +31,35 @@ void BZready::entry() {
     			new(this) BZEinlauf;
     			entry();
     			break;
-    		}
+
+
+    		case LSA2interrupted :
+
+				exit();
+				new(this) BZEinlauf;
+				entry();
+				break;
+
+
+
+    		case LSEinterrupted :
+
+				exit();
+				new(this) BZEinlauf;
+				entry();
+				break;
+
+
+    		case LSE2interrupted :
+
+				exit();
+				new(this) BZEinlauf;
+				entry();
+				break;
+
+    	}
+
+
+
 
     	}

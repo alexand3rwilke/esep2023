@@ -87,6 +87,21 @@ int QnetServer::server(){
 		    	   		MsgSendPulse(dispatcher->getConnectionID(), -1, LSEinterrupted, 0);
 		    	   		break;
 
+
+		    	   	case LSEinterrupted:
+						MsgSendPulse(dispatcher->getConnectionID(), -1, LSEinterrupted, 0);
+						break;
+
+		    	   	case LSA2interrupted:
+		    	   		MsgSendPulse(dispatcher->getConnectionID(), -1, LSA2interrupted, 0);
+		    	   		break;
+
+
+
+
+
+
+
 //					case FBM2_SEND_WK:
 //
 //						int recvid = MsgReceivePulse (chid, &pulse, sizeof (_pulse), NULL);

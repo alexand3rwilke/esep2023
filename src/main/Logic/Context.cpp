@@ -15,7 +15,7 @@
 #include "BZ/BZ.h"
 #include "ESZ/ESz.h"
 #include "SMZ/SMZ.h"
-#include "FZ/AnstehendQuittiert.h"
+
 
 #include <stdio.h>
 #include <iostream>
@@ -56,7 +56,7 @@ void Context::eventHandler(){
 		//TODO alle sensorsignale einfügen
 		events = {LSAinterrupted,LSEinterrupted,STRinterrupted, STRnotInterrupted, STPinterrupted,
 				LSSinterrupted, LSSnotInterrupted, LSRinterrupted, LSRnotInterrupted, LSEnotInterrupted,ADC_WK_IN_HM,ADC_WK_NIN_HM,STR_SMZ, MTDinterrupted,ADC_START_SINGLE_SAMPLE,
-				ADC_SINGLE_SAMLING_FINISHED,ESTPinterrupted,ESTPnotInterrupted, RSTinterrupted};
+				ADC_SINGLE_SAMLING_FINISHED,ESTPinterrupted,ESTPnotInterrupted, RSTinterrupted,LSA2interrupted,LSE2interrupted};
 
 		disp->registerForEventWIthConnection(events, conID);
 
@@ -164,6 +164,13 @@ void Context::eventHandler(){
 			  case MTDinterrupted:
 				  state->doAction(MTDinterrupted, msg);
 			   	   break;
+
+			  case LSE2interrupted:
+				  state->doAction(LSE2interrupted,msg);
+				  break;
+			  case LSA2interrupted:
+				  state->doAction(LSA2interrupted,msg);
+				  break;
 			   }
 
 		}

@@ -33,6 +33,9 @@ using namespace std;
 #ifndef SRC_IMPORTS_H_
 #define SRC_IMPORTS_H_
 
+
+// which FA am I?
+extern string FESTO_TYPE;
 /*------------------------Pins--------------------------*/
 
 // Sensorik
@@ -127,6 +130,10 @@ using namespace std;
 #define LSEinterrupted 106
 #define LSEnotInterrupted 107
 #define MTDinterrupted 99
+
+
+#define LSA2interrupted 40
+#define LSE2interrupted 41
 
 //Aktion ADC
 #define HMSinterrupted 108
