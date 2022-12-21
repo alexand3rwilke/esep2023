@@ -20,10 +20,6 @@
 #include "Qnet/QnetClient/QnetClient.h"
 #include "Qnet/QnetServer/QnetServer.h"
 
-#include <sys/mman.h>
-#include <hw/inout.h>
-#include <sys/neutrino.h>
-
 #include "Imports.h"
 
 
@@ -38,11 +34,7 @@ void wait(int seconds) {
 
 int main(int argc, char** args) {
 
-
-
 	cout << "Starting Festo Test \n" << endl;
-
-
 
 		Dispatcher dispatcher;
 
