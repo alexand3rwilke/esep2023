@@ -128,7 +128,6 @@ int ADC_Service::classifyWK() {
 		samples.pop_back();
 	}
 
-
 	int max = samples.front();
 	int min = samples.front();
 	int letzterWert = samples.front();
@@ -173,8 +172,10 @@ for(int s: samples){
 	if(max > 2450 ) {
 
 		if(min < 2350) {
+			MsgSendPulse(dispId, -1, WK_Bohrung, 0);
 			return WK_Bohrung;
 		}
+		MsgSendPulse(dispId, -1, WK_FLACH, 0);
 		return WK_FLACH;
 	}
 
@@ -185,7 +186,7 @@ for(int s: samples){
 
 		return WK_Normal;
 	}
-
+	MsgSendPulse(dispId, -1, WK_UNDEFINED, 0);
 	return WK_UNDEFINED;
 
 

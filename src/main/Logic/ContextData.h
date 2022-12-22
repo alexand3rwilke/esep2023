@@ -14,6 +14,7 @@ private:
     int errorCounter = 0;
     bool rampe1Voll = false;
     bool rampe2Voll = false;
+    int zielWk = 0;
 
 public:
     Dispatcher *disp;
@@ -22,10 +23,16 @@ public:
     void incErrorCounter();
     void clearErrorcounter();
     void show();
+
+    //Rampen logik
     void setRampe1Voll(bool value);
     void setRampe2Voll(bool value);
     bool getRampe1Voll();
     bool getRampe2Voll();
+
+    //Das Werkstück welches erwartet wird
+    void setZielWk(int wkType);
+    int getZielWk();
 
     int conIDDis = 0;
 };

@@ -63,6 +63,10 @@ int main(int argc, char** args) {
 		ADC_Service *adcService = new ADC_Service(&dispatcher);
 
 		ContextData *contextData = new ContextData(&dispatcher);
+		// TODO Entfernen, nut zum testen der aussortierung.
+		// Nachher zu ersetzen mit Werten aus ausgelesender Liste
+		contextData->setZielWk(WK_Normal);
+
 		Context *context = new Context(&dispatcher, actions,contextData);
 
 		if (strcmp(args[1], "F1") == 0) {

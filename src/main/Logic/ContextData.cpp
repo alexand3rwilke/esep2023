@@ -48,4 +48,11 @@ bool ContextData::getRampe2Voll() {
    return rampe2Voll;
 }
 
+void ContextData::setZielWk(int wkType) {
+    zielWk = wkType;
+}
+
+int ContextData::getZielWk() {
+  return zielWk;
+}
 
