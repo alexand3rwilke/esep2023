@@ -141,11 +141,23 @@ void Sensor::sensorRoutine() {
 				case ESTP:
 				   if (pulse.value.sival_int == 1) {
 					   cout << "ESTP ist druaßen\n" << endl;
-					   MsgSendPulse(dispID, -1, ESTPnotInterrupted, 0);
+
+ 						if(FESTO_TYPE == 1) {
+						    MsgSendPulse(dispID, -1, ESTP1notInterrupted, 0);
+					   } else if(FESTO_TYPE == 2) {
+
+						  MsgSendPulse(dispID, -1, ESTP2notInterrupted, 0);
+					   }
 					   break;
 				   } else {
 					   cout << "ESTP Reingedrückt\n" << endl;
-					   MsgSendPulse(dispID, -1, ESTPinterrupted, 0);
+					   if(FESTO_TYPE == 1) {
+						     MsgSendPulse(dispID, -1, ESTP1interrupted, 0);
+					   } else if(FESTO_TYPE == 2) {
+
+						   MsgSendPulse(dispID, -1, ESTP2interrupted, 0);
+					   }
+
 				   }
 				   break;
 			   case RST:

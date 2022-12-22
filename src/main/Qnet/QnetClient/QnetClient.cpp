@@ -52,7 +52,7 @@ int QnetClient::client(){
 				perror("Could not connect to channel!");
 	}
 
-	vector<int8_t> events = {LSE, LSE1interrupted, LSA2interrupted};
+	vector<int8_t> events = {LSE, LSE1interrupted, LSA2interrupted,ESTP1interrupted, ESTP2interrupted};
 
 	dispatcher->registerForEventWIthConnection(events, conID);
 
@@ -84,7 +84,23 @@ int QnetClient::client(){
 						return EXIT_FAILURE;
 						}
 					break;
-			
+
+				case ESTP1interrupted:
+
+					if(MsgSendPulse(server_coid, -1, ESTP1interrupted,0) != 0){
+						perror("[Client]: sendPulse failed");
+						return EXIT_FAILURE;
+						}
+					break;			
+
+				case ESTP2interrupted:
+
+					if(MsgSendPulse(server_coid, -1, ESTP2interrupted,0) != 0){
+						perror("[Client]: sendPulse failed");
+						return EXIT_FAILURE;
+						}
+					break;	
+
 
 	//				case WK_DATA_SEND:
 	//
@@ -100,9 +116,7 @@ int QnetClient::client(){
 	//						 		case NORMAL: MsgSendPulse(server_coid, -1, FBM1_WK_NORMAL, wk.Hoehe1); break;
 	//						 		case BOHRUNG: MsgSendPulse(server_coid, -1, FBM1_WK_BOHRUNG, wk.Hoehe1); break;
 	//						 		case METALL: MsgSendPulse(server_coid, -1, FBM1_WK_METALL, wk.Hoehe1); break;
-	//						 		case GRADECODIERT: MsgSendPulse(server_coid, -1, FBM1_WK_CODIERT_GRADE, wk.Hoehe1); break;
-	//						 		case UNGRADECODIERT: MsgSendPulse(server_coid, -1, FBM1_WK_CODIERT_UNGRADE, wk.Hoehe1); break;
-	//						 		case NULLCODIERT: MsgSendPulse(server_coid, -1, FBM1_WK_CODIERT_NULL, wk.Hoehe1); break;
+	//						 		case UNDEFINED_WK: MsgSendPulse(server_coid, -1, FBM1_WK_CODIERT_NULL, wk.Hoehe1); break;
 	//						 	}
 	//
 	//						 	data->increaseClientCounter();

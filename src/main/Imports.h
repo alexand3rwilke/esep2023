@@ -156,9 +156,14 @@ extern int FESTO_TYPE;
 //#define STPnotInterrupted 112
 #define RSTinterrupted 112
 //#define RSTnotInterrupted 114
-#define ESTPinterrupted 114
-#define ESTPnotInterrupted 115
+#define ESTP1interrupted 114
+#define ESTP1notInterrupted 115
 #define STR_SMZ 120
+
+
+// FESTO 2 ESTP
+#define ESTP2interrupted 114
+#define ESTP2notInterrupted 115
 
 //Aktionen der LED
 #define Q1On 98
