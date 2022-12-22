@@ -68,17 +68,6 @@ int QnetClient::client(){
 
 		switch(msg.code){
 
-//					case LSE1:
-//
-//					if(MsgSendPulse(server_coid, -1, LSE,0) != 0){
-//						perror("[Client]: sendPulse failed");
-//						return EXIT_FAILURE;
-//						}
-//					break;
-
-
-
-
 					case LSE1interrupted:
 
 					if(MsgSendPulse(server_coid, -1, LSE1interrupted,0) != 0){
@@ -88,7 +77,6 @@ int QnetClient::client(){
 					break;
 
 
-
 					case LSA2interrupted:
 
 					if(MsgSendPulse(server_coid, -1, LSA2interrupted,0) != 0){
@@ -96,6 +84,7 @@ int QnetClient::client(){
 						return EXIT_FAILURE;
 						}
 					break;
+			
 
 	//				case WK_DATA_SEND:
 	//

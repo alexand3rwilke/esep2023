@@ -7,6 +7,7 @@
 
 
 #include "BZAuslauf.h"
+#include "BZready.h"
 
 
 
@@ -37,9 +38,11 @@ void BZAuslauf::entry() {
 
 
     		// wenn fertig dann in Auslauf
-    		case 12 :
-    					entry();
-    					break;
+    		case LSE2notInterrupted :
+    					exit();
+    			new(this) BZready;
+    			entry();
+    			break;
 
 
 

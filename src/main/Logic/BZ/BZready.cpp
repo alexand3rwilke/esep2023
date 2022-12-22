@@ -50,12 +50,12 @@ void BZready::entry() {
 				break;
 
 
-    		case LSE2interrupted :
+    		// case LSE2interrupted :
 
-				exit();
-				new(this) BZEinlauf;
-				entry();
-				break;
+			// 	exit();
+			// 	new(this) BZEinlauf;
+			// 	entry();
+			// 	break;
 
     	}
 

@@ -56,7 +56,7 @@ void Context::eventHandler(){
 		//TODO alle sensorsignale einfügen
 		events = {LSA1interrupted,LSE1interrupted,STRinterrupted, STRnotInterrupted, STPinterrupted,
 				LSS1interrupted, LSS1notInterrupted, LSR1interrupted, LSR1notInterrupted, LSE1notInterrupted,ADC_WK_IN_HM,ADC_WK_NIN_HM,STR_SMZ, MTD1interrupted,ADC_START_SINGLE_SAMPLE,
-				ADC_SINGLE_SAMLING_FINISHED,ESTPinterrupted,ESTPnotInterrupted, RSTinterrupted,LSA2interrupted,LSE2interrupted};
+				ADC_SINGLE_SAMLING_FINISHED,ESTPinterrupted,ESTPnotInterrupted, RSTinterrupted,LSA2interrupted,LSE2interrupted, LSE1interrupted};
 
 		disp->registerForEventWIthConnection(events, conID);
 

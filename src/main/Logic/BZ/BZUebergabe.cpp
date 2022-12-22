@@ -29,12 +29,13 @@ void BZUebergabe::entry() {
 
     	switch(event){
     		// Checke ob WK in LSA von FEsto 2 ist dann stop
-    		case LSE1notInterrupted:
-    			//actions->stopFB();
-    			exit();
-    			new(this) BZready;
-    			entry();
-    			break;
+    		
+			// case LSE1notInterrupted:
+    		// 	//actions->stopFB();
+    		// 	exit();
+    		// 	new(this) BZready;
+    		// 	entry();
+    		// 	break;
 
 
 
@@ -49,23 +50,23 @@ void BZUebergabe::entry() {
 
 
 
-    		case LSE2interrupted:
-    		  			// TODO delete this thread
-    			actions->stopFB();
-    						exit();
-    						new(this) BZready;
-    						entry();
-    						break;
+    		// case LSE2interrupted:
+    		//   			// TODO delete this thread
+    		// 	actions->stopFB();
+    		// 				exit();
+    		// 				new(this) BZready;
+    		// 				entry();
+    		// 				break;
 
 
 
-    		case LSE1interrupted:
-    		    		  			// TODO delete this thread
-    			actions->stopFB();
-    		    						exit();
-    		    						new(this) BZready;
-    		    						entry();
-    		    						break;
+    		// case LSE1interrupted:
+    		//     		  			// TODO delete this thread
+    		// 	actions->stopFB();
+    		//     						exit();
+    		//     						new(this) BZready;
+    		//     						entry();
+    		//     						break;
     		}
 
 

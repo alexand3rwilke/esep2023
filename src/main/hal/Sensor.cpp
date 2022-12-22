@@ -80,7 +80,18 @@ void Sensor::sensorRoutine() {
 				   } break;
 			   case LSE:
 				   if (pulse.value.sival_int == 1) {
-					   MsgSendPulse(dispID, -1, LSE1notInterrupted, 0);
+
+
+
+if(FESTO_TYPE.compare("FBM1")) {
+						    MsgSendPulse(dispID, -1, LSE1notInterrupted, 0);
+					   } else if(FESTO_TYPE.compare("FBM2")) {
+
+						   MsgSendPulse(dispID, -1, LSE2notInterrupted, 0);
+					   }
+					 
+
+
 					   break;
 				   } else {
 					   if(FESTO_TYPE.compare("FBM1")) {

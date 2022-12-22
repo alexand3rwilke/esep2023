@@ -136,6 +136,7 @@ extern string FESTO_TYPE;
 // FESTO 2 Sensor interrupt
 #define LSA2interrupted 40
 #define LSE2interrupted 41
+#define LSE2notInterrupted 42
 
 //Aktion ADC
 #define HMSinterrupted 108
