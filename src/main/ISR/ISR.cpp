@@ -29,6 +29,7 @@
 #define BIT_MASK(x) (0x1 << (x))
 
 
+
 /* My pulse codes */
 #define PULSE_STOP_THREAD _PULSE_CODE_MINAVAIL + 1
 #define PULSE_INTR_ON_PORT0 _PULSE_CODE_MINAVAIL + 2
@@ -115,7 +116,7 @@ void ISR::recieveInterruptRoutine() {
 			// Lichtschranke Eingang
 			//	Rising Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(LSA) | BIT_MASK());//Add desired pins.
+			temp |= (BIT_MASK(LSA) | BIT_MASK(LSA));//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
 
 			//	Falling Edge

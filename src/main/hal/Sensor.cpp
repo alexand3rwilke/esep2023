@@ -43,7 +43,7 @@ void Sensor::sensorRoutine() {
 		perror("Could not connect to channel!");
 	}
 
-	senorEvents={LSA, LSE, LSS, HMS1, STR, ESTP, RST, STP, STR_SMZ, MTD};
+	senorEvents={LSA, LSE, LSS, HMS, STR, ESTP, RST, STP, STR_SMZ, MTD};
 
 	disp->registerForEventWIthConnection(senorEvents, conID);
 
@@ -67,13 +67,15 @@ void Sensor::sensorRoutine() {
 					   break;
 				   } else {
 
-					   if(FESTO_TYPE.compare("FBM1")) {
+					   if(FESTO_TYPE == 1) {
 
 						   MsgSendPulse(dispID, -1, LSA1interrupted, 0);
-						   printf("Festo1 LSA interrupt");
+						   printf("Festo 1 LSA interrupt");
+						   printf("%d",FESTO_TYPE);
 
-					   } else  if(FESTO_TYPE.compare("FBM2")) {
-						   	   printf("Festo2 LSA interrupt");
+					   } else  if(FESTO_TYPE == 2) {
+						   	   printf("Festo 2 LSA interrupt");
+						   	 printf("%d",FESTO_TYPE);
 						   MsgSendPulse(dispID, -1, LSA2interrupted, 0);
 					   }
 
@@ -83,9 +85,9 @@ void Sensor::sensorRoutine() {
 
 
 
-if(FESTO_TYPE.compare("FBM1")) {
+					   	   	  if(FESTO_TYPE == 1) {
 						    MsgSendPulse(dispID, -1, LSE1notInterrupted, 0);
-					   } else if(FESTO_TYPE.compare("FBM2")) {
+					   } else if(FESTO_TYPE == 2) {
 
 						   MsgSendPulse(dispID, -1, LSE2notInterrupted, 0);
 					   }
@@ -94,9 +96,12 @@ if(FESTO_TYPE.compare("FBM1")) {
 
 					   break;
 				   } else {
-					   if(FESTO_TYPE.compare("FBM1")) {
+					   if(FESTO_TYPE == 1) {
 						   MsgSendPulse(dispID, -1, LSE1interrupted, 0);
-					   } else if(FESTO_TYPE.compare("FBM2")) {
+						   cout << "\n  Sensorik sagt: LSE1interrupted auf FBM1\n" << endl;
+					   } else if(FESTO_TYPE == 2) {
+
+						   cout << "\n  Sensorik sagt: LSE1interrupted auf FBM2\n" << endl;
 
 						   MsgSendPulse(dispID, -1, LSE2interrupted, 0);
 					   }

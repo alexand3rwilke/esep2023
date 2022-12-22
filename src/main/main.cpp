@@ -33,10 +33,17 @@ void wait(int seconds) {
 }
 
 
-string FESTO_TYPE;
+int FESTO_TYPE;
 int main(int argc, char** args) {
 
-	 FESTO_TYPE = args[1];
+			if (strcmp(args[1], "F1") == 0) {
+				FESTO_TYPE = 1;
+
+			}
+			else if (strcmp(args[1], "F2") == 0) {
+				FESTO_TYPE = 2;
+
+			}
 
 	 cout << "Im Festo:" << FESTO_TYPE << endl;
 
@@ -56,13 +63,13 @@ int main(int argc, char** args) {
 		ContextData *contextData = new ContextData(&dispatcher);
 		Context *context = new Context(&dispatcher, actions,contextData);
 
-		if (strcmp(args[1], "FBM1") == 0) {
+		if (strcmp(args[1], "F1") == 0) {
 
 			cout << "Starting Festo FBM1 \n" << endl;
 			QnetServer *server = new QnetServer("FBM1",&dispatcher);
 			QnetClient *client = new QnetClient("FBM2",&dispatcher);
 		}
-		else if (strcmp(args[1], "FBM2") == 0) {
+		else if (strcmp(args[1], "F2") == 0) {
 
 			cout << "Starting Festo FBM2 \n" << endl;
 			QnetServer *server = new QnetServer("FBM2",&dispatcher);

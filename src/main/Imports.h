@@ -35,7 +35,7 @@ using namespace std;
 
 
 // which FA am I?
-extern string FESTO_TYPE;
+extern int FESTO_TYPE;
 /*------------------------Pins--------------------------*/
 
 // Sensorik
@@ -177,6 +177,8 @@ extern string FESTO_TYPE;
 #define HELLO 125
 extern int MIN_HOEHE;
 extern int MAX_HOEHE;
+
+
 
 
 

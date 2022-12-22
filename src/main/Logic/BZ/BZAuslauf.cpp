@@ -12,6 +12,8 @@
 
 
 void BZAuslauf::entry() {
+
+	cout << "\n  BZAuslauf entry\n" << endl;
 	actions->stopFB();
 
 }

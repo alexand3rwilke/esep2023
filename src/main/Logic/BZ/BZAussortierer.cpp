@@ -48,7 +48,6 @@ void BZAussortierer::entry() {
 
     		case LSE2interrupted :
     		    exit();
-    		    actions->stopFB();
     		    new (this) BZAuslauf;
     		    entry();
 
