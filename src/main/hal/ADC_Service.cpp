@@ -165,22 +165,17 @@ for(int s: samples){
 	// hier damit WK klassifizieren
 
 
-
-
 	printf("MAX: %d",max);
 	printf("MIN: %d",min);
 	if(max > 2450 ) {
 
 		if(min < 2350) {
-			MsgSendPulse(dispId, -1, WK_Bohrung, 0);
-			return WK_Bohrung;
+			MsgSendPulse(dispId, -1, WK_Bohrung_Normal, 0);
+			return WK_Bohrung_Normal;
 		}
 		MsgSendPulse(dispId, -1, WK_FLACH, 0);
 		return WK_FLACH;
 	}
-
-
-
 
 	else if((max < 2450 && max < 2800) && maxDiff < 60) {
 
@@ -188,9 +183,6 @@ for(int s: samples){
 	}
 	MsgSendPulse(dispId, -1, WK_UNDEFINED, 0);
 	return WK_UNDEFINED;
-
-
-
 
 }
 
@@ -202,8 +194,5 @@ void ADC_Service::printSamples(){
 		i++;
 	}
 }
-
-
-
 
 

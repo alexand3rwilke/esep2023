@@ -190,12 +190,11 @@ extern int MIN_HOEHE;
 extern int MAX_HOEHE;
 
 
-#define WK_FLACH 140
-#define WK_Bohrung 141
-#define WK_Normal 142
-#define WK_Bohrung_Metal 143
-#define MK_Bohrung_Normal 144
-#define WK_UNDEFINED 145
+#define WK_FLACH 35
+#define WK_Normal 36
+#define WK_Bohrung_Metal 37
+#define WK_Bohrung_Normal 38
+#define WK_UNDEFINED 39
 
 
 

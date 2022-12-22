@@ -54,10 +54,18 @@ void Context::eventHandler(){
 			perror("Could not connect to channel!");
 		}
 		//TODO alle sensorsignale einfügen
-		events = {LSA1interrupted,LSE1interrupted,STRinterrupted, STRnotInterrupted, STPinterrupted,
-				LSS1interrupted, LSS1notInterrupted, LSE1notInterrupted,ADC_WK_IN_HM,ADC_WK_NIN_HM,STR_SMZ, MTD1interrupted,ADC_START_SINGLE_SAMPLE,
-				ADC_SINGLE_SAMLING_FINISHED,ESTP1interrupted,ESTP1notInterrupted, RSTinterrupted,LSA2interrupted,LSE2interrupted,ESTP2interrupted,ESTP2notInterrupted,LSR1notInterrupted,LSR2notInterrupted,LSR1interrupted,LSR2interrupted
-				};
+		events = 	{LSA1interrupted,LSA2interrupted,
+					LSE1interrupted,LSE2interrupted,LSE1notInterrupted,
+					LSS1interrupted,LSS1notInterrupted,
+					LSR1notInterrupted,LSR2notInterrupted,LSR1interrupted,LSR2interrupted,
+					STRinterrupted,STRnotInterrupted,STPinterrupted,
+					ADC_WK_IN_HM,ADC_WK_NIN_HM,ADC_SINGLE_SAMLING_FINISHED,ADC_START_SINGLE_SAMPLE,
+					STR_SMZ,MTD1interrupted,
+					ESTP1interrupted,ESTP1notInterrupted, 
+					ESTP2interrupted,ESTP2notInterrupted,
+					RSTinterrupted,
+					WK_FLACH,WK_Normal,WK_Bohrung_Metal,WK_Bohrung_Normal,WK_UNDEFINED
+					};
 
 		disp->registerForEventWIthConnection(events, conID);
 
@@ -205,8 +213,30 @@ void Context::eventHandler(){
 				//TODO setze contextData Rampe2 voll auf true;
 				break;
 
+				// TODO Werkstück erkennung testen
+			
 
-				
+				case WK_FLACH : 
+				state->doAction(WK_FLACH, msg);
+				break;
+
+				case WK_Normal : 
+				state->doAction(WK_Normal, msg);
+				break;
+
+				case WK_Bohrung_Metal : 
+				state->doAction(WK_Bohrung_Metal, msg);
+				break;
+
+				case WK_Bohrung_Normal : 
+				state->doAction(WK_Bohrung_Normal, msg);
+				break;
+
+				case WK_UNDEFINED : 
+				state->doAction(WK_UNDEFINED, msg);
+				break;
+
+
 			   }
 
 		}

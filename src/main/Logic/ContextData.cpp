@@ -56,3 +56,12 @@ int ContextData::getZielWk() {
   return zielWk;
 }
 
+
+void ContextData::setErkanntesWk(int wkType) {
+    erkanntesWk = wkType;
+}
+
+int ContextData::getErkanntesWk() {
+  return erkanntesWk;
+}
+
