@@ -37,10 +37,19 @@ void SMZ :: doAction(int event, _pulse msg){
 		entry();
 		break;
 
-	case ESTPinterrupted:
+	case ESTP1interrupted:
+		exit();
+		new(this) ESZ;
+		entry();
+		break;
+
+	case ESTP2interrupted:
 		exit();
 		new(this) ESZ;
 		entry();
 		break;
 	}
+
+
+
 }

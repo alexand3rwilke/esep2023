@@ -115,7 +115,7 @@ void ADC_Service::adcInterruptService() {
 				 }
 }
 
-int ADC_Service:classifyWK() {
+int ADC_Service::classifyWK() {
 	int i = 0;
 	int max = samples.front();
 	int letzterWert = samples.front();
@@ -152,13 +152,13 @@ for(int s: samples){
 
 	else if((max > 2500 && max < 2800) && maxDiff > 50) {
 
-		return WK_Bohrung
+		return WK_Bohrung;
 	}
 
 
 	else if((max > 2500 && max < 2800) && maxDiff < 50) {
 
-		return WK_Normal
+		return WK_Normal;
 	}
 
 	return WK_UNDEFINED;

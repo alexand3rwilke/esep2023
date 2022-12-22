@@ -162,8 +162,8 @@ extern int FESTO_TYPE;
 
 
 // FESTO 2 ESTP
-#define ESTP2interrupted 130
-#define ESTP2notInterrupted 131
+#define ESTP2interrupted 80
+#define ESTP2notInterrupted 81
 
 //Aktionen der LED
 #define Q1On 98
@@ -174,14 +174,22 @@ extern int FESTO_TYPE;
 //Aktionen alles weitere
 #define ACTIVTE_AUSSORTIERER 116
 #define TimerTimeout 117
-#define WS_DURCHLASSEN 118
 #define WS_AUSSORTIEREN 119
+#define WS_DURCHLASSEN 118
 
 //enum WS{FWS, WSMB, WSMM, WSO}
 
 #define HELLO 125
 extern int MIN_HOEHE;
 extern int MAX_HOEHE;
+
+
+#define WK_FLACH 140
+#define WK_Bohrung 141
+#define WK_Normal 142
+#define WK_Bohrung_Metal 143
+#define MK_Bohrung_Normal 144
+#define WK_UNDEFINED 145
 
 
 
