@@ -300,6 +300,9 @@ void ISR::handleInterruptAndSend(int interruptID) {
 
 				case MTD:MsgSendPulse(dispId, -1, MTD,current_level);
 				break;
+
+				case LSR: MsgSendPulse(dispId, -1, LSR,current_level);
+				break;
 				}
 			}
 		}

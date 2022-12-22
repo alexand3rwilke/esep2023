@@ -102,6 +102,9 @@ extern int FESTO_TYPE;
 //Metall Detector
 #define MTD 7
 
+//Rampe
+
+
 /* ------------------------Aktionen ------------------------*/
 
 //Aktionen der Aktorik
@@ -137,6 +140,9 @@ extern int FESTO_TYPE;
 #define LSA2interrupted 40
 #define LSE2interrupted 41
 #define LSE2notInterrupted 42
+
+#define LSR2interrupted 43
+#define LSR2notInterrupted 44
 
 //Aktion ADC
 #define HMSinterrupted 108

@@ -75,9 +75,10 @@ int QnetServer::server(){
 		    	   	     * reply now or later. */
 		    	   	    break;
 
-		    	   	case LSE:
-		    	   		MsgSendPulse(dispatcher->getConnectionID(), -1, LSA1interrupted, 0);
-		    	   		break;
+					//nur zum Testen
+		    	   	// case LSE:
+		    	   	// 	MsgSendPulse(dispatcher->getConnectionID(), -1, LSA1interrupted, 0);
+		    	   	// 	break;
 
 		    	   	case HELLO:
 		    	   		std::cout << "Hallo von anderer Anlage gesendet!\n" << endl ;
@@ -109,8 +110,29 @@ int QnetServer::server(){
 		    	   		}
 		    	   		break;
 
+					case LSR1notInterrupted:
+		    	   		if(FESTO_TYPE == 2) {
+		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSR1notInterrupted, 0);
+		    	   		}
+		    	   		break;
 
+					case LSR2notInterrupted:
+		    	   		if(FESTO_TYPE == 1) {
+		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSR2notInterrupted, 0);
+		    	   		}
+		    	   		break;
 
+					case LSR1interrupted:
+		    	   		if(FESTO_TYPE == 2) {
+		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSR1interrupted, 0);
+		    	   		}
+		    	   		break;
+
+						case LSR2interrupted:
+		    	   		if(FESTO_TYPE == 1) {
+		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSR2interrupted, 0);
+		    	   		}
+		    	   		break;
 
 //					case FBM2_SEND_WK:
 //

@@ -117,10 +117,22 @@ void Sensor::sensorRoutine() {
 				   } break;
 			   case LSR:
 				   if (pulse.value.sival_int == 1) {
-					   MsgSendPulse(dispID, -1, LSR1notInterrupted, 0);
+
+					if(FESTO_TYPE == 1) {
+						   MsgSendPulse(dispID, -1, LSR1notInterrupted, 0);
+					   } else if(FESTO_TYPE == 2) {
+
+						  MsgSendPulse(dispID, -1, LSR2notInterrupted, 0);
+					   }
 					   break;
+					   
 				   } else {
-					   MsgSendPulse(dispID, -1, LSR1interrupted, 0);
+					if(FESTO_TYPE == 1) {
+						   MsgSendPulse(dispID, -1, LSR1interrupted, 0);
+					   } else if(FESTO_TYPE == 2) {
+
+						  MsgSendPulse(dispID, -1, LSR2interrupted, 0);
+					   }
 				   } break;
 			   case HMS:
 					   MsgSendPulse(dispID, -1, HMSinterrupted, 0);
