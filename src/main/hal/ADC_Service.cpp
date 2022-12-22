@@ -98,6 +98,7 @@ void ADC_Service::adcInterruptService() {
 									MsgSendPulse(dispId, -1, ADC_WK_NIN_HM, aktuelleHoehe);
 									//MsgSendPulse(dispId, -1, ADC_SAMLING__VALUE_FINISHED, aktuelleHöhe);
 									//printSamples();
+									//TODO Hier WK classify starten
 									counter = 0;
 									samples.clear();
 								} else if (isInterrupted){
@@ -114,7 +115,58 @@ void ADC_Service::adcInterruptService() {
 				 }
 }
 
+int classifyWK() {
+	int i = 0;
+	int max = samples.front();
+	int letzterWert = samples.front();
+	int diff = 0;
+	int maxDiff = 0;
+	
 
+for(int s: samples){
+
+		if(letzterWert > s) {
+			diff = letzterWert - s;
+		} else {
+
+			diff = s - letzterWert;
+		}
+
+
+	if (s > max) {
+		max = s;
+	}
+	if(diff > maxDiff) {
+		maxDiff = diff;
+
+	}
+
+	}
+
+	// hier damit WK klassifizieren
+
+
+	if(max < 2500 ) {
+		return WK_FLACH;
+	}
+
+	else if((max > 2500 && max < 2800) && maxDiff > 50) {
+
+		return WK_Bohrung
+	}
+
+
+	else if((max > 2500 && max < 2800) && maxDiff < 50) {
+
+		return WK_Normal
+	}
+
+	return WK_UNDEFINED;
+
+
+
+
+}
 
 void ADC_Service::printSamples(){
 	int i=1;
