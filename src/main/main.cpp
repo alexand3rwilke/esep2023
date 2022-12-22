@@ -38,10 +38,12 @@ int main(int argc, char** args) {
 
 			if (strcmp(args[1], "F1") == 0) {
 				FESTO_TYPE = 1;
+				system("gns -s");
 
 			}
 			else if (strcmp(args[1], "F2") == 0) {
 				FESTO_TYPE = 2;
+				system("gns");
 
 			}
 
