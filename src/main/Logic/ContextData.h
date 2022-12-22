@@ -12,6 +12,8 @@
 class ContextData{
 private:
     int errorCounter = 0;
+    bool rampe1Voll = false;
+    bool rampe2Voll = false;
 
 public:
     Dispatcher *disp;
@@ -20,6 +22,10 @@ public:
     void incErrorCounter();
     void clearErrorcounter();
     void show();
+    void setRampe1Voll(bool value);
+    void setRampe2Voll(bool value);
+    bool getRampe1Voll();
+    bool getRampe2Voll();
 
     int conIDDis = 0;
 };

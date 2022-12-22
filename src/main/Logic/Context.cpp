@@ -56,8 +56,7 @@ void Context::eventHandler(){
 		//TODO alle sensorsignale einfügen
 		events = {LSA1interrupted,LSE1interrupted,STRinterrupted, STRnotInterrupted, STPinterrupted,
 				LSS1interrupted, LSS1notInterrupted, LSE1notInterrupted,ADC_WK_IN_HM,ADC_WK_NIN_HM,STR_SMZ, MTD1interrupted,ADC_START_SINGLE_SAMPLE,
-				ADC_SINGLE_SAMLING_FINISHED,ESTP1interrupted,ESTP1notInterrupted, RSTinterrupted,LSA2interrupted,LSE2interrupted,ESTP2interrupted,ESTP2notInterrupted
-				LSR1notInterrupted,LSR2notInterrupted,LSR1interrupted,LSR2interrupted
+				ADC_SINGLE_SAMLING_FINISHED,ESTP1interrupted,ESTP1notInterrupted, RSTinterrupted,LSA2interrupted,LSE2interrupted,ESTP2interrupted,ESTP2notInterrupted,LSR1notInterrupted,LSR2notInterrupted,LSR1interrupted,LSR2interrupted
 				};
 
 		disp->registerForEventWIthConnection(events, conID);
@@ -111,11 +110,6 @@ void Context::eventHandler(){
 
 			   case LSE1interrupted:
 				   state->doAction(LSE1interrupted, msg);
-				   break;
-
-
-			   case LSR1interrupted:
-				   state->doAction(LSR1interrupted, msg);
 				   break;
 
 			   case	LSS1interrupted:
@@ -187,19 +181,27 @@ void Context::eventHandler(){
 				  break;
 
 				case LSR1notInterrupted:
+				state->doAction(LSR1notInterrupted, msg);
+				contextData->setRampe1Voll(false);
 				//TODO setze contextData Rampe1 voll auf false;
 				break;
 
 				case LSR2notInterrupted:
+				state->doAction(LSR2notInterrupted, msg);
+				contextData->setRampe2Voll(false);
 				//TODO setze contextData Rampe2 voll auf false;
 				break;
 
 				case LSR1interrupted : 
+				contextData->setRampe1Voll(true);
+				state->doAction(LSR1interrupted, msg);
 				//TODO setze contextData Rampe1 voll auf true;
 				break;
 
 
 				case LSR2interrupted : 
+				contextData->setRampe2Voll(false);
+				state->doAction(LSR2interrupted, msg);
 				//TODO setze contextData Rampe2 voll auf true;
 				break;
 

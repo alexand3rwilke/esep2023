@@ -32,3 +32,20 @@ void ContextData::incErrorCounter() {
 void ContextData::show() {
     cout << "error counter:" << errorCounter << endl; // just for illustration.
 }
+
+void ContextData::setRampe1Voll(bool value) {
+   rampe1Voll = value;
+}
+
+void ContextData::setRampe2Voll(bool value) {
+   rampe2Voll = value;
+}
+bool ContextData::getRampe1Voll() {
+   return rampe1Voll;
+}
+
+bool ContextData::getRampe2Voll() {
+   return rampe2Voll;
+}
+
+

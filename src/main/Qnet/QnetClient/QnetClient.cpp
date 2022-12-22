@@ -52,8 +52,7 @@ int QnetClient::client(){
 				perror("Could not connect to channel!");
 	}
 
-	vector<int8_t> events = {LSE, LSE1interrupted, LSA2interrupted,ESTP1interrupted, ESTP2interrupted
-	LSR1notInterrupted,LSR2notInterrupted,LSR1interrupted,LSR2interrupted
+	vector<int8_t> events = {LSE, LSE1interrupted, LSA2interrupted,ESTP1interrupted, ESTP2interrupted,LSR1notInterrupted,LSR2notInterrupted,LSR1interrupted,LSR2interrupted
 	};
 
 	dispatcher->registerForEventWIthConnection(events, conID);
