@@ -24,25 +24,25 @@ void SMZTesting::doAction(int event, _pulse msg){
 
 	switch(event){
 
-	case LSAinterrupted:
+	case LSA1interrupted:
 		actions->greenOn();
 		sleep(2);
 		actions->greenOff();
 		break;
 
-	case LSSinterrupted:
+	case LSS1interrupted:
 		actions->greenOn();
 		sleep(2);
 		actions->greenOff();
 		break;
 
-	case LSRinterrupted:
+	case LSR1interrupted:
 		actions->greenOn();
 		sleep(2);
 		actions->greenOff();
 		break;
 
-	case LSEinterrupted:
+	case LSE1interrupted:
 		actions->greenOn();
 		sleep(2);
 		actions->greenOff();

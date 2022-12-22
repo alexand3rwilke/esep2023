@@ -17,7 +17,7 @@ void SMZDistanceMeasurement_ADC_WS::exit(){
 void SMZDistanceMeasurement_ADC_WS::doAction(int event, _pulse msg){
 
 	switch(event){
-	case LSAinterrupted:
+	case LSA1interrupted:
 		//Starte Zeitmessung für Wegstrecke von LSA zu ADC
 		time1=0.0;
 		tstart = 0.0;
@@ -57,7 +57,7 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event, _pulse msg){
 	   actions->moveFaster();
 	   break;
 
-   case LSSinterrupted:
+   case LSS1interrupted:
 	   time1 += clock() - tstart;
 	   time1 = time1/CLOCKS_PER_SEC;
 	   wsa_data->setDistance_ADC_LSS(time1);
@@ -68,7 +68,7 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event, _pulse msg){
 	   tstart = clock();
 	   break;
 
-   case LSEinterrupted:
+   case LSE1interrupted:
 	   time1 += clock() - tstart;
 	   time1 = time1/CLOCKS_PER_SEC;
 

@@ -43,7 +43,7 @@ void Sensor::sensorRoutine() {
 		perror("Could not connect to channel!");
 	}
 
-	senorEvents={LSA1, LSE1, LSS1, HMS1, STR, ESTP, RST, STP, STR_SMZ, MTD1};
+	senorEvents={LSA, LSE, LSS, HMS1, STR, ESTP, RST, STP, STR_SMZ, MTD};
 
 	disp->registerForEventWIthConnection(senorEvents, conID);
 
@@ -61,15 +61,15 @@ void Sensor::sensorRoutine() {
 			// Untersuche und Sende event an Dispatcher
 			 switch(pulse.code) {
 
-			   case LSA1:
+			   case LSA:
 				   if (pulse.value.sival_int == 1) {
-					   MsgSendPulse(dispID, -1, LSAnotInterrupted, 0);
+					   MsgSendPulse(dispID, -1, LSA1notInterrupted, 0);
 					   break;
 				   } else {
 
 					   if(FESTO_TYPE.compare("FBM1")) {
 
-						   MsgSendPulse(dispID, -1, LSAinterrupted, 0);
+						   MsgSendPulse(dispID, -1, LSA1interrupted, 0);
 						   printf("Festo1 LSA interrupt");
 
 					   } else  if(FESTO_TYPE.compare("FBM2")) {
@@ -78,13 +78,13 @@ void Sensor::sensorRoutine() {
 					   }
 
 				   } break;
-			   case LSE1:
+			   case LSE:
 				   if (pulse.value.sival_int == 1) {
-					   MsgSendPulse(dispID, -1, LSEnotInterrupted, 0);
+					   MsgSendPulse(dispID, -1, LSE1notInterrupted, 0);
 					   break;
 				   } else {
 					   if(FESTO_TYPE.compare("FBM1")) {
-						   MsgSendPulse(dispID, -1, LSEinterrupted, 0);
+						   MsgSendPulse(dispID, -1, LSE1interrupted, 0);
 					   } else if(FESTO_TYPE.compare("FBM2")) {
 
 						   MsgSendPulse(dispID, -1, LSE2interrupted, 0);
@@ -92,21 +92,21 @@ void Sensor::sensorRoutine() {
 
 
 				   } break;
-			   case LSS1:
+			   case LSS:
 				   if (pulse.value.sival_int == 1) {
-					   MsgSendPulse(dispID, -1, LSSnotInterrupted, 0);
+					   MsgSendPulse(dispID, -1, LSS1notInterrupted, 0);
 					   break;
 				   } else {
-					   MsgSendPulse(dispID, -1, LSSinterrupted, 0);
+					   MsgSendPulse(dispID, -1, LSS1interrupted, 0);
 				   } break;
-			   case LSR1:
+			   case LSR:
 				   if (pulse.value.sival_int == 1) {
-					   MsgSendPulse(dispID, -1, LSRnotInterrupted, 0);
+					   MsgSendPulse(dispID, -1, LSR1notInterrupted, 0);
 					   break;
 				   } else {
-					   MsgSendPulse(dispID, -1, LSRinterrupted, 0);
+					   MsgSendPulse(dispID, -1, LSR1interrupted, 0);
 				   } break;
-			   case HMS1:
+			   case HMS:
 					   MsgSendPulse(dispID, -1, HMSinterrupted, 0);
 				   break;
 			   case STR:
@@ -137,8 +137,8 @@ void Sensor::sensorRoutine() {
 					   MsgSendPulse(dispID, -1, RSTinterrupted, 0);
 				   }
 				   break;
-			   case MTD1:
-				   MsgSendPulse(dispID, -1, MTDinterrupted, 0);
+			   case MTD:
+				   MsgSendPulse(dispID, -1, MTD1interrupted, 0);
 			   }
 
 		 }

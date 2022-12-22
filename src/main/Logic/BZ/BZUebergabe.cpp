@@ -29,7 +29,7 @@ void BZUebergabe::entry() {
 
     	switch(event){
     		// Checke ob WK in LSA von FEsto 2 ist dann stop
-    		case LSEnotInterrupted:
+    		case LSE1notInterrupted:
     			//actions->stopFB();
     			exit();
     			new(this) BZready;
@@ -59,7 +59,7 @@ void BZUebergabe::entry() {
 
 
 
-    		case LSEinterrupted:
+    		case LSE1interrupted:
     		    		  			// TODO delete this thread
     			actions->stopFB();
     		    						exit();

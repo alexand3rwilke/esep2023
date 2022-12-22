@@ -25,7 +25,7 @@ void BZready::entry() {
 
     	switch(event){
     		// check ob LSE interrupt bekommt
-    		case LSAinterrupted :
+    		case LSA1interrupted :
 
     			exit();
     			new(this) BZEinlauf;
@@ -42,7 +42,7 @@ void BZready::entry() {
 
 
 
-    		case LSEinterrupted :
+    		case LSE1interrupted :
 
 				exit();
 				new(this) BZEinlauf;

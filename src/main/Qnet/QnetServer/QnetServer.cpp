@@ -75,21 +75,21 @@ int QnetServer::server(){
 		    	   	     * reply now or later. */
 		    	   	    break;
 
-		    	   	case LSE1:
-		    	   		MsgSendPulse(dispatcher->getConnectionID(), -1, LSAinterrupted, 0);
+		    	   	case LSE:
+		    	   		MsgSendPulse(dispatcher->getConnectionID(), -1, LSA1interrupted, 0);
 		    	   		break;
 
 		    	   	case HELLO:
 		    	   		std::cout << "Hallo von anderer Anlage gesendet!\n" << endl ;
 		    	   	    break;
 
-		    	   	case LSA1:
-		    	   		MsgSendPulse(dispatcher->getConnectionID(), -1, LSEinterrupted, 0);
+		    	   	case LSA:
+		    	   		MsgSendPulse(dispatcher->getConnectionID(), -1, LSE1interrupted, 0);
 		    	   		break;
 
 
-		    	   	case LSEinterrupted:
-						MsgSendPulse(dispatcher->getConnectionID(), -1, LSEinterrupted, 0);
+		    	   	case LSE1interrupted:
+						MsgSendPulse(dispatcher->getConnectionID(), -1, LSE1interrupted, 0);
 						break;
 
 		    	   	case LSA2interrupted:

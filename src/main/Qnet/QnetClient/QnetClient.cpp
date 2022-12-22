@@ -52,7 +52,7 @@ int QnetClient::client(){
 				perror("Could not connect to channel!");
 	}
 
-	vector<int8_t> events = {LSE1, LSEinterrupted, LSA2interrupted};
+	vector<int8_t> events = {LSE, LSE1interrupted, LSA2interrupted};
 
 	dispatcher->registerForEventWIthConnection(events, conID);
 
@@ -70,7 +70,7 @@ int QnetClient::client(){
 
 //					case LSE1:
 //
-//					if(MsgSendPulse(server_coid, -1, LSE1,0) != 0){
+//					if(MsgSendPulse(server_coid, -1, LSE,0) != 0){
 //						perror("[Client]: sendPulse failed");
 //						return EXIT_FAILURE;
 //						}
@@ -79,9 +79,9 @@ int QnetClient::client(){
 
 
 
-					case LSEinterrupted:
+					case LSE1interrupted:
 
-					if(MsgSendPulse(server_coid, -1, LSEinterrupted,0) != 0){
+					if(MsgSendPulse(server_coid, -1, LSE1interrupted,0) != 0){
 						perror("[Client]: sendPulse failed");
 						return EXIT_FAILURE;
 						}

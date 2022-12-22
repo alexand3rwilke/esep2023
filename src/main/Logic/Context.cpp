@@ -54,8 +54,8 @@ void Context::eventHandler(){
 			perror("Could not connect to channel!");
 		}
 		//TODO alle sensorsignale einfügen
-		events = {LSAinterrupted,LSEinterrupted,STRinterrupted, STRnotInterrupted, STPinterrupted,
-				LSSinterrupted, LSSnotInterrupted, LSRinterrupted, LSRnotInterrupted, LSEnotInterrupted,ADC_WK_IN_HM,ADC_WK_NIN_HM,STR_SMZ, MTDinterrupted,ADC_START_SINGLE_SAMPLE,
+		events = {LSA1interrupted,LSE1interrupted,STRinterrupted, STRnotInterrupted, STPinterrupted,
+				LSS1interrupted, LSS1notInterrupted, LSR1interrupted, LSR1notInterrupted, LSE1notInterrupted,ADC_WK_IN_HM,ADC_WK_NIN_HM,STR_SMZ, MTD1interrupted,ADC_START_SINGLE_SAMPLE,
 				ADC_SINGLE_SAMLING_FINISHED,ESTPinterrupted,ESTPnotInterrupted, RSTinterrupted,LSA2interrupted,LSE2interrupted};
 
 		disp->registerForEventWIthConnection(events, conID);
@@ -91,25 +91,25 @@ void Context::eventHandler(){
 
 			   	//----------------------------------------------------
 
-			   case LSAinterrupted:
-				   state->doAction(LSAinterrupted, msg);
+			   case LSA1interrupted:
+				   state->doAction(LSA1interrupted, msg);
 				   break;
 
-			   case LSEinterrupted:
-				   state->doAction(LSEinterrupted, msg);
+			   case LSE1interrupted:
+				   state->doAction(LSE1interrupted, msg);
 				   break;
 
 
-			   case LSRinterrupted:
-				   state->doAction(LSRinterrupted, msg);
+			   case LSR1interrupted:
+				   state->doAction(LSR1interrupted, msg);
 				   break;
 
-			   case	LSSinterrupted:
-				   state->doAction(LSSinterrupted , msg);
+			   case	LSS1interrupted:
+				   state->doAction(LSS1interrupted , msg);
 				   break;
 
-			   case LSEnotInterrupted:
-				   state->doAction(LSEnotInterrupted, msg);
+			   case LSE1notInterrupted:
+				   state->doAction(LSE1notInterrupted, msg);
 				   break;
 
 
@@ -161,8 +161,8 @@ void Context::eventHandler(){
 				  state->doAction(STPinterrupted, msg);
 				  break;
 
-			  case MTDinterrupted:
-				  state->doAction(MTDinterrupted, msg);
+			  case MTD1interrupted:
+				  state->doAction(MTD1interrupted, msg);
 			   	   break;
 
 			  case LSE2interrupted:

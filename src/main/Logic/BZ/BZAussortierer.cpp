@@ -33,14 +33,14 @@ void BZAussortierer::entry() {
 
 
     	switch (event) {
-    		case LSEinterrupted :
+    		case LSE1interrupted :
     			exit();
     			new(this) BZUebergabe;
     			entry();
     			break;
 
 
-    		case LSSinterrupted :
+    		case LSS1interrupted :
     			actions->durchlassen();
     			break;
 

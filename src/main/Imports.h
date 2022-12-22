@@ -84,12 +84,12 @@ extern string FESTO_TYPE;
 #define GPIO_DATAIN 0x138
 #define GPIO_SETDATAOUT 0x194
 
-// Lichtschranken
-#define LSA1 2	//active low
-#define LSE1 20
-#define LSR1 15
-#define LSS1 5
-#define HMS1 3
+// Lichtschranken 
+#define LSA 2	//active low
+#define LSE 20
+#define LSR 15
+#define LSS 5
+#define HMS 3
 
 //Buttons
 #define STR 22			//active high
@@ -100,7 +100,7 @@ extern string FESTO_TYPE;
 //LEDs pin
 
 //Metall Detector
-#define MTD1 7
+#define MTD 7
 
 /* ------------------------Aktionen ------------------------*/
 
@@ -121,17 +121,19 @@ extern string FESTO_TYPE;
 #define AMP_ALL_OFF 63
 
 //Aktionen der Sensorik
-#define LSAinterrupted 100
-#define LSAnotInterrupted 101
-#define LSSinterrupted 102
-#define LSSnotInterrupted 103
-#define LSRinterrupted 104
-#define LSRnotInterrupted 105
-#define LSEinterrupted 106
-#define LSEnotInterrupted 107
-#define MTDinterrupted 99
 
+// FESTO 1 Sensor Interrupt
+#define LSA1interrupted 100
+#define LSA1notInterrupted 101
+#define LSS1interrupted 102
+#define LSS1notInterrupted 103
+#define LSR1interrupted 104
+#define LSR1notInterrupted 105
+#define LSE1interrupted 106
+#define LSE1notInterrupted 107
+#define MTD1interrupted 99
 
+// FESTO 2 Sensor interrupt
 #define LSA2interrupted 40
 #define LSE2interrupted 41
 
