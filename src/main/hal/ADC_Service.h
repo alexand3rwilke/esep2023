@@ -21,6 +21,7 @@ class ADC_Service  {
 private:
 	int aktuelleHoehe;
 	void printSamples();
+	int classifyWK();
 
 public:
 

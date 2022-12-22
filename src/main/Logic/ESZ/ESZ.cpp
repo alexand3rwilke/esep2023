@@ -30,10 +30,18 @@ void ESZ::exit(){
 void ESZ::doAction(int event, _pulse msg){
 
 	switch(event){
-	case ESTPnotInterrupted:schalteRaus = true;
+
+	case ESTP2notInterrupted:schalteRaus = true;
+		break;
+
+	case ESTP1notInterrupted:schalteRaus = true;
 	break;
-	case ESTPinterrupted: entry();
+
+	case ESTP1interrupted: entry();
 	break;
+
+	case ESTP2interrupted: entry();
+		break;
 	case RSTinterrupted:
 		if(resetCounter == 0){
 			actions->redOff();

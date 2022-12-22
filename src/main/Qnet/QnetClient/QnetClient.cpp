@@ -85,7 +85,7 @@ int QnetClient::client(){
 						}
 					break;
 
-				case ESTP1interrupted:
+					case ESTP1interrupted:
 
 					if(MsgSendPulse(server_coid, -1, ESTP1interrupted,0) != 0){
 						perror("[Client]: sendPulse failed");
@@ -93,7 +93,7 @@ int QnetClient::client(){
 						}
 					break;			
 
-				case ESTP2interrupted:
+					case ESTP2interrupted:
 
 					if(MsgSendPulse(server_coid, -1, ESTP2interrupted,0) != 0){
 						perror("[Client]: sendPulse failed");

@@ -115,7 +115,7 @@ void ADC_Service::adcInterruptService() {
 				 }
 }
 
-int classifyWK() {
+int ADC_Service:classifyWK() {
 	int i = 0;
 	int max = samples.front();
 	int letzterWert = samples.front();
