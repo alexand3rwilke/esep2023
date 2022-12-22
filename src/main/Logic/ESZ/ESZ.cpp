@@ -17,7 +17,8 @@ void ESZ::entry(){
 	actions->stopFB();
 	actions->redLightBlinking();
 	actions->yellowLightBlinking();
-	schalteRaus = false;
+
+
 	// substate GUFZ
 
 }
@@ -37,11 +38,23 @@ void ESZ::doAction(int event, _pulse msg){
 	case ESTP1notInterrupted:schalteRaus = true;
 	break;
 
-	case ESTP1interrupted: entry();
-	break;
+	case ESTP1interrupted:
+		entry();
+		if(FESTO_TYPE == 1) {
+			schalteRaus = false;
 
-	case ESTP2interrupted: entry();
+		}
 		break;
+
+	case ESTP2interrupted:
+		entry();
+		if(FESTO_TYPE == 2) {
+			schalteRaus = false;
+
+		}
+
+		break;
+
 	case RSTinterrupted:
 		if(resetCounter == 0){
 			actions->redOff();

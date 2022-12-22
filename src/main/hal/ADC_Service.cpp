@@ -99,6 +99,9 @@ void ADC_Service::adcInterruptService() {
 									//MsgSendPulse(dispId, -1, ADC_SAMLING__VALUE_FINISHED, aktuelleHöhe);
 									//printSamples();
 									//TODO Hier WK classify starten
+
+									int wkType = classifyWK();
+									printf("WK TYPE : %d",wkType);
 									counter = 0;
 									samples.clear();
 								} else if (isInterrupted){
@@ -116,14 +119,25 @@ void ADC_Service::adcInterruptService() {
 }
 
 int ADC_Service::classifyWK() {
-	int i = 0;
+
+
+	// remove noise from start and beginning
+	for(int i = 0; i < 10; i++) {
+
+		samples.erase(samples.begin());
+		samples.pop_back();
+	}
+
+
 	int max = samples.front();
+	int min = samples.front();
 	int letzterWert = samples.front();
 	int diff = 0;
 	int maxDiff = 0;
 	
 
 for(int s: samples){
+
 
 		if(letzterWert > s) {
 			diff = letzterWert - s;
@@ -136,6 +150,12 @@ for(int s: samples){
 	if (s > max) {
 		max = s;
 	}
+
+	if (s < min) {
+		min = s;
+		}
+
+
 	if(diff > maxDiff) {
 		maxDiff = diff;
 
@@ -146,17 +166,22 @@ for(int s: samples){
 	// hier damit WK klassifizieren
 
 
-	if(max < 2500 ) {
+
+
+	printf("MAX: %d",max);
+	printf("MIN: %d",min);
+	if(max > 2450 ) {
+
+		if(min < 2350) {
+			return WK_Bohrung;
+		}
 		return WK_FLACH;
 	}
 
-	else if((max > 2500 && max < 2800) && maxDiff > 50) {
-
-		return WK_Bohrung;
-	}
 
 
-	else if((max > 2500 && max < 2800) && maxDiff < 50) {
+
+	else if((max < 2450 && max < 2800) && maxDiff < 60) {
 
 		return WK_Normal;
 	}

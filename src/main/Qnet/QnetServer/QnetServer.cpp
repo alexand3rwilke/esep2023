@@ -98,14 +98,14 @@ int QnetServer::server(){
 // ESTP
 					case ESTP1interrupted:
 		    	   		if(FESTO_TYPE == 2) {
-		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSA2interrupted, 0);
+		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, ESTP1interrupted, 0);
 		    	   		}
 		    	   		break;
 
 
 		    	   	case ESTP2interrupted:
 		    	   		if(FESTO_TYPE == 1) {
-		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSA2interrupted, 0);
+		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, ESTP2interrupted, 0);
 		    	   		}
 		    	   		break;
 
