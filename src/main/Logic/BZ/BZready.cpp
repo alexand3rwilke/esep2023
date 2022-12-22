@@ -11,6 +11,7 @@
 
 void BZready::entry() {
 
+	actions->stopFB();
 	cout << "\n  rz entry\n" << endl;
 }
     void BZready::exit() {

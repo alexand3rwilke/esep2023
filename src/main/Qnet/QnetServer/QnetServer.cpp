@@ -84,11 +84,18 @@ int QnetServer::server(){
 		    	   	    break;
 
 		    	   	case LSE1interrupted:
-						MsgSendPulse(dispatcher->getConnectionID(), -1, LSE1interrupted, 0);
+		    	   		if(FESTO_TYPE == 2) {
+		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSE1interrupted, 0);
+		    	   		}
+
 						break;
 
 		    	   	case LSA2interrupted:
-		    	   		MsgSendPulse(dispatcher->getConnectionID(), -1, LSA2interrupted, 0);
+		    	   		if(FESTO_TYPE == 1) {
+		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSA2interrupted, 0);
+
+		    	   		}
+
 		    	   		break;
 
 
