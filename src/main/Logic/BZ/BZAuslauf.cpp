@@ -18,7 +18,7 @@ void BZAuslauf::entry() {
 
 }
     void BZAuslauf::exit() {
-
+    	delete this;
     }
     void BZAuslauf::estp() {
 
