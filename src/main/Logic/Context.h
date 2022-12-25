@@ -37,6 +37,9 @@ public:
 	ContextData *contextData;
 	Dispatcher *disp;
 	Actions *actions;
+
+private:
+	bool firstState = true; // wird direkt beim ersten LSA trigger auf false gesetzt
 };
 
 #endif /* SRC_MAIN_LOGIC_CONTEXT_H_ */

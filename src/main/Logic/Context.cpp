@@ -21,6 +21,8 @@
 #include <iostream>
 
 
+
+
 Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *contextData) {
 
 	// Setze state auf RZ
@@ -123,17 +125,19 @@ void Context::eventHandler(){
 					   // ADD NEW STATE
 					   // TODO hier noch unterscheiden ob wir im firstState sind, um nich am Anfang schon mit 2 states zu starten
 					   // Da-> init mit [firstState] in RZ(), dann kommt LSA1 interrupted welches nicht einen neuen State in den vector packen soll...
-					   Basestate *newState = new RZ();
+					  if(!firstState) {
+				   	   Basestate *newState = new RZ();
 					   newState = new RZ();
 					   newState->setContextData(contextData);
 					   newState->setActions(actions);
 					   newState->entry();
 					   newState->doAction(LSA1interrupted, msg);
 					   stateList.push_back(newState);
-
+					  }
 
 				   	// danach normale action
 				   state->doAction(LSA1interrupted, msg);
+				   firstState = false;
 				   break;
 
 			   case LSE1interrupted:
