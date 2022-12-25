@@ -64,4 +64,14 @@ void ContextData::setErkanntesWk(int wkType) {
 int ContextData::getErkanntesWk() {
   return erkanntesWk;
 }
+void ContextData::addWK() {
+	wkCounter++;
 
+}
+
+void ContextData::removeWK() {
+	if(wkCounter> 1) {
+		wkCounter--;
+	}
+
+}

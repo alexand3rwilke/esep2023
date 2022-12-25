@@ -197,6 +197,11 @@ extern int MAX_HOEHE;
 #define WK_UNDEFINED 39
 
 
+//
+#define WK_REMOVED 70
+#define WK_ADDED 71
+
+
 
 
 

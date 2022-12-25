@@ -16,6 +16,7 @@ private:
     bool rampe2Voll = false;
     int zielWk = 0;
     int erkanntesWk = 0;
+    int wkCounter = 0;
 
 public:
     Dispatcher *disp;
@@ -39,6 +40,10 @@ public:
     //Das Werkstück welches erwartet wird
     void setErkanntesWk(int wkType);
     int getErkanntesWk();
+
+    //WK Counter Methoden
+    void addWK();
+    void removeWK();
 
     int conIDDis = 0;
 };

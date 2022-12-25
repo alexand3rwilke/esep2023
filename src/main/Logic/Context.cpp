@@ -32,6 +32,7 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 	fisrsState->setActions(actions);
 	fisrsState->entry();
 	stateList.push_back(fisrsState);
+	contextData->addWK();
 
 	disp = dispatcher;
 	dispID = disp->getConnectionID();
@@ -72,7 +73,8 @@ void Context::eventHandler(){
 					ESTP1interrupted,ESTP1notInterrupted, 
 					ESTP2interrupted,ESTP2notInterrupted,
 					RSTinterrupted,
-					WK_FLACH,WK_Normal,WK_Bohrung_Metal,WK_Bohrung_Normal,WK_UNDEFINED
+					WK_FLACH,WK_Normal,WK_Bohrung_Metal,WK_Bohrung_Normal,WK_UNDEFINED,
+					WK_REMOVED,WK_ADDED
 					};
 
 		disp->registerForEventWIthConnection(events, conID);
@@ -258,6 +260,14 @@ void Context::eventHandler(){
 
 				case WK_UNDEFINED : 
 				state->doAction(WK_UNDEFINED, msg);
+				break;
+
+				case WK_ADDED :
+				contextData->addWK();
+				break;
+
+				case WK_REMOVED :
+				contextData->removeWK();
 				break;
 
 

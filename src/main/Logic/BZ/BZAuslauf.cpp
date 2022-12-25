@@ -18,6 +18,7 @@ void BZAuslauf::entry() {
 
 }
     void BZAuslauf::exit() {
+    	MsgSendPulse(myChannel, -1, WK_REMOVED, 0);
     	delete this;
     }
     void BZAuslauf::estp() {
