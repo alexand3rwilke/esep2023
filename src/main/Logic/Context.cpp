@@ -32,7 +32,6 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 	fisrsState->setActions(actions);
 	fisrsState->entry();
 	stateList.push_back(fisrsState);
-	contextData->addWK();
 
 	disp = dispatcher;
 	dispID = disp->getConnectionID();

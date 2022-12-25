@@ -18,6 +18,7 @@ void BZUebergabe::entry() {
 
 }
     void BZUebergabe::exit() {
+    	contextData->removeWK();
 
     }
     void BZUebergabe::estp() {
