@@ -14,7 +14,10 @@
 void BZAuslauf::entry() {
 
 	cout << "\n  BZAuslauf entry\n" << endl;
-	actions->stopFB();
+
+	if(contextData->getWKCount() == 0) {
+	    		actions->stopFB();
+	    	}
 
 }
     void BZAuslauf::exit() {

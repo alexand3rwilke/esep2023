@@ -19,6 +19,9 @@ void BZUebergabe::entry() {
 }
     void BZUebergabe::exit() {
     	contextData->removeWK();
+    	if(contextData->getWKCount() == 0) {
+    		actions->stopFB();
+    	}
 
     }
     void BZUebergabe::estp() {

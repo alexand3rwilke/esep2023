@@ -75,3 +75,8 @@ void ContextData::removeWK() {
 	}
 
 }
+
+int ContextData::getWKCount() {
+	return wkCounter;
+
+}

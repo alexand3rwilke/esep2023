@@ -239,8 +239,6 @@ void Context::eventHandler(){
 				break;
 
 				// TODO Werkstück erkennung testen
-			
-
 				case WK_FLACH : 
 				state->doAction(WK_FLACH, msg);
 				break;

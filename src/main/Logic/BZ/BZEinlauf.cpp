@@ -31,8 +31,6 @@ void BZEinlauf::entry() {
 
     		switch (event) {
 
-
-
     		case ADC_WK_IN_HM :
     			exit();
     			new(this) BZHoehenmessung;

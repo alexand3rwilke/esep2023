@@ -44,6 +44,7 @@ public:
     //WK Counter Methoden
     void addWK();
     void removeWK();
+    int getWKCount();
 
     int conIDDis = 0;
 };
