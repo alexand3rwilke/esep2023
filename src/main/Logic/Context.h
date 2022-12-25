@@ -16,7 +16,10 @@
 
 class Context {
 private:
-	Basestate *state;
+	//Basestate *state;
+
+	vector<Basestate *> stateList;
+
 
 	std::thread* ContextThread;
 	std::vector<int8_t> events;
