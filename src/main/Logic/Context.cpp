@@ -25,8 +25,8 @@
 
 Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *contextData) {
 
-	// Setze state auf RZ
-	Basestate *fisrsState = new RZ();
+	// Setze State auf RZ
+	Basestate *fisrsState;
 	fisrsState = new RZ();
 	fisrsState->setContextData(contextData);
 	fisrsState->setActions(actions);
