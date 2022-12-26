@@ -17,13 +17,10 @@
 class Context {
 private:
 	//Basestate *state;
-
 	vector<Basestate *> stateList;
-
-
 	std::thread* ContextThread;
 	std::vector<int8_t> events;
-	std::vector<int> werkstuckReihenfolge;
+	std::vector<int> werkstuckReihenfolgeList;
 	void eventHandler();
 	int dispID;
 
@@ -40,7 +37,7 @@ public:
 	Actions *actions;
 
 private:
-	int index;
+	int wkReihenfolgeIndex;
 	bool firstState = true; // wird direkt beim ersten LSA trigger auf false gesetzt
 };
 

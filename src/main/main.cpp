@@ -70,7 +70,7 @@ int main(int argc, char** args) {
 		config.open("/bspreihenfolgeWK.cfg", ios::in);
 		vector<int> werkstuckReihenfolge;
 
-		if(!config)perror("Failed to create/open file!");
+		if(!config)perror("Fehler beim Öffnen von bspreihenfolgeWK.cfg");
 		string werkstueck;
 		while(getline(config, input))
 		{
@@ -81,15 +81,15 @@ int main(int argc, char** args) {
 				werkstuckReihenfolge.push_back(WK_Normal);
 			}
 
-			if(werkstueck == "WK_FLACH")  {
+			else if(werkstueck == "WK_FLACH")  {
 				werkstuckReihenfolge.push_back(WK_FLACH);
 			}
 
-			if(werkstueck == "WK_Bohrung_Normal")  {
+			else if(werkstueck == "WK_Bohrung_Normal")  {
 				werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
 			}
 
-			if(werkstueck == "WK_Bohrung_Metal")  {
+			else if(werkstueck == "WK_Bohrung_Metal")  {
 				werkstuckReihenfolge.push_back(WK_Bohrung_Metal);
 			}
 
@@ -104,10 +104,6 @@ int main(int argc, char** args) {
 		}
 
 		ContextData *contextData = new ContextData(&dispatcher);
-		// TODO Entfernen, nut zum testen der aussortierung.
-		// Nachher zu ersetzen mit Werten aus ausgelesender Liste
-		contextData->setZielWk(WK_Normal);
-
 		Context *context = new Context(&dispatcher, actions,contextData,werkstuckReihenfolge);
 
 		if (strcmp(args[1], "F1") == 0) {
