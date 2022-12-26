@@ -23,11 +23,12 @@ private:
 
 	std::thread* ContextThread;
 	std::vector<int8_t> events;
+	std::vector<int> werkstuckReihenfolge;
 	void eventHandler();
 	int dispID;
 
 public:
-	Context(Dispatcher *dispatcher, Actions *actions, ContextData  * contextData);
+	Context(Dispatcher *dispatcher, Actions *actions, ContextData  * contextData, vector<int> werkstuckReihenfolge);
 
 	virtual ~Context();
 	void entry();
@@ -39,6 +40,7 @@ public:
 	Actions *actions;
 
 private:
+	int index;
 	bool firstState = true; // wird direkt beim ersten LSA trigger auf false gesetzt
 };
 

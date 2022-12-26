@@ -23,15 +23,21 @@
 
 
 
-Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *contextData) {
+Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *contextData,vector<int> werkstuckReihenfolge) {
 
+
+	index = 0;
+	this->werkstuckReihenfolge = werkstuckReihenfolge;
 	// Setze State auf RZ
 	Basestate *fisrsState;
 	fisrsState = new RZ();
 	fisrsState->setContextData(contextData);
 	fisrsState->setActions(actions);
 	fisrsState->entry();
+	fisrsState->setZielWK(werkstuckReihenfolge.at(++index % werkstuckReihenfolge.size()));
+
 	stateList.push_back(fisrsState);
+
 
 	disp = dispatcher;
 	dispID = disp->getConnectionID();
@@ -133,6 +139,8 @@ void Context::eventHandler(){
 					   newState->setActions(actions);
 					   newState->entry();
 					   newState->doAction(LSA1interrupted, msg);
+					   // setze gesuchtes WK auf den aktuellen stand der liste und setze den pointer danach hoch
+					   newState->setZielWK(werkstuckReihenfolge.at(++index % werkstuckReihenfolge.size()));
 					   stateList.push_back(newState);
 					  }
 

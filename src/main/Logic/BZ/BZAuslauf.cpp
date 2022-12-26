@@ -16,12 +16,14 @@ void BZAuslauf::entry() {
 	cout << "\n  BZAuslauf entry\n" << endl;
 
 	if(contextData->getWKCount() == 0) {
-	    		actions->stopFB();
+	    	actions->stopFB();
 	    	}
 
 }
     void BZAuslauf::exit() {
     	MsgSendPulse(myChannel, -1, WK_REMOVED, 0);
+
+    	//lösche den State nachdem das WK vom Band genommen wurde
     	delete this;
     }
     void BZAuslauf::estp() {
@@ -45,7 +47,7 @@ void BZAuslauf::entry() {
 
     		// wenn fertig dann in Auslauf
     		case LSE2notInterrupted :
-    					exit();
+    			exit();
     			new(this) BZready;
     			entry();
     			break;

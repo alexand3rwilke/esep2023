@@ -19,6 +19,7 @@
 #include "Logic/Actions.h"
 #include "Qnet/QnetClient/QnetClient.h"
 #include "Qnet/QnetServer/QnetServer.h"
+#include <fstream>
 
 #include "Imports.h"
 
@@ -62,12 +63,52 @@ int main(int argc, char** args) {
 		Actuator *actuator = new Actuator(&dispatcher);
 		ADC_Service *adcService = new ADC_Service(&dispatcher);
 
+
+		fstream config;
+		string input;
+		string delimiter= " ";
+		config.open("/bspreihenfolgeWK.cfg", ios::in);
+		vector<int> werkstuckReihenfolge;
+
+		if(!config)perror("Failed to create/open file!");
+		string werkstueck;
+		while(getline(config, input))
+		{
+			werkstueck = input.substr(input.find(delimiter) + 1, input.length());
+
+
+			if(werkstueck == "WK_NORMAL")  {
+				werkstuckReihenfolge.push_back(WK_Normal);
+			}
+
+			if(werkstueck == "WK_FLACH")  {
+				werkstuckReihenfolge.push_back(WK_FLACH);
+			}
+
+			if(werkstueck == "WK_Bohrung_Normal")  {
+				werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
+			}
+
+			if(werkstueck == "WK_Bohrung_Metal")  {
+				werkstuckReihenfolge.push_back(WK_Bohrung_Metal);
+			}
+
+
+		}
+
+		config.close();
+
+		if(werkstuckReihenfolge.size() == 0) {
+
+			perror("Es wurde keine Reihenfolge bestimmt!");
+		}
+
 		ContextData *contextData = new ContextData(&dispatcher);
 		// TODO Entfernen, nut zum testen der aussortierung.
 		// Nachher zu ersetzen mit Werten aus ausgelesender Liste
 		contextData->setZielWk(WK_Normal);
 
-		Context *context = new Context(&dispatcher, actions,contextData);
+		Context *context = new Context(&dispatcher, actions,contextData,werkstuckReihenfolge);
 
 		if (strcmp(args[1], "F1") == 0) {
 
