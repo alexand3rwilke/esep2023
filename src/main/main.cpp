@@ -71,7 +71,7 @@ int main(int argc, char** args) {
 		vector<int> werkstuckReihenfolge;
 
 		if(!config)perror("Fehler beim Öffnen von bspreihenfolgeWK.cfg");
-		string werkstueck;
+		string werkstueck = "WK_NORMAL WK_FLACH WK_BOHRUNG";
 		while(getline(config, input))
 		{
 			werkstueck = input.substr(input.find(delimiter) + 1, input.length());
