@@ -46,6 +46,10 @@ int main(int argc, char** args) {
 				FESTO_TYPE = 2;
 				system("gns");
 
+			} else {
+
+				FESTO_TYPE = 1;
+				system("gns -s");
 			}
 
 	 cout << "Im Festo:" << FESTO_TYPE << endl;
@@ -65,36 +69,40 @@ int main(int argc, char** args) {
 
 
 		fstream config;
-		string input;
+		string input = "WK_NORMAL WK_FLACH WK_BOHRUNG";
 		string delimiter= " ";
 		config.open("/bspreihenfolgeWK.cfg", ios::in);
 		vector<int> werkstuckReihenfolge;
 
 		if(!config)perror("Fehler beim Öffnen von bspreihenfolgeWK.cfg");
-		string werkstueck = "WK_NORMAL WK_FLACH WK_BOHRUNG";
-		while(getline(config, input))
-		{
-			werkstueck = input.substr(input.find(delimiter) + 1, input.length());
+		string werkstueck;
 
-
-			if(werkstueck == "WK_NORMAL")  {
-				werkstuckReihenfolge.push_back(WK_Normal);
-			}
-
-			else if(werkstueck == "WK_FLACH")  {
-				werkstuckReihenfolge.push_back(WK_FLACH);
-			}
-
-			else if(werkstueck == "WK_Bohrung_Normal")  {
-				werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
-			}
-
-			else if(werkstueck == "WK_Bohrung_Metal")  {
-				werkstuckReihenfolge.push_back(WK_Bohrung_Metal);
-			}
-
-
-		}
+		werkstuckReihenfolge.push_back(WK_Normal);
+		werkstuckReihenfolge.push_back(WK_FLACH);
+		werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
+//		while(getline(config, input))
+//		{
+//			werkstueck = input.substr(input.find(delimiter) + 1, input.length());
+//
+//
+//			if(werkstueck == "WK_NORMAL")  {
+//				werkstuckReihenfolge.push_back(WK_Normal);
+//			}
+//
+//			else if(werkstueck == "WK_FLACH")  {
+//				werkstuckReihenfolge.push_back(WK_FLACH);
+//			}
+//
+//			else if(werkstueck == "WK_Bohrung_Normal")  {
+//				werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
+//			}
+//
+//			else if(werkstueck == "WK_Bohrung_Metal")  {
+//				werkstuckReihenfolge.push_back(WK_Bohrung_Metal);
+//			}
+//
+//
+//		}
 
 		config.close();
 
