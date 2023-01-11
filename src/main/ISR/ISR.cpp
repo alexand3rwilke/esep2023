@@ -29,7 +29,6 @@
 #define BIT_MASK(x) (0x1 << (x))
 
 
-
 /* My pulse codes */
 #define PULSE_STOP_THREAD _PULSE_CODE_MINAVAIL + 1
 #define PULSE_INTR_ON_PORT0 _PULSE_CODE_MINAVAIL + 2
@@ -55,6 +54,9 @@ void ISR::recieveInterruptRoutine() {
 	InterruptEnable();
 	int interruptID;
 
+	uintptr_t port1BaseAddr = mmap_device_io(GPIO_REGISTER_LENGHT, GPIO_PORT1);
+
+
 	/* ### Create channel ### */
 			int chanID = ChannelCreate(0);//Create channel to receive interrupt pulse messages.
 			if (chanID < 0) {
@@ -69,14 +71,13 @@ void ISR::recieveInterruptRoutine() {
 			}
 
 
-
 			/* ### Register interrupts by OS. ### */
 			struct sigevent intr_event;
 			SIGEV_PULSE_INIT(&intr_event, conID, SIGEV_PULSE_PRIO_INHERIT, PULSE_INTR_ON_PORT0, 0);
-			interruptID = InterruptAttachEvent(INTR_GPIO_PORT0, &intr_event, 0);
+			interruptID = InterruptAttachEvent(/*INTR_GPIO_PORT0*/97, &intr_event, 0);
 			if (interruptID < 0) {
-				perror("Interrupt was not able to be attached!");
-
+				perror("Interrupt was not able to be attached! - ISR");
+				exit(EXIT_FAILURE);
 			}
 
 			/* ### Configure registers to receive irq events. */
@@ -84,16 +85,16 @@ void ISR::recieveInterruptRoutine() {
 
 
 			// Enable interrupts on pins.
-			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LSA));
-			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LSE));
-			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LSR));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LSA1));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LSE1));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LSR1));
 			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(STR));
 			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(STP));
 			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(RST));
 			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(ESTP));
-			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(MTD));
-			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LSS));
-			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(HMS));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(MTD1));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(LSS1));
+			out32((uintptr_t) port0BaseAddr + GPIO_IRQSTATUS_SET_1, BIT_MASK(HMS1));
 
 
 
@@ -104,72 +105,72 @@ void ISR::recieveInterruptRoutine() {
 			// Lichtschranke Ausgang
 			//	Rising Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(LSE) | BIT_MASK(LSE));//Add desired pins.
+			temp |= (BIT_MASK(LSE1) | BIT_MASK(LSE1));//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
 
 			//	Falling Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(LSE) | BIT_MASK(LSE));//Add desired pins.
+			temp |= (BIT_MASK(LSE1) | BIT_MASK(LSE1));//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
 
 
 			// Lichtschranke Eingang
 			//	Rising Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(LSA) | BIT_MASK(LSA));//Add desired pins.
+			temp |= (BIT_MASK(LSA1) | BIT_MASK(LSA1));//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
 
 			//	Falling Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(LSA) | BIT_MASK(LSA));//Add desired pins.
+			temp |= (BIT_MASK(LSA1) | BIT_MASK(LSA1));//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
 
 
 			 //Lichtschranke Rampe
 			//	Rising Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(LSR) | BIT_MASK(LSR));//Add desired pins.
+			temp |= (BIT_MASK(LSR1) | BIT_MASK(LSR1));//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
 
 			//	Falling Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(LSR) | BIT_MASK(LSR));//Add desired pins.
+			temp |= (BIT_MASK(LSR1) | BIT_MASK(LSR1));//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
 
 			// NEW
 			 //Lichtschranke Am Sortierer
 			//	Rising Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(LSS) | BIT_MASK(LSS));//Add desired pins.
+			temp |= (BIT_MASK(LSS1) | BIT_MASK(LSS1));//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
 
 			//	Falling Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(LSS) | BIT_MASK(LSS));//Add desired pins.
+			temp |= (BIT_MASK(LSS1) | BIT_MASK(LSS1));//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
 
 
 			// Sensor Metall Detector
 			//	Rising Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(MTD) | BIT_MASK(MTD));//Add desired pins.
+			temp |= (BIT_MASK(MTD1) | BIT_MASK(MTD1));//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
 
 			//	Falling Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(MTD) | BIT_MASK(MTD));//Add desired pins.
+			temp |= (BIT_MASK(MTD1) | BIT_MASK(MTD1));//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
 
 
 			// WS in Höhenmesser
 			//	Rising Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(HMS) | BIT_MASK(HMS));//Add desired pins.
+			temp |= (BIT_MASK(HMS1) | BIT_MASK(HMS1));//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_RISINGDETECT), temp);			//Write new config back.
 
 			//	Falling Edge
 			temp = in32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT));			//Read current config.
-			temp |= (BIT_MASK(HMS) | BIT_MASK(HMS));//Add desired pins.
+			temp |= (BIT_MASK(HMS1) | BIT_MASK(HMS1));//Add desired pins.
 			out32((uintptr_t) (port0BaseAddr + GPIO_FALLINGDETECT), temp);			//Write new config back.
 
 
@@ -277,16 +278,16 @@ void ISR::handleInterruptAndSend(int interruptID) {
 					MsgSendPulse(dispId, -1, ESTP,current_level);
 					break;
 
-				case LSA : MsgSendPulse(dispId, -1, LSA,current_level);
+				case LSA1 : MsgSendPulse(dispId, -1, LSA1,current_level);
 				break;
 
-				case LSE : MsgSendPulse(dispId, -1, LSE,current_level);
+				case LSE1 : MsgSendPulse(dispId, -1, LSE1,current_level);
 				break;
 
-				case LSS : MsgSendPulse(dispId, -1, LSS,current_level);
+				case LSS1 : MsgSendPulse(dispId, -1, LSS1,current_level);
 				break;
 
-				case LSR: MsgSendPulse(dispId, -1, LSR,current_level);
+				case LSR1: MsgSendPulse(dispId, -1, LSR1,current_level);
 				break;
 
 				case STR : MsgSendPulse(dispId, -1, STR,current_level);
@@ -298,9 +299,8 @@ void ISR::handleInterruptAndSend(int interruptID) {
 				case STP: MsgSendPulse(dispId, -1, STP,current_level);
 				break;
 
-				case MTD:MsgSendPulse(dispId, -1, MTD,current_level);
+				case MTD1:MsgSendPulse(dispId, -1, MTD1,current_level);
 				break;
-
 				}
 			}
 		}

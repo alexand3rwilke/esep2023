@@ -27,15 +27,17 @@
 #include <ctime>
 #include <time.h>
 
+//#include "simulation/simulationadapterqnx/simqnxirq.h"
+//#include "simulation/simulationadapterqnx/simqnxgpioapi.h"
+//#include "simulation/simulationadapterqnx/simqnxgpioapi.h" // must be last include !!!
+
+
 
 using namespace std;
 
 #ifndef SRC_IMPORTS_H_
 #define SRC_IMPORTS_H_
 
-
-// which FA am I?
-extern int FESTO_TYPE;
 /*------------------------Pins--------------------------*/
 
 // Sensorik
@@ -84,12 +86,12 @@ extern int FESTO_TYPE;
 #define GPIO_DATAIN 0x138
 #define GPIO_SETDATAOUT 0x194
 
-// Lichtschranken 
-#define LSA 2	//active low
-#define LSE 20
-#define LSR 15
-#define LSS 5
-#define HMS 3
+// Lichtschranken
+#define LSA1 2	//active low
+#define LSE1 20
+#define LSR1 15
+#define LSS1 5
+#define HMS1 3
 
 //Buttons
 #define STR 22			//active high
@@ -100,10 +102,7 @@ extern int FESTO_TYPE;
 //LEDs pin
 
 //Metall Detector
-#define MTD 7
-
-//Rampe
-
+#define MTD1 7
 
 /* ------------------------Aktionen ------------------------*/
 
@@ -120,29 +119,23 @@ extern int FESTO_TYPE;
 #define RED_OFF 59
 #define GREEN_BLINKING_ON 60
 #define YELLOW_BLINKING_ON 61
-#define RED_BLINKING_ON 62
+#define RED_BLINKING_ON 62 //---- Kann glaube ich weg, bitte prüfen
 #define AMP_ALL_OFF 63
+#define RED_BLINKING_ON_FAST 64
+#define RED_BLINKING_ON_SLOW 65
 
 //Aktionen der Sensorik
-
-// FESTO 1 Sensor Interrupt
-#define LSA1interrupted 100
-#define LSA1notInterrupted 101
-#define LSS1interrupted 102
-#define LSS1notInterrupted 103
+#define LSAinterrupted 100
+#define LSAnotInterrupted 101
+#define LSSinterrupted 102
+#define LSSnotInterrupted 103
 #define LSR1interrupted 104
-#define LSR1notInterrupted 105
-#define LSE1interrupted 106
-#define LSE1notInterrupted 107
-#define MTD1interrupted 99
-
-// FESTO 2 Sensor interrupt
-#define LSA2interrupted 40
-#define LSE2interrupted 41
-#define LSE2notInterrupted 42
-
-#define LSR2interrupted 43
-#define LSR2notInterrupted 44
+#define LSR2interrupted 105
+#define LSR1notInterrupted 106
+#define LSR2notInterrupted 96
+#define LSEinterrupted 97
+#define LSEnotInterrupted 98
+#define MTDinterrupted 99
 
 //Aktion ADC
 #define HMSinterrupted 108
@@ -155,6 +148,15 @@ extern int FESTO_TYPE;
 #define ADC_SINGLE_SAMLING_FINISHED 126
 #define ADC_START_SINGLE_SAMPLE 127
 
+//#define SIM\_SHOW\_SENSORS
+//#define SIM\_SHOW\_ACTUATORS
+//#define SIM\_SHOW\_ACTIONS
+//#define SIM\_SHOW\_POSITIONS
+//#define SIM\_SHOW\_TIMESTAMP
+//#define SIM\_SHOW\_RIO
+//#define SIM\_SHOW\_REPORT
+//#define SIM\_SHOW\_CYCLE\_DURATION
+
 //Aktionen der Buttons
 #define STRinterrupted 109
 #define STRnotInterrupted 110
@@ -162,14 +164,9 @@ extern int FESTO_TYPE;
 //#define STPnotInterrupted 112
 #define RSTinterrupted 112
 //#define RSTnotInterrupted 114
-#define ESTP1interrupted 114
-#define ESTP1notInterrupted 115
+#define ESTPinterrupted 114
+#define ESTPnotInterrupted 115
 #define STR_SMZ 120
-
-
-// FESTO 2 ESTP
-#define ESTP2interrupted 80
-#define ESTP2notInterrupted 81
 
 //Aktionen der LED
 #define Q1On 98
@@ -177,32 +174,22 @@ extern int FESTO_TYPE;
 #define Q2On 96
 #define Q2Off 95
 
-//Aktionen alles weitere
+//Aktionen für Weiche
 #define ACTIVTE_AUSSORTIERER 116
-#define TimerTimeout 117
-#define WS_AUSSORTIEREN 119
 #define WS_DURCHLASSEN 118
+#define WS_AUSSORTIEREN 119
 
-//enum WS{FWS, WSMB, WSMM, WSO}
+//Aktionen für FZ
+#define RU_VOLL 94
+#define WSZuVielOderWSZuWenig 93
 
+//Aktionen für alles weitere
+#define TimerTimeout 117
 #define HELLO 125
 extern int MIN_HOEHE;
 extern int MAX_HOEHE;
 
-
-#define WK_FLACH 35
-#define WK_Normal 36
-#define WK_Bohrung_Metal 37
-#define WK_Bohrung_Normal 38
-#define WK_UNDEFINED 39
-
-
-//
-#define WK_REMOVED 70
-#define WK_ADDED 71
-
-
-
+//enum WS{FWS, WSMB, WSMM, WSO}
 
 
 #endif /* SRC_IMPORTS_H */

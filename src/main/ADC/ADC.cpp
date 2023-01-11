@@ -57,6 +57,7 @@ void ADC::registerAdcISR(int connectionID, char msgType){
 
 	interruptID = InterruptAttach(ADC_TSC_GENINT, adcISR, this, sizeof(ADC), 0);
 	if(interruptID == -1){
+		perror("Interrupt was not able to be attached! - ADC");
 		DBG_ERROR("InterruptAttach failed");
 		exit(EXIT_FAILURE);
 	}

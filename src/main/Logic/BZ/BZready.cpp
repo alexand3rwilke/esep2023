@@ -11,7 +11,6 @@
 
 void BZready::entry() {
 
-	//actions->stopFB();
 	cout << "\n  rz entry\n" << endl;
 }
     void BZready::exit() {
@@ -26,41 +25,12 @@ void BZready::entry() {
 
     	switch(event){
     		// check ob LSE interrupt bekommt
-    		case LSA1interrupted :
+    		case LSAinterrupted :
 
     			exit();
     			new(this) BZEinlauf;
     			entry();
     			break;
-
-
-    		case LSA2interrupted :
-
-				exit();
-				new(this) BZEinlauf;
-				entry();
-				break;
-
-
-
-    		case LSE1interrupted :
-
-				exit();
-				new(this) BZEinlauf;
-				entry();
-				break;
-
-
-    		// case LSE2interrupted :
-
-			// 	exit();
-			// 	new(this) BZEinlauf;
-			// 	entry();
-			// 	break;
-
-    	}
-
-
-
+    		}
 
     	}

@@ -41,9 +41,9 @@ public:
 	void ampAllOff(void);
 
 	void greenLightBlinking(void);
-	//void greenLightBlinkingOff(void);
-	void yellowLightBlinking();
-	void redLightBlinking();
+	void yellowLightBlinking(void);
+	void redLightBlinkingFast(void);
+	void redLightBlinkingSlow(void);
 
 	//LED
 	void ledQ1On(void);

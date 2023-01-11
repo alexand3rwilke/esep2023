@@ -29,7 +29,10 @@ private:
 	int myChannel;
 	int myConnection;
 	Dispatcher *disp;
-
+	Basestate state1;
+	Basestate state2;
+	//vector<Basestate> stateList = &{state1,state2};
+	Basestate stateList[2] = {state1,state2};
 public:
 	void entry()override;
 	void exit() override;

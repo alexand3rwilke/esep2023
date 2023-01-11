@@ -52,8 +52,7 @@ int QnetClient::client(){
 				perror("Could not connect to channel!");
 	}
 
-	vector<int8_t> events = {LSE, LSE1interrupted, LSA2interrupted,ESTP1interrupted, ESTP2interrupted,LSR1notInterrupted,LSR2notInterrupted,LSR1interrupted,LSR2interrupted
-	};
+	vector<int8_t> events = {LSE1};
 
 	dispatcher->registerForEventWIthConnection(events, conID);
 
@@ -69,66 +68,11 @@ int QnetClient::client(){
 
 		switch(msg.code){
 
-					case LSE1interrupted:
+					case LSE1:
 
-					if(MsgSendPulse(server_coid, -1, LSE1interrupted,0) != 0){
-						perror("[Client]: sendPulse failed");
-						return EXIT_FAILURE;
-						}
-					break;
-
-
-					case LSA2interrupted:
-
-					if(MsgSendPulse(server_coid, -1, LSA2interrupted,0) != 0){
-						perror("[Client]: sendPulse failed");
-						return EXIT_FAILURE;
-						}
-					break;
-
-					case ESTP1interrupted:
-
-					if(MsgSendPulse(server_coid, -1, ESTP1interrupted,0) != 0){
-						perror("[Client]: sendPulse failed");
-						return EXIT_FAILURE;
-						}
-					break;			
-
-					case ESTP2interrupted:
-
-					if(MsgSendPulse(server_coid, -1, ESTP2interrupted,0) != 0){
-						perror("[Client]: sendPulse failed");
-						return EXIT_FAILURE;
-						}
-					break;	
-
-
-					case LSR1notInterrupted:
-					if(MsgSendPulse(server_coid, -1, LSR1notInterrupted,0) != 0){
-						perror("[Client]: sendPulse failed");
-						return EXIT_FAILURE;
-						}
-					break;	
-
-					case LSR2notInterrupted:
-					if(MsgSendPulse(server_coid, -1, LSR2notInterrupted,0) != 0){
-						perror("[Client]: sendPulse failed");
-						return EXIT_FAILURE;
-						}
-					break;
-
-					case LSR1interrupted:
-					if(MsgSendPulse(server_coid, -1, LSR1interrupted,0) != 0){
-						perror("[Client]: sendPulse failed");
-						return EXIT_FAILURE;
-						}
-					break;	
-
-
-					case LSR2interrupted:
-					if(MsgSendPulse(server_coid, -1, LSR2interrupted,0) != 0){
-						perror("[Client]: sendPulse failed");
-						return EXIT_FAILURE;
+						if(MsgSendPulse(server_coid, -1, LSE1,0) != 0){
+								perror("[Client]: sendPulse failed");
+								return EXIT_FAILURE;
 						}
 					break;
 
@@ -146,7 +90,9 @@ int QnetClient::client(){
 	//						 		case NORMAL: MsgSendPulse(server_coid, -1, FBM1_WK_NORMAL, wk.Hoehe1); break;
 	//						 		case BOHRUNG: MsgSendPulse(server_coid, -1, FBM1_WK_BOHRUNG, wk.Hoehe1); break;
 	//						 		case METALL: MsgSendPulse(server_coid, -1, FBM1_WK_METALL, wk.Hoehe1); break;
-	//						 		case UNDEFINED_WK: MsgSendPulse(server_coid, -1, FBM1_WK_CODIERT_NULL, wk.Hoehe1); break;
+	//						 		case GRADECODIERT: MsgSendPulse(server_coid, -1, FBM1_WK_CODIERT_GRADE, wk.Hoehe1); break;
+	//						 		case UNGRADECODIERT: MsgSendPulse(server_coid, -1, FBM1_WK_CODIERT_UNGRADE, wk.Hoehe1); break;
+	//						 		case NULLCODIERT: MsgSendPulse(server_coid, -1, FBM1_WK_CODIERT_NULL, wk.Hoehe1); break;
 	//						 	}
 	//
 	//						 	data->increaseClientCounter();

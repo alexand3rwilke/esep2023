@@ -75,63 +75,16 @@ int QnetServer::server(){
 		    	   	     * reply now or later. */
 		    	   	    break;
 
-					//nur zum Testen
-		    	   	// case LSE:
-		    	   	// 	MsgSendPulse(dispatcher->getConnectionID(), -1, LSA1interrupted, 0);
-		    	   	// 	break;
+		    	   	case LSE1:
+		    	   		MsgSendPulse(dispatcher->getConnectionID(), -1, LSAinterrupted, 0);
+		    	   		break;
 
 		    	   	case HELLO:
 		    	   		std::cout << "Hallo von anderer Anlage gesendet!\n" << endl ;
 		    	   	    break;
 
-		    	   	case LSE1interrupted:
-		    	   		if(FESTO_TYPE == 2) {
-		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSE1interrupted, 0);
-		    	   		}
-						break;
-
-		    	   	case LSA2interrupted:
-		    	   		if(FESTO_TYPE == 1) {
-		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSA2interrupted, 0);
-		    	   		}
-		    	   		break;
-
-// ESTP
-					case ESTP1interrupted:
-		    	   		if(FESTO_TYPE == 2) {
-		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, ESTP1interrupted, 0);
-		    	   		}
-		    	   		break;
-
-
-		    	   	case ESTP2interrupted:
-		    	   		if(FESTO_TYPE == 1) {
-		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, ESTP2interrupted, 0);
-		    	   		}
-		    	   		break;
-
-					case LSR1notInterrupted:
-		    	   		if(FESTO_TYPE == 2) {
-		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSR1notInterrupted, 0);
-		    	   		}
-		    	   		break;
-
-					case LSR2notInterrupted:
-		    	   		if(FESTO_TYPE == 1) {
-		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSR2notInterrupted, 0);
-		    	   		}
-		    	   		break;
-
-					case LSR1interrupted:
-		    	   		if(FESTO_TYPE == 2) {
-		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSR1interrupted, 0);
-		    	   		}
-		    	   		break;
-
-						case LSR2interrupted:
-		    	   		if(FESTO_TYPE == 1) {
-		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSR2interrupted, 0);
-		    	   		}
+		    	   	case LSA1:
+		    	   		MsgSendPulse(dispatcher->getConnectionID(), -1, LSEinterrupted, 0);
 		    	   		break;
 
 //					case FBM2_SEND_WK:

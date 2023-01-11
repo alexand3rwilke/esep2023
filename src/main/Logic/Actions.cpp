@@ -50,7 +50,6 @@ void Actions::aussortieren(){
 /*------------------------Ampel--------------------------*/
 
 void Actions::greenOn(){
-	printf("Actions green on los-------- \n");
 	MsgSendPulse(conID,-1,GREEN_ON,0);
 }
 
@@ -79,16 +78,19 @@ void Actions::greenLightBlinking(){
 	MsgSendPulse(conID,-1,GREEN_BLINKING_ON,0);
 
 }
-//void Actions::greenLightBlinkingOff(int coID){
-//	//MsgSendPulse(conID,-1,xxx,0);
-//}
 
 void Actions::yellowLightBlinking(){
 	MsgSendPulse(conID,-1,YELLOW_BLINKING_ON,0);
 }
-void Actions::redLightBlinking(){
-	MsgSendPulse(conID,-1,RED_BLINKING_ON,0);
+
+void Actions::redLightBlinkingFast(){
+	MsgSendPulse(conID,-1,RED_BLINKING_ON_FAST,0);
 }
+
+void Actions::redLightBlinkingSlow(){
+	MsgSendPulse(conID,-1,RED_BLINKING_ON_SLOW,0);
+}
+
 /*----------------LED---------------------*/
 
 void Actions::ledQ1On(){

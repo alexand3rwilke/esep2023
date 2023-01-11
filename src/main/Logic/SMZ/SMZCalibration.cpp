@@ -8,10 +8,11 @@
 #include "SMZCalibration.h"
 
 void SMZCalibration::entry(){
-
-	clearThresholds();
+	actions->yellowLightBlinking();
+	//clearThresholds();
 	exit();
-	new(this)SMZDistanceMeasurement_ADC_FB;
+	//new(this)SMZDistanceMeasurement_ADC_FB;
+	new(this) SMZDistanceMeasurement_ADC_WS;
 	entry();
 
 
@@ -37,8 +38,6 @@ void SMZCalibration::clearThresholds(){
 	wsa_data->setDistance_ADC_LSS(0);
 	wsa_data->setDistance_LSS_LSE(0);
 
-	exit();
-	new(this)SMZDistanceMeasurement_ADC_FB;
-	entry();
+
 
 }

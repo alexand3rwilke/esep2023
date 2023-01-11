@@ -30,53 +30,5 @@ void ContextData::incErrorCounter() {
 }
 
 void ContextData::show() {
-    cout << "error counter:" << errorCounter << endl; // just for illustration.
-}
-
-void ContextData::setRampe1Voll(bool value) {
-   rampe1Voll = value;
-}
-
-void ContextData::setRampe2Voll(bool value) {
-   rampe2Voll = value;
-}
-bool ContextData::getRampe1Voll() {
-   return rampe1Voll;
-}
-
-bool ContextData::getRampe2Voll() {
-   return rampe2Voll;
-}
-
-void ContextData::setZielWk(int wkType) {
-    zielWk = wkType;
-}
-
-int ContextData::getZielWk() {
-  return zielWk;
-}
-
-
-void ContextData::setErkanntesWk(int wkType) {
-    erkanntesWk = wkType;
-}
-
-int ContextData::getErkanntesWk() {
-  return erkanntesWk;
-}
-void ContextData::addWK() {
-	wkCounter++;
-
-}
-
-void ContextData::removeWK() {
-	if(wkCounter> 1) {
-		wkCounter--;
-	}
-
-}
-
-int ContextData::getWKCount() {
-	return wkCounter;
-
+    //cout << "error counter:" << errorCounter << endl; // just for illustration.
 }

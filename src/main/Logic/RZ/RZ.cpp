@@ -41,16 +41,7 @@ void RZ::doAction(int event, _pulse msg){
 			new (this) SMZ;
 			entry();
 			break;
-		case ESTP1interrupted:
-			cout << "Estp in RZ \n" << endl;
-			exit();
-			new(this) ESZ;
-			entry();
-			break;
-
-
-		case ESTP2interrupted:
-			cout << "Estp in RZ \n" << endl;
+		case ESTPinterrupted:
 			exit();
 			new(this) ESZ;
 			entry();

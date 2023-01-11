@@ -31,17 +31,17 @@ void SMZTestingWS::doAction(int event, _pulse msg){
 		new (this) RZ;
 		break;
 
-	case LSA1interrupted:
+	case LSAinterrupted:
 		actions->startFB();
 		actions->ledQ1Off();
 		wkTest = false;
 		break;
 
-	case LSE1interrupted:
+	case LSEinterrupted:
 		actions->stopFB();
 		break;
 
-	case LSS1interrupted:
+	case LSSinterrupted:
 		if(wkTest){
 			actions->durchlassen();
 		}else{
@@ -59,10 +59,10 @@ void SMZTestingWS::doAction(int event, _pulse msg){
 		break;
 
 	case ADC_START_SINGLE_SAMPLE:
-		printf("!!!");
+		printf("!!!\n");
 		break;
 
-	case MTD1interrupted:
+	case MTDinterrupted:
 		wkTest = true;
 		break;
 	}

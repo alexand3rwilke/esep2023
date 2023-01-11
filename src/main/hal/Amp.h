@@ -16,6 +16,10 @@ enum TrafficColer {
     GREEN, YELLOW, RED,
 };
 
+enum Tempo {
+    FAST,SLOW
+};
+
 //enum Tempo {
 //    FAST, SLOW,
 //};
@@ -48,7 +52,7 @@ public:
 	void greenOn(void);
 	void greenOff(void);
 	void greenBlinken(int);
-	void flashinLight(TrafficColer, int);
+	void flashinLight(TrafficColer, Tempo);
 };
 
 

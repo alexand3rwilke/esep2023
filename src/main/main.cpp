@@ -12,14 +12,13 @@
 #include "hal/ADC_Service.h"
 #include "ADC/ADC.h"
 #include "ADC/TSCADC.h"
-
+#include "WSAData.h"
 #include "ISR/ISR.h"
 #include "dispatcher/Dispatcher.h"
 #include "Logic/Context.h"
 #include "Logic/Actions.h"
 #include "Qnet/QnetClient/QnetClient.h"
 #include "Qnet/QnetServer/QnetServer.h"
-#include <fstream>
 
 #include "Imports.h"
 
@@ -33,109 +32,39 @@ void wait(int seconds) {
 	usleep(1000 * (seconds * 1000 ));
 }
 
-
-int FESTO_TYPE;
 int main(int argc, char** args) {
-
-			if (strcmp(args[1], "F1") == 0) {
-				FESTO_TYPE = 1;
-				system("gns -s");
-
-			}
-			else if (strcmp(args[1], "F2") == 0) {
-				FESTO_TYPE = 2;
-				system("gns");
-
-			} else {
-
-				FESTO_TYPE = 1;
-				system("gns -s");
-			}
-
-	 cout << "Im Festo:" << FESTO_TYPE << endl;
 
 	cout << "Starting Festo Test \n" << endl;
 
 		Dispatcher dispatcher;
+		ISR *isr = new ISR(&dispatcher);
 
 		WSAData *wsa_data = new WSAData();
-		ISR *isr = new ISR(&dispatcher);
+
 		Sensor *sensor = new Sensor(&dispatcher);
 		TSCADC tscadc;
 		ADC* adc = new ADC(tscadc);
+
 		Actions *actions = new Actions(&dispatcher);
 		Actuator *actuator = new Actuator(&dispatcher);
 		ADC_Service *adcService = new ADC_Service(&dispatcher);
 
-
-		fstream config;
-		string input = "WK_NORMAL WK_FLACH WK_BOHRUNG";
-		string delimiter= " ";
-		config.open("/bspreihenfolgeWK.cfg", ios::in);
-		vector<int> werkstuckReihenfolge;
-
-		if(!config)perror("Fehler beim Öffnen von bspreihenfolgeWK.cfg");
-		string werkstueck;
-
-		werkstuckReihenfolge.push_back(WK_Normal);
-		werkstuckReihenfolge.push_back(WK_FLACH);
-		werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
-//		while(getline(config, input))
-//		{
-//			werkstueck = input.substr(input.find(delimiter) + 1, input.length());
-//
-//
-//			if(werkstueck == "WK_NORMAL")  {
-//				werkstuckReihenfolge.push_back(WK_Normal);
-//			}
-//
-//			else if(werkstueck == "WK_FLACH")  {
-//				werkstuckReihenfolge.push_back(WK_FLACH);
-//			}
-//
-//			else if(werkstueck == "WK_Bohrung_Normal")  {
-//				werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
-//			}
-//
-//			else if(werkstueck == "WK_Bohrung_Metal")  {
-//				werkstuckReihenfolge.push_back(WK_Bohrung_Metal);
-//			}
-//
-//
-//		}
-
-		config.close();
-
-		if(werkstuckReihenfolge.size() == 0) {
-
-			perror("Es wurde keine Reihenfolge bestimmt!");
-		}
-
 		ContextData *contextData = new ContextData(&dispatcher);
-		Context *context = new Context(&dispatcher, actions,contextData,werkstuckReihenfolge);
+		Context *context = new Context(&dispatcher, actions,contextData);
 
-		if (strcmp(args[1], "F1") == 0) {
-
-			cout << "Starting Festo FBM1 \n" << endl;
-			QnetServer *server = new QnetServer("FBM1",&dispatcher);
-			QnetClient *client = new QnetClient("FBM2",&dispatcher);
-		}
-		else if (strcmp(args[1], "F2") == 0) {
-
-			cout << "Starting Festo FBM2 \n" << endl;
-			QnetServer *server = new QnetServer("FBM2",&dispatcher);
-			QnetClient *client = new QnetClient("FBM1",&dispatcher);
-		}
+//		if (strcmp(args[1], "-FBM1") == 0) {
 //
 //			cout << "Starting Festo FBM1 \n" << endl;
 //			QnetServer *server = new QnetServer("FBM1",&dispatcher);
 //			QnetClient *client = new QnetClient("FBM2",&dispatcher);
+//			wsa_data->setFBM1(true);
 //		}
 //		else if (strcmp(args[1], "-FBM2") == 0) {
 //
 //			cout << "Starting Festo FBM2 \n" << endl;
 //			QnetServer *server = new QnetServer("FBM2",&dispatcher);
 //			QnetClient *client = new QnetClient("FBM1",&dispatcher);
+//			wsa_data->setFBM2(true);
 //		}
 	//TODO: Besseres warten
 	 while(true){

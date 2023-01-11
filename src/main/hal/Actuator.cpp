@@ -40,11 +40,24 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 	start_LedOn();
 	stop_LedOff();
 
+//	q1_LedOn();
+//	q2_LedOn();
+//	start_LedOn();
+//	stop_LedOn();
+//
+//	usleep(1000 * (1  * 1000 ));
+//
+//	q1_LedOff();
+//	q2_LedOff();
+//	start_LedOff();
+//	stop_LedOff();
+
+
 
 	istWeiche = getAussortierer();
 
 
-	cout << "\n Cout Aktorik\n" << endl;
+	
 	aktuatorThread = new thread([this]() {handleEvents();});
 
 
@@ -59,8 +72,8 @@ void Actuator::handleEvents(void){
 	int ConID = ConnectAttach(0,0,chanID,_NTO_SIDE_CHANNEL,0);
 
 	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON,
-			YELLOW_OFF, RED_ON, RED_OFF,WS_DURCHLASSEN,WS_DURCHLASSEN,ESTP1interrupted,ESTP2interrupted, Q1On, Q2On, Q1Off, Q2Off, GREEN_BLINKING_ON,
-			RED_BLINKING_ON,YELLOW_BLINKING_ON,AMP_ALL_OFF};
+			YELLOW_OFF, RED_ON, RED_OFF,WS_DURCHLASSEN,WS_DURCHLASSEN,ESTPinterrupted, Q1On, Q2On, Q1Off, Q2Off, GREEN_BLINKING_ON,
+			RED_BLINKING_ON_FAST, RED_BLINKING_ON_SLOW, YELLOW_BLINKING_ON, AMP_ALL_OFF};
 
 	disp->registerForEventWIthConnection(actuatorEvents, ConID);
 	while(true){
@@ -103,21 +116,20 @@ void Actuator::handleEvents(void){
 			case RED_OFF:amp->redOff();
 			break;
 
-			case ESTP1interrupted:
-			clearSorter();
+			case ESTPinterrupted:
+				clearSorter();
 			break;
 
-			case ESTP2interrupted:
-			clearSorter();
+			case GREEN_BLINKING_ON:	amp->flashinLight(GREEN,FAST);
 			break;
 
-			case GREEN_BLINKING_ON:	amp->flashinLight(GREEN,1);
+			case YELLOW_BLINKING_ON: amp->flashinLight(YELLOW,FAST);
 			break;
 
-			case YELLOW_BLINKING_ON: amp->flashinLight(YELLOW,2);
+			case RED_BLINKING_ON_FAST: amp->flashinLight(RED,FAST);
 			break;
 
-			case RED_BLINKING_ON: amp->flashinLight(RED,1);
+			case RED_BLINKING_ON_SLOW: amp->flashinLight(RED,SLOW);
 			break;
 
 			case WS_DURCHLASSEN:
@@ -206,7 +218,7 @@ void Actuator::clearSorter(void) {
 void Actuator::estp(void) {
 	FB_stop();
 	amp->ampOff();
-	amp->flashinLight(RED,1);
+	amp->flashinLight(RED,FAST);
 	out32(GPIO_CLEAR_REGISTER(gpio_bank_1), 0x00080000);
 
 
@@ -240,7 +252,7 @@ void Actuator::q1_LedOn(void) {
 
 void Actuator::q1_LedOff(void) {
 	//out32(GPIO_CLEAR_REGISTER(gpio_bank_2), (0x1 << 2));
-	out32((uintptr_t) (gpio_bank_2 + 0x190), 1 << 4);
+	out32((uintptr_t) (gpio_bank_2), 1 << 4);
 }
 
 void Actuator::q2_LedOn(void) {
@@ -259,6 +271,7 @@ int Actuator::getAussortierer(void){
 		 printf(" Weichen wert: %d",tmp);
 		 return tmp;
 }
+
 
 int Actuator::getSorter(){
 	return istWeiche;

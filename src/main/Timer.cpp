@@ -19,12 +19,9 @@ Timer::~Timer() {
 }
 
 int Timer::running(){
-
 	while(true){
 		this_thread::sleep_for(chrono::milliseconds(40));
 		MsgSendPulse(conID, -1,TimerTimeout,0);
 	}
 	return 1;
 }
-
-

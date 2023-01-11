@@ -43,11 +43,6 @@ public:
 	void setActions(Actions *actions) {this->actions = actions;};
 	void setContextData(ContextData *contextData) {this->contextData = contextData;};
 	void setDispId(int dispId) {this->dispId = dispId;};
-	void setErkanntesWK(int wkType) {contextData->setErkanntesWk(wkType);};
-	void setZielWK(int wkType) {contextData->setZielWk(wkType);};
-
-	int getErkanntesWK(int dispId) {return contextData->getErkanntesWk();};
-	int getZielWK(int dispId) {return contextData->getZielWk();};
 
 	//
 };

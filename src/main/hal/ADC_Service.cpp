@@ -86,22 +86,20 @@ void ADC_Service::adcInterruptService() {
 
 								isInterrupted = true;
 
-								printf("werkstueck in hoehenmessung %d \n",counter);
+								//printf("werkstueck in hoehenmessung %d \n",counter);
 								//
 								MsgSendPulse(dispId, -1, ADC_WK_IN_HM, aktuelleHoehe);
 								}
 					 			//WS raus aus Höhenmessung
 								else if(aktuelleHoehe > MIN_HOEHE && isInterrupted){
+									// classify ws
+									// berechne durschnitt
 									isInterrupted = false;
 									printf("Es wurden %d Messungn beim Höhenmesser gemacht \n",counter);
 									// berechne durchschnnit
 									MsgSendPulse(dispId, -1, ADC_WK_NIN_HM, aktuelleHoehe);
 									//MsgSendPulse(dispId, -1, ADC_SAMLING__VALUE_FINISHED, aktuelleHöhe);
 									//printSamples();
-									//TODO Hier WK classify starten
-
-									int wkType = classifyWK();
-									printf("WK TYPE : %d",wkType);
 									counter = 0;
 									samples.clear();
 								} else if (isInterrupted){
@@ -118,81 +116,17 @@ void ADC_Service::adcInterruptService() {
 				 }
 }
 
-int ADC_Service::classifyWK() {
 
-
-	// remove noise from start and beginning
-	for(int i = 0; i < 10; i++) {
-
-		samples.erase(samples.begin());
-		samples.pop_back();
-	}
-
-	int max = samples.front();
-	int min = samples.front();
-	int letzterWert = samples.front();
-	int diff = 0;
-	int maxDiff = 0;
-	
-
-for(int s: samples){
-
-
-		if(letzterWert > s) {
-			diff = letzterWert - s;
-		} else {
-
-			diff = s - letzterWert;
-		}
-
-
-	if (s > max) {
-		max = s;
-	}
-
-	if (s < min) {
-		min = s;
-		}
-
-
-	if(diff > maxDiff) {
-		maxDiff = diff;
-
-	}
-
-	}
-
-	// hier damit WK klassifizieren
-
-
-	printf("MAX: %d",max);
-	printf("MIN: %d",min);
-	if(max > 2450 ) {
-
-		if(min < 2350) {
-			MsgSendPulse(dispId, -1, WK_Bohrung_Normal, 0);
-			return WK_Bohrung_Normal;
-		}
-		MsgSendPulse(dispId, -1, WK_FLACH, 0);
-		return WK_FLACH;
-	}
-
-	else if((max < 2450 && max < 2800) && maxDiff < 60) {
-
-		return WK_Normal;
-	}
-	MsgSendPulse(dispId, -1, WK_UNDEFINED, 0);
-	return WK_UNDEFINED;
-
-}
 
 void ADC_Service::printSamples(){
 	int i=1;
 	for(int s: samples){
 		cout << i << ". höhe:"<< s << endl;
-		//printf("%d. höhe: %d \n ",i,s);
 		i++;
 	}
 }
+
+
+
 
 

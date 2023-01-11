@@ -13,6 +13,7 @@
 #include "../Imports.h"
 #include "../Dispatcher/Dispatcher.h"
 #include "../Timer.h"
+#include "../WSAData.h"
 
 class Sensor  {
 private:
@@ -21,6 +22,7 @@ private:
 public:
 	std::thread* SensorRoutineThread;
 	Dispatcher *disp;
+	WSAData *wsa_data;
 	int dispID;
 	Sensor(Dispatcher * dispatcher);
 	virtual ~Sensor();

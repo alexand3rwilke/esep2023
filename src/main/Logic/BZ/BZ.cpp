@@ -19,7 +19,7 @@ void BZ::entry(){
 	substate->setActions(actions);
 	substate->setContextData(contextData);
 	substate->entry();
-//	substate->contextData
+	//substate->contextData;
 
 }
 
@@ -32,41 +32,83 @@ void BZ::exit(){
 
 void BZ::doAction (int event, _pulse msg) {
 
-	///
-				// gebe event an substate weiter
-				substate->doAction(event, msg);
+//	for(int i =0; i < 2; i++){
+//		Basestate *tmp= &state1;
+//		i++;
 
-	//
-				switch (event) {
+		switch (event) {
 
-
-			   case ESTP1interrupted:
-				   exit();
-				   new (this) ESZ;
-				   entry();
-				   break;
+	   case ESTPinterrupted:
+		   exit();
+		   new (this) ESZ;
+		   entry();
+		   break;
 
 
-			   case ESTP2interrupted:
-				   exit();
-				   new (this) ESZ;
-				   entry();
-				   break;
+	   case STPinterrupted:
+		   exit();
+			new (this) RZ;
+			entry();
+			break;
+
+		case STRinterrupted:
+			  exit();
+			new(this) BZ;
+			entry();
+			break;
+		case LSAinterrupted:
+			//Thread starten
+//			if(i== 0){
+//
+//			}
+//			tmp = new BZready();
+			substate->setActions(actions);
+			substate->setContextData(contextData);
+			substate->entry();
+			substate->doAction(event, msg);
+			break;
+		default:
+			//cout << event << ":  FSM Nr." << i << endl;
+			// gebe event an substate weiter
+			substate->doAction(event, msg);
+
+		}
+//	}
 
 
-			   case STPinterrupted:
-				   exit();
-			  		new (this) RZ;
-			  		entry();
-			  		break;
-
-				case STRinterrupted:
-					  exit();
-					new(this) BZ;
-					entry();
-					break;
-
-				}
+//				switch (event) {
+//				case LSAinterrupted:
+//					//Thread starten
+//					substate = new BZready();
+//					substate->setActions(actions);
+//					substate->setContextData(contextData);
+//					substate->entry();
+//					substate->doAction(event, msg);
+//					break;
+//
+//			   case ESTPinterrupted:
+//				   exit();
+//				   new (this) ESZ;
+//				   entry();
+//				   break;
+//
+//
+//			   case STPinterrupted:
+//				   exit();
+//			  		new (this) RZ;
+//			  		entry();
+//			  		break;
+//
+//				case STRinterrupted:
+//					  exit();
+//					new(this) BZ;
+//					entry();
+//					break;
+//				default:
+//					// gebe event an substate weiter
+//					substate->doAction(event, msg);
+//
+//				}
 
 }
 

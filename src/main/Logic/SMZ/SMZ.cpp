@@ -8,12 +8,17 @@
 #include "SMZ.h"
 
 void SMZ :: entry(){
-	printf("SMZ entry");
+	printf("SMZ entry\n");
 	actions->greenLightBlinking();
+
+	substate = new SMZ();
+
+	//substate->entry();
 
 }
 
 void SMZ :: exit(){
+	actions->greenOff();
 }
 
 /**
@@ -25,31 +30,31 @@ void SMZ :: doAction(int event, _pulse msg){
 
 	//Choose calibrationmode
 	case STRinterrupted:
-		exit();
-		new(this)SMZCalibration;
-		entry();
+		//substate->exit();
+		new(substate)SMZCalibration;
+		substate->setActions(actions);
+		substate->setContextData(contextData);
+		substate->entry();
 		break;
 
 	//Choose testmode
 	case STPinterrupted:
-		exit();
-		new(this)SMZTesting;
-		entry();
+		//substate->exit();
+		new(substate)SMZTesting;
+		substate->setActions(actions);
+		substate->setContextData(contextData);
+		substate->entry();
 		break;
 
-	case ESTP1interrupted:
+	case ESTPinterrupted:
+		substate->exit();
+		//substate = null;
 		exit();
 		new(this) ESZ;
 		entry();
 		break;
-
-	case ESTP2interrupted:
-		exit();
-		new(this) ESZ;
-		entry();
-		break;
+	default:
+		substate->doAction(event,msg);
 	}
-
-
 
 }

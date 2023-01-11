@@ -76,6 +76,7 @@ void Amp::greenOff(void) {
 
 
 void Amp::redFlashing(int hz) {
+
 	while(redIsFlashing) {
 		out32((uintptr_t) (gpio_bank_1 + 0x194), 1 << 16);
 		usleep(hz*300000);
@@ -102,7 +103,14 @@ void Amp::greenFlashing(int hz) {
 	}
 }
 
-void Amp::flashinLight(TrafficColer coler, int hz) {
+void Amp::flashinLight(TrafficColer coler, Tempo tempo) {
+	int hz=0;
+	if(tempo==FAST){
+		hz =1;
+	} else if(tempo == SLOW){
+		hz = 2;
+	}
+
 	switch(coler){
 	case RED:
 		if(!redIsFlashing){

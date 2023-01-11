@@ -15,7 +15,6 @@
 void BZEinlauf::entry() {
 	cout << "\n  BZEinlauf entry\n" << endl;
 	actions->startFB();
-	contextData->addWK();
 
 }
     void BZEinlauf::exit() {
@@ -30,6 +29,8 @@ void BZEinlauf::entry() {
 
 
     		switch (event) {
+
+
 
     		case ADC_WK_IN_HM :
     			exit();

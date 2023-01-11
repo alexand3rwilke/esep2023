@@ -21,9 +21,16 @@ private:
 	int myChannel;
 	int myConnection;
 	Dispatcher *disp;
-	double time1, tstart;
+	double startZeit;
+	double gesamtZeit;
+	double endZeit;
 	ADC *adc;
 	WSAData *wsa_data;
+	TimerBZ* timerBZ;
+	double zeit;
+	void start_stopuhr();
+	double stopp_stopuhr();
+	bool warStartSchon;
 
 public:
 	void entry()override;
