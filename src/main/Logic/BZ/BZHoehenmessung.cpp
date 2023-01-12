@@ -15,7 +15,7 @@ void BZHoehenmessung::entry() {
 	cout << "\n  BZHoehenmessung entry\n" << endl;
 	actions->moveSlower();
 
-	contextData->registerForAdc(stateId);
+	//contextData->registerForAdc(stateId);
 
 }
     void BZHoehenmessung::exit() {

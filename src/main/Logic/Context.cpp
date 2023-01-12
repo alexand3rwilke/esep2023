@@ -29,7 +29,7 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 	wkReihenfolgeIndex = 0;
 	stateIndex = 0;
 	this->werkstuckReihenfolgeList = werkstuckReihenfolgeList;
-
+	this->contextData = contextData;
 	disp = dispatcher;
 		dispID = disp->getConnectionID();
 
@@ -163,6 +163,7 @@ void Context::eventHandler(){
 					   contextData->setGesuchtWKMapForStateForIndex(stateIndex++,wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size());
 					   stateList.push_back(newState);
 					   firstState = false;
+					   cout << stateIndex << "\n" << endl;
 					  }
 
 				   	// danach normale action
@@ -192,6 +193,7 @@ void Context::eventHandler(){
 
 			   case	ADC_WK_NIN_HM:
 				   //cout << "ADC_WK_NIN_HM \n" << endl;
+
 				   stateList.at(i)->doAction(ADC_WK_NIN_HM, msg);
 				   break;
 
@@ -316,18 +318,20 @@ void Context::eventHandler(){
 
 void Context::setWkInStateWhereNotSet(int wkType) {
 
-	//for(int i = 0;i < stateIndex; i++) {
+	for(int i = 0;i < stateIndex; i++) {
 		//cout << "map auf wert 0 ist:" << contextData->getGescanntWKMapForStateForIndex(0) << "\n" << endl;
 		//cout << i << "\n" << endl;
-	//	cout << "--------------------map hat wert: "<< contextData->getGescanntWKMapForStateForIndex(i) << "\n" << endl;
-		//	if(contextData->getGescanntWKMapForStateForIndex(i) == 0) {
-//			contextData->setGescanntWKMapForStateForIndex(0,WK_Normal);
+//		cout << "--------------------map hat wert: "<< contextData->getGescanntWKMapForStateForIndex(i) << "\n" << endl;
+//	cout << "--------------------map hat wert" << "\n" << endl;
+	if(contextData->getGescanntWKMapForStateForIndex(i) == 0) {
+		contextData->setGescanntWKMapForStateForIndex(0,wkType);
+//			cout << "--------------------map hat wert 2" << "\n" << endl;
 //				return;
-//			}
-	//}
-		contextData->getLatestRegisterForAdcState();
-		int adcRecieverStateId = contextData->getLatestRegisterForAdcState();
-		contextData->setGescanntWKMapForStateForIndex(adcRecieverStateId,wkType);
+	}
+}
+//		contextData->getLatestRegisterForAdcState();
+//		int adcRecieverStateId = contextData->getLatestRegisterForAdcState();
+//		contextData->setGescanntWKMapForStateForIndex(adcRecieverStateId,wkType);
 
 
 }

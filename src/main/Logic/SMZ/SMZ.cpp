@@ -8,7 +8,7 @@
 #include "SMZ.h"
 
 void SMZ :: entry(){
-	printf("SMZ entry");
+	printf("SMZ entry \n");
 	actions->greenLightBlinking();
 
 }

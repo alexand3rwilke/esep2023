@@ -46,7 +46,7 @@ void BZAussortierer::entry() {
 			// checke ob das WK das gesuchte ist, sonst aussortieren und wieder in BZready+
 
 
-
+    			contextData->getLatestRegisterForAdcState();
     			cout << "------------Aussortierer Test:"<< endl;
 				cout << "------------Gesucht:"<< contextData->getGesuchtWKMapForStateForIndex(stateId) << endl;
 
