@@ -37,6 +37,7 @@ public:
 	Actions *actions;
 
 private:
+	void setWkInStateWhereNotSet(int wkType);
 	int wkReihenfolgeIndex;
 	int stateIndex;
 	bool firstState = true; // wird direkt beim ersten LSA trigger auf false gesetzt

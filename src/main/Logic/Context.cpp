@@ -259,63 +259,27 @@ void Context::eventHandler(){
 
 				// TODO Werkstück erkennung testen
 				case WK_FLACH : 
-					for(int i = 0;i <= stateIndex; i++) {
-						if(contextData->getGescanntWKMapForStateForIndex(i)==0) {
-							contextData->setGescanntWKMapForStateForIndex(i,WK_FLACH);
-						}
-
-
-					}
+				setWkInStateWhereNotSet(WK_FLACH);
 				stateList.at(i)->doAction(WK_FLACH, msg);
 				break;
 
 				case WK_Normal :
-
-					for(int i = 0;i <= stateIndex; i++) {
-						if(contextData->getGescanntWKMapForStateForIndex(i)==0) {
-							contextData->setGescanntWKMapForStateForIndex(i,WK_Normal);
-						}
-
-
-					}
-
+				setWkInStateWhereNotSet(WK_Normal);
 				stateList.at(i)->doAction(WK_Normal, msg);
 				break;
 
-				case WK_Bohrung_Metal : 
-
-					for(int i = 0;i <= stateIndex; i++) {
-						if(contextData->getGescanntWKMapForStateForIndex(i)==0) {
-							contextData->setGescanntWKMapForStateForIndex(i,WK_Bohrung_Metal);
-						}
-
-
-					}
-
+				case WK_Bohrung_Metal :
+				setWkInStateWhereNotSet(WK_Bohrung_Metal);
 				stateList.at(i)->doAction(WK_Bohrung_Metal, msg);
 				break;
 
-				case WK_Bohrung_Normal : 
-
-					for(int i = 0;i <= stateIndex; i++) {
-						if(contextData->getGescanntWKMapForStateForIndex(i)==0) {
-							contextData->setGescanntWKMapForStateForIndex(i,WK_Bohrung_Normal);
-						}
-
-
-					}
+				case WK_Bohrung_Normal :
+				setWkInStateWhereNotSet(WK_Bohrung_Normal);
 				stateList.at(i)->doAction(WK_Bohrung_Normal, msg);
 				break;
 
 				case WK_UNDEFINED : 
-
-					for(int i = 0;i <= stateIndex; i++) {
-					if(contextData->getGescanntWKMapForStateForIndex(i)==0) {
-						contextData->setGescanntWKMapForStateForIndex(i,WK_UNDEFINED);
-					}
-
-
-				}
+				setWkInStateWhereNotSet(WK_UNDEFINED);
 				stateList.at(i)->doAction(WK_UNDEFINED, msg);
 				break;
 
@@ -333,4 +297,18 @@ void Context::eventHandler(){
 			}
 
 		}
+
+}
+
+void Context::setWkInStateWhereNotSet(int wkType) {
+
+	for(int i = 0;i <= stateIndex; i++) {
+			if(contextData->getGescanntWKMapForStateForIndex(i)==0) {
+				contextData->setGescanntWKMapForStateForIndex(i,wkType);
+				return;
+			}
+	}
+
+
+
 }
