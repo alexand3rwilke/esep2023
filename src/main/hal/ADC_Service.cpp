@@ -59,12 +59,14 @@ void ADC_Service::adcInterruptService() {
 			disp->registerForEventWIthConnection(events, conID);
 
 			_pulse pulse;
-
+			adc.sample();
 				 while (true) {
 
 					 adc.sample();
 					 int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
-
+					 	 	 if(SMZ_On){
+					 	 		adcSMZ();
+					 	 	 }else {
 					 		if (recvid < 0) {
 					 			perror("MsgReceivePulse failed! - ADC_Service");
 					 			exit(EXIT_FAILURE);
@@ -106,6 +108,7 @@ void ADC_Service::adcInterruptService() {
 									samples.push_back(pulse.value.sival_int);
 									counter++;
 								}
+					 	 	 }
 
 					 			//break;
 //					 			switch(pulse.code){
