@@ -20,6 +20,7 @@ private:
 
     map<int, int> gesuchtesWKMap;
     map<int, int> gescanntesWKMap;
+    std::vector<int> adcWaitList;
 
 public:
     Dispatcher *disp;
@@ -54,7 +55,11 @@ public:
     void setGescanntWKMapForStateForIndex(int index,int gescanntesWK);
     int getGesuchtWKMapForStateForIndex(int index);
     int getGescanntWKMapForStateForIndex(int index);
+    bool isPresentInMap(int index);
 
+    void registerForAdc(int stateId);
+
+    int getLatestRegisterForAdcState();
     int conIDDis = 0;
 };
 

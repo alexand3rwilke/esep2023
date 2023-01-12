@@ -36,17 +36,26 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 	// Setze State auf RZ
 	Basestate *fisrsState;
 	fisrsState = new RZ();
+
+
+
 	fisrsState->setContextData(contextData);
 	fisrsState->setActions(actions);
 	//fisrsState->setZielWK(werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
+	//RZ
 	fisrsState->setStateId(stateIndex);
+	contextData->setGescanntWKMapForStateForIndex(stateIndex,0);
 	contextData->setGesuchtWKMapForStateForIndex(stateIndex++,werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
+
 	fisrsState->entry();
 
-	cout << "GESUCHTES WK WURDE AUF FOLGENDES GESETZT: "<< contextData->getGesuchtWKMapForStateForIndex(fisrsState->getStateId()) << "\n" << endl;
+	cout << "GESUCHTES WK WURDE AUF FOLGENDES GESETZT: "<< contextData->getGesuchtWKMapForStateForIndex(/*fisrsState->getStateId()*/0) << "\n" << endl;
 
 	stateList.push_back(fisrsState);
 
+	fisrsState->exit();
+		new (fisrsState) BZ;
+		fisrsState->entry(); //TODO ---------------------------------------------------------------------------------------- Nur für den Test
 
 
 	ContextThread = new std::thread([this]() {eventHandler();});
@@ -150,6 +159,7 @@ void Context::eventHandler(){
 					   // setze gesuchtes WK auf den aktuellen stand der liste und setze den pointer danach hoch
 					   //newState->setZielWK(werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
 					   newState->setStateId(stateIndex);
+					   contextData->setGescanntWKMapForStateForIndex(stateIndex,0);
 					   contextData->setGesuchtWKMapForStateForIndex(stateIndex++,wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size());
 					   stateList.push_back(newState);
 					   firstState = false;
@@ -174,15 +184,19 @@ void Context::eventHandler(){
 
 
 			   case ADC_WK_IN_HM:
+				   //cout << "ADC_WK_IN_HM \n" << endl;
+
 				   MsgSendPulse(chanID, -1, ADC_START_SINGLE_SAMPLE, 0);
 				   stateList.at(i)->doAction(ADC_WK_IN_HM, msg);
 				   break;
 
 			   case	ADC_WK_NIN_HM:
+				   //cout << "ADC_WK_NIN_HM \n" << endl;
 				   stateList.at(i)->doAction(ADC_WK_NIN_HM, msg);
 				   break;
 
 			   case ADC_SINGLE_SAMLING_FINISHED:
+				   cout << "ADC_SINGLE_SAMLING_FINISHED \n" << endl;
 				   stateList.at(i)->doAction(ADC_SINGLE_SAMLING_FINISHED, msg);
 				   break;
 
@@ -302,13 +316,18 @@ void Context::eventHandler(){
 
 void Context::setWkInStateWhereNotSet(int wkType) {
 
-	for(int i = 0;i <= stateIndex; i++) {
-			if(contextData->getGescanntWKMapForStateForIndex(i)==0) {
-				contextData->setGescanntWKMapForStateForIndex(i,wkType);
-				return;
-			}
-	}
-
+	//for(int i = 0;i < stateIndex; i++) {
+		//cout << "map auf wert 0 ist:" << contextData->getGescanntWKMapForStateForIndex(0) << "\n" << endl;
+		//cout << i << "\n" << endl;
+	//	cout << "--------------------map hat wert: "<< contextData->getGescanntWKMapForStateForIndex(i) << "\n" << endl;
+		//	if(contextData->getGescanntWKMapForStateForIndex(i) == 0) {
+//			contextData->setGescanntWKMapForStateForIndex(0,WK_Normal);
+//				return;
+//			}
+	//}
+		contextData->getLatestRegisterForAdcState();
+		int adcRecieverStateId = contextData->getLatestRegisterForAdcState();
+		contextData->setGescanntWKMapForStateForIndex(adcRecieverStateId,wkType);
 
 
 }

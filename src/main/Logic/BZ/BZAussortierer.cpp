@@ -47,9 +47,10 @@ void BZAussortierer::entry() {
 
 
 
+    			cout << "------------Aussortierer Test:"<< endl;
+				cout << "------------Gesucht:"<< contextData->getGesuchtWKMapForStateForIndex(stateId) << endl;
 
-
-				cout << "Folgendes WK wurde gescannt:"<< contextData->getGescanntWKMapForStateForIndex(stateId) << endl;
+				cout << "------------Folgendes WK wurde gescannt:"<< contextData->getGescanntWKMapForStateForIndex(stateId) << endl;
 
 
 			if(contextData->getGescanntWKMapForStateForIndex(stateId) == contextData->getGesuchtWKMapForStateForIndex(stateId)) {
@@ -59,6 +60,7 @@ void BZAussortierer::entry() {
 			} else {
 			exit();
 			new(this)BZready;
+
 			}
     		break;
 

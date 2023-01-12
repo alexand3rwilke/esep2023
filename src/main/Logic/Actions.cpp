@@ -50,7 +50,6 @@ void Actions::aussortieren(){
 /*------------------------Ampel--------------------------*/
 
 void Actions::greenOn(){
-	printf("Actions green on los-------- \n");
 	MsgSendPulse(conID,-1,GREEN_ON,0);
 }
 

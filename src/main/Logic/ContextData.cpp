@@ -13,6 +13,8 @@ ContextData::ContextData(Dispatcher *dispatcher) {
 disp = dispatcher;
 gescanntesWKMap = {};
 gesuchtesWKMap = {};
+//adcWaitList = {};
+
 
 
 }
@@ -100,13 +102,44 @@ void ContextData::setGescanntWKMapForStateForIndex(int index,int gescanntesWK) {
 
 
 int ContextData::getGesuchtWKMapForStateForIndex(int index) {
-	return gesuchtesWKMap[index];
+
+	return gesuchtesWKMap.at(index);
 
 
 }
 
 
 int ContextData::getGescanntWKMapForStateForIndex(int index) {
-	return  gescanntesWKMap[index];
 
+	return  gescanntesWKMap.at(index);
+
+}
+
+bool ContextData::isPresentInMap(int index) {
+	return  gescanntesWKMap.count(index) > 0;
+
+}
+
+void ContextData::registerForAdc(int stateId){
+	adcWaitList.push_back(stateId);
+
+	for(int bla : adcWaitList) {
+		cout << "State wartet auf ADC :" << bla << endl; // just for illustration.
+
+	}
+
+
+}
+
+int ContextData::getLatestRegisterForAdcState() {
+
+	if(!adcWaitList.empty()) {
+
+		int stateAdcId = adcWaitList.at(adcWaitList.size()-1);
+			adcWaitList.pop_back();
+			return stateAdcId;
+
+	}
+
+		return -1;
 }

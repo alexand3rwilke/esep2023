@@ -65,51 +65,51 @@ void ADC_Service::adcInterruptService() {
 					 adc.sample();
 					 int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
 
-					 		if (recvid < 0) {
-					 			perror("MsgReceivePulse failed! - ADC_Service");
-					 			exit(EXIT_FAILURE);
-					 		}
-					 		// send adc value to dispathcer
-					 		//switch(pulse.code){
-					 		//case ADC_SAMLING_FINISHED:
+					if (recvid < 0) {
+						perror("MsgReceivePulse failed! - ADC_Service");
+						exit(EXIT_FAILURE);
+					}
+					// send adc value to dispathcer
+					//switch(pulse.code){
+					//case ADC_SAMLING_FINISHED:
 
-					 			//Wenn noch keine Distanzmessung hinterlegt wurde für FB_ADC Messung
+						//Wenn noch keine Distanzmessung hinterlegt wurde für FB_ADC Messung
 //					 			if(&wsa_data->distance_FB_ADC == 0){
 //					 			MsgSendPulse(dispId, -1, ADC_WK_IN_HM, pulse.value.sival_int);
 //					 			}
-					 		//sleep(2);
-					 		aktuelleHoehe = pulse.value.sival_int;
-					 			//WS in Höhenmessung
-					 		 //if(aktuelleHoehe < MIN_HOEHE && aktuelleHoehe > MAX_HOEHE &&!isInterrupted){
-					 		if(aktuelleHoehe < MIN_HOEHE && aktuelleHoehe > MAX_HOEHE &&!isInterrupted){
+					//sleep(2);
+					aktuelleHoehe = pulse.value.sival_int;
+						//WS in Höhenmessung
+					 //if(aktuelleHoehe < MIN_HOEHE && aktuelleHoehe > MAX_HOEHE &&!isInterrupted){
+					if(aktuelleHoehe < MIN_HOEHE && aktuelleHoehe > MAX_HOEHE &&!isInterrupted){
 
 
-								isInterrupted = true;
+					isInterrupted = true;
 
-								printf("werkstueck in hoehenmessung %d \n",counter);
-								//
-								MsgSendPulse(dispId, -1, ADC_WK_IN_HM, aktuelleHoehe);
-								}
-					 			//WS raus aus Höhenmessung
-								else if(aktuelleHoehe > MIN_HOEHE && isInterrupted){
-									isInterrupted = false;
-									printf("Es wurden %d Messungn beim Höhenmesser gemacht \n",counter);
-									// berechne durchschnnit
-									MsgSendPulse(dispId, -1, ADC_WK_NIN_HM, aktuelleHoehe);
-									//MsgSendPulse(dispId, -1, ADC_SAMLING__VALUE_FINISHED, aktuelleHöhe);
-									//printSamples();
-									//TODO Hier WK classify starten
+					printf("werkstueck in hoehenmessung %d \n",counter);
+					//
+					MsgSendPulse(dispId, -1, ADC_WK_IN_HM, aktuelleHoehe);
+					}
+					//WS raus aus Höhenmessung
+					else if(aktuelleHoehe > MIN_HOEHE && isInterrupted){
+						isInterrupted = false;
+						printf("Es wurden %d Messungn beim Höhenmesser gemacht \n",counter);
+						// berechne durchschnnit
+						MsgSendPulse(dispId, -1, ADC_WK_NIN_HM, aktuelleHoehe);
+						//MsgSendPulse(dispId, -1, ADC_SAMLING__VALUE_FINISHED, aktuelleHöhe);
+						//printSamples();
+						//TODO Hier WK classify starten
 
-									int wkType = classifyWK();
-									printf("WK TYPE : %d",wkType);
+						int wkType = classifyWK();
+						printf("WK TYPE : %d",wkType);
 
 
-									counter = 0;
-									samples.clear();
-								} else if (isInterrupted){
-									samples.push_back(pulse.value.sival_int);
-									counter++;
-								}
+						counter = 0;
+						samples.clear();
+						} else if (isInterrupted){
+							samples.push_back(pulse.value.sival_int);
+							counter++;
+						}
 
 					 			//break;
 //					 			switch(pulse.code){
@@ -137,38 +137,35 @@ int ADC_Service::classifyWK() {
 	int maxDiff = 0;
 	
 
-for(int s: samples){
-
+	for(int s: samples){
 
 		if(letzterWert > s) {
 			diff = letzterWert - s;
 		} else {
-
 			diff = s - letzterWert;
 		}
 
+		if (s > max) {
+			max = s;
+		}
 
-	if (s > max) {
-		max = s;
-	}
-
-	if (s < min) {
-		min = s;
+		if (s < min) {
+			min = s;
 		}
 
 
-	if(diff > maxDiff) {
-		maxDiff = diff;
-
-	}
+		if(diff > maxDiff) {
+			maxDiff = diff;
+		}
 
 	}
 
 	// hier damit WK klassifizieren
 
 
-	printf("MAX: %d",max);
-	printf("MIN: %d",min);
+	printf("MAX: %d \n",max);
+	printf("MIN: %d \n",min);
+
 	if(max > 2450 ) {
 
 		if(min < 2350) {
@@ -182,6 +179,7 @@ for(int s: samples){
 	}
 
 	else if((max < 2450 && max < 2800) && maxDiff < 60) {
+		MsgSendPulse(dispId, -1, WK_Normal, 0);
 		printf("NORMAL WK ENTDECKT  \n");
 		return WK_Normal;
 	}
