@@ -18,6 +18,9 @@ private:
     int erkanntesWk = 0;
     int wkCounter = 0;
 
+    map<int, int> gesuchtesWKMap;
+    map<int, int> gescanntesWKMap;
+
 public:
     Dispatcher *disp;
     ContextData(Dispatcher *dispatcher);
@@ -33,18 +36,24 @@ public:
     bool getRampe2Voll();
 
     //Das Werkstück welches erwartet wird
-    void setZielWk(int wkType);
-    int getZielWk();
+    //void setZielWk(int wkType);
+    //int getZielWk();
 
 
     //Das Werkstück welches erwartet wird
-    void setErkanntesWk(int wkType);
-    int getErkanntesWk();
+    //void setErkanntesWk(int wkType);
+    //int getErkanntesWk();
 
     //WK Counter Methoden
     void addWK();
     void removeWK();
     int getWKCount();
+
+    // WK gesucht & gescannt map
+    void setGesuchtWKMapForStateForIndex(int index, int gesuchtesWK);
+    void setGescanntWKMapForStateForIndex(int index,int gescanntesWK);
+    int getGesuchtWKMapForStateForIndex(int index);
+    int getGescanntWKMapForStateForIndex(int index);
 
     int conIDDis = 0;
 };

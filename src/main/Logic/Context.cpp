@@ -27,18 +27,27 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 
 
 	wkReihenfolgeIndex = 0;
+	stateIndex = 0;
 	this->werkstuckReihenfolgeList = werkstuckReihenfolgeList;
+
+	disp = dispatcher;
+		dispID = disp->getConnectionID();
+
 	// Setze State auf RZ
 	Basestate *fisrsState;
 	fisrsState = new RZ();
 	fisrsState->setContextData(contextData);
 	fisrsState->setActions(actions);
-	fisrsState->setZielWK(werkstuckReihenfolgeList.at(++wkReihenfolgeIndex % werkstuckReihenfolgeList.size()));
+	//fisrsState->setZielWK(werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
+	fisrsState->setStateId(stateIndex);
+	contextData->setGesuchtWKMapForStateForIndex(stateIndex++,werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
 	fisrsState->entry();
+
+	cout << "GESUCHTES WK WURDE AUF FOLGENDES GESETZT: "<< contextData->getGesuchtWKMapForStateForIndex(fisrsState->getStateId()) << "\n" << endl;
+
 	stateList.push_back(fisrsState);
 
-	disp = dispatcher;
-	dispID = disp->getConnectionID();
+
 
 	ContextThread = new std::thread([this]() {eventHandler();});
 }
@@ -94,33 +103,34 @@ void Context::eventHandler(){
 			   			//exit();
 			   		}
 
-			   for(Basestate *state : stateList) {
+			   //for(Basestate *state : stateList) {
+				   for(int i = 0; i< stateList.size(); i++) {
 
 
 			   switch(msg.code) {
 			   //----------------------------------------------------
 			   // EStop
 			   case ESTP1interrupted:
-					state->doAction(ESTP1interrupted, msg);
+				   stateList.at(i)->doAction(ESTP1interrupted, msg);
 			 		break;
 
 			   case ESTP1notInterrupted:
-			   		state->doAction(ESTP1notInterrupted, msg);
+			   		stateList.at(i)->doAction(ESTP1notInterrupted, msg);
 			   		break;
 
 
 			   case ESTP2interrupted:
-					state->doAction(ESTP2interrupted, msg);
+					stateList.at(i)->doAction(ESTP2interrupted, msg);
 					break;
 
 			   case ESTP2notInterrupted:
-					state->doAction(ESTP2notInterrupted, msg);
+					stateList.at(i)->doAction(ESTP2notInterrupted, msg);
 					break;
 
 
 
 			   case RSTinterrupted:
-			  		state->doAction(RSTinterrupted, msg);
+			  		stateList.at(i)->doAction(RSTinterrupted, msg);
 			  		break;
 
 
@@ -138,39 +148,42 @@ void Context::eventHandler(){
 					   newState->entry();
 					   newState->doAction(LSA1interrupted, msg);
 					   // setze gesuchtes WK auf den aktuellen stand der liste und setze den pointer danach hoch
-					   newState->setZielWK(werkstuckReihenfolgeList.at(++wkReihenfolgeIndex % werkstuckReihenfolgeList.size()));
+					   //newState->setZielWK(werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
+					   newState->setStateId(stateIndex);
+					   contextData->setGesuchtWKMapForStateForIndex(stateIndex++,wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size());
 					   stateList.push_back(newState);
+					   firstState = false;
 					  }
 
 				   	// danach normale action
-				   state->doAction(LSA1interrupted, msg);
-				   firstState = false;
+				   stateList.at(i)->doAction(LSA1interrupted, msg);
+
 				   break;
 
 			   case LSE1interrupted:
-				   state->doAction(LSE1interrupted, msg);
+				   stateList.at(i)->doAction(LSE1interrupted, msg);
 				   break;
 
 			   case	LSS1interrupted:
-				   state->doAction(LSS1interrupted , msg);
+				   stateList.at(i)->doAction(LSS1interrupted , msg);
 				   break;
 
 			   case LSE1notInterrupted:
-				   state->doAction(LSE1notInterrupted, msg);
+				   stateList.at(i)->doAction(LSE1notInterrupted, msg);
 				   break;
 
 
 			   case ADC_WK_IN_HM:
 				   MsgSendPulse(chanID, -1, ADC_START_SINGLE_SAMPLE, 0);
-				   state->doAction(ADC_WK_IN_HM, msg);
+				   stateList.at(i)->doAction(ADC_WK_IN_HM, msg);
 				   break;
 
 			   case	ADC_WK_NIN_HM:
-				   state->doAction(ADC_WK_NIN_HM, msg);
+				   stateList.at(i)->doAction(ADC_WK_NIN_HM, msg);
 				   break;
 
 			   case ADC_SINGLE_SAMLING_FINISHED:
-				   state->doAction(ADC_SINGLE_SAMLING_FINISHED, msg);
+				   stateList.at(i)->doAction(ADC_SINGLE_SAMLING_FINISHED, msg);
 				   break;
 
 			   case	STRinterrupted:
@@ -189,80 +202,121 @@ void Context::eventHandler(){
 
 						//Taster länger als 2 Sekunden betätigt, dann SMZ
 						if(time_diff >= 2){
-							state->doAction(STR_SMZ ,msg);
+							stateList.at(i)->doAction(STR_SMZ ,msg);
 							break;
 						//Taster weniger als 2 Sekunden, dann BZ
 						}else{
-							state->doAction(STRinterrupted, msg);
+							stateList.at(i)->doAction(STRinterrupted, msg);
 							break;
 						}
 					}
 				   break;
 
 			  case STR_SMZ:
-				  state->doAction(STR_SMZ, msg);
+				  stateList.at(i)->doAction(STR_SMZ, msg);
 				  break;
 
 			  case STPinterrupted:
 				  // if keine Warning
-				  state->doAction(STPinterrupted, msg);
+				  stateList.at(i)->doAction(STPinterrupted, msg);
 				  break;
 
 			  case MTD1interrupted:
-				  state->doAction(MTD1interrupted, msg);
+				  stateList.at(i)->doAction(MTD1interrupted, msg);
 			   	   break;
 
 			  case LSE2interrupted:
-				  state->doAction(LSE2interrupted,msg);
+				  stateList.at(i)->doAction(LSE2interrupted,msg);
 				  break;
 			  case LSA2interrupted:
-				  state->doAction(LSA2interrupted,msg);
+				  stateList.at(i)->doAction(LSA2interrupted,msg);
 				  break;
 
 				case LSR1notInterrupted:
-				state->doAction(LSR1notInterrupted, msg);
+				stateList.at(i)->doAction(LSR1notInterrupted, msg);
 				contextData->setRampe1Voll(false);
 				//TODO setze contextData Rampe1 voll auf false;
 				break;
 
 				case LSR2notInterrupted:
-				state->doAction(LSR2notInterrupted, msg);
+				stateList.at(i)->doAction(LSR2notInterrupted, msg);
 				contextData->setRampe2Voll(false);
 				//TODO setze contextData Rampe2 voll auf false;
 				break;
 
 				case LSR1interrupted : 
 				contextData->setRampe1Voll(true);
-				state->doAction(LSR1interrupted, msg);
+				stateList.at(i)->doAction(LSR1interrupted, msg);
 				//TODO setze contextData Rampe1 voll auf true;
 				break;
 
 
 				case LSR2interrupted : 
 				contextData->setRampe2Voll(false);
-				state->doAction(LSR2interrupted, msg);
+				stateList.at(i)->doAction(LSR2interrupted, msg);
 				//TODO setze contextData Rampe2 voll auf true;
 				break;
 
 				// TODO Werkstück erkennung testen
 				case WK_FLACH : 
-				state->doAction(WK_FLACH, msg);
+					for(int i = 0;i <= stateIndex; i++) {
+						if(contextData->getGescanntWKMapForStateForIndex(i)==0) {
+							contextData->setGescanntWKMapForStateForIndex(i,WK_FLACH);
+						}
+
+
+					}
+				stateList.at(i)->doAction(WK_FLACH, msg);
 				break;
 
-				case WK_Normal : 
-				state->doAction(WK_Normal, msg);
+				case WK_Normal :
+
+					for(int i = 0;i <= stateIndex; i++) {
+						if(contextData->getGescanntWKMapForStateForIndex(i)==0) {
+							contextData->setGescanntWKMapForStateForIndex(i,WK_Normal);
+						}
+
+
+					}
+
+				stateList.at(i)->doAction(WK_Normal, msg);
 				break;
 
 				case WK_Bohrung_Metal : 
-				state->doAction(WK_Bohrung_Metal, msg);
+
+					for(int i = 0;i <= stateIndex; i++) {
+						if(contextData->getGescanntWKMapForStateForIndex(i)==0) {
+							contextData->setGescanntWKMapForStateForIndex(i,WK_Bohrung_Metal);
+						}
+
+
+					}
+
+				stateList.at(i)->doAction(WK_Bohrung_Metal, msg);
 				break;
 
 				case WK_Bohrung_Normal : 
-				state->doAction(WK_Bohrung_Normal, msg);
+
+					for(int i = 0;i <= stateIndex; i++) {
+						if(contextData->getGescanntWKMapForStateForIndex(i)==0) {
+							contextData->setGescanntWKMapForStateForIndex(i,WK_Bohrung_Normal);
+						}
+
+
+					}
+				stateList.at(i)->doAction(WK_Bohrung_Normal, msg);
 				break;
 
 				case WK_UNDEFINED : 
-				state->doAction(WK_UNDEFINED, msg);
+
+					for(int i = 0;i <= stateIndex; i++) {
+					if(contextData->getGescanntWKMapForStateForIndex(i)==0) {
+						contextData->setGescanntWKMapForStateForIndex(i,WK_UNDEFINED);
+					}
+
+
+				}
+				stateList.at(i)->doAction(WK_UNDEFINED, msg);
 				break;
 
 				case WK_ADDED :

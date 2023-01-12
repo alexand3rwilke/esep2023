@@ -102,6 +102,8 @@ void ADC_Service::adcInterruptService() {
 
 									int wkType = classifyWK();
 									printf("WK TYPE : %d",wkType);
+
+
 									counter = 0;
 									samples.clear();
 								} else if (isInterrupted){
@@ -171,17 +173,20 @@ for(int s: samples){
 
 		if(min < 2350) {
 			MsgSendPulse(dispId, -1, WK_Bohrung_Normal, 0);
+			printf("BOHRUNG WK ENTDECKT  \n");
 			return WK_Bohrung_Normal;
 		}
 		MsgSendPulse(dispId, -1, WK_FLACH, 0);
+		printf("FLACHES WK ENTDECKT  \n");
 		return WK_FLACH;
 	}
 
 	else if((max < 2450 && max < 2800) && maxDiff < 60) {
-
+		printf("NORMAL WK ENTDECKT  \n");
 		return WK_Normal;
 	}
 	MsgSendPulse(dispId, -1, WK_UNDEFINED, 0);
+	printf("UNDEFINED WK ENTDECKT  \n");
 	return WK_UNDEFINED;
 
 }

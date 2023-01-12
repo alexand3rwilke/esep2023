@@ -11,6 +11,9 @@ using namespace std;
 
 ContextData::ContextData(Dispatcher *dispatcher) {
 disp = dispatcher;
+gescanntesWKMap = {};
+gesuchtesWKMap = {};
+
 
 }
 
@@ -48,22 +51,22 @@ bool ContextData::getRampe2Voll() {
    return rampe2Voll;
 }
 
-void ContextData::setZielWk(int wkType) {
-    zielWk = wkType;
-}
+//void ContextData::setZielWk(int wkType) {
+//    zielWk = wkType;
+//}
 
-int ContextData::getZielWk() {
-  return zielWk;
-}
+//int ContextData::getZielWk() {
+//  return zielWk;
+//}
 
 
-void ContextData::setErkanntesWk(int wkType) {
-    erkanntesWk = wkType;
-}
+//void ContextData::setErkanntesWk(int wkType) {
+//    erkanntesWk = wkType;
+//}
 
-int ContextData::getErkanntesWk() {
-  return erkanntesWk;
-}
+//int ContextData::getErkanntesWk() {
+//  return erkanntesWk;
+//}
 void ContextData::addWK() {
 	wkCounter++;
 
@@ -78,5 +81,32 @@ void ContextData::removeWK() {
 
 int ContextData::getWKCount() {
 	return wkCounter;
+
+}
+
+void ContextData::setGesuchtWKMapForStateForIndex(int index, int gesuchtesWK) {
+	gesuchtesWKMap[index] = gesuchtesWK;
+	cout << "Gesuchtes WK wurde auf folgendes gesetzt:" << gesuchtesWKMap[index] << endl; // just for illustration.
+
+
+
+}
+
+
+void ContextData::setGescanntWKMapForStateForIndex(int index,int gescanntesWK) {
+	 gescanntesWKMap[index] = gescanntesWK;
+
+}
+
+
+int ContextData::getGesuchtWKMapForStateForIndex(int index) {
+	return gesuchtesWKMap[index];
+
+
+}
+
+
+int ContextData::getGescanntWKMapForStateForIndex(int index) {
+	return  gescanntesWKMap[index];
 
 }

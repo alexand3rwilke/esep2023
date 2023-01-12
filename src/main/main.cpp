@@ -68,18 +68,18 @@ int main(int argc, char** args) {
 		ADC_Service *adcService = new ADC_Service(&dispatcher);
 
 
-		fstream config;
-		string input = "WK_NORMAL WK_FLACH WK_BOHRUNG";
-		string delimiter= " ";
-		config.open("/bspreihenfolgeWK.cfg", ios::in);
+//		fstream config;
+//		string input = "WK_NORMAL WK_FLACH WK_BOHRUNG";
+//		string delimiter= " ";
+//		config.open("/bspreihenfolgeWK.cfg", ios::in);
 		vector<int> werkstuckReihenfolge;
-
-		if(!config)perror("Fehler beim Öffnen von bspreihenfolgeWK.cfg");
-		string werkstueck;
+//
+//		if(!config)perror("Fehler beim Öffnen von bspreihenfolgeWK.cfg");
+//		string werkstueck;
 
 		werkstuckReihenfolge.push_back(WK_Normal);
-		werkstuckReihenfolge.push_back(WK_FLACH);
-		werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
+		//werkstuckReihenfolge.push_back(WK_FLACH);
+		//werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
 //		while(getline(config, input))
 //		{
 //			werkstueck = input.substr(input.find(delimiter) + 1, input.length());
@@ -103,8 +103,8 @@ int main(int argc, char** args) {
 //
 //
 //		}
-
-		config.close();
+//
+//		config.close();
 
 		if(werkstuckReihenfolge.size() == 0) {
 
