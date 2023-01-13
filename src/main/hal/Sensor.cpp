@@ -7,6 +7,7 @@
  *
  */
 #include "Sensor.h"
+#include "../Imports.h"
 
 #include <iostream>
 #include <stdint.h>
@@ -22,8 +23,6 @@ Sensor::Sensor(Dispatcher * dispatcher) {
 	disp = dispatcher;
 	dispID  = disp->getConnectionID();
 	SensorRoutineThread = new std::thread([this]() {sensorRoutine();});
-
-
 }
 
 Sensor::~Sensor() {
@@ -32,91 +31,155 @@ Sensor::~Sensor() {
 
 void Sensor::sensorRoutine() {
 
-
-	// Hier signale weiterleiten
-
 	//channel erstellen
-	/* ### Create channel ### */
-				int chanID = ChannelCreate(0);//Create channel to receive interrupt pulse messages.
-				if (chanID < 0) {
-					perror("Could not create a channel!\n");
-				}
+	int chanID = ChannelCreate(0);
+	if (chanID < 0) {
+		perror("Could not create a channel!\n");
+	}
+
+	//Connect to channel
+	int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0);
+	if (conID < 0) {
+		perror("Could not connect to channel!");
+	}
+
+	senorEvents={LSA, LSE, LSS, HMS, STR, ESTP, RST, STP, STR_SMZ, MTD};
+
+	disp->registerForEventWIthConnection(senorEvents, conID);
+
+	_pulse pulse;
+	//TODO Estop vor dem Start
+		// run 4ever
+	while (true) {
+
+		int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
+
+		if (recvid < 0) {
+				perror("MsgReceivePulse failed!- in Sensorik");
+				exit(EXIT_FAILURE);
+		}
+			// Untersuche und Sende event an Dispatcher
+			 switch(pulse.code) {
+
+			   case LSA:
+				   if (pulse.value.sival_int == 1) {
+					   MsgSendPulse(dispID, -1, LSA1notInterrupted, 0);
+					   break;
+				   } else {
+
+					   if(FESTO_TYPE == 1) {
+
+						   MsgSendPulse(dispID, -1, LSA1interrupted, 0);
+						   printf("Festo 1 LSA interrupt");
+						   printf("%d",FESTO_TYPE);
+
+					   } else  if(FESTO_TYPE == 2) {
+						   	   printf("Festo 2 LSA interrupt");
+						   	 printf("%d",FESTO_TYPE);
+						   MsgSendPulse(dispID, -1, LSA2interrupted, 0);
+					   }
+
+				   } break;
+			   case LSE:
+				   if (pulse.value.sival_int == 1) {
 
 
-				int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
-				if (conID < 0) {
-					perror("Could not connect to channel!");
-				}
 
-				//printf("Sensorik conID: %d \n", conID);
-				senorEvents={LSA1, LSE1, LSS1, HMS1, SRT, ESTP, RST, STP};
+					   	   	  if(FESTO_TYPE == 1) {
+						    MsgSendPulse(dispID, -1, LSE1notInterrupted, 0);
+					   } else if(FESTO_TYPE == 2) {
 
-				disp->registerForEventWIthConnection(senorEvents, conID);
+						   MsgSendPulse(dispID, -1, LSE2notInterrupted, 0);
+					   }
+					 
 
-				_pulse pulse;
 
-					// run 4ever
-				while (true) {
+					   break;
+				   } else {
+					   if(FESTO_TYPE == 1) {
+						   MsgSendPulse(dispID, -1, LSE1interrupted, 0);
+						   cout << "\n  Sensorik sagt: LSE1interrupted auf FBM1\n" << endl;
+					   } else if(FESTO_TYPE == 2) {
 
-					int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
+						   cout << "\n  Sensorik sagt: LSE1interrupted auf FBM2\n" << endl;
 
-					if (recvid < 0) {
-							perror("MsgReceivePulse failed!");
-							exit(EXIT_FAILURE);
+						   MsgSendPulse(dispID, -1, LSE2interrupted, 0);
+					   }
+
+
+				   } break;
+			   case LSS:
+				   if (pulse.value.sival_int == 1) {
+					   MsgSendPulse(dispID, -1, LSS1notInterrupted, 0);
+					   break;
+				   } else {
+					   MsgSendPulse(dispID, -1, LSS1interrupted, 0);
+				   } break;
+			   case LSR:
+				   if (pulse.value.sival_int == 1) {
+
+					if(FESTO_TYPE == 1) {
+						   MsgSendPulse(dispID, -1, LSR1notInterrupted, 0);
+					   } else if(FESTO_TYPE == 2) {
+
+						  MsgSendPulse(dispID, -1, LSR2notInterrupted, 0);
+					   }
+					   break;
+					   
+				   } else {
+					if(FESTO_TYPE == 1) {
+						   MsgSendPulse(dispID, -1, LSR1interrupted, 0);
+					   } else if(FESTO_TYPE == 2) {
+
+						  MsgSendPulse(dispID, -1, LSR2interrupted, 0);
+					   }
+				   } break;
+			   case HMS:
+					   MsgSendPulse(dispID, -1, HMSinterrupted, 0);
+				   break;
+			   case STR:
+				   if (pulse.value.sival_int == 1) {
+					   MsgSendPulse(dispID, -1, STRinterrupted, 0);
+				   } else {
+					   MsgSendPulse(dispID, -1, STRnotInterrupted, 0);
+				   }
+				   break;
+				case STP:
+					if (pulse.value.sival_int == 0) {
+						MsgSendPulse(dispID, -1, STPinterrupted, 0);
 					}
-					//printf("Sensorik vor dem Switch Case");
-						// Untersuche und Sende event an Dispatcher
-						 switch(pulse.code) {
 
-						   case LSA1:
-							   //printf("Sensorik hat Lichtschranke 1 - signal erhalten \n ");
-							   if (pulse.value.sival_int == 1) {
-								   MsgSendPulse(dispID, -1, LSAnotInterrupted, 0);
-								   break;
-							   } else {
-								   MsgSendPulse(dispID, -1, LSAinterrupted, 0);
-							   } break;
-						   case LSE1:
-							   if (pulse.value.sival_int == 1) {
-								   MsgSendPulse(dispID, -1, LSEnotInterrupted, 0);
-								   break;
-							   } else {
-								   MsgSendPulse(dispID, -1, LSEinterrupted, 0);
-							   } break;
-						   case LSS1:
-							   if (pulse.value.sival_int == 1) {
-								   MsgSendPulse(dispID, -1, LSSnotInterrupted, 0);
-								   break;
-							   } else {
-								   MsgSendPulse(dispID, -1, LSSinterrupted, 0);
-							   } break;
-						   case HMS1:
-								   MsgSendPulse(dispID, -1, HMSinterrupted, 0);
-							   break;
+					break;
+				case ESTP:
+				   if (pulse.value.sival_int == 1) {
+					   cout << "ESTP ist druaßen\n" << endl;
 
+ 						if(FESTO_TYPE == 1) {
+						    MsgSendPulse(dispID, -1, ESTP1notInterrupted, 0);
+					   } else if(FESTO_TYPE == 2) {
 
-						   case SRT:
-							   printf("Sensro STR Taste -------- \n");
-								   MsgSendPulse(dispID, -1, STRinterrupted, 0);
-							   break;
-							   //TODO STR release
+						  MsgSendPulse(dispID, -1, ESTP2notInterrupted, 0);
+					   }
+					   break;
+				   } else {
+					   cout << "ESTP Reingedrückt\n" << endl;
+					   if(FESTO_TYPE == 1) {
+						     MsgSendPulse(dispID, -1, ESTP1interrupted, 0);
+					   } else if(FESTO_TYPE == 2) {
 
+						   MsgSendPulse(dispID, -1, ESTP2interrupted, 0);
+					   }
 
-							case STP:
-								   MsgSendPulse(dispID, -1, STPinterrupted, 0);
-							   break;
+				   }
+				   break;
+			   case RST:
+				   if (pulse.value.sival_int == 0) {
+					   MsgSendPulse(dispID, -1, RSTinterrupted, 0);
+				   }
+				   break;
+			   case MTD:
+				   MsgSendPulse(dispID, -1, MTD1interrupted, 0);
+			   }
 
-
-							case ESTP:
-								   MsgSendPulse(dispID, -1,ESTPinterrupted, 0);
-							   break;
-
-							   case RST:
-								   MsgSendPulse(dispID, -1, RSTinterrupted, 0);
-							   break;
-
-							   }
-
-
-					 }
+		 }
 }

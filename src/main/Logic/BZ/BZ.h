@@ -11,9 +11,15 @@
 #include "../Basestate.h"
 #include "../../hal/Actuator.h"
 #include "../Context.h"
+#include "../../WSAData.h"
+#include "../ESZ/ESZ.h"
+#include "BZready.h"
+#include "BZEinlauf.h"
+#include "BZAuslauf.h"
+#include "BZAussortierer.h"
+#include "BZHoehenmessung.h"
 
 
-using namespace std;
 
 /**
  * Erbt von Basic_State
@@ -27,7 +33,7 @@ private:
 public:
 	void entry()override;
 	void exit() override;
-	void doAction() override;
+	void doAction(int, _pulse) override;
 };
 
 #endif /* SRC_MAIN_LOGIC_BZ_H_ */

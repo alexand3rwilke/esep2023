@@ -8,10 +8,25 @@
 #ifndef SRC_MAIN_LOGIC_SMZ_H_
 #define SRC_MAIN_LOGIC_SMZ_H_
 
-class SMZ {
+#include "../Basestate.h"
+#include "../../hal/Actuator.h"
+#include "../Context.h"
+#include "SMZCalibration.h"
+#include "SMZTesting.h"
+#include "../../WSAData.h"
+#include "../../Imports.h"
+
+class SMZ : public Basestate{
+private:
+	int myChannel;
+	int myConnection;
+	Dispatcher *disp;
+	WSAData *wsa_data;
+
 public:
-	SMZ();
-	virtual ~SMZ();
+	void entry()override;
+	void exit() override;
+	void doAction(int, _pulse) override;
 };
 
 #endif /* SRC_MAIN_LOGIC_SMZ_H_ */

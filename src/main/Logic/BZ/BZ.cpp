@@ -6,48 +6,68 @@
  */
 
 #include "BZ.h"
-
-#include "../ESZ/ESZ.h"
+#include "../RZ/RZ.h"
 #include "../ESZ/ESZ.h"
 
 
 void BZ::entry(){
 	// grünes licht an entry
-	actions->greenOn(1);
-	substate = NULL;
-	doAction();
+	actions->greenOn();
+	//printf("in BZ");
+	actions->greenOn();
+	substate = new BZready();
+	substate->setActions(actions);
+	substate->setContextData(contextData);
+	substate->entry();
+	substate->setStateId(stateId);
+//	substate->contextData
+
 }
 
 void BZ::exit(){
 	// grünes licht aus exit
-	actions->greenOff(1);
+	actions->greenOff();
+	actions->stopFB();
 }
 
-void BZ::doAction (/*int event*/) {
+
+void BZ::doAction (int event, _pulse msg) {
+
+	///
+				// gebe event an substate weiter
+				substate->doAction(event, msg);
+
+	//
+				switch (event) {
 
 
+			   case ESTP1interrupted:
+				   exit();
+				   new (this) ESZ;
+				   entry();
+				   break;
 
-	_pulse msg;
-		while(true){
-			int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);
 
-			if (recvid < 0) {
-				perror("MsgReceivePulse failed!");
-			}
+			   case ESTP2interrupted:
+				   exit();
+				   new (this) ESZ;
+				   entry();
+				   break;
 
-			if (recvid == 0) {
 
-				switch (msg.code) {
+			   case STPinterrupted:
+				   exit();
+			  		new (this) RZ;
+			  		entry();
+			  		break;
 
-				// TODO  change case
-				case SRT :	new(this) BZ;
-							entry();
-							break;
+				case STRinterrupted:
+					  exit();
+					new(this) BZ;
+					entry();
+					break;
 
-				case ESTP:	new(this) ESZ;
-						entry();
-						break;
 				}
-			}
-		}
+
 }
+

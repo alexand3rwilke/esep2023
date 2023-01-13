@@ -12,6 +12,15 @@
 class ContextData{
 private:
     int errorCounter = 0;
+    bool rampe1Voll = false;
+    bool rampe2Voll = false;
+    int zielWk = 0;
+    int erkanntesWk = 0;
+    int wkCounter = 0;
+
+    map<int, int> gesuchtesWKMap;
+    map<int, int> gescanntesWKMap;
+    std::vector<int> adcWaitList;
 
 public:
     Dispatcher *disp;
@@ -21,6 +30,36 @@ public:
     void clearErrorcounter();
     void show();
 
+    //Rampen logik
+    void setRampe1Voll(bool value);
+    void setRampe2Voll(bool value);
+    bool getRampe1Voll();
+    bool getRampe2Voll();
+
+    //Das Werkstück welches erwartet wird
+    //void setZielWk(int wkType);
+    //int getZielWk();
+
+
+    //Das Werkstück welches erwartet wird
+    //void setErkanntesWk(int wkType);
+    //int getErkanntesWk();
+
+    //WK Counter Methoden
+    void addWK();
+    void removeWK();
+    int getWKCount();
+
+    // WK gesucht & gescannt map
+    void setGesuchtWKMapForStateForIndex(int index, int gesuchtesWK);
+    void setGescanntWKMapForStateForIndex(int index,int gescanntesWK);
+    int getGesuchtWKMapForStateForIndex(int index);
+    int getGescanntWKMapForStateForIndex(int index);
+    bool isPresentInMap(int index);
+
+    void registerForAdc(int stateId);
+
+    int getLatestRegisterForAdcState();
     int conIDDis = 0;
 };
 

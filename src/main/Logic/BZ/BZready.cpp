@@ -11,9 +11,8 @@
 
 void BZready::entry() {
 
-
-	doAction();
-
+	//actions->stopFB();
+	cout << "\n  BZready entry\n" << endl;
 }
     void BZready::exit() {
 
@@ -22,34 +21,46 @@ void BZready::entry() {
 
 
     }
-    void BZready::doAction(){
-
-    	_pulse msg;
-    	int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);
-
-    	if (recvid < 0) {
-    				perror("MsgReceivePulse failed!");
-    			}
-
-    			if (recvid == 0) {
-    			while(true) {
-
-    		switch (msg.code) {
+    void BZready::doAction(int event, _pulse msg){
 
 
+    	switch(event){
     		// check ob LSE interrupt bekommt
-    		case LSE1 :	new(this) BZEinlauf;
-    					entry();
-    					break;
+    		case LSA1interrupted :
+
+    			exit();
+    			new(this) BZEinlauf;
+    			entry();
+    			break;
+
+
+    		case LSA2interrupted :
+
+				exit();
+				new(this) BZEinlauf;
+				entry();
+				break;
 
 
 
+    		case LSE1interrupted :
+
+				exit();
+				new(this) BZEinlauf;
+				entry();
+				break;
 
 
-    		}
+    		// case LSE2interrupted :
+
+			// 	exit();
+			// 	new(this) BZEinlauf;
+			// 	entry();
+			// 	break;
+
+    	}
 
 
-    		}
-    			}
+
 
     	}

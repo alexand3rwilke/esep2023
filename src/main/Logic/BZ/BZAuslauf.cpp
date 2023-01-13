@@ -7,23 +7,30 @@
 
 
 #include "BZAuslauf.h"
+#include "BZready.h"
 
 
 
 void BZAuslauf::entry() {
 
+	cout << "\n  BZAuslauf entry\n" << endl;
 
-	doAction();
+	if(contextData->getWKCount() == 0) {
+	    	actions->stopFB();
+	    	}
 
 }
     void BZAuslauf::exit() {
+    	MsgSendPulse(myChannel, -1, WK_REMOVED, 0);
 
+    	//lösche den State nachdem das WK vom Band genommen wurde
+    	delete this;
     }
     void BZAuslauf::estp() {
 
 
     }
-    void BZAuslauf::doAction(){
+    void BZAuslauf::doAction(int event, _pulse){
 
     	_pulse msg;
     	int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);
@@ -39,9 +46,11 @@ void BZAuslauf::entry() {
 
 
     		// wenn fertig dann in Auslauf
-    		case 12 :
-    					entry();
-    					break;
+    		case LSE2notInterrupted :
+    			exit();
+    			new(this) BZready;
+    			entry();
+    			break;
 
 
 

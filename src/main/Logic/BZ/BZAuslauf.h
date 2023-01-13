@@ -13,7 +13,7 @@ public:
     void entry() override;
     void exit() override;
     void estp() override;
-    void doAction() override;
+    void doAction(int, _pulse) override;
     //void showState() override;
 };
 

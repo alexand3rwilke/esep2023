@@ -8,10 +8,23 @@
 #ifndef SRC_MAIN_LOGIC_ESZ_H_
 #define SRC_MAIN_LOGIC_ESZ_H_
 
-class ESZ {
+#include "../Basestate.h"
+#include "../../hal/Actuator.h"
+#include "../Context.h"
+#include "../RZ/RZ.h"
+#include "../BZ/BZ.h"
+
+
+class ESZ: public Basestate {
+private:
+	int resetCounter;
+	bool schalteRaus;
+
 public:
-	ESZ();
-	virtual ~ESZ();
+
+	void entry()override;
+	void exit() override;
+	void doAction(int, _pulse) override;
 };
 
 #endif /* SRC_MAIN_LOGIC_ESZ_H_ */

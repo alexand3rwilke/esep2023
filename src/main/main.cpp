@@ -7,9 +7,6 @@
 
 #ifndef RUN_TESTS
 
-#include <iostream>
-#include <stdio.h>
-#include <iostream>
 #include "hal/Actuator.h"
 #include "hal/Sensor.h"
 #include "hal/ADC_Service.h"
@@ -20,86 +17,129 @@
 #include "dispatcher/Dispatcher.h"
 #include "Logic/Context.h"
 #include "Logic/Actions.h"
+#include "Qnet/QnetClient/QnetClient.h"
+#include "Qnet/QnetServer/QnetServer.h"
+#include <fstream>
 
-#include <sys/mman.h>
-#include <hw/inout.h>
-#include <sys/neutrino.h>
+#include "Imports.h"
 
 
-
-
+int MIN_HOEHE = 3580;
+int MAX_HOEHE = 2100;
 
 using namespace std;
 
 void wait(int seconds) {
-
 	usleep(1000 * (seconds * 1000 ));
 }
 
+
+int FESTO_TYPE;
 int main(int argc, char** args) {
 
+			if (strcmp(args[1], "F1") == 0) {
+				FESTO_TYPE = 1;
+				system("gns -s");
+
+			}
+			else if (strcmp(args[1], "F2") == 0) {
+				FESTO_TYPE = 2;
+				system("gns");
+
+			} else {
+
+				FESTO_TYPE = 1;
+				system("gns -s");
+			}
+
+	 cout << "Im Festo:" << FESTO_TYPE << endl;
 
 	cout << "Starting Festo Test \n" << endl;
 
-//	uintptr_t adcBaseAddr = mmap_device_io(ADC_LENGTH, ADC_BASE);
-
-		//printf("In main");
-
 		Dispatcher dispatcher;
 
+		WSAData *wsa_data = new WSAData();
 		ISR *isr = new ISR(&dispatcher);
 		Sensor *sensor = new Sensor(&dispatcher);
 		TSCADC tscadc;
 		ADC* adc = new ADC(tscadc);
-		Actions *actions = new Actions();
+		Actions *actions = new Actions(&dispatcher);
 		Actuator *actuator = new Actuator(&dispatcher);
 		ADC_Service *adcService = new ADC_Service(&dispatcher);
 
 
-		ContextData *contextData = new ContextData(&dispatcher);
-		Context *context = new Context(&dispatcher, actions,contextData);
-
-
-
-		//cout << "ende festo" << endl;
-
-
-
-
-
-
+//		fstream config;
+//		string input = "WK_NORMAL WK_FLACH WK_BOHRUNG";
+//		string delimiter= " ";
+//		config.open("/bspreihenfolgeWK.cfg", ios::in);
+		vector<int> werkstuckReihenfolge;
 //
-//		while(true){
-//					this_thread::sleep_for(chrono::hours(999999));
-//				}
+//		if(!config)perror("Fehler beim Öffnen von bspreihenfolgeWK.cfg");
+//		string werkstueck;
 
+		werkstuckReihenfolge.push_back(WK_Normal);
+		//werkstuckReihenfolge.push_back(WK_FLACH);
+		//werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
+//		while(getline(config, input))
+//		{
+//			werkstueck = input.substr(input.find(delimiter) + 1, input.length());
+//
+//
+//			if(werkstueck == "WK_NORMAL")  {
+//				werkstuckReihenfolge.push_back(WK_Normal);
+//			}
+//
+//			else if(werkstueck == "WK_FLACH")  {
+//				werkstuckReihenfolge.push_back(WK_FLACH);
+//			}
+//
+//			else if(werkstueck == "WK_Bohrung_Normal")  {
+//				werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
+//			}
+//
+//			else if(werkstueck == "WK_Bohrung_Metal")  {
+//				werkstuckReihenfolge.push_back(WK_Bohrung_Metal);
+//			}
+//
+//
+//		}
+//
+//		config.close();
 
+		if(werkstuckReihenfolge.size() == 0) {
 
-	// Sample misst das signal bei aufrud der methode
-	 //adc->sample();
+			perror("Es wurde keine Reihenfolge bestimmt!");
+		}
 
-	 // Lese höhe aus dem Register aus
-	 //uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
+		ContextData *contextData = new ContextData(&dispatcher);
+		Context *context = new Context(&dispatcher, actions,contextData,werkstuckReihenfolge);
 
-	 //printf("Value from adc with value %d!\n",heightData);
+		if (strcmp(args[1], "F1") == 0) {
 
+			cout << "Starting Festo FBM1 \n" << endl;
+			QnetServer *server = new QnetServer("FBM1",&dispatcher);
+			QnetClient *client = new QnetClient("FBM2",&dispatcher);
+		}
+		else if (strcmp(args[1], "F2") == 0) {
 
+			cout << "Starting Festo FBM2 \n" << endl;
+			QnetServer *server = new QnetServer("FBM2",&dispatcher);
+			QnetClient *client = new QnetClient("FBM1",&dispatcher);
+		}
+//
+//			cout << "Starting Festo FBM1 \n" << endl;
+//			QnetServer *server = new QnetServer("FBM1",&dispatcher);
+//			QnetClient *client = new QnetClient("FBM2",&dispatcher);
+//		}
+//		else if (strcmp(args[1], "-FBM2") == 0) {
+//
+//			cout << "Starting Festo FBM2 \n" << endl;
+//			QnetServer *server = new QnetServer("FBM2",&dispatcher);
+//			QnetClient *client = new QnetClient("FBM1",&dispatcher);
+//		}
+	//TODO: Besseres warten
 	 while(true){
-
-		 //adc->sample();
-		 //uint32_t heightData =  in32((uintptr_t) adcBaseAddr + ADC_DATA);
-		 //printf("Value from adc with value %d!\n",heightData);
-		 //sleep(1);
-		 //isr->handleInterruptAndSend(1);
 	 }
-	 //this_thread::sleep_for(chrono::minutes(5));
-
-
-
-
-
-
-
 
 	return EXIT_SUCCESS;
 }
@@ -113,42 +153,42 @@ int main(int argc, char** args) {
 void playDemo() {
 
 
-				Dispatcher dispatcher;
-
-
-				// Muss keine Events verschicken, nur annehmen
-				Actuator *actuator = new Actuator(&dispatcher);
-
-				// Move Assambly Left
-			 	actuator->assamblyMoveLeftOn();
-			 	wait(3);
-			 	actuator->assamblyMoveLeftOff();
-
-			 	// Move Assambly Right
-			 	actuator->assamblyMoveRightOn();
-			 	wait(3);
-			 	actuator->assamblyMoveRightOff();
-
-			 	// Move Assambly Slow
-			 	actuator->assamblyMoveRightOn();
-			 	actuator->assamblyMoveSlowOn();
-			 	wait(3);
-			 	actuator->assamblyMoveSlowOff();
-			 	actuator->assamblyMoveRightOff();
-
-			 	// Open Switch
-			 	actuator->switchOn();
-			 	wait(3);
-			 	actuator->switchOff();
-
-			 	// LED On
-			 	actuator->redOn();
-			 	actuator->yellowOn();
-			 	actuator->greenOn();
-			 	wait(3);
-			 	actuator->redOff();
-			 	actuator->yellowOff();
-			 	actuator->greenOff();
+//				Dispatcher dispatcher;
+//
+//
+//				// Muss keine Events verschicken, nur annehmen
+//				Actuator *actuator = new Actuator(&dispatcher);
+//
+//				// Move Assambly Left
+//			 	actuator->assamblyMoveLeftOn();
+//			 	wait(3);
+//			 	actuator->assamblyMoveLeftOff();
+//
+//			 	// Move Assambly Right
+//			 	actuator->assamblyMoveRightOn();
+//			 	wait(3);
+//			 	actuator->assamblyMoveRightOff();
+//
+//			 	// Move Assambly Slow
+//			 	actuator->assamblyMoveRightOn();
+//			 	actuator->assamblyMoveSlowOn();
+//			 	wait(3);
+//			 	actuator->assamblyMoveSlowOff();
+//			 	actuator->assamblyMoveRightOff();
+//
+//			 	// Open Switch
+//			 	actuator->switchOn();
+//			 	wait(3);
+//			 	actuator->switchOff();
+//
+//			 	// LED On
+//			 	actuator->redOn();
+//			 	actuator->yellowOn();
+//			 	actuator->greenOn();
+//			 	wait(3);
+//			 	actuator->redOff();
+//			 	actuator->yellowOff();
+//			 	actuator->greenOff();
 
 }
 

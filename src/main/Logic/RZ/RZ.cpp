@@ -6,57 +6,62 @@
  */
 
 #include "RZ.h"
-
+#include "../SMZ/SMZ.h"
 
 
 void RZ::entry() {
 
-	actions->greenOn(contextData->disp->getConnectionID());
-	actions->yellowOff(contextData->disp->getConnectionID());
-	actions->redOff(contextData->disp->getConnectionID());
-	printf("---in rz entry");
-	doAction();
+	cout << "\n  rz entry\n" << endl;
+	//actions->greenOff();
+	//actions->yellowOff();
+	actions->ampAllOff();
+}
 
+void RZ::exit() {
 
 }
-    void RZ::exit() {
-
-    }
-    void RZ::estp() {
 
 
-    }
-    void RZ::doAction(){
+/**
+ * Ruhezustand
+ */
 
-//    	_pulse msg;
-//
-//    	int chanID = ChannelCreate(0);
-//    	int ConID = ConnectAttach(0,0,chanID,_NTO_SIDE_CHANNEL,0);
-//
-//    	int recvid = MsgReceivePulse(contextData->disp->getConnectionID(), &msg, sizeof(_pulse), nullptr);
-//
-//    	if (recvid < 0) {
-//    				perror("MsgReceivePulse failed in RZ State!");
-//    			}
-//
-//    			if (recvid == 0) {
-//    			while(true) {
-
-//    		switch (msg.code) {
-//
-//    		case 12 : new(this) BZ; entry(); break;
-//
-//
-//
-//
-//
-//    		}
-//
-//
-//    		}
-//    			}
-
-    	}
+void RZ::doAction(int event, _pulse msg){
+	switch (event) {
+		//Starte Betriebszustand
+		case STRinterrupted:
+			printf("\n wechsel zu BZ \n");
+			exit();
+			new(this) BZ;
+			entry();
+			break;
+		//Starte Servicemode
+		case STR_SMZ:
+			exit();
+			new (this) SMZ;
+			entry();
+			break;
+		case ESTP1interrupted:
+			cout << "Estp in RZ \n" << endl;
+			exit();
+			new(this) ESZ;
+			entry();
+			break;
 
 
+		case ESTP2interrupted:
+			cout << "Estp in RZ \n" << endl;
+			exit();
+			new(this) ESZ;
+			entry();
+			break;
+	}
+}
 
+
+void RZ::estp(){
+	exit();
+	new(this) ESZ;
+	entry();
+
+}

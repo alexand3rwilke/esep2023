@@ -13,10 +13,9 @@
 
 
 void BZEinlauf::entry() {
-	actions->startFB(contextData->conIDDis);
-
-
-	doAction();
+	cout << "\n  BZEinlauf entry\n" << endl;
+	actions->startFB();
+	contextData->addWK();
 
 }
     void BZEinlauf::exit() {
@@ -26,34 +25,18 @@ void BZEinlauf::entry() {
 
 
     }
-    void BZEinlauf::doAction(){
-
-    	_pulse msg;
-    	int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);
-
-    	if (recvid < 0) {
-    				perror("MsgReceivePulse failed!");
-    			}
-
-    			if (recvid == 0) {
-    			while(true) {
-
-    		switch (msg.code) {
-
-
-    		// checke ob höhenmesser interrupt angekommen ist dann next state
-    		case 12 :	new(this) BZHoehenmessung;
-    					entry();
-    					break;
+    void BZEinlauf::doAction(int event, _pulse msg){
 
 
 
+    		switch (event) {
 
+    		case ADC_WK_IN_HM :
+    			exit();
+    			new(this) BZHoehenmessung;
+    			entry();
+    			break;
 
     		}
-
-
-    		}
-    			}
 
     	}

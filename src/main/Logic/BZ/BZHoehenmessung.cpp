@@ -12,45 +12,44 @@
 
 void BZHoehenmessung::entry() {
 
+	cout << "\n  BZHoehenmessung entry\n" << endl;
+	actions->moveSlower();
 
-	doAction();
+	//contextData->registerForAdc(stateId);
 
 }
     void BZHoehenmessung::exit() {
-
+    	actions->moveFaster();
     }
     void BZHoehenmessung::estp() {
 
 
     }
-    void BZHoehenmessung::doAction(){
+    void BZHoehenmessung::doAction(int event, _pulse msg){
 
-    	_pulse msg;
-    	int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);
-
-    	if (recvid < 0) {
-    				perror("MsgReceivePulse failed!");
-    			}
-
-    			if (recvid == 0) {
-    			while(true) {
-
-    		switch (msg.code) {
-
-
-    		// wenn fertig dann in Auslauf
-    		case 12 :	new(this) BZAussortierer;
-    					entry();
-    					break;
+//    	int adcHeight = msg.value.sival_int
+//    	if( contextData->getWerkstueckType() != getWKType(adcHeight) 9 {
+//    		new (this) BZAussortieren;
+//    	} else {
+//
+//    		new (this) BZDurchlassen
+//    	}
 
 
 
 
 
-    		}
+		switch (event) {
 
 
-    		}
-    			}
 
-    	}
+		case ADC_WK_NIN_HM :
+			exit();
+			new(this) BZAussortierer;
+			entry();
+			break;
+
+		}
+
+
+    }

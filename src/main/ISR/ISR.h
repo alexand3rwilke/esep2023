@@ -12,14 +12,11 @@
 
 #include "../Imports.h"
 #include "../Dispatcher/Dispatcher.h"
-#include <thread>
 #include "../hal/Sensor.h"
 
-
-
-
-
 class ISR  {
+private:
+	bool istESZ = false;
 
 public:
 	ISR(Dispatcher *dispatcher);

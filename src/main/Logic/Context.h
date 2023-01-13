@@ -14,21 +14,18 @@
 #include "ContextData.h"
 #include "../Imports.h"
 
-
-
-
-
 class Context {
 private:
-	Basestate *state;
-
+	//Basestate *state;
+	vector<Basestate *> stateList;
 	std::thread* ContextThread;
 	std::vector<int8_t> events;
+	std::vector<int> werkstuckReihenfolgeList;
 	void eventHandler();
 	int dispID;
 
 public:
-	Context(Dispatcher *dispatcher, Actions *actions, ContextData  * contextData);
+	Context(Dispatcher *dispatcher, Actions *actions, ContextData  * contextData, vector<int> werkstuckReihenfolge);
 
 	virtual ~Context();
 	void entry();
@@ -38,6 +35,12 @@ public:
 	ContextData *contextData;
 	Dispatcher *disp;
 	Actions *actions;
+
+private:
+	void setWkInStateWhereNotSet(int wkType);
+	int wkReihenfolgeIndex;
+	int stateIndex;
+	bool firstState = true; // wird direkt beim ersten LSA trigger auf false gesetzt
 };
 
 #endif /* SRC_MAIN_LOGIC_CONTEXT_H_ */
