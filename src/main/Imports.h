@@ -201,6 +201,10 @@ extern int MAX_HOEHE;
 #define WK_REMOVED 70
 #define WK_ADDED 71
 
+#define ESTP1Finished 90
+#define ESTP2Finished 91
+
+
 
 enum WkType { WKN,WKF,WKB,WKBM,WKU,NOWK};
 

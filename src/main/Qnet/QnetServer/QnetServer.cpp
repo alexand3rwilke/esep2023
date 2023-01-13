@@ -110,6 +110,20 @@ int QnetServer::server(){
 		    	   		}
 		    	   		break;
 
+
+		    	   	case ESTP1notInterrupted:
+					if(FESTO_TYPE == 2) {
+						MsgSendPulse(dispatcher->getConnectionID(), -1, ESTP1notInterrupted, 0);
+					}
+					break;
+
+
+				case ESTP2notInterrupted:
+					if(FESTO_TYPE == 1) {
+						MsgSendPulse(dispatcher->getConnectionID(), -1, ESTP2notInterrupted, 0);
+					}
+					break;
+
 					case LSR1notInterrupted:
 		    	   		if(FESTO_TYPE == 2) {
 		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSR1notInterrupted, 0);
@@ -128,11 +142,24 @@ int QnetServer::server(){
 		    	   		}
 		    	   		break;
 
-						case LSR2interrupted:
+					case LSR2interrupted:
 		    	   		if(FESTO_TYPE == 1) {
 		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSR2interrupted, 0);
 		    	   		}
 		    	   		break;
+
+					case ESTP1Finished:
+						if(FESTO_TYPE == 2) {
+					MsgSendPulse(dispatcher->getConnectionID(), -1, ESTP1Finished, 0);
+
+						}
+					break;
+
+					case ESTP2Finished:
+						if(FESTO_TYPE == 1) {
+					MsgSendPulse(dispatcher->getConnectionID(), -1, ESTP2Finished, 0);
+						}
+					break;
 
 //					case FBM2_SEND_WK:
 //

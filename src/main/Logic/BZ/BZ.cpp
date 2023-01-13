@@ -40,11 +40,11 @@ void BZ::doAction (int event, _pulse msg) {
 	//
 				switch (event) {
 
-
 			   case ESTP1interrupted:
 				   exit();
 				   new (this) ESZ;
 				   entry();
+				   doAction(event, msg);
 				   break;
 
 
@@ -52,6 +52,7 @@ void BZ::doAction (int event, _pulse msg) {
 				   exit();
 				   new (this) ESZ;
 				   entry();
+				   doAction(event, msg);
 				   break;
 
 

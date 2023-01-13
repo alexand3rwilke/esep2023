@@ -95,7 +95,8 @@ void Context::eventHandler(){
 					ESTP2interrupted,ESTP2notInterrupted,
 					RSTinterrupted,
 					WK_FLACH,WK_Normal,WK_Bohrung_Metal,WK_Bohrung_Normal,WK_UNDEFINED,
-					WK_REMOVED,WK_ADDED
+					WK_REMOVED,WK_ADDED,
+					ESTP1Finished, ESTP2Finished
 					};
 
 		disp->registerForEventWIthConnection(events, conID);
@@ -136,6 +137,13 @@ void Context::eventHandler(){
 					stateList.at(i)->doAction(ESTP2notInterrupted, msg);
 					break;
 
+			   case ESTP1Finished:
+				   stateList.at(i)->doAction(ESTP1Finished, msg);
+				   break;
+
+			   case ESTP2Finished:
+				   stateList.at(i)->doAction(ESTP2Finished, msg);
+				   break;
 
 
 			   case RSTinterrupted:
