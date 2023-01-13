@@ -70,13 +70,16 @@ bool ContextData::getRampe2Voll() {
 //  return erkanntesWk;
 //}
 void ContextData::addWK() {
+
 	wkCounter++;
+	printf("Now WK count is : %d  \n",wkCounter);
 
 }
 
 void ContextData::removeWK() {
 	if(wkCounter> 1) {
 		wkCounter--;
+		printf("Now WK count is : %d \n",wkCounter);
 	}
 
 }
