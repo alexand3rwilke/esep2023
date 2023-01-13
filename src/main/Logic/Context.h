@@ -13,7 +13,7 @@
 #include "Basestate.h"
 #include "ContextData.h"
 #include "../Imports.h"
-
+#include "TimerBZ.h"
 class Context {
 private:
 	//Basestate *state;
@@ -23,11 +23,16 @@ private:
 	std::vector<int> werkstuckReihenfolgeList;
 	void eventHandler();
 	int dispID;
+	void setWkInStateWhereNotSet(int wkType);
+	int wkReihenfolgeIndex;
+	int stateIndex;
+	bool firstState = true; // wird direkt beim ersten LSA trigger auf false gesetzt
 
 public:
 	Context(Dispatcher *dispatcher, Actions *actions, ContextData  * contextData, vector<int> werkstuckReihenfolge);
 
 	virtual ~Context();
+	TimerBZ *timerBz;
 	void entry();
 	void exit();
 	void estp();
@@ -36,11 +41,7 @@ public:
 	Dispatcher *disp;
 	Actions *actions;
 
-private:
-	void setWkInStateWhereNotSet(int wkType);
-	int wkReihenfolgeIndex;
-	int stateIndex;
-	bool firstState = true; // wird direkt beim ersten LSA trigger auf false gesetzt
+
 };
 
 #endif /* SRC_MAIN_LOGIC_CONTEXT_H_ */

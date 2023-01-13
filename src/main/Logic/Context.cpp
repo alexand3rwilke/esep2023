@@ -17,6 +17,7 @@
 #include "SMZ/SMZ.h"
 
 
+
 #include <stdio.h>
 #include <iostream>
 
@@ -26,11 +27,14 @@
 Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *contextData,vector<int> werkstuckReihenfolgeList) {
 
 
+	//TimerBZ timerBz;
+//	TimerBZ timerBz;
+//			timerBz = new TimerBZ(3,7);
 	wkReihenfolgeIndex = 0;
 	stateIndex = 0;
 	this->werkstuckReihenfolgeList = werkstuckReihenfolgeList;
 	this->contextData = contextData;
-	disp = dispatcher;
+	this->disp = dispatcher;
 		dispID = disp->getConnectionID();
 
 	// Setze State auf RZ
@@ -95,7 +99,8 @@ void Context::eventHandler(){
 					ESTP2interrupted,ESTP2notInterrupted,
 					RSTinterrupted,
 					WK_FLACH,WK_Normal,WK_Bohrung_Metal,WK_Bohrung_Normal,WK_UNDEFINED,
-					WK_REMOVED,WK_ADDED
+					WK_REMOVED,WK_ADDED,
+					TIMER_IS_OVER
 					};
 
 		disp->registerForEventWIthConnection(events, conID);
@@ -131,6 +136,9 @@ void Context::eventHandler(){
 			   case ESTP2interrupted:
 					stateList.at(i)->doAction(ESTP2interrupted, msg);
 					break;
+			   case TIMER_IS_OVER:
+				   cout << "---------Time Over" << endl;
+				   break;
 
 			   case ESTP2notInterrupted:
 					stateList.at(i)->doAction(ESTP2notInterrupted, msg);
@@ -261,13 +269,16 @@ void Context::eventHandler(){
 				break;
 
 				case LSR1interrupted : 
+				//timerBz;
+				//int k =LSR1notInterrupted;
+				//timerBz = new TimerBZ(disp,3,LSR1notInterrupted);
 				contextData->setRampe1Voll(true);
 				stateList.at(i)->doAction(LSR1interrupted, msg);
 				//TODO setze contextData Rampe1 voll auf true;
 				break;
 
 
-				case LSR2interrupted : 
+				case LSR2interrupted:
 				contextData->setRampe2Voll(false);
 				stateList.at(i)->doAction(LSR2interrupted, msg);
 				//TODO setze contextData Rampe2 voll auf true;
