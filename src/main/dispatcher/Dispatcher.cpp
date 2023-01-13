@@ -85,7 +85,7 @@ void Dispatcher::DispatchMessageToSubscriber(int8_t code, int value) {
 			MsgSendPulse(connections.at(j), -1, code, value);
 			//cout << "\n Dispatcher sends message : " << code << "\n" << endl;
 
-			printf("Dispatcher sends message: %d \n", code);
+			//printf("Dispatcher sends message: %d \n", code);
 		}
 	connectionMutex.unlock();
 }

@@ -41,7 +41,7 @@ void TimerBZ::setUp(){
 			std::vector<int8_t> events = {event};
 			disp->registerForEventWIthConnection(events, conID);
 			_pulse pulse;
-			while (true) {
+
 
 				int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
 
@@ -51,14 +51,16 @@ void TimerBZ::setUp(){
 				}
 
 				recivedIntereupt = true;
+				cout << "Timer ---------------------------- gut" << endl;
 
 
-			}
+
 }
 
 void TimerBZ::timerGestartet(){
 	usleep(1000 * (seconds * 1000 ));
 	if(!recivedIntereupt){
+		cout << "Timer Fehler" << endl;
 		MsgSendPulse(dispConID,-1,TIMER_IS_OVER,0);
 	}
 }

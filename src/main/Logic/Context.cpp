@@ -271,7 +271,8 @@ void Context::eventHandler(){
 				case LSR1interrupted : 
 				//timerBz;
 				//int k =LSR1notInterrupted;
-				//timerBz = new TimerBZ(disp,3,LSR1notInterrupted);
+				cout << "LSR1interrupted" << endl;
+				timerBz = new TimerBZ(disp,3,LSR1notInterrupted);
 				contextData->setRampe1Voll(true);
 				stateList.at(i)->doAction(LSR1interrupted, msg);
 				//TODO setze contextData Rampe1 voll auf true;
@@ -279,6 +280,7 @@ void Context::eventHandler(){
 
 
 				case LSR2interrupted:
+					cout << "LSR2interrupted" << endl;
 				contextData->setRampe2Voll(false);
 				stateList.at(i)->doAction(LSR2interrupted, msg);
 				//TODO setze contextData Rampe2 voll auf true;
