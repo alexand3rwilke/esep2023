@@ -58,8 +58,11 @@ void BZAussortierer::entry() {
 			// TODO : Vielleicht noch eine Sekunde weiterlaufen lassen damit es in die Rutsche geht
 			// TODO : Vielleicht brauchen wir noch einen Ruschen state um zu warten bis das WK die rutsche runtergerutscht ist, damit wir keine feste Zeit warten müssen
 			} else {
+
 			exit();
-			new(this)BZready;
+			new(this)BZrutsche;
+			entry();
+
 
 			}
     		break;

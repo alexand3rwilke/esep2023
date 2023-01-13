@@ -43,7 +43,7 @@ void Sensor::sensorRoutine() {
 		perror("Could not connect to channel!");
 	}
 
-	senorEvents={LSA, LSE, LSS, HMS, STR, ESTP, RST, STP, STR_SMZ, MTD};
+	senorEvents={LSA, LSE,LSR, LSS, HMS, STR, ESTP, RST, STP, STR_SMZ, MTD};
 
 	disp->registerForEventWIthConnection(senorEvents, conID);
 

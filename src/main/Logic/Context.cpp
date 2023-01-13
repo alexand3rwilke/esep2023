@@ -164,6 +164,7 @@ void Context::eventHandler(){
 					   stateList.push_back(newState);
 					   firstState = false;
 					   contextData->addWK();
+					   cout << "WK anzahl auf den FB ist : " << contextData->getWKCount();
 					  }
 
 				   	// danach normale action

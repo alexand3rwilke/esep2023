@@ -77,7 +77,7 @@ void ContextData::addWK() {
 }
 
 void ContextData::removeWK() {
-	if(wkCounter> 1) {
+	if(wkCounter>= 1) {
 		wkCounter--;
 		printf("Now WK count is : %d \n",wkCounter);
 	}

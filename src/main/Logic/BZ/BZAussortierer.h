@@ -3,6 +3,8 @@
 
 
 #include "../Basestate.h"
+#include "BZrutsche.h"
+
 
 
 class BZAussortierer : public Basestate {
