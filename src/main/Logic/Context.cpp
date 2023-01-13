@@ -150,8 +150,7 @@ void Context::eventHandler(){
 					   // TODO hier noch unterscheiden ob wir im firstState sind, um nich am Anfang schon mit 2 states zu starten
 					   // Da-> init mit [firstState] in RZ(), dann kommt LSA1 interrupted welches nicht einen neuen State in den vector packen soll...
 					  if(!firstState) {
-				   	   Basestate *newState = new RZ();
-					   newState = new RZ();
+				   	   Basestate *newState = new BZ;
 					   newState->setContextData(contextData);
 					   newState->setActions(actions);
 					   newState->entry();

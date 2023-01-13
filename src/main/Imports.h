@@ -202,7 +202,7 @@ extern int MAX_HOEHE;
 #define WK_ADDED 71
 
 
-
+enum WkType { WKN,WKF,WKB,WKBM,WKU,NOWK};
 
 
 #endif /* SRC_IMPORTS_H */

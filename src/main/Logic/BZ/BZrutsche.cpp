@@ -33,8 +33,12 @@ void BZrutsche::entry() {
     		if(contextData->getWKCount()==0) {
 
     			actions->stopFB();
-    		}
+    		} else {
+
     		delete this;
+    		}
+
+
 
 
 
