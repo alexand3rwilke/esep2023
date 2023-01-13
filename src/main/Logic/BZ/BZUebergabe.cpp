@@ -18,7 +18,10 @@ void BZUebergabe::entry() {
 
 }
     void BZUebergabe::exit() {
+
+    	cout << "\n  BZUebergabe exit\n" << endl;
     	contextData->removeWK();
+
     	if(contextData->getWKCount() == 0) {
     		actions->stopFB();
     	}

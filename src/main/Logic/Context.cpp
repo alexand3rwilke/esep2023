@@ -171,7 +171,7 @@ void Context::eventHandler(){
 					   contextData->setGesuchtWKMapForStateForIndex(stateIndex++,wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size());
 					   stateList.push_back(newState);
 					   firstState = false;
-					   cout << stateIndex << "\n" << endl;
+					   contextData->addWK();
 					  }
 
 				   	// danach normale action
