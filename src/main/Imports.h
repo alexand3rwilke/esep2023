@@ -201,6 +201,7 @@ extern int MAX_HOEHE;
 #define WK_REMOVED 70
 #define WK_ADDED 71
 
+#define TIMER_IS_OVER 89
 
 
 
