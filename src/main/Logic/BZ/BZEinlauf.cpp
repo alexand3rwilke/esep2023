@@ -15,7 +15,7 @@
 void BZEinlauf::entry() {
 	cout << "\n  BZEinlauf entry\n" << endl;
 	actions->startFB();
-	contextData->addWK();
+
 
 }
     void BZEinlauf::exit() {

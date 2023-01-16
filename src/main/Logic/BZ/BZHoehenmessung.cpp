@@ -13,13 +13,23 @@
 void BZHoehenmessung::entry() {
 
 	cout << "\n  BZHoehenmessung entry\n" << endl;
-	actions->moveSlower();
+	if(FESTO_TYPE == 1) {
+
+		actions->moveSlower();
+	}
+
 
 	//contextData->registerForAdc(stateId);
 
 }
     void BZHoehenmessung::exit() {
-    	actions->moveFaster();
+
+    	if(FESTO_TYPE == 1) {
+
+        	actions->moveFaster();
+    		}
+
+
     }
     void BZHoehenmessung::estp() {
 

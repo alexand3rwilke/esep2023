@@ -14,13 +14,11 @@ void BZ::entry(){
 	// grünes licht an entry
 	actions->greenOn();
 	//printf("in BZ");
-	actions->greenOn();
-	substate = new BZready();
-	substate->setActions(actions);
-	substate->setContextData(contextData);
-	substate->entry();
-	substate->setStateId(stateId);
+	//actions->greenOn();
+
 //	substate->contextData
+
+	//substateList.push_back(substate);
 
 }
 
@@ -35,7 +33,41 @@ void BZ::doAction (int event, _pulse msg) {
 
 	///
 				// gebe event an substate weiter
-				substate->doAction(event, msg);
+
+
+	if(event == LSA1interrupted && FESTO_TYPE ==1) {
+		Basestate *newsubState;
+		newsubState = new BZEinlauf();
+		newsubState->setActions(actions);
+		newsubState->setContextData(contextData);
+		newsubState->entry();
+		newsubState->setStateId(stateId);
+		substateList.push_back(newsubState);
+		contextData->addWK();
+		//cout << contextData->getWKCount() << "ist die aktuelle WK anzahl" << endl;
+
+	}
+
+	if(event == LSA2interrupted && FESTO_TYPE ==2) {
+			Basestate *newsubState;
+			newsubState = new BZEinlauf();
+			newsubState->setActions(actions);
+			newsubState->setContextData(contextData);
+			newsubState->entry();
+			newsubState->setStateId(stateId);
+			substateList.push_back(newsubState);
+			contextData->addWK();
+			//cout << contextData->getWKCount() << "ist die aktuelle WK anzahl" << endl;
+
+		}
+
+	for(Basestate *stateFromList :substateList ) {
+
+
+
+
+	stateFromList->doAction(event, msg);
+	//cout << "folgendes event wird an den substate weitergegebern: " << event << endl;
 
 	//
 				switch (event) {
@@ -63,12 +95,13 @@ void BZ::doAction (int event, _pulse msg) {
 			  		break;
 
 				case STRinterrupted:
-					  exit();
+					exit();
 					new(this) BZ;
 					entry();
 					break;
 
-				}
 
+				}
+	}
 }
 

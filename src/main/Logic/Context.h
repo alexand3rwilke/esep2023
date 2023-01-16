@@ -17,7 +17,7 @@
 class Context {
 private:
 	//Basestate *state;
-	vector<Basestate *> stateList;
+	Basestate *fisrsState;
 	std::thread* ContextThread;
 	std::vector<int8_t> events;
 	std::vector<int> werkstuckReihenfolgeList;

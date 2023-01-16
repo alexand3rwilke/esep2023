@@ -70,7 +70,7 @@ void ESZ::doAction(int event, _pulse msg){
 
 	case RSTinterrupted:
 
-		cout << "ESTP1 ist:" << schalter1Gedrueckt << "und ESTP2 ist :" << schalter1Gedrueckt << endl;
+		//cout << "ESTP1 ist:" << schalter1Gedrueckt << "und ESTP2 ist :" << schalter1Gedrueckt << endl;
 		if(!schalter1Gedrueckt && !schalter2Gedrueckt) {
 		if(resetCounter == 0){
 			actions->redOff();
@@ -99,9 +99,10 @@ void ESZ::doAction(int event, _pulse msg){
 
 	case STRinterrupted:
 
-		cout << "Resetcounter is :" << resetCounter << "und beide ESTP done: " << (estp1Finished && estp2Finished) << endl;
+		//cout << "Resetcounter is :" << resetCounter << "und beide ESTP done: " << (estp1Finished && estp2Finished) << endl;
 		if(resetCounter >= 2 && (estp1Finished && estp2Finished)) {
 			exit();
+			actions->greenOn();
 			new (this) BZ;
 
 
@@ -110,12 +111,10 @@ void ESZ::doAction(int event, _pulse msg){
 
 
 	case ESTP1Finished :
-		cout << "blabllaablalbbbalbalalblablalba 1 DONE" << endl;
 		estp1Finished = true;
 		break;
 
 	case ESTP2Finished :
-		cout << "blabllaablalbbbalbalalblablalba 2 DONE" << endl;
 		estp2Finished = true;
 		break;
 	}

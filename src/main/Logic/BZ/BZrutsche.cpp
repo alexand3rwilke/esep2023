@@ -16,6 +16,19 @@ void BZrutsche::entry() {
 }
     void BZrutsche::exit() {
 
+    	cout << "\n  BZrutsche exit\n" << "in State: "<< stateId << endl;
+
+    	contextData->removeWK();
+    	    		//printf("WK count now is: %d",contextData->getWKCount());
+    	    		if(contextData->getWKCount()==0) {
+
+    	    			actions->stopFB();
+    	    		} else {
+
+    	    		//delete this;
+    	    		}
+
+
     }
     void BZrutsche::estp() {
 
@@ -28,16 +41,11 @@ void BZrutsche::entry() {
 
     	case LSR1interrupted :
     		//printf("WK count is: %d",contextData->getWKCount());
-    		contextData->removeWK();
-    		//printf("WK count now is: %d",contextData->getWKCount());
-    		if(contextData->getWKCount()==0) {
+    		exit();
 
-    			actions->stopFB();
-    		} else {
-
-    		delete this;
-    		}
-
+     	case LSR2interrupted :
+        	//printf("WK count is: %d",contextData->getWKCount());
+        	exit();
 
 
 

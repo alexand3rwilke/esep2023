@@ -31,10 +31,10 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 	this->werkstuckReihenfolgeList = werkstuckReihenfolgeList;
 	this->contextData = contextData;
 	disp = dispatcher;
-		dispID = disp->getConnectionID();
+	dispID = disp->getConnectionID();
 
 	// Setze State auf RZ
-	Basestate *fisrsState;
+
 	fisrsState = new RZ();
 
 
@@ -49,13 +49,13 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 
 	fisrsState->entry();
 
-	cout << "GESUCHTES WK WURDE AUF FOLGENDES GESETZT: "<< contextData->getGesuchtWKMapForStateForIndex(/*fisrsState->getStateId()*/0) << "\n" << endl;
+	//cout << "GESUCHTES WK WURDE AUF FOLGENDES GESETZT: "<< contextData->getGesuchtWKMapForStateForIndex(/*fisrsState->getStateId()*/0) << "\n" << endl;
 
-	stateList.push_back(fisrsState);
+
 
 	fisrsState->exit();
-		new (fisrsState) BZ;
-		fisrsState->entry(); //TODO ---------------------------------------------------------------------------------------- Nur für den Test
+	new (fisrsState) BZ;
+	fisrsState->entry(); //TODO ---------------------------------------------------------------------------------------- Nur für den Test
 
 
 	ContextThread = new std::thread([this]() {eventHandler();});
@@ -63,9 +63,9 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 
 Context::~Context() {
 	//delete states;
-	for(Basestate *s : stateList) {
-		delete s;
-	}
+
+		delete fisrsState;
+
 
 	delete disp;
 }
@@ -85,7 +85,7 @@ void Context::eventHandler(){
 		}
 		//TODO alle sensorsignale einfügen
 		events = 	{LSA1interrupted,LSA2interrupted,
-					LSE1interrupted,LSE2interrupted,LSE1notInterrupted,
+					LSE1interrupted,LSE2interrupted,LSE1notInterrupted,LSE2notInterrupted,
 					LSS1interrupted,LSS1notInterrupted,
 					LSR1notInterrupted,LSR2notInterrupted,LSR1interrupted,LSR2interrupted,
 					STRinterrupted,STRnotInterrupted,STPinterrupted,
@@ -114,40 +114,40 @@ void Context::eventHandler(){
 			   		}
 
 			   //for(Basestate *state : stateList) {
-				   for(int i = 0; i< stateList.size(); i++) {
+
 
 
 			   switch(msg.code) {
 			   //----------------------------------------------------
 			   // EStop
 			   case ESTP1interrupted:
-				   stateList.at(i)->doAction(ESTP1interrupted, msg);
+				   fisrsState->doAction(ESTP1interrupted, msg);
 			 		break;
 
 			   case ESTP1notInterrupted:
-			   		stateList.at(i)->doAction(ESTP1notInterrupted, msg);
+			   		fisrsState->doAction(ESTP1notInterrupted, msg);
 			   		break;
 
 
 			   case ESTP2interrupted:
-					stateList.at(i)->doAction(ESTP2interrupted, msg);
+					fisrsState->doAction(ESTP2interrupted, msg);
 					break;
 
 			   case ESTP2notInterrupted:
-					stateList.at(i)->doAction(ESTP2notInterrupted, msg);
+					fisrsState->doAction(ESTP2notInterrupted, msg);
 					break;
 
 			   case ESTP1Finished:
-				   stateList.at(i)->doAction(ESTP1Finished, msg);
+				   fisrsState->doAction(ESTP1Finished, msg);
 				   break;
 
 			   case ESTP2Finished:
-				   stateList.at(i)->doAction(ESTP2Finished, msg);
+				   fisrsState->doAction(ESTP2Finished, msg);
 				   break;
 
 
 			   case RSTinterrupted:
-			  		stateList.at(i)->doAction(RSTinterrupted, msg);
+			  		fisrsState->doAction(RSTinterrupted, msg);
 			  		break;
 
 
@@ -155,59 +155,66 @@ void Context::eventHandler(){
 
 			   case LSA1interrupted:
 					   // ADD NEW STATE
-					   // TODO hier noch unterscheiden ob wir im firstState sind, um nich am Anfang schon mit 2 states zu starten
-					   // Da-> init mit [firstState] in RZ(), dann kommt LSA1 interrupted welches nicht einen neuen State in den vector packen soll...
-					  if(!firstState) {
-				   	   Basestate *newState = new BZ;
-					   newState->setContextData(contextData);
-					   newState->setActions(actions);
-					   newState->entry();
-					   newState->doAction(LSA1interrupted, msg);
-					   // setze gesuchtes WK auf den aktuellen stand der liste und setze den pointer danach hoch
-					   //newState->setZielWK(werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
-					   newState->setStateId(stateIndex);
-					   contextData->setGescanntWKMapForStateForIndex(stateIndex,0);
-					   contextData->setGesuchtWKMapForStateForIndex(stateIndex++,wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size());
-					   stateList.push_back(newState);
-					   firstState = false;
-					   contextData->addWK();
-					   cout << "WK anzahl auf den FB ist : " << contextData->getWKCount();
-					  }
+					   // TODO hier noch unterscheiden ob wir im fisrsState sind, um nich am Anfang schon mit 2 states zu starten
+					   // Da-> init mit [fisrsState] in RZ(), dann kommt LSA1 interrupted welches nicht einen neuen State in den vector packen soll...
+//					  if(!fisrsState) {
+//				   	   Basestate *newState = new BZ;
+//					   newState->setContextData(contextData);
+//					   newState->setActions(actions);
+//					   newState->entry();
+//					   newState->doAction(LSA1interrupted, msg);
+//					   // setze gesuchtes WK auf den aktuellen stand der liste und setze den pointer danach hoch
+//					   //newState->setZielWK(werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
+//					   newState->setStateId(stateIndex);
+//					   contextData->setGescanntWKMapForStateForIndex(stateIndex,0);
+//					   contextData->setGesuchtWKMapForStateForIndex(stateIndex++,wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size());
+//					   stateList.push_back(newState);
+//					   fisrsState = false;
+//					   contextData->addWK();
+//					   cout << "WK anzahl auf den FB ist : " << contextData->getWKCount();
+//					  }
 
 				   	// danach normale action
-				   stateList.at(i)->doAction(LSA1interrupted, msg);
+				   fisrsState->doAction(LSA1interrupted, msg);
 
 				   break;
 
 			   case LSE1interrupted:
-				   stateList.at(i)->doAction(LSE1interrupted, msg);
+				   fisrsState->doAction(LSE1interrupted, msg);
 				   break;
 
 			   case	LSS1interrupted:
-				   stateList.at(i)->doAction(LSS1interrupted , msg);
+				   fisrsState->doAction(LSS1interrupted , msg);
 				   break;
 
 			   case LSE1notInterrupted:
-				   stateList.at(i)->doAction(LSE1notInterrupted, msg);
+				   fisrsState->doAction(LSE1notInterrupted, msg);
 				   break;
+
+
+			   case LSE2notInterrupted:
+				   fisrsState->doAction(LSE2notInterrupted, msg);
+				   break;
+
+
 
 
 			   case ADC_WK_IN_HM:
 				   //cout << "ADC_WK_IN_HM \n" << endl;
 
 				   MsgSendPulse(chanID, -1, ADC_START_SINGLE_SAMPLE, 0);
-				   stateList.at(i)->doAction(ADC_WK_IN_HM, msg);
+				   fisrsState->doAction(ADC_WK_IN_HM, msg);
 				   break;
 
 			   case	ADC_WK_NIN_HM:
 				   //cout << "ADC_WK_NIN_HM \n" << endl;
 
-				   stateList.at(i)->doAction(ADC_WK_NIN_HM, msg);
+				   fisrsState->doAction(ADC_WK_NIN_HM, msg);
 				   break;
 
 			   case ADC_SINGLE_SAMLING_FINISHED:
 				   cout << "ADC_SINGLE_SAMLING_FINISHED \n" << endl;
-				   stateList.at(i)->doAction(ADC_SINGLE_SAMLING_FINISHED, msg);
+				   fisrsState->doAction(ADC_SINGLE_SAMLING_FINISHED, msg);
 				   break;
 
 			   case	STRinterrupted:
@@ -226,85 +233,85 @@ void Context::eventHandler(){
 
 						//Taster länger als 2 Sekunden betätigt, dann SMZ
 						if(time_diff >= 2){
-							stateList.at(i)->doAction(STR_SMZ ,msg);
+							fisrsState->doAction(STR_SMZ ,msg);
 							break;
 						//Taster weniger als 2 Sekunden, dann BZ
 						}else{
-							stateList.at(i)->doAction(STRinterrupted, msg);
+							fisrsState->doAction(STRinterrupted, msg);
 							break;
 						}
 					}
 				   break;
 
 			  case STR_SMZ:
-				  stateList.at(i)->doAction(STR_SMZ, msg);
+				  fisrsState->doAction(STR_SMZ, msg);
 				  break;
 
 			  case STPinterrupted:
 				  // if keine Warning
-				  stateList.at(i)->doAction(STPinterrupted, msg);
+				  fisrsState->doAction(STPinterrupted, msg);
 				  break;
 
 			  case MTD1interrupted:
-				  stateList.at(i)->doAction(MTD1interrupted, msg);
+				  fisrsState->doAction(MTD1interrupted, msg);
 			   	   break;
 
 			  case LSE2interrupted:
-				  stateList.at(i)->doAction(LSE2interrupted,msg);
+				  fisrsState->doAction(LSE2interrupted,msg);
 				  break;
 			  case LSA2interrupted:
-				  stateList.at(i)->doAction(LSA2interrupted,msg);
+				  fisrsState->doAction(LSA2interrupted,msg);
 				  break;
 
 				case LSR1notInterrupted:
-				stateList.at(i)->doAction(LSR1notInterrupted, msg);
+				fisrsState->doAction(LSR1notInterrupted, msg);
 				contextData->setRampe1Voll(false);
 				//TODO setze contextData Rampe1 voll auf false;
 				break;
 
 				case LSR2notInterrupted:
-				stateList.at(i)->doAction(LSR2notInterrupted, msg);
+				fisrsState->doAction(LSR2notInterrupted, msg);
 				contextData->setRampe2Voll(false);
 				//TODO setze contextData Rampe2 voll auf false;
 				break;
 
 				case LSR1interrupted : 
 				contextData->setRampe1Voll(true);
-				stateList.at(i)->doAction(LSR1interrupted, msg);
+				fisrsState->doAction(LSR1interrupted, msg);
 				//TODO setze contextData Rampe1 voll auf true;
 				break;
 
 
 				case LSR2interrupted : 
 				contextData->setRampe2Voll(false);
-				stateList.at(i)->doAction(LSR2interrupted, msg);
+				fisrsState->doAction(LSR2interrupted, msg);
 				//TODO setze contextData Rampe2 voll auf true;
 				break;
 
 				// TODO Werkstück erkennung testen
-				case WK_FLACH : 
+				case WK_FLACH :
 				setWkInStateWhereNotSet(WK_FLACH);
-				stateList.at(i)->doAction(WK_FLACH, msg);
+				fisrsState->doAction(WK_FLACH, msg);
 				break;
 
 				case WK_Normal :
 				setWkInStateWhereNotSet(WK_Normal);
-				stateList.at(i)->doAction(WK_Normal, msg);
+				fisrsState->doAction(WK_Normal, msg);
 				break;
 
 				case WK_Bohrung_Metal :
 				setWkInStateWhereNotSet(WK_Bohrung_Metal);
-				stateList.at(i)->doAction(WK_Bohrung_Metal, msg);
+				fisrsState->doAction(WK_Bohrung_Metal, msg);
 				break;
 
 				case WK_Bohrung_Normal :
 				setWkInStateWhereNotSet(WK_Bohrung_Normal);
-				stateList.at(i)->doAction(WK_Bohrung_Normal, msg);
+				fisrsState->doAction(WK_Bohrung_Normal, msg);
 				break;
 
-				case WK_UNDEFINED : 
+				case WK_UNDEFINED :
 				setWkInStateWhereNotSet(WK_UNDEFINED);
-				stateList.at(i)->doAction(WK_UNDEFINED, msg);
+				fisrsState->doAction(WK_UNDEFINED, msg);
 				break;
 
 				case WK_ADDED :
@@ -318,7 +325,7 @@ void Context::eventHandler(){
 
 			   }
 
-			}
+
 
 		}
 

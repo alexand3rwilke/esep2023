@@ -19,7 +19,7 @@ protected:
 	//Befehle der HAL
 
 	Basestate *substate;
-
+	vector<Basestate *> substateList;
 	Actions *actions;
 	WSAData *wsa_data;
 	ContextData *contextData;

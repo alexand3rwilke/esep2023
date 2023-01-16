@@ -17,6 +17,7 @@ private:
     int zielWk = 0;
     int erkanntesWk = 0;
     int wkCounter = 0;
+    bool wkAufFBM2;
 
     map<int, int> gesuchtesWKMap;
     map<int, int> gescanntesWKMap;
@@ -60,6 +61,8 @@ public:
     void registerForAdc(int stateId);
 
     int getLatestRegisterForAdcState();
+    void setWkOnFMB2(bool wkAufFBM2);
+    bool getWkOnFMB2();
     int conIDDis = 0;
 };
 
