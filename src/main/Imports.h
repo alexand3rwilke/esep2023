@@ -203,6 +203,8 @@ extern int MAX_HOEHE;
 
 #define TIMER_IS_OVER 89
 
+#define SEND_STRING 45
+
 
 
 

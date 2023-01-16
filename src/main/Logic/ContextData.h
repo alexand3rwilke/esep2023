@@ -10,6 +10,8 @@
 
 #include "../dispatcher/Dispatcher.h"
 
+using namespace std;
+
 
 class ContextData{
 private:
@@ -24,6 +26,8 @@ private:
     map<int, int> gescanntesWKMap;
     std::vector<int> adcWaitList;
 
+    string wkData= "init";
+
 public:
     Dispatcher *disp;
     ContextData(Dispatcher *dispatcher);
@@ -37,6 +41,8 @@ public:
     void setRampe2Voll(bool value);
     bool getRampe1Voll();
     bool getRampe2Voll();
+    string getWkData();
+    void setWkData(string wk);
 
     //Das Werkstück welches erwartet wird
     //void setZielWk(int wkType);

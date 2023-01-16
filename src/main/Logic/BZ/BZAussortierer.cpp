@@ -45,6 +45,10 @@ void BZAussortierer::entry() {
     		case LSS1interrupted :
 			// checke ob das WK das gesuchte ist, sonst aussortieren und wieder in BZready+
 
+//----------------------------------------------------------------------------------------
+
+    			actions->durchlassen();
+    			//----------------------------------------------------------------------------------------
 
     			contextData->getLatestRegisterForAdcState();
     			cout << "------------Aussortierer Test:"<< endl;

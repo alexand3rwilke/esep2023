@@ -23,13 +23,13 @@
 
 
 
-
 Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *contextData,vector<int> werkstuckReihenfolgeList) {
 
 
 	//TimerBZ timerBz;
 //	TimerBZ timerBz;
 //			timerBz = new TimerBZ(3,7);
+	cout << "Context" << endl;
 	wkReihenfolgeIndex = 0;
 	stateIndex = 0;
 	this->werkstuckReihenfolgeList = werkstuckReihenfolgeList;
@@ -182,6 +182,7 @@ void Context::eventHandler(){
 
 			   case LSE1interrupted:
 				   stateList.at(i)->doAction(LSE1interrupted, msg);
+				   //cout << "SEND_STRING -- print" << endl;
 				   break;
 
 			   case	LSS1interrupted:
@@ -190,6 +191,7 @@ void Context::eventHandler(){
 
 			   case LSE1notInterrupted:
 				   stateList.at(i)->doAction(LSE1notInterrupted, msg);
+				   MsgSendPulse(dispID,-1,SEND_STRING,0);
 				   break;
 
 
@@ -249,6 +251,11 @@ void Context::eventHandler(){
 			  case MTD1interrupted:
 				  stateList.at(i)->doAction(MTD1interrupted, msg);
 			   	   break;
+//			  case LSE1interrupted:
+//
+//				  stateList.at(i)->doAction(LSE1interrupted,msg);
+//				  MsgSendPulse(dispID,-1,SEND_STRING,0);
+//				  break;
 
 			  case LSE2interrupted:
 				  stateList.at(i)->doAction(LSE2interrupted,msg);

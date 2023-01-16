@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include "../../Imports.h"
 
-QnetServer::QnetServer(const char* attach_point, Dispatcher *disp) {
+QnetServer::QnetServer(const char* attach_point, Dispatcher *disp, ContextData *contextData) {
 	//this->data = data;
 	this ->dispatcher = disp;
 	this->attach_point =attach_point;

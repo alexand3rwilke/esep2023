@@ -67,7 +67,11 @@ void BZUebergabe::entry() {
 
 
 
-    		// case LSE1interrupted:
+    		case LSE1notInterrupted:
+    			// hier soll der string in ContextData abgelegt werden
+    			contextData->setWkData("Test WK Data");
+
+
     		//     		  			// TODO delete this thread
     		// 	actions->stopFB();
     		//     						exit();

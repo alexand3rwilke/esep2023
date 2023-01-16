@@ -146,3 +146,11 @@ int ContextData::getLatestRegisterForAdcState() {
 
 		return -1;
 }
+
+string ContextData::getWkData(){
+	return wkData;
+}
+
+void ContextData::setWkData(string wk){
+	wkData = wk;
+}

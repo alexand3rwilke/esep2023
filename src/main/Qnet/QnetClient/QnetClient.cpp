@@ -8,11 +8,15 @@
 #include "QnetClient.h"
 #include "../../Imports.h"
 
-QnetClient::QnetClient(const char* attach_point, Dispatcher *disp) {
+using namespace std;
+
+QnetClient::QnetClient(const char* attach_point, Dispatcher *disp, ContextData *contextData) {
 
 	this->dispatcher = disp;
 	this->attach_point =attach_point;
+	this->contextData = contextData;
 	ClientThread = new std::thread([this]() {client();});
+
 }
 
 QnetClient::~QnetClient() {}
@@ -27,14 +31,14 @@ int QnetClient::client(){
 
 	// Use GNS for setting up the connection to the server - running somewhere in the network
 	if ((server_coid = name_open(attach_point, NAME_FLAG_ATTACH_GLOBAL)) == -1) {
-	    	perror("Client: name_open failed");
-	        return EXIT_FAILURE;
+	    	//perror("Client: name_open failed");
+	       // return EXIT_FAILURE;
 	}
 
 	//// ======== send pulse message ================
     if(MsgSendPulse(server_coid,-1,HELLO,0) != 0){
-		 	perror("[Client]: sendPulse failed");
-		 	return EXIT_FAILURE;
+		 	//perror("[Client]: sendPulse failed");
+		 	//return EXIT_FAILURE;
 	}
 
 	/* ### Create channel ### */
@@ -52,7 +56,9 @@ int QnetClient::client(){
 				perror("Could not connect to channel!");
 	}
 
-	vector<int8_t> events = {LSE, LSE1interrupted, LSA2interrupted,ESTP1interrupted, ESTP2interrupted,LSR1notInterrupted,LSR2notInterrupted,LSR1interrupted,LSR2interrupted
+	vector<int8_t> events = {LSE, LSE1interrupted, LSA2interrupted,ESTP1interrupted,
+			ESTP2interrupted,LSR1notInterrupted,LSR2notInterrupted,LSR1interrupted,
+			LSR2interrupted, SEND_STRING
 	};
 
 	dispatcher->registerForEventWIthConnection(events, conID);
@@ -70,10 +76,10 @@ int QnetClient::client(){
 		switch(msg.code){
 
 					case LSE1interrupted:
-
+						cout << "Client hat LSE1 erhalten --" << endl;
 					if(MsgSendPulse(server_coid, -1, LSE1interrupted,0) != 0){
 						perror("[Client]: sendPulse failed");
-						return EXIT_FAILURE;
+						//return EXIT_FAILURE;
 						}
 					break;
 
@@ -131,7 +137,13 @@ int QnetClient::client(){
 						return EXIT_FAILURE;
 						}
 					break;
+					case SEND_STRING:
+						string tmp = contextData->getWkData();
 
+						cout << tmp << endl;
+						contextData->setWkData("");
+						//rauslesen aus COntextdata
+					break;
 	//				case WK_DATA_SEND:
 	//
 	//					if(MsgSendPulse(server_coid, -1, FBM2_SEND_WK,data->getClientCounter()) != 0){

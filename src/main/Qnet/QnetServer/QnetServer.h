@@ -9,11 +9,12 @@
 #define SRC_MAIN_QNET_QNETSERVER_QNETSERVER_H_
 
 #include "../../Dispatcher/Dispatcher.h"
+#include "../../Logic/ContextData.h"
 
 #define USE_GNS true
 class QnetServer {
 public:
-	QnetServer(const char* attach_point, Dispatcher *disp);
+	QnetServer(const char* attach_point, Dispatcher *disp, ContextData *contextData);
 	virtual ~QnetServer();
 	int server();
 	thread *ServerThread;
