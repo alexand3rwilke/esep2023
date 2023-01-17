@@ -61,6 +61,39 @@ void BZ::doAction (int event, _pulse msg) {
 
 		}
 
+	switch (event) {
+
+				   case ESTP1interrupted:
+					   exit();
+					   new (this) ESZ;
+					   entry();
+					   doAction(event, msg);
+					   break;
+
+
+				   case ESTP2interrupted:
+					   exit();
+					   new (this) ESZ;
+					   entry();
+					   doAction(event, msg);
+					   break;
+
+
+				   case STPinterrupted:
+					   exit();
+				  		new (this) RZ;
+				  		entry();
+				  		break;
+
+					case STRinterrupted:
+						exit();
+						new(this) BZ;
+						entry();
+						break;
+
+
+					}
+
 	for(Basestate *stateFromList :substateList ) {
 
 
@@ -68,38 +101,7 @@ void BZ::doAction (int event, _pulse msg) {
 	//cout << "folgendes event wird an den substate weitergegebern: " << event << endl;
 
 	//
-				switch (event) {
 
-			   case ESTP1interrupted:
-				   exit();
-				   new (this) ESZ;
-				   entry();
-				   doAction(event, msg);
-				   break;
-
-
-			   case ESTP2interrupted:
-				   exit();
-				   new (this) ESZ;
-				   entry();
-				   doAction(event, msg);
-				   break;
-
-
-			   case STPinterrupted:
-				   exit();
-			  		new (this) RZ;
-			  		entry();
-			  		break;
-
-				case STRinterrupted:
-					exit();
-					new(this) BZ;
-					entry();
-					break;
-
-
-				}
 	}
 }
 
