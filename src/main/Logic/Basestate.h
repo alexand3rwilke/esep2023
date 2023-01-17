@@ -12,13 +12,16 @@
 #include "Actions.h"
 #include "ContextData.h"
 #include "../WSAData.h"
+//#include "TimerBZ.h"
 
 
 class Basestate {
 protected:
 	//Befehle der HAL
 
+	//TimerBZ *timerBz;
 	Basestate *substate;
+
 	vector<Basestate *> substateList;
 	Actions *actions;
 	WSAData *wsa_data;
@@ -26,10 +29,9 @@ protected:
 	int myChannel;
 	int myConnection;
 
+
 	int dispId;
 	int stateId;
-
-
 
 public:
 

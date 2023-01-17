@@ -16,6 +16,9 @@ void BZEinlauf::entry() {
 	cout << "\n  BZEinlauf entry\n" << endl;
 	actions->startFB();
 
+	TimerBZ *timerBz = new TimerBZ(contextData->disp,10,-1, STATE_TOO_LONG);
+
+
 
 }
     void BZEinlauf::exit() {

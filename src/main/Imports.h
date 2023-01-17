@@ -215,6 +215,8 @@ extern int MAX_HOEHE;
 #define RUTSCHE_1_LEER 31
 #define RUTSCHE_2_LEER 32
 
+#define STATE_TOO_LONG 34
+
 
 
 enum WkType { WKN,WKF,WKB,WKBM,WKU,NOWK};

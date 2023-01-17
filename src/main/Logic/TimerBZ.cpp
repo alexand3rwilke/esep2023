@@ -61,7 +61,7 @@ void TimerBZ::setUp(){
 void TimerBZ::timerGestartet(){
 	usleep(1000 * (seconds * 1000 ));
 	if(!recivedIntereupt){
-		cout << "Timer Fehler" << endl;
+		//cout << "Timer Fehler" << endl;
 		MsgSendPulse(dispConID,-1,this->reactionEvent,0);
 	}
 }
