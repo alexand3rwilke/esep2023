@@ -33,6 +33,7 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 	disp = dispatcher;
 	dispID = disp->getConnectionID();
 
+		this->actions = actions;
 	// Setze State auf RZ
 
 	fisrsState = new RZ();
@@ -96,7 +97,9 @@ void Context::eventHandler(){
 					RSTinterrupted,
 					WK_FLACH,WK_Normal,WK_Bohrung_Metal,WK_Bohrung_Normal,WK_UNDEFINED,
 					WK_REMOVED,WK_ADDED,
-					ESTP1Finished, ESTP2Finished
+					ESTP1Finished, ESTP2Finished,
+					TIMER_IS_OVER,
+					RUTSCHE_1_VOLL,RUTSCHE_2_VOLL,RUTSCHE_1_LEER,RUTSCHE_2_LEER
 					};
 
 		disp->registerForEventWIthConnection(events, conID);
@@ -264,28 +267,65 @@ void Context::eventHandler(){
 				  break;
 
 				case LSR1notInterrupted:
-				fisrsState->doAction(LSR1notInterrupted, msg);
+				fisrsState->doAction(LSR1interrupted, msg);
+				timerBz = new TimerBZ(disp,3,LSR2notInterrupted, RUTSCHE_2_LEER);
 				contextData->setRampe1Voll(false);
 				//TODO setze contextData Rampe1 voll auf false;
 				break;
 
 				case LSR2notInterrupted:
-				fisrsState->doAction(LSR2notInterrupted, msg);
-				contextData->setRampe2Voll(false);
+				fisrsState->doAction(LSR2interrupted, msg);
+				timerBz = new TimerBZ(disp,3,LSR2notInterrupted, RUTSCHE_2_LEER);
 				//TODO setze contextData Rampe2 voll auf false;
 				break;
 
 				case LSR1interrupted : 
-				contextData->setRampe1Voll(true);
+				cout << "LSR1interrupted" << endl;
+				timerBz = new TimerBZ(disp,3,LSR1notInterrupted,RUTSCHE_1_VOLL);
 				fisrsState->doAction(LSR1interrupted, msg);
 				//TODO setze contextData Rampe1 voll auf true;
 				break;
 
 
 				case LSR2interrupted : 
-				contextData->setRampe2Voll(false);
+				timerBz = new TimerBZ(disp,3,LSR2notInterrupted, RUTSCHE_2_VOLL);
 				fisrsState->doAction(LSR2interrupted, msg);
 				//TODO setze contextData Rampe2 voll auf true;
+				break;
+
+				case RUTSCHE_1_VOLL:
+				contextData->setRampe1Voll(true);
+				cout << "Rutsche 1" << contextData->getRampe1Voll() <<"und Rutsche 2: " <<contextData->getRampe2Voll() << endl;
+
+				actions->greenOff();
+				actions->yellowLightBlinking();
+
+
+				break;
+
+				case RUTSCHE_2_VOLL:
+				contextData->setRampe2Voll(true);
+				cout << "Rutsche 1" << contextData->getRampe1Voll() <<"und Rutsche 2: " <<contextData->getRampe2Voll() << endl;
+
+				actions->greenOff();
+				actions->yellowLightBlinking();
+
+
+				break;
+
+
+
+				case RUTSCHE_1_LEER:
+				contextData->setRampe1Voll(false);
+				actions->yellowOff();
+				actions->greenOn();
+
+				break;
+
+				case RUTSCHE_2_LEER:
+				contextData->setRampe2Voll(false);
+				actions->yellowOff();
+				actions->greenOn();
 				break;
 
 				// TODO Werkstück erkennung testen
@@ -322,6 +362,10 @@ void Context::eventHandler(){
 				contextData->removeWK();
 				break;
 
+
+				case TIMER_IS_OVER:
+					cout << "---------Time Over" << endl;
+					break;
 
 			   }
 

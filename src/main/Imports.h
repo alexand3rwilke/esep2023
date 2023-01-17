@@ -207,6 +207,14 @@ extern int MAX_HOEHE;
 #define WK_ON_FB2 92
 #define WK_NON_FB2 93
 
+#define TIMER_IS_OVER 89
+
+#define RUTSCHE_1_VOLL 29
+#define RUTSCHE_2_VOLL 30
+
+#define RUTSCHE_1_LEER 31
+#define RUTSCHE_2_LEER 32
+
 
 
 enum WkType { WKN,WKF,WKB,WKBM,WKU,NOWK};

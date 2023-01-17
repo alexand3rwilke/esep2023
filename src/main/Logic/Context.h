@@ -13,6 +13,7 @@
 #include "Basestate.h"
 #include "ContextData.h"
 #include "../Imports.h"
+#include "TimerBZ.h"
 
 class Context {
 private:
@@ -27,6 +28,8 @@ private:
 public:
 	Context(Dispatcher *dispatcher, Actions *actions, ContextData  * contextData, vector<int> werkstuckReihenfolge);
 
+
+	TimerBZ *timerBz;
 	virtual ~Context();
 	void entry();
 	void exit();

@@ -50,8 +50,9 @@ void BZUebergabe::entry() {
     		case LSA2interrupted:
   			// TODO delete this thread
 				exit();
-				new(this) BZready;
-				entry();
+				delete this;
+				//new(this) BZready;
+				//entry();
 				break;
 
 

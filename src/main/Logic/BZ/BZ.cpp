@@ -64,8 +64,6 @@ void BZ::doAction (int event, _pulse msg) {
 	for(Basestate *stateFromList :substateList ) {
 
 
-
-
 	stateFromList->doAction(event, msg);
 	//cout << "folgendes event wird an den substate weitergegebern: " << event << endl;
 

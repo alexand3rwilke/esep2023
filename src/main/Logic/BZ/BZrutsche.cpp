@@ -25,7 +25,7 @@ void BZrutsche::entry() {
     	    			actions->stopFB();
     	    		} else {
 
-    	    		//delete this;
+    	    		delete this;
     	    		}
 
 
