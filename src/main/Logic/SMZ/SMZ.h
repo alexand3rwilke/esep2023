@@ -11,10 +11,12 @@
 #include "../Basestate.h"
 #include "../../hal/Actuator.h"
 #include "../Context.h"
-#include "SMZCalibration.h"
 #include "SMZTesting.h"
 #include "../../WSAData.h"
 #include "../../Imports.h"
+#include "../ContextData.h"
+#include "../Actions.h"
+#include "SMZMesseGrundhoehe.h"
 
 class SMZ : public Basestate{
 private:

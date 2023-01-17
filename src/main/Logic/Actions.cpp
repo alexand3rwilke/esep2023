@@ -110,3 +110,7 @@ void Actions::ampAllOff(){
 	MsgSendPulse(conID,-1,AMP_ALL_OFF,0);
 }
 
+void Actions::startSMZ_hoehe(){
+	MsgSendPulse(conID,-1,START_SMZ,0);
+}
+

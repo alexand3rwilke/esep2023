@@ -202,7 +202,8 @@ extern int MAX_HOEHE;
 #define WK_ADDED 71
 
 #define TIMER_IS_OVER 89
-
+#define SMZ_CHECK_HOEHE 46
+#define START_SMZ 47
 
 
 

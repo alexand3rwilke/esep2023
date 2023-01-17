@@ -58,7 +58,7 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 	stateList.push_back(fisrsState);
 
 	fisrsState->exit();
-		new (fisrsState) BZ;
+		new (fisrsState) SMZ;
 		fisrsState->entry(); //TODO ---------------------------------------------------------------------------------------- Nur für den Test
 
 

@@ -1,12 +1,12 @@
 /*
- * SMZCalibration.h
+ * SMZMesseGrundhoehe.h
  *
  *  Created on: 14.12.2022
  *      Author: Hendrik Marquardt
  */
 
-#ifndef SRC_MAIN_LOGIC_SMZ_SMZCALIBRATION_H_
-#define SRC_MAIN_LOGIC_SMZ_SMZCALIBRATION_H_
+#ifndef SRC_MAIN_LOGIC_SMZ_SMZMESSEGRUNDHOEHE_H_
+#define SRC_MAIN_LOGIC_SMZ_SMZMESSEGRUNDHOEHE_H_
 
 #include "../Basestate.h"
 #include "../../hal/Actuator.h"
@@ -14,13 +14,12 @@
 #include "../../WSAData.h"
 #include "SMZDistanceMeasurementADCFB.h"
 #include "../../Imports.h"
-
 #include "../RZ/RZ.h"
 #include "../BZ/BZ.h"
 
 
 
-class SMZCalibration : public Basestate{
+class SMZMesseGrundhoehe : public Basestate{
 private:
 	int myChannel;
 	int myConnection;
@@ -41,4 +40,4 @@ public:
 
 
 
-#endif /* SRC_MAIN_LOGIC_SMZ_SMZCALIBRATION_H_ */
+#endif /* SRC_MAIN_LOGIC_SMZ_SMZMESSEGRUNDHOEHE_H_ */

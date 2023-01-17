@@ -22,6 +22,8 @@ private:
 	int aktuelleHoehe;
 	void printSamples();
 	int classifyWK();
+	bool SMZ_checkHoehe = false;
+	void smz(_pulse pulse);
 
 public:
 
@@ -35,7 +37,7 @@ public:
 	void adcInterruptService();
 	WSAData *wsa_data;
 
-
+	void startSMZHoehenCheck();
 };
 
 #endif /* SRC_MAIN_HAL_ADC_SERVICE_H_ */

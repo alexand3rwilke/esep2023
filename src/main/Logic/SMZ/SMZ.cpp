@@ -10,6 +10,10 @@
 void SMZ :: entry(){
 	printf("SMZ entry \n");
 	actions->greenLightBlinking();
+	substate = new SMZMesseGrundhoehe();
+	substate->setActions(actions);
+	substate->setContextData(contextData);
+	substate->entry();
 
 }
 
@@ -21,19 +25,25 @@ void SMZ :: exit(){
  */
 void SMZ :: doAction(int event, _pulse msg){
 
+	substate->doAction(event,msg);
 	switch (event) {
 
 	//Choose calibrationmode
 	case STRinterrupted:
 		exit();
-		new(this)SMZCalibration;
+		new(substate)SMZMesseGrundhoehe;
 		entry();
 		break;
 
 	//Choose testmode
 	case STPinterrupted:
 		exit();
-		new(this)SMZTesting;
+		new(substate)SMZDistanceMeasurement_ADC_WS;
+		entry();
+		break;
+	case RSTinterrupted:
+		exit();
+		substate = null; //
 		entry();
 		break;
 

@@ -52,7 +52,8 @@ void ADC_Service::adcInterruptService() {
 
 
 
-			events = {ADC_START_SAMPLE, ADC_SAMLING_FINISHED};
+			events = {ADC_START_SAMPLE, ADC_SAMLING_FINISHED, START_SMZ
+			};
 
 			//events = {ADC_START_SAMPLE};
 
@@ -79,8 +80,13 @@ void ADC_Service::adcInterruptService() {
 //					 			}
 					//sleep(2);
 					aktuelleHoehe = pulse.value.sival_int;
+
+					if(!SMZ_checkHoehe){
 						//WS in Höhenmessung
 					 //if(aktuelleHoehe < MIN_HOEHE && aktuelleHoehe > MAX_HOEHE &&!isInterrupted){
+					if(pulse.code == START_SMZ){
+						SMZ_checkHoehe = true;
+					}
 					if(aktuelleHoehe < MIN_HOEHE && aktuelleHoehe > MAX_HOEHE &&!isInterrupted){
 
 
@@ -110,7 +116,9 @@ void ADC_Service::adcInterruptService() {
 							samples.push_back(pulse.value.sival_int);
 							counter++;
 						}
-
+					} else {
+						smz(pulse);
+					}
 					 			//break;
 //					 			switch(pulse.code){
 //					 		case ADC_START_SAMPLE:
@@ -119,6 +127,25 @@ void ADC_Service::adcInterruptService() {
 					 		//}
 				 }
 }
+
+void ADC_Service::smz(_pulse pulse){
+	if(samples.size()  <= 100){
+	samples.push_back(pulse.value.sival_int);
+	} else {
+		int summe=0;
+		for(int i: samples){
+			summe += i;
+		}
+		int tmp = summe / samples.size();
+		cout <<"Es wurden in " << samples.size() << "Messungen der Durschnitt:"<<  tmp << endl;
+		// hiernach soll max und min höhe gesetzt werden
+		//MsgSendPulse();
+		samples.clear();
+		SMZ_checkHoehe = false;
+	}
+
+}
+
 
 int ADC_Service::classifyWK() {
 
@@ -197,5 +224,6 @@ void ADC_Service::printSamples(){
 		i++;
 	}
 }
+
 
 
