@@ -10,7 +10,7 @@
 #include "WarteAufFlachesWS.h"
 
 void SMZMesseGrundhoehe::entry(){
-	actions->yelowLightBlinking();
+	actions->yellowLightBlinking();
 	cout << "[SMZ] - Bereit grundhoehe zu messen" << endl;
 
 	//clearThresholds();

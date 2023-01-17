@@ -43,7 +43,7 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event, _pulse msg){
 		   cout <<"Zeit von LSA bis ADC: " << zeit << endl;
 //
 		   //wsa_data->setDistance_LSA_ADC(time1);
-		   actions->ledQ1On();
+		   //actions->ledQ1On();
 
 		   start_stopuhr();
 
@@ -70,10 +70,11 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event, _pulse msg){
 		   zeit = stopp_stopuhr();
 		   cout <<"ADC bis LSS: " << zeit << endl;
 		   actions->durchlassen();
+		   actions->moveFaster();
 
 		   //wsa_data->setDistance_ADC_LSS(time1);
 
-		 start_stopuhr();
+		   start_stopuhr();
 		   break;
 
 	   case LSE1interrupted:

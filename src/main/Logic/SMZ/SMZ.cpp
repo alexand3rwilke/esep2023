@@ -29,22 +29,23 @@ void SMZ :: doAction(int event, _pulse msg){
 	switch (event) {
 
 	//Choose calibrationmode
-	case STRinterrupted:
-		exit();
-		new(substate)SMZMesseGrundhoehe;
-		entry();
-		break;
+//	case STRinterrupted:
+//		exit();
+//		new(substate)SMZMesseGrundhoehe;
+//		entry();
+//		break;
 
 	//Choose testmode
 	case STPinterrupted:
 		exit();
-		new(substate)SMZDistanceMeasurement_ADC_WS;
+//		new(substate)SMZDistanceMeasurement_ADC_WS;
+		new (this) RZ;
 		entry();
 		break;
 	case RSTinterrupted:
-		exit();
-		substate = null; //
-		entry();
+		substate->exit();
+		new(substate)SMZDistanceMeasurement_ADC_WS;
+		substate->entry();
 		break;
 
 	case ESTP1interrupted:
