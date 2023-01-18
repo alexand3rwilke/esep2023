@@ -213,15 +213,18 @@ int ADC_Service::classifyWK() {
 
 	if(max > h_flach -toleranz && min < h_flach + toleranz) {
 			MsgSendPulse(dispId, -1, WK_FLACH, 0);
-			printf("FLACHES WK ENTDECKT  \n");
+			cout << "FLACHES WK ENTDECKT  \n" << endl;
+			cout << "Flach: "<< h_flach<< "\n" << endl;
 			return WK_FLACH;
 	} else if(max > h_bohrung -toleranz && min < h_bohrung +toleranz ) {
 			MsgSendPulse(dispId, -1, WK_Bohrung_Normal, 0);
 			printf("BOHRUNG WK ENTDECKT  \n");
+			cout << "Bohrung: "<< h_bohrung<< "\n" << endl;
 			return WK_Bohrung_Normal;
 	}	else if(max < h_normal-toleranz && max < h_normal+toleranz){
 			MsgSendPulse(dispId, -1, WK_Normal, 0);
 			printf("NORMAL WK ENTDECKT  \n");
+			cout << "Bohrung: "<< h_normal<< "\n" << endl;
 			return WK_Normal;
 	}
 //
