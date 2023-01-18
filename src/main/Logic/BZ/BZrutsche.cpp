@@ -17,6 +17,9 @@ void BZrutsche::entry() {
 }
     void BZrutsche::exit() {
 
+    	stateTimer->stopTimer();
+    	delete stateTimer;
+
     	cout << "\n  BZrutsche exit\n" << "in State: "<< stateId << endl;
 
     	contextData->removeWK();

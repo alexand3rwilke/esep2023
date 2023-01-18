@@ -26,6 +26,8 @@ void BZAussortierer::entry() {
 }
     void BZAussortierer::exit() {
 
+    	stateTimer->stopTimer();
+
     }
     void BZAussortierer::estp() {
 
@@ -38,7 +40,7 @@ void BZAussortierer::entry() {
 
     	switch (event) {
     		case LSE1interrupted :
-    			if(stateTimer->getTime() > 2) {
+    			if(stateTimer->getTime() > 1.5) {
     				exit();
 				new(this) BZUebergabe;
 				entry();

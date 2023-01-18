@@ -13,10 +13,10 @@
 void BZHoehenmessung::entry() {
 
 	cout << "\n  BZHoehenmessung entry\n" << endl;
-	if(FESTO_TYPE == 1) {
+
 
 		actions->moveSlower();
-	}
+
 
 	stateTimer = new SimpleTimer(this->contextData->disp);
 	stateTimer->startTimer();
@@ -27,10 +27,10 @@ void BZHoehenmessung::entry() {
 }
     void BZHoehenmessung::exit() {
 
-    	if(FESTO_TYPE == 1) {
+    	stateTimer->stopTimer();
 
         	actions->moveFaster();
-    		}
+
 
 
     }

@@ -27,6 +27,8 @@ void BZUebergabe::entry() {
     		actions->stopFB();
     	}
 
+    	stateTimer->stopTimer();
+
     	delete stateTimer;
 
     }

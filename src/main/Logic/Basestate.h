@@ -55,6 +55,7 @@ public:
 	//int getErkanntesWK(int dispId) {return contextData->getErkanntesWk();};
 	//int getZielWK(int dispId) {return contextData->getZielWk();};
 	int getStateId() {return stateId;};
+	void setChannelId(int chanID){this->myChannel = chanID;};
 
 	//
 };

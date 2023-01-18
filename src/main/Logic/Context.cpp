@@ -76,6 +76,7 @@ void Context::eventHandler(){
 
 	/* ### Create channel ### */
 		int chanID = ChannelCreate(0);//Create channel to receive interrupt pulse messages.
+		fisrsState->setChannelId(chanID);
 		if (chanID < 0) {
 			perror("Could not create a channel!\n");
 		}
