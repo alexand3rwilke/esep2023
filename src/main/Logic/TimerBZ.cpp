@@ -51,7 +51,7 @@ void TimerBZ::setUp(){
 				}
 
 				recivedIntereupt = true;
-				cout << "Timer ---------------------------- gut" << endl;
+				//cout << "Timer ---------------------------- gut" << endl;
 
 
 

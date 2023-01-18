@@ -7,7 +7,7 @@
 
 #include "SMZMesseGrundhoehe.h"
 
-#include "WarteAufFlachesWS.h"
+#include "SMZwsFlach.h"
 
 void SMZMesseGrundhoehe::entry(){
 	actions->yellowLightBlinking();
@@ -31,13 +31,19 @@ void SMZMesseGrundhoehe::doAction(int event, _pulse msg){
 	case LSA1interrupted:
 		cout << "[SMZ] - Messe Grundhoehe ..." << endl;
 		actions->yellowOn();
-		actions->startSMZ_hoehe();
+		actions->startSMZ_hoehe(0);
 		actions->startFB();
+		break;
+	case LSR1interrupted:
+		actions->stopFB();
+		cout << "[SMZ] - Messung fertig" << endl;
+
 		break;
 	case STRinterrupted:
 		exit();
-		new(this) Warte_Auf_Flaches_WS;
+		new(this) SMZwsFlach;
 		entry();
+		break;
 	}
 
 
@@ -47,17 +53,5 @@ void SMZMesseGrundhoehe::doAction(int event, _pulse msg){
  * Gemessene Höhen und Timer zurücksetzen
  */
 void SMZMesseGrundhoehe::clearThresholds(){
-
-//	wsa_data->setSorterTyp(0);
-//	wsa_data->setDistance_FB_ADC(0);
-//	wsa_data->setDistance_FWS_ADC(0);
-//	wsa_data->setDistance_WS_ADC(0);
-//	wsa_data->setDistance_LSA_ADC(0);
-//	wsa_data->setDistance_ADC_LSS(0);
-//	wsa_data->setDistance_LSS_LSE(0);
-//
-//	exit();
-//	new(this)SMZDistanceMeasurement_ADC_FB;
-//	entry();
 
 }

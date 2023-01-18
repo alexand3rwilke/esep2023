@@ -52,7 +52,7 @@ public:
 	void ledQ2Off(void);
 
 	//ADC
-	void startSMZ_hoehe(void);
+	void startSMZ_hoehe(int ws_type);
 
 
 };

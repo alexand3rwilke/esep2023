@@ -17,6 +17,10 @@
 #include "../ContextData.h"
 #include "../Actions.h"
 #include "SMZMesseGrundhoehe.h"
+#include "SMZwsBohrung.h"
+#include "SMZwsNormal.h"
+#include "SMZwsMetall.h"
+#include "SMZwsFlach.h"
 
 class SMZ : public Basestate{
 private:

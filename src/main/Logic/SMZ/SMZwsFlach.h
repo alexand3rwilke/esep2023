@@ -5,13 +5,13 @@
  *      Author: Jobut
  */
 
-#ifndef SRC_MAIN_LOGIC_SMZ_WARTEAUFFLACHESWS_H_
-#define SRC_MAIN_LOGIC_SMZ_WARTEAUFFLACHESWS_H_
+#ifndef SRC_MAIN_LOGIC_SMZ_SMZWSFLACH_H_
+#define SRC_MAIN_LOGIC_SMZ_SMZWSFLACH_H_
 
 #include "../../Imports.h"
 #include "SMZ.h"
 
-class Warte_Auf_Flaches_WS : public Basestate{
+class SMZwsFlach : public Basestate{
 private:
 
 public:
@@ -20,4 +20,4 @@ public:
 	void doAction(int, _pulse) override;
 };
 
-#endif /* SRC_MAIN_LOGIC_SMZ_WARTEAUFFLACHESWS_H_ */
+#endif /* SRC_MAIN_LOGIC_SMZ_SMZWSFLACH_H_ */

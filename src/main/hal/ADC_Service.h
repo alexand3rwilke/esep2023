@@ -20,10 +20,21 @@
 class ADC_Service  {
 private:
 	int aktuelleHoehe;
+	int conID;
+	int chanID;
 	void printSamples();
 	int classifyWK();
 	bool SMZ_checkHoehe = false;
 	void smz(_pulse pulse);
+	int h_grund = 3641;
+	int h_flach = 2525;
+	int h_normal= 2630;
+	int h_bohrung= 2786;
+	int h_metall= 2623;
+	int toleranz = 30;
+	int ws_type=0;
+	void chooseWS();
+	vector<int> samples={};
 
 public:
 
@@ -31,13 +42,15 @@ public:
 	Dispatcher *disp;
 	thread* ADCInterruptServiceThread;
 	vector<int8_t> events;
-	vector<int> samples;
+
 	int dispId;
 	virtual ~ADC_Service();
 	void adcInterruptService();
 	WSAData *wsa_data;
 
 	void startSMZHoehenCheck();
+	int setWS_hoehe();
+	int getGemssenehoehe(int type);
 };
 
 #endif /* SRC_MAIN_HAL_ADC_SERVICE_H_ */

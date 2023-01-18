@@ -100,7 +100,6 @@ void Context::eventHandler(){
 					RSTinterrupted,
 					WK_FLACH,WK_Normal,WK_Bohrung_Metal,WK_Bohrung_Normal,WK_UNDEFINED,
 					WK_REMOVED,WK_ADDED,
-					TIMER_IS_OVER
 					};
 
 		disp->registerForEventWIthConnection(events, conID);
@@ -136,9 +135,6 @@ void Context::eventHandler(){
 			   case ESTP2interrupted:
 					stateList.at(i)->doAction(ESTP2interrupted, msg);
 					break;
-			   case TIMER_IS_OVER:
-				   cout << "---------Time Over" << endl;
-				   break;
 
 			   case ESTP2notInterrupted:
 					stateList.at(i)->doAction(ESTP2notInterrupted, msg);
