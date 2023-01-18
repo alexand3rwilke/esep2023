@@ -10,11 +10,10 @@
 #include "../../Imports.h"
 
 
+
 void BZUebergabe::entry() {
 
 	cout << "\n  BZUebergabe entry\n" << endl;
-
-
 
 
 }

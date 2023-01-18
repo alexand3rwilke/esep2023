@@ -9,6 +9,7 @@
 
 
 #include "../dispatcher/Dispatcher.h"
+#include "./Werkstueck.h";
 
 
 class ContextData{
@@ -22,7 +23,7 @@ private:
     bool wkAufFBM2;
 
     map<int, int> gesuchtesWKMap;
-    map<int, int> gescanntesWKMap;
+    map<int, Werkstueck> gescanntesWKMap;
     std::vector<int> adcWaitList;
 
 public:
@@ -57,7 +58,7 @@ public:
     void setGesuchtWKMapForStateForIndex(int index, int gesuchtesWK);
     void setGescanntWKMapForStateForIndex(int index,int gescanntesWK);
     int getGesuchtWKMapForStateForIndex(int index);
-    int getGescanntWKMapForStateForIndex(int index);
+    Werkstueck getGescanntWKMapForStateForIndex(int index);
     bool isPresentInMap(int index);
 
     void registerForAdc(int stateId);

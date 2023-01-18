@@ -59,10 +59,10 @@ void BZAussortierer::entry() {
     			cout << "------------Aussortierer Test:"<< endl;
 				cout << "------------Gesucht:"<< contextData->getGesuchtWKMapForStateForIndex(stateId) << endl;
 
-				cout << "------------Folgendes WK wurde gescannt:"<< contextData->getGescanntWKMapForStateForIndex(stateId) << endl;
+				cout << "------------Folgendes WK wurde gescannt:"<< contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp << endl;
 
 
-			if(contextData->getGescanntWKMapForStateForIndex(stateId) == contextData->getGesuchtWKMapForStateForIndex(stateId)) {
+			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == contextData->getGesuchtWKMapForStateForIndex(stateId)) {
 			actions->durchlassen();
 			// TODO : Vielleicht noch eine Sekunde weiterlaufen lassen damit es in die Rutsche geht
 			// TODO : Vielleicht brauchen wir noch einen Ruschen state um zu warten bis das WK die rutsche runtergerutscht ist, damit wir keine feste Zeit warten müssen
@@ -92,7 +92,7 @@ void BZAussortierer::entry() {
 
 
 			case MTD1interrupted :
-			if(contextData->getGescanntWKMapForStateForIndex(stateId) == WK_Bohrung_Normal) {
+			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == WK_Bohrung_Normal) {
 				contextData->setGescanntWKMapForStateForIndex(stateId,WK_Bohrung_Metal);
 
 				cout << "Werkstück enthält Metall \n" << endl;

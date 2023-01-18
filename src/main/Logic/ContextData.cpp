@@ -92,6 +92,7 @@ int ContextData::getWKCount() {
 }
 
 void ContextData::setGesuchtWKMapForStateForIndex(int index, int gesuchtesWK) {
+
 	gesuchtesWKMap[index] = gesuchtesWK;
 	cout << "Gesuchtes WK wurde auf folgendes gesetzt:" << gesuchtesWKMap[index] << endl; // just for illustration.
 
@@ -101,7 +102,14 @@ void ContextData::setGesuchtWKMapForStateForIndex(int index, int gesuchtesWK) {
 
 
 void ContextData::setGescanntWKMapForStateForIndex(int index,int gescanntesWK) {
-	 gescanntesWKMap[index] = gescanntesWK;
+
+	Werkstueck wk;
+	wk.setAbsoluteHoehe(0);
+	wk.setAussortieren(false);
+	wk.setMittlereHoehe(0);
+	wk.setWkFlipped(false);
+	wk.setWkType(gescanntesWK);
+	gescanntesWKMap[index] = wk;
 
 }
 
@@ -114,7 +122,7 @@ int ContextData::getGesuchtWKMapForStateForIndex(int index) {
 }
 
 
-int ContextData::getGescanntWKMapForStateForIndex(int index) {
+Werkstueck ContextData::getGescanntWKMapForStateForIndex(int index) {
 
 	return  gescanntesWKMap.at(index);
 

@@ -303,6 +303,7 @@ void Context::eventHandler(){
 
 				case RUTSCHE_1_VOLL:
 				contextData->setRampe1Voll(true);
+
 				cout << "Rutsche 1" << contextData->getRampe1Voll() <<"und Rutsche 2: " <<contextData->getRampe2Voll() << endl;
 				if(FESTO_TYPE == 1) {
 					actions->greenOff();
@@ -424,7 +425,7 @@ void Context::setWkInStateWhereNotSet(int wkType) {
 		//cout << i << "\n" << endl;
 //		cout << "--------------------map hat wert: "<< contextData->getGescanntWKMapForStateForIndex(i) << "\n" << endl;
 //	cout << "--------------------map hat wert" << "\n" << endl;
-	if(contextData->getGescanntWKMapForStateForIndex(i) == 0) {
+	if(contextData->getGescanntWKMapForStateForIndex(i).werkstueckTyp == 0) {
 		contextData->setGescanntWKMapForStateForIndex(0,wkType);
 //			cout << "--------------------map hat wert 2" << "\n" << endl;
 //				return;
