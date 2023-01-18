@@ -35,7 +35,7 @@ void SMZwsMetall::doAction(int event,_pulse msg){
 		break;
 	case STRinterrupted:
 		exit();
-		new(this) SMZwsFlach;
+		new(this) SMZMesseGrundhoehe;
 		entry();
 		break;
 	}

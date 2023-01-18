@@ -10,7 +10,7 @@
 void SMZ :: entry(){
 	printf("SMZ entry \n");
 	actions->greenLightBlinking();
-	substate = new SMZwsFlach();
+	substate = new SMZMesseGrundhoehe();
 	substate->setActions(actions);
 	substate->setContextData(contextData);
 	substate->entry();
