@@ -14,6 +14,7 @@ disp = dispatcher;
 gescanntesWKMap = {};
 gesuchtesWKMap = {};
 wkAufFBM2 = false;
+wkReihenfolgeIndex = 0;
 
 //adcWaitList = {};
 
@@ -161,10 +162,17 @@ void ContextData::setWkOnFMB2(bool wkAufFBM2) {
 
 this->wkAufFBM2 = wkAufFBM2;
 }
-   bool ContextData::getWkOnFMB2() {
 
 
-return wkAufFBM2;
+bool ContextData::getWkOnFMB2() {
+
+
+	return wkAufFBM2;
+  }
+
+   void ContextData::increaseWkReihenfolgeIndex() {
+
+	   wkReihenfolgeIndex++;
    }
 
 

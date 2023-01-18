@@ -21,13 +21,16 @@ private:
     int erkanntesWk = 0;
     int wkCounter = 0;
     bool wkAufFBM2;
+    int wkReihenfolgeIndex;
 
     map<int, int> gesuchtesWKMap;
     map<int, Werkstueck> gescanntesWKMap;
     std::vector<int> adcWaitList;
 
+
 public:
     Dispatcher *disp;
+    vector<int> werkstuckReihenfolgeList;
     ContextData(Dispatcher *dispatcher);
     ~ContextData();
     void incErrorCounter();
@@ -67,6 +70,11 @@ public:
     void setWkOnFMB2(bool wkAufFBM2);
     bool getWkOnFMB2();
     int conIDDis = 0;
+
+    void increaseWkReihenfolgeIndex();
+    int getwkReihenfolgeIndex(){return wkReihenfolgeIndex;};
+
+
 };
 
 

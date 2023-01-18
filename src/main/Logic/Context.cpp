@@ -33,7 +33,9 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 	wkReihenfolgeIndex = 0;
 	stateIndex = 0;
 	this->werkstuckReihenfolgeList = werkstuckReihenfolgeList;
+	this->contextData->werkstuckReihenfolgeList = werkstuckReihenfolgeList;
 	this->contextData = contextData;
+
 	this->disp = dispatcher;
 	this->dispID = disp->getConnectionID();
 	this->actions = actions;

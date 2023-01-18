@@ -41,9 +41,15 @@ void BZ::doAction (int event, _pulse msg) {
 		newsubState->setActions(actions);
 		newsubState->setContextData(contextData);
 		newsubState->entry();
-		newsubState->setStateId(stateId);
+		contextData->setGescanntWKMapForStateForIndex(stateId,0);
+		int gesuchtesWK = contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex() % contextData->werkstuckReihenfolgeList.size());
+		contextData->setGesuchtWKMapForStateForIndex(stateId,gesuchtesWK);
+		contextData->increaseWkReihenfolgeIndex();
+		newsubState->setStateId(stateId++);
 		substateList.push_back(newsubState);
 		contextData->addWK();
+
+
 		//cout << contextData->getWKCount() << "ist die aktuelle WK anzahl" << endl;
 
 	}
@@ -54,7 +60,11 @@ void BZ::doAction (int event, _pulse msg) {
 			newsubState->setActions(actions);
 			newsubState->setContextData(contextData);
 			newsubState->entry();
-			newsubState->setStateId(stateId);
+			contextData->setGescanntWKMapForStateForIndex(stateId,0);
+			int gesuchtesWK = contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex() % contextData->werkstuckReihenfolgeList.size());
+			contextData->setGesuchtWKMapForStateForIndex(stateId,gesuchtesWK);
+			contextData->increaseWkReihenfolgeIndex();
+			newsubState->setStateId(stateId++);
 			substateList.push_back(newsubState);
 			contextData->addWK();
 
