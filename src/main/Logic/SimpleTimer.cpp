@@ -6,6 +6,8 @@ SimpleTimer::SimpleTimer(Dispatcher *disp){
     stopStartHandler = new std::thread([this]() {stopStartThread();});
 }
 
+
+
 void SimpleTimer::startTimer() {
     if(is_paused) {
         is_paused = false;

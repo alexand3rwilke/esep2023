@@ -82,17 +82,18 @@ void ADC_Service::adcInterruptService() {
 					aktuelleHoehe = pulse.value.sival_int;
 						//WS in Höhenmessung
 					 //if(aktuelleHoehe < MIN_HOEHE && aktuelleHoehe > MAX_HOEHE &&!isInterrupted){
-					if(aktuelleHoehe < MIN_HOEHE && aktuelleHoehe > MAX_HOEHE &&!isInterrupted){
+					if((aktuelleHoehe < MIN_HOEHE && aktuelleHoehe > MAX_HOEHE &&!isInterrupted)&& aktuelleHoehe != 0 ){
 
 
 					isInterrupted = true;
 
-					printf("werkstueck in hoehenmessung %d \n",counter);
+					printf("werkstueck in hoehenmessung %d \n",aktuelleHoehe);
+					printf("mit folgendem WERT %d \n",counter);
 					//
 					MsgSendPulse(dispId, -1, ADC_WK_IN_HM, 0);
 					}
 					//WS raus aus Höhenmessung
-					else if(aktuelleHoehe > MIN_HOEHE && isInterrupted){
+					else if((aktuelleHoehe > MIN_HOEHE && isInterrupted)&& counter != 0 ){
 						isInterrupted = false;
 						printf("Es wurden %d Messungn beim Höhenmesser gemacht \n",counter);
 						// berechne durchschnnit

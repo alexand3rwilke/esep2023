@@ -18,7 +18,6 @@ void BZHoehenmessung::entry() {
 		actions->moveSlower();
 
 
-	stateTimer = new SimpleTimer(this->contextData->disp);
 	stateTimer->startTimer();
 
 
@@ -27,7 +26,8 @@ void BZHoehenmessung::entry() {
 }
     void BZHoehenmessung::exit() {
 
-    	stateTimer->stopTimer();
+     	stateTimer->stopTimer();
+        	stateTimer->resetTimer();
 
         	actions->moveFaster();
 

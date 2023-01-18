@@ -25,7 +25,9 @@ void BZEinlauf::entry() {
 }
     void BZEinlauf::exit() {
 
+
     	stateTimer->stopTimer();
+    	stateTimer->resetTimer();
     }
     void BZEinlauf::estp() {
 

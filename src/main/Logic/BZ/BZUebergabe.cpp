@@ -13,7 +13,7 @@
 void BZUebergabe::entry() {
 
 	cout << "\n  BZUebergabe entry\n" << endl;
-	stateTimer = new SimpleTimer(this->contextData->disp);
+
 
 
 
@@ -27,9 +27,10 @@ void BZUebergabe::entry() {
     		actions->stopFB();
     	}
 
-    	stateTimer->stopTimer();
+     	stateTimer->stopTimer();
+        	stateTimer->resetTimer();
 
-    	delete stateTimer;
+        	delete stateTimer;
 
     }
     void BZUebergabe::estp() {

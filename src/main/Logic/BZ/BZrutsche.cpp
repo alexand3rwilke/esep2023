@@ -10,15 +10,16 @@
 
 
 void BZrutsche::entry() {
-	stateTimer = new SimpleTimer(this->contextData->disp);
+
 
 	//actions->stopFB();
 	cout << "\n  BZrutsche entry\n" << endl;
 }
     void BZrutsche::exit() {
 
-    	stateTimer->stopTimer();
-    	delete stateTimer;
+     	stateTimer->stopTimer();
+        	stateTimer->resetTimer();
+        	delete stateTimer;
 
     	cout << "\n  BZrutsche exit\n" << "in State: "<< stateId << endl;
 

@@ -24,7 +24,7 @@
 #include "Imports.h"
 
 
-int MIN_HOEHE = 3580;
+int MIN_HOEHE = 3300;
 int MAX_HOEHE = 2100;
 
 using namespace std;

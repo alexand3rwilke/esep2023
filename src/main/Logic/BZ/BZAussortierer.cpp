@@ -18,7 +18,6 @@ void BZAussortierer::entry() {
 	cout << "\n  BZAussortierer entry\n" << endl;
 	cout << "\n  Das Gesuchte WK ist: " << contextData->getGesuchtWKMapForStateForIndex(stateId) <<  "\n" << endl;
 
-	stateTimer = new SimpleTimer(this->contextData->disp);
 	stateTimer->startTimer();
 
 
@@ -26,7 +25,8 @@ void BZAussortierer::entry() {
 }
     void BZAussortierer::exit() {
 
-    	stateTimer->stopTimer();
+     	stateTimer->stopTimer();
+        	stateTimer->resetTimer();
 
     }
     void BZAussortierer::estp() {
