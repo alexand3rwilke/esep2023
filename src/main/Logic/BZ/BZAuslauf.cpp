@@ -15,14 +15,16 @@ void BZAuslauf::entry() {
 
 	cout << "\n  BZAuslauf entry\n" << endl;
 
-
+	stateTimer = new SimpleTimer(this->contextData->disp);
 	    	actions->stopFB();
+	    	MsgSendPulse(myChannel, -1, FA2_STOPPED, 0);
 
 
 }
     void BZAuslauf::exit() {
     	MsgSendPulse(myChannel, -1, WK_REMOVED, 0);
     	contextData->removeWK();
+
 
     	//lösche den State nachdem das WK vom Band genommen wurde
     //	delete this;

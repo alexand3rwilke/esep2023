@@ -57,6 +57,11 @@ void BZ::doAction (int event, _pulse msg) {
 			newsubState->setStateId(stateId);
 			substateList.push_back(newsubState);
 			contextData->addWK();
+			if(contextData->getWKCount() == 1 ) {
+			MsgSendPulse(contextData->conIDDis, -1, FA2_RUNNING, 0);
+			cout << "sending message : FA_RUNNING" << endl;
+
+						}
 			//cout << contextData->getWKCount() << "ist die aktuelle WK anzahl" << endl;
 
 		}

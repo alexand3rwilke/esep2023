@@ -10,6 +10,7 @@
 
 
 void BZrutsche::entry() {
+	stateTimer = new SimpleTimer(this->contextData->disp);
 
 	//actions->stopFB();
 	cout << "\n  BZrutsche entry\n" << endl;

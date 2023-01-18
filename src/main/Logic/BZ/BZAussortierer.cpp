@@ -18,6 +18,9 @@ void BZAussortierer::entry() {
 	cout << "\n  BZAussortierer entry\n" << endl;
 	cout << "\n  Das Gesuchte WK ist: " << contextData->getGesuchtWKMapForStateForIndex(stateId) <<  "\n" << endl;
 
+	stateTimer = new SimpleTimer(this->contextData->disp);
+	stateTimer->startTimer();
+
 
 
 }
@@ -35,9 +38,13 @@ void BZAussortierer::entry() {
 
     	switch (event) {
     		case LSE1interrupted :
-    			exit();
-    			new(this) BZUebergabe;
-    			entry();
+    			if(stateTimer->getTime() > 2) {
+    				exit();
+				new(this) BZUebergabe;
+				entry();
+
+    			}
+
     			break;
 
 
@@ -58,10 +65,11 @@ void BZAussortierer::entry() {
 			// TODO : Vielleicht noch eine Sekunde weiterlaufen lassen damit es in die Rutsche geht
 			// TODO : Vielleicht brauchen wir noch einen Ruschen state um zu warten bis das WK die rutsche runtergerutscht ist, damit wir keine feste Zeit warten müssen
 			} else {
-
-			exit();
-			new(this)BZrutsche;
-			entry();
+				//TODO ENTFERNEN
+				actions->durchlassen();
+//			exit();
+//			new(this)BZrutsche;
+//			entry();
 
 
 			}
@@ -70,9 +78,14 @@ void BZAussortierer::entry() {
 
 
     		case LSE2interrupted :
-    		    exit();
-    		    new (this) BZAuslauf;
-    		    entry();
+
+    			if(stateTimer->getTime() > 2) {
+    				exit();
+    				new (this) BZAuslauf;
+    				entry();
+
+    			}
+
     		    break;
 
 

@@ -161,6 +161,21 @@ int QnetServer::server(){
 						}
 					break;
 
+					case FA2_RUNNING:
+					if(FESTO_TYPE == 1) {
+						cout << "recieved MESSAGE FA2_RUNNING!!!!" << endl;
+						MsgSendPulse(dispatcher->getConnectionID(), -1, FA2_RUNNING, 0);
+					}
+					break;
+
+					case FA2_STOPPED:
+						if(FESTO_TYPE == 1) {
+						MsgSendPulse(dispatcher->getConnectionID(), -1, FA2_STOPPED, 0);
+						}
+						break;
+
+
+
 //					case FBM2_SEND_WK:
 //
 //						int recvid = MsgReceivePulse (chid, &pulse, sizeof (_pulse), NULL);

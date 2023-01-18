@@ -77,7 +77,8 @@ void ADC_Service::adcInterruptService() {
 //					 			if(&wsa_data->distance_FB_ADC == 0){
 //					 			MsgSendPulse(dispId, -1, ADC_WK_IN_HM, pulse.value.sival_int);
 //					 			}
-					//sleep(2);
+
+					//printf("          DIESE HÖHE HAT DEN ADC GETRIGGERT: %d \n",pulse.value.sival_int);
 					aktuelleHoehe = pulse.value.sival_int;
 						//WS in Höhenmessung
 					 //if(aktuelleHoehe < MIN_HOEHE && aktuelleHoehe > MAX_HOEHE &&!isInterrupted){
@@ -88,14 +89,14 @@ void ADC_Service::adcInterruptService() {
 
 					printf("werkstueck in hoehenmessung %d \n",counter);
 					//
-					MsgSendPulse(dispId, -1, ADC_WK_IN_HM, aktuelleHoehe);
+					MsgSendPulse(dispId, -1, ADC_WK_IN_HM, 0);
 					}
 					//WS raus aus Höhenmessung
 					else if(aktuelleHoehe > MIN_HOEHE && isInterrupted){
 						isInterrupted = false;
 						printf("Es wurden %d Messungn beim Höhenmesser gemacht \n",counter);
 						// berechne durchschnnit
-						MsgSendPulse(dispId, -1, ADC_WK_NIN_HM, aktuelleHoehe);
+						MsgSendPulse(dispId, -1, ADC_WK_NIN_HM, 0);
 						//MsgSendPulse(dispId, -1, ADC_SAMLING__VALUE_FINISHED, aktuelleHöhe);
 						//printSamples();
 						//TODO Hier WK classify starten

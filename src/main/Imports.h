@@ -217,6 +217,10 @@ extern int MAX_HOEHE;
 
 #define STATE_TOO_LONG 34
 
+#define FA2_RUNNING 67
+#define FA2_STOPPED 68
+
+
 
 
 enum WkType { WKN,WKF,WKB,WKBM,WKU,NOWK};

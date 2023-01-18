@@ -99,7 +99,8 @@ void Context::eventHandler(){
 					WK_REMOVED,WK_ADDED,
 					ESTP1Finished, ESTP2Finished,
 					TIMER_IS_OVER,
-					RUTSCHE_1_VOLL,RUTSCHE_2_VOLL,RUTSCHE_1_LEER,RUTSCHE_2_LEER
+					RUTSCHE_1_VOLL,RUTSCHE_2_VOLL,RUTSCHE_1_LEER,RUTSCHE_2_LEER,
+					FA2_RUNNING,FA2_STOPPED
 					};
 
 		disp->registerForEventWIthConnection(events, conID);
@@ -365,6 +366,26 @@ void Context::eventHandler(){
 
 				case TIMER_IS_OVER:
 					cout << "---------Time Over" << endl;
+					break;
+
+				case FA2_RUNNING:
+					if(FESTO_TYPE == 1) {
+						actions->stopFB();
+
+					}
+
+					break;
+
+				case FA2_STOPPED:
+
+					if(FESTO_TYPE == 1) {
+						if(contextData->getWKCount() >0) {
+							actions->startFB();
+							}
+
+					}
+
+
 					break;
 
 			   }

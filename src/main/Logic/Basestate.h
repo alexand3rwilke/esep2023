@@ -13,6 +13,7 @@
 #include "ContextData.h"
 #include "../WSAData.h"
 //#include "TimerBZ.h"
+#include "SimpleTimer.h"
 
 
 class Basestate {
@@ -20,6 +21,7 @@ protected:
 	//Befehle der HAL
 
 	//TimerBZ *timerBz;
+	SimpleTimer *stateTimer;
 	Basestate *substate;
 
 	vector<Basestate *> substateList;
