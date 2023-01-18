@@ -195,8 +195,8 @@ extern int MAX_HOEHE;
 #define WK_UNDEFINED 39
 
 //MQTT
-#define MQTTMESSAGE 40
-#define WSDDATEN 41
+#define MQTTMESSAGE 72
+#define WSDATA 73
 //
 #define WK_REMOVED 70
 #define WK_ADDED 71

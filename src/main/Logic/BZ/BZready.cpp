@@ -33,15 +33,12 @@ void BZready::entry() {
     			entry();
     			break;
 
-
     		case LSA2interrupted :
 
 				exit();
 				new(this) BZEinlauf;
 				entry();
 				break;
-
-
 
     		case LSE1interrupted :
 
@@ -50,8 +47,10 @@ void BZready::entry() {
 				entry();
 				break;
 
-    		case WSDATEN:
-    			//Daten in WS auf FBM speichern
+    		case WSDATA:
+    			if(FESTO_TYPE == 2){
+    				//Daten in WS auf FBM speichern
+    			}
 
     			break;
 
