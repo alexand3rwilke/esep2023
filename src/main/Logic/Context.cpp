@@ -269,7 +269,7 @@ void Context::eventHandler(){
 
 				case LSR1notInterrupted:
 				fisrsState->doAction(LSR1interrupted, msg);
-				timerBz = new TimerBZ(disp,3,LSR2notInterrupted, RUTSCHE_2_LEER);
+				timerBz = new TimerBZ(disp,3,LSR1notInterrupted, RUTSCHE_1_LEER);
 				contextData->setRampe1Voll(false);
 				//TODO setze contextData Rampe1 voll auf false;
 				break;
@@ -297,9 +297,12 @@ void Context::eventHandler(){
 				case RUTSCHE_1_VOLL:
 				contextData->setRampe1Voll(true);
 				cout << "Rutsche 1" << contextData->getRampe1Voll() <<"und Rutsche 2: " <<contextData->getRampe2Voll() << endl;
+				if(FESTO_TYPE == 1) {
+					actions->greenOff();
+									actions->yellowLightBlinking();
 
-				actions->greenOff();
-				actions->yellowLightBlinking();
+				}
+
 
 
 				break;
@@ -307,9 +310,12 @@ void Context::eventHandler(){
 				case RUTSCHE_2_VOLL:
 				contextData->setRampe2Voll(true);
 				cout << "Rutsche 1" << contextData->getRampe1Voll() <<"und Rutsche 2: " <<contextData->getRampe2Voll() << endl;
+				if(FESTO_TYPE == 2) {
+					actions->greenOff();
+					actions->yellowLightBlinking();
 
-				actions->greenOff();
-				actions->yellowLightBlinking();
+				}
+
 
 
 				break;
@@ -318,15 +324,23 @@ void Context::eventHandler(){
 
 				case RUTSCHE_1_LEER:
 				contextData->setRampe1Voll(false);
-				actions->yellowOff();
-				actions->greenOn();
+				if(FESTO_TYPE == 1) {
+					actions->yellowOff();
+					actions->greenOn();
+
+				}
+
 
 				break;
 
 				case RUTSCHE_2_LEER:
 				contextData->setRampe2Voll(false);
-				actions->yellowOff();
-				actions->greenOn();
+				if(FESTO_TYPE == 2) {
+					actions->yellowOff();
+					actions->greenOn();
+
+				}
+
 				break;
 
 				// TODO Werkstück erkennung testen
