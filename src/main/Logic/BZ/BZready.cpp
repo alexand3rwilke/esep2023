@@ -50,6 +50,11 @@ void BZready::entry() {
 				entry();
 				break;
 
+    		case WSDATEN:
+    			//Daten in WS auf FBM speichern
+
+    			break;
+
 
     		// case LSE2interrupted :
 

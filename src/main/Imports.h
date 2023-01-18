@@ -196,6 +196,7 @@ extern int MAX_HOEHE;
 
 //MQTT
 #define MQTTMESSAGE 40
+#define WSDDATEN 41
 //
 #define WK_REMOVED 70
 #define WK_ADDED 71

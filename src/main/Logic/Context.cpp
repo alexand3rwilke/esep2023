@@ -95,7 +95,7 @@ void Context::eventHandler(){
 					ESTP2interrupted,ESTP2notInterrupted,
 					RSTinterrupted,
 					WK_FLACH,WK_Normal,WK_Bohrung_Metal,WK_Bohrung_Normal,WK_UNDEFINED,
-					WK_REMOVED,WK_ADDED
+					WK_REMOVED,WK_ADDED, WSDATEN
 					};
 
 		disp->registerForEventWIthConnection(events, conID);

@@ -128,11 +128,17 @@ int QnetServer::server(){
 		    	   		}
 		    	   		break;
 
-						case LSR2interrupted:
-		    	   		if(FESTO_TYPE == 1) {
-		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSR2interrupted, 0);
-		    	   		}
-		    	   		break;
+					case LSR2interrupted:
+					if(FESTO_TYPE == 1) {
+						MsgSendPulse(dispatcher->getConnectionID(), -1, LSR2interrupted, 0);
+					}
+					break;
+
+					case WSDATEN:
+					if(FESTO_TYPE == 2) {
+						MsgSendPulse(dispatcher->getConnectionID(), -1, WSDATEN, 0);
+					}
+					break;
 
 //					case FBM2_SEND_WK:
 //
