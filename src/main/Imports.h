@@ -224,6 +224,13 @@ extern int MAX_HOEHE;
 #define FA2_RUNNING 67
 #define FA2_STOPPED 68
 
+#define FEHLER_OK 12
+#define CLEAR_SORTER 14
+
+#define FEHLER_1 13
+#define FEHLER_2 10
+
+
 
 enum WkType { WKN,WKF,WKB,WKBM,WKU,NOWK};
 

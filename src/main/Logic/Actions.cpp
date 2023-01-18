@@ -114,3 +114,7 @@ void Actions::startSMZ_hoehe(int ws_type){
 	MsgSendPulse(conID,-1,START_SMZ,ws_type);
 }
 
+void Actions::clearSorter(){
+	MsgSendPulse(conID,-1,CLEAR_SORTER,0);
+}
+

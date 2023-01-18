@@ -5,13 +5,30 @@
  *      Author: Marquahe
  */
 
-#ifndef SRC_MAIN_LOGIC_ESZ_H_
-#define SRC_MAIN_LOGIC_ESZ_H_
+#ifndef SRC_MAIN_LOGIC_FZ_H_
+#define SRC_MAIN_LOGIC_FZ_H_
 
-class ESZ {
+#include "../ContextData.h"
+#include "../../Imports.h"
+#include "../Actions.h"
+#include "../Basestate.h"
+#include "../Context.h"
+#include "../BZ/BZ.h"
+#include "../ESZ/ESZ.h"
+#include "FGUZ.h"
+#include "FAUZ.h"
+#include "FAQZ.h"
+#include "../TimerBZ.h"
+
+
+class FZ: public Basestate {
+private:
+	Basestate *substate;
+
 public:
-	ESZ();
-	virtual ~ESZ();
+	void entry()override;
+	void exit() override;
+	void doAction(int, _pulse) override;
 };
+#endif /* SRC_MAIN_LOGIC_FZ_H_ */
 
-#endif /* SRC_MAIN_LOGIC_ESZ_H_ */

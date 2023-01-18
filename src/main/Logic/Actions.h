@@ -51,8 +51,9 @@ public:
 	void ledQ1Off(void);
 	void ledQ2Off(void);
 
-	//ADC
+	//ADC SMZ
 	void startSMZ_hoehe(int ws_type);
+	void clearSorter();
 
 
 };

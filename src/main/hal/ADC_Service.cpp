@@ -377,11 +377,7 @@ int ADC_Service::setWS_hoehe(){
 				MsgSendPulse(dispId, -1, ADC_WK_NIN_HM, 0);
 
 				}
-
-
 		}
-
-
 	}
 
 

@@ -60,7 +60,7 @@ void Actuator::handleEvents(void){
 
 	actuatorEvents={START_FB, STOP_FB, MOVE_FASTER, MOVE_SLOWER, GREEN_ON, GREEN_OFF, YELLOW_ON,
 			YELLOW_OFF, RED_ON, RED_OFF,WS_DURCHLASSEN,WS_DURCHLASSEN,ESTP1interrupted,ESTP2interrupted, Q1On, Q2On, Q1Off, Q2Off, GREEN_BLINKING_ON,
-			RED_BLINKING_ON,YELLOW_BLINKING_ON,AMP_ALL_OFF};
+			RED_BLINKING_ON,YELLOW_BLINKING_ON,AMP_ALL_OFF,CLEAR_SORTER};
 
 	disp->registerForEventWIthConnection(actuatorEvents, ConID);
 	while(true){
@@ -102,7 +102,9 @@ void Actuator::handleEvents(void){
 
 			case RED_OFF:amp->redOff();
 			break;
-
+			case CLEAR_SORTER:
+				clearSorter();
+				break;
 			case ESTP1interrupted:
 			clearSorter();
 			break;

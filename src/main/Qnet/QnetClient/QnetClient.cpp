@@ -53,7 +53,7 @@ int QnetClient::client(){
 	}
 
 	vector<int8_t> events = {LSE, LSE1interrupted, LSA2interrupted,ESTP1interrupted, ESTP2interrupted,LSR1notInterrupted,LSR2notInterrupted,LSR1interrupted,LSR2interrupted
-			,ESTP1Finished,ESTP2Finished,ESTP1notInterrupted,ESTP2notInterrupted,FA2_RUNNING,FA2_STOPPED};
+			,ESTP1Finished,ESTP2Finished,ESTP1notInterrupted,ESTP2notInterrupted,FA2_RUNNING,FA2_STOPPED, FEHLER_1, FEHLER_2};
 
 	dispatcher->registerForEventWIthConnection(events, conID);
 
@@ -187,6 +187,20 @@ int QnetClient::client(){
 						return EXIT_FAILURE;
 						}
 						break;
+					case FEHLER_1 :
+
+					if(MsgSendPulse(server_coid, -1, FEHLER_1,0) != 0){
+						perror("[Client]: sendPulse failed");
+						return EXIT_FAILURE;
+						}
+					break;
+					case FEHLER_2 :
+
+					if(MsgSendPulse(server_coid, -1, FEHLER_2,0) != 0){
+						perror("[Client]: sendPulse failed");
+						return EXIT_FAILURE;
+						}
+					break;
 
 
 

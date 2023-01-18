@@ -174,6 +174,17 @@ int QnetServer::server(){
 						}
 						break;
 
+					case FEHLER_2:
+						if(FESTO_TYPE == 1) {
+						MsgSendPulse(dispatcher->getConnectionID(), -1, FEHLER_2, 0);
+					}
+					break;
+					case FEHLER_1:
+						if(FESTO_TYPE == 2) {
+						MsgSendPulse(dispatcher->getConnectionID(), -1, FEHLER_1, 0);
+					}
+					break;
+
 
 
 //					case FBM2_SEND_WK:

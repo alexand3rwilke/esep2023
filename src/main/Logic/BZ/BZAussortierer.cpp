@@ -69,6 +69,14 @@ void BZAussortierer::entry() {
 			} else {
 				//TODO ENTFERNEN
 				actions->durchlassen();
+
+				if(contextData->getRampe1Voll() == true && contextData->getRampe2Voll() == true){
+					if(FESTO_TYPE == 1){
+						MsgSendPulse(contextData->disp->getConnectionID(), -1, FEHLER_1,0);
+					} else {
+						MsgSendPulse(contextData->disp->getConnectionID(), -1, FEHLER_2,0);
+					}
+				}
 //			exit();
 //			new(this)BZrutsche;
 //			entry();
