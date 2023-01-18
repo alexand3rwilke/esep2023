@@ -13,6 +13,8 @@ ContextData::ContextData(Dispatcher *dispatcher) {
 disp = dispatcher;
 gescanntesWKMap = {};
 gesuchtesWKMap = {};
+wkAufFBM2 = false;
+
 //adcWaitList = {};
 
 
@@ -146,3 +148,18 @@ int ContextData::getLatestRegisterForAdcState() {
 
 		return -1;
 }
+
+void ContextData::setWkOnFMB2(bool wkAufFBM2) {
+
+this->wkAufFBM2 = wkAufFBM2;
+}
+   bool ContextData::getWkOnFMB2() {
+
+
+return wkAufFBM2;
+   }
+
+
+
+
+

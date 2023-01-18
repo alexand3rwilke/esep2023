@@ -15,16 +15,20 @@ void BZAuslauf::entry() {
 
 	cout << "\n  BZAuslauf entry\n" << endl;
 
-	if(contextData->getWKCount() == 0) {
+	stateTimer = new SimpleTimer(this->contextData->disp);
 	    	actions->stopFB();
-	    	}
+
+
 
 }
     void BZAuslauf::exit() {
-    	MsgSendPulse(myChannel, -1, WK_REMOVED, 0);
+    	MsgSendPulse(contextData->disp->getConnectionID(), -1, FA2_STOPPED, 0);
+    	contextData->removeWK();
+    	delete stateTimer;
+
 
     	//lösche den State nachdem das WK vom Band genommen wurde
-    	delete this;
+    //	delete this;
     }
     void BZAuslauf::estp() {
 
@@ -32,17 +36,10 @@ void BZAuslauf::entry() {
     }
     void BZAuslauf::doAction(int event, _pulse){
 
-    	_pulse msg;
-    	int recvid = MsgReceivePulse(myChannel, &msg, sizeof(_pulse), nullptr);
 
-    	if (recvid < 0) {
-    				perror("MsgReceivePulse failed!");
-    			}
 
-    			if (recvid == 0) {
-    			while(true) {
 
-    		switch (msg.code) {
+    		switch (event) {
 
 
     		// wenn fertig dann in Auslauf
@@ -52,14 +49,10 @@ void BZAuslauf::entry() {
     			entry();
     			break;
 
-
-
-
-
     		}
 
 
-    		}
-    			}
+
+
 
     	}

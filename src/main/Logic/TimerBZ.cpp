@@ -12,9 +12,11 @@ TimerBZ::TimerBZ() {
 
 }
 
-TimerBZ::TimerBZ(Dispatcher *disp, int seconds, int event) {
+
+TimerBZ::TimerBZ(Dispatcher *disp, int seconds, int event, int reactionEvent) {
 	this->seconds = seconds;
 	this->event = event;
+	this->reactionEvent = reactionEvent;
 	this->disp = disp;
 	dispConID = disp->getConnectionID();
 	timer = new std::thread([this]() {setUp();});
@@ -51,8 +53,6 @@ void TimerBZ::setUp(){
 				}
 
 				recivedIntereupt = true;
-				//cout << "Timer ---------------------------- gut" << endl;
-
 
 
 }
@@ -60,8 +60,8 @@ void TimerBZ::setUp(){
 void TimerBZ::timerGestartet(){
 	usleep(1000 * (seconds * 1000 ));
 	if(!recivedIntereupt){
-		cout << "Timer Fehler" << endl;
-		MsgSendPulse(dispConID,-1,TIMER_IS_OVER,0);
+		//cout << "Timer Fehler" << endl;
+		MsgSendPulse(dispConID,-1,this->reactionEvent,0);
 	}
 }
 
@@ -76,4 +76,3 @@ void TimerBZ::stopTimer(){
 	cout << timerResult << endl;
 
 }
-

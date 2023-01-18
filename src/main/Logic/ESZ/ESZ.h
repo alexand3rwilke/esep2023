@@ -18,7 +18,11 @@
 class ESZ: public Basestate {
 private:
 	int resetCounter;
-	bool schalteRaus;
+	bool schalter1Gedrueckt;
+	bool schalter2Gedrueckt;
+
+	bool estp1Finished;
+	bool estp2Finished;
 
 public:
 
