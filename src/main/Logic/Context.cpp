@@ -99,7 +99,8 @@ void Context::eventHandler(){
 					WK_REMOVED,WK_ADDED,
 					ESTP1Finished, ESTP2Finished,
 					TIMER_IS_OVER,
-					RUTSCHE_1_VOLL,RUTSCHE_2_VOLL,RUTSCHE_1_LEER,RUTSCHE_2_LEER
+					RUTSCHE_1_VOLL,RUTSCHE_2_VOLL,RUTSCHE_1_LEER,RUTSCHE_2_LEER,
+					WK_REMOVED,WK_ADDED, WSDATA
 					};
 
 		disp->registerForEventWIthConnection(events, conID);

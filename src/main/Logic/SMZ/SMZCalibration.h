@@ -25,8 +25,6 @@ private:
 	int myChannel;
 	int myConnection;
 	Dispatcher *disp;
-	Actuator *act;
-	WSAData *wsa_data;
 
 public:
 	void entry()override;

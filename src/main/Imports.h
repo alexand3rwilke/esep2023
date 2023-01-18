@@ -183,20 +183,20 @@ extern int FESTO_TYPE;
 #define WS_AUSSORTIEREN 119
 #define WS_DURCHLASSEN 118
 
-//enum WS{FWS, WSMB, WSMM, WSO}
-
 #define HELLO 125
 extern int MIN_HOEHE;
 extern int MAX_HOEHE;
 
-
+//WS Typen
 #define WK_FLACH 35
 #define WK_Normal 36
 #define WK_Bohrung_Metal 37
 #define WK_Bohrung_Normal 38
 #define WK_UNDEFINED 39
 
-
+//MQTT
+#define MQTTMESSAGE 72
+#define WSDATA 73
 //
 #define WK_REMOVED 70
 #define WK_ADDED 71

@@ -50,15 +50,15 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event, _pulse msg){
 		   actions->moveSlower();
 		   break;
 
-//	   case ADC_SAMPLE_VALUE:
-//		   //ADC auslesen und abspeichern
-//		   if(wsa_data->getDistance_FWS_ADC()!= 0){
-//			   wsa_data->setDistance_WS_ADC(msg.value.sival_int);
-//		   }else{
-//			   wsa_data->setDistance_FWS_ADC(msg.value.sival_int);
-//		   }
-//		   break;
-//
+	   case ADC_SAMLING_FINISHED:
+		   //ADC auslesen und abspeichern
+		   if(wsa_data->getDistance_FWS_ADC()!= 0){
+			   wsa_data->setDistance_WS_ADC(msg.value.sival_int);
+		   }else{
+			   wsa_data->setDistance_FWS_ADC(msg.value.sival_int);
+		   }
+		   break;
+
 	   case	ADC_WK_NIN_HM:
 		   zeit = stopp_stopuhr();
 		   cout <<"Zeit im ADC (Slow-Modus): " << zeit << endl;

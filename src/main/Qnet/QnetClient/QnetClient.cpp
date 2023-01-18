@@ -53,7 +53,7 @@ int QnetClient::client(){
 	}
 
 	vector<int8_t> events = {LSE, LSE1interrupted, LSA2interrupted,ESTP1interrupted, ESTP2interrupted,LSR1notInterrupted,LSR2notInterrupted,LSR1interrupted,LSR2interrupted
-			,ESTP1Finished,ESTP2Finished,ESTP1notInterrupted,ESTP2notInterrupted};
+			,ESTP1Finished,ESTP2Finished,ESTP1notInterrupted,ESTP2notInterrupted, WSDATA};
 
 	dispatcher->registerForEventWIthConnection(events, conID);
 

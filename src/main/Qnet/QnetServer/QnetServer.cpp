@@ -6,7 +6,6 @@
  */
 
 #include "QnetServer.h"
-#include <stdio.h>
 #include "../../Imports.h"
 
 QnetServer::QnetServer(const char* attach_point, Dispatcher *disp) {
@@ -143,10 +142,21 @@ int QnetServer::server(){
 		    	   		break;
 
 					case LSR2interrupted:
+
 		    	   		if(FESTO_TYPE == 1) {
 		    	   			MsgSendPulse(dispatcher->getConnectionID(), -1, LSR2interrupted, 0);
 		    	   		}
 		    	   		break;
+
+					if(FESTO_TYPE == 1) {
+						MsgSendPulse(dispatcher->getConnectionID(), -1, LSR2interrupted, 0);
+					}
+					break;
+
+					case WSDATA:
+						MsgSendPulse(dispatcher->getConnectionID(), -1, WSDATA, 0);
+					break;
+
 
 					case ESTP1Finished:
 						if(FESTO_TYPE == 2) {
