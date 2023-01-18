@@ -15,6 +15,7 @@ void SMZwsMetall::entry(){
 }
 
 void SMZwsMetall::exit(){
+	actions->moveFaster();
 
 
 }
@@ -37,6 +38,14 @@ void SMZwsMetall::doAction(int event,_pulse msg){
 		exit();
 		new(this) SMZMesseGrundhoehe;
 		entry();
+		break;
+
+	case ADC_WK_IN_HM :
+		actions->moveSlower();
+		break;
+
+	case ADC_WK_NIN_HM :
+		actions->moveFaster();
 		break;
 	}
 }

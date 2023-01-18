@@ -89,7 +89,7 @@ void ADC_Service::adcInterruptService() {
 						//WS in Höhenmessung
 					 //if(aktuelleHoehe < MIN_HOEHE && aktuelleHoehe > MAX_HOEHE &&!isInterrupted){
 
-					if((aktuelleHoehe < MIN_HOEHE && aktuelleHoehe > MAX_HOEHE &&!isInterrupted)&& aktuelleHoehe != 0 ){
+					if((aktuelleHoehe < h_grund-150 &&!isInterrupted)&& aktuelleHoehe != 0 ){
 
 
 					//if(aktuelleHoehe < MIN_HOEHE && aktuelleHoehe > MAX_HOEHE &&!isInterrupted){
@@ -102,7 +102,7 @@ void ADC_Service::adcInterruptService() {
 					MsgSendPulse(dispId, -1, ADC_WK_IN_HM, 0);
 					}
 					//WS raus aus Höhenmessung
-					else if((aktuelleHoehe > MIN_HOEHE && isInterrupted)&& counter != 0 ){
+					else if((aktuelleHoehe > h_grund-150 && isInterrupted)&& (counter != 0) && samples.size() > 50){
 						isInterrupted = false;
 						printf("Es wurden %d Messungn beim Höhenmesser gemacht \n",counter);
 						// berechne durchschnnit
@@ -173,11 +173,11 @@ int ADC_Service::classifyWK() {
 
 
 	// remove noise from start and beginning
-	for(int i = 0; i < 10; i++) {
-
-		samples.erase(samples.begin());
-		samples.pop_back();
-	}
+//	for(int i = 0; i < 10; i++) {
+//
+//		samples.erase(samples.begin());
+//		samples.pop_back();
+//	}
 
 	int max = samples.front();
 	int min = samples.front();
@@ -186,51 +186,67 @@ int ADC_Service::classifyWK() {
 	int maxDiff = 0;
 	
 
-	for(int s: samples){
+//	for(int s: samples){
+//
+//		if(letzterWert > s) {
+//			diff = letzterWert - s;
+//		} else {
+//			diff = s - letzterWert;
+//		}
+//
+//		if (s > max) {
+//			max = s;
+//		}
+//
+//		if (s < min) {
+//			min = s;
+//		}
+//
+//
+//		if(diff > maxDiff) {
+//			maxDiff = diff;
+//		}
+//
+//	}
+	int durchschnitt = 0;
+			for (int bla : samples) {
 
-		if(letzterWert > s) {
-			diff = letzterWert - s;
-		} else {
-			diff = s - letzterWert;
-		}
+				durchschnitt += bla;
+			}
 
-		if (s > max) {
-			max = s;
-		}
+			durchschnitt = durchschnitt / samples.size();
 
-		if (s < min) {
-			min = s;
-		}
-
-
-		if(diff > maxDiff) {
-			maxDiff = diff;
-		}
-
-	}
 
 	// hier damit WK klassifizieren
 
 
-	printf("MAX: %d \n",max);
-	printf("MIN: %d \n",min);
+//	printf("MAX: %d \n",max);
+//	printf("MIN: %d \n",min);
+
+		printf("Durchschnitt: %d \n",durchschnitt);
 
 
-	if(max > h_flach -toleranz && min < h_flach + toleranz) {
+	if(durchschnitt < h_flach + toleranz && durchschnitt > h_flach - toleranz) {
 			MsgSendPulse(dispId, -1, WK_FLACH, 0);
 			cout << "FLACHES WK ENTDECKT  \n" << endl;
 			cout << "Flach: "<< h_flach<< "\n" << endl;
 			return WK_FLACH;
-	} else if(max > h_bohrung -toleranz && min < h_bohrung +toleranz ) {
+	} else if(durchschnitt < h_bohrung + toleranz && durchschnitt > h_bohrung - toleranz ) {
 			MsgSendPulse(dispId, -1, WK_Bohrung_Normal, 0);
 			printf("BOHRUNG WK ENTDECKT  \n");
 			cout << "Bohrung: "<< h_bohrung<< "\n" << endl;
 			return WK_Bohrung_Normal;
-	}	else if(max < h_normal-toleranz && max < h_normal+toleranz){
+	}else if(durchschnitt < h_normal + toleranz && durchschnitt > h_normal - toleranz){
 			MsgSendPulse(dispId, -1, WK_Normal, 0);
 			printf("NORMAL WK ENTDECKT  \n");
-			cout << "Bohrung: "<< h_normal<< "\n" << endl;
+			cout << "NORMAL: "<< h_normal<< "\n" << endl;
 			return WK_Normal;
+	} else if(durchschnitt < h_metall + toleranz && durchschnitt > h_metall - toleranz) {
+		MsgSendPulse(dispId, -1, WK_Bohrung_Normal, 0);
+			printf("METALL WK ENTDECKT  \n");
+			cout << "Bohrung Metall: "<< h_normal<< "\n" << endl;
+			return WK_Bohrung_Normal;
+
 	}
 //
 //	if(max > h_normal -50 ) {
@@ -326,8 +342,16 @@ int ADC_Service::setWS_hoehe(){
 
 		int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
 		if(pulse.code == LSR1interrupted){
+
+//			for(int i = 0; i < 10; i++) {
+//
+//					samples.erase(samples.begin());
+//					samples.pop_back();
+//				}
+
 			int summe=0;
 			for(int s: samples){
+				//cout << s << "in looooop "<< endl;
 
 				summe += s;
 			}
@@ -339,12 +363,28 @@ int ADC_Service::setWS_hoehe(){
 			samples.clear();
 			return summe;
 		}
-		if(pulse.value.sival_int < (h_grund -100)){
-			samples.push_back(pulse.value.sival_int);
+		if(pulse.value.sival_int < (h_grund -150)){
+
+			if(!isInterrupted) {
+				isInterrupted = true;
+				MsgSendPulse(dispId, -1, ADC_WK_IN_HM, 0);
+			}
+
+				samples.push_back(pulse.value.sival_int);
+
+		} else if((pulse.value.sival_int > h_grund-400 && isInterrupted)){
+				isInterrupted = false;
+				MsgSendPulse(dispId, -1, ADC_WK_NIN_HM, 0);
+
+				}
+
+
 		}
+
+
 	}
 
-}
+
 
 
 

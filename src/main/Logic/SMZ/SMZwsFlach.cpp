@@ -10,6 +10,7 @@
 void SMZwsFlach::entry(){
 	cout << "[SMZ] - Bitte flaches WS drauflegen" << endl;
 	actions->yellowOn();
+
 }
 
 void SMZwsFlach::exit(){
@@ -35,6 +36,14 @@ void SMZwsFlach::doAction(int event,_pulse msg){
 		exit();
 		new(this) SMZwsNormal;
 		entry();
+		break;
+
+	case ADC_WK_IN_HM :
+		actions->moveSlower();
+		break;
+
+	case ADC_WK_NIN_HM :
+		actions->moveFaster();
 		break;
 
 	}

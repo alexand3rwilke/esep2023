@@ -37,5 +37,12 @@ void SMZwsNormal::doAction(int event,_pulse msg){
 		new(this) SMZwsBohrung;
 		entry();
 		break;
+	case ADC_WK_IN_HM :
+		actions->moveSlower();
+		break;
+
+	case ADC_WK_NIN_HM :
+		actions->moveFaster();
+		break;
 	}
 }

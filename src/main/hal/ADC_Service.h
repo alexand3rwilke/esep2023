@@ -27,11 +27,11 @@ private:
 	bool SMZ_checkHoehe = false;
 	void smz(_pulse pulse);
 	int h_grund = 3641;
-	int h_flach = 2525;
-	int h_normal= 2630;
-	int h_bohrung= 2786;
-	int h_metall= 2623;
-	int toleranz = 30;
+	int h_flach = 2426; //2426
+	int h_normal= 2184; //2184
+	int h_bohrung= 2524; //2524
+	int h_metall= 2560; //2560
+	int toleranz = 40;
 	int ws_type=0;
 	void chooseWS();
 	vector<int> samples={};
