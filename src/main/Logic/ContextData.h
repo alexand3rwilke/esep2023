@@ -8,6 +8,7 @@
 #define CONTEXTDATA_H
 
 #include "../dispatcher/Dispatcher.h"
+#include "Werkstueck.h"
 
 class ContextData{
 private:
@@ -20,7 +21,6 @@ private:
     bool wkAufFBM2;
 
     map<int, int> gesuchtesWKMap;
-    map<int, int> gescanntesWKMap;
     std::vector<int> adcWaitList;
 
 public:
@@ -30,6 +30,7 @@ public:
     void incErrorCounter();
     void clearErrorcounter();
     void show();
+    map<int, Werkstueck> gescanntesWKMap;
 
     //Rampen logik
     void setRampe1Voll(bool value);
@@ -53,9 +54,9 @@ public:
 
     // WK gesucht & gescannt map
     void setGesuchtWKMapForStateForIndex(int index, int gesuchtesWK);
-    void setGescanntWKMapForStateForIndex(int index,int gescanntesWK);
+    void setGescanntWKMapForStateForIndex(int index, Werkstueck* gescanntesWK);
     int getGesuchtWKMapForStateForIndex(int index);
-    int getGescanntWKMapForStateForIndex(int index);
+    Werkstueck getGescanntWKMapForStateForIndex(int index);
     bool isPresentInMap(int index);
 
     void registerForAdc(int stateId);

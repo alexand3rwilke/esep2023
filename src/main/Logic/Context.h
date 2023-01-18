@@ -14,6 +14,7 @@
 #include "ContextData.h"
 #include "../Imports.h"
 #include "TimerBZ.h"
+#include "Werkstueck.h"
 
 class Context {
 private:
@@ -40,7 +41,7 @@ public:
 	Actions *actions;
 
 private:
-	void setWkInStateWhereNotSet(int wkType);
+	void setWkInStateWhereNotSet(WkType wkType);
 	int wkReihenfolgeIndex;
 	int stateIndex;
 	bool firstState = true; // wird direkt beim ersten LSA trigger auf false gesetzt

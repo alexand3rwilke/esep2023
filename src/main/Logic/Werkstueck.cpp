@@ -8,7 +8,7 @@
 #include "Werkstueck.h"
 
 Werkstueck::Werkstueck() {
-	werkstueckTyp = NOWK;
+	werkstueckTyp = 0;
 	absoluteHoehe = 0;
 	mittlereHoehe = 0;
 	wkFlipped = false;
@@ -20,11 +20,11 @@ Werkstueck::~Werkstueck(){
 
 }
 
-WkType Werkstueck::getWkType() {
+int Werkstueck::getWkType() {
 return werkstueckTyp;
 
 }
-void Werkstueck::setWkType(WkType wkType) {
+void Werkstueck::setWkType(int wkType) {
 	this->werkstueckTyp = wkType;
 
 }

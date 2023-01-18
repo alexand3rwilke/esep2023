@@ -50,7 +50,7 @@ void BZAussortierer::entry() {
     			cout << "------------Aussortierer Test:"<< endl;
 				cout << "------------Gesucht:"<< contextData->getGesuchtWKMapForStateForIndex(stateId) << endl;
 
-				cout << "------------Folgendes WK wurde gescannt:"<< contextData->getGescanntWKMapForStateForIndex(stateId) << endl;
+				//cout << "------------Folgendes WK wurde gescannt:"<< contextData->getGescanntWKMapForStateForIndex(stateId) << endl;
 
 
 			if(contextData->getGescanntWKMapForStateForIndex(stateId) == contextData->getGesuchtWKMapForStateForIndex(stateId)) {
@@ -77,8 +77,9 @@ void BZAussortierer::entry() {
 
 
 			case MTD1interrupted :
-			if(contextData->getGescanntWKMapForStateForIndex(stateId) == WK_Bohrung_Normal) {
-				contextData->setGescanntWKMapForStateForIndex(stateId,WK_Bohrung_Metal);
+			if(contextData->getGescanntWKMapForStateForIndex(stateId)->werkstueckTyp == WKB) {
+				Werkstueck *ws1 = contextData->getGescanntWKMapForStateForIndex(stateId);
+				contextData->setGescanntWKMapForStateForIndex(stateId,*ws1->setWkType(WKBM));
 
 				cout << "Werkstück enthält Metall \n" << endl;
 
@@ -88,25 +89,29 @@ void BZAussortierer::entry() {
 
 			// Klassefizierung
 
-//			case WK_FLACH :
-//			contextData->setGescanntWKMapForStateForIndex(stateId,WK_FLACH);
-//			cout << "WERKSTÜCK AUF FLACH GESETZT \n" << endl;
-//			break;
-//
-//			case WK_Normal:
-//			contextData->setGescanntWKMapForStateForIndex(stateId,WK_Normal);
-//			cout << "WERKSTÜCK AUF NORMAL GESETZT \n" << endl;
-//			break;
-//
-//			case WK_Bohrung_Normal :
-//			contextData->setGescanntWKMapForStateForIndex(stateId,WK_Bohrung_Normal);
-//			cout << "WERKSTÜCK AUF BOHRUNG NORMAL GESETZT \n" << endl;
-//			break;
-//
-//			case WK_UNDEFINED :
-//			contextData->setGescanntWKMapForStateForIndex(stateId,WK_UNDEFINED);
-//			cout << "WERKSTÜCK AUF UNDEFINED GESETZT \n" << endl;
-//			break;
+			case WK_FLACH :
+			Werkstueck *ws2 = contextData->getGescanntWKMapForStateForIndex(stateId);
+			contextData->setGescanntWKMapForStateForIndex(stateId,ws2->setWkType(WKF));
+			cout << "WERKSTÜCK AUF FLACH GESETZT \n" << endl;
+			break;
+
+			case WK_Normal:
+			Werkstueck *ws3 = contextData->getGescanntWKMapForStateForIndex(stateId);
+			contextData->setGescanntWKMapForStateForIndex(stateId,ws3->setWkType(WKN));
+			cout << "WERKSTÜCK AUF NORMAL GESETZT \n" << endl;
+			break;
+
+			case WK_Bohrung_Normal :
+			Werkstueck *ws4 = contextData->getGescanntWKMapForStateForIndex(stateId);
+			contextData->setGescanntWKMapForStateForIndex(stateId,ws4->setWkType(WKB));
+			cout << "WERKSTÜCK AUF BOHRUNG NORMAL GESETZT \n" << endl;
+			break;
+
+			case WK_UNDEFINED :
+			Werkstueck *ws5 = contextData->getGescanntWKMapForStateForIndex(stateId);
+			contextData->setGescanntWKMapForStateForIndex(stateId,ws5->setWkType(WKU));
+			cout << "WERKSTÜCK AUF UNDEFINED GESETZT \n" << endl;
+			break;
 
     		}
 

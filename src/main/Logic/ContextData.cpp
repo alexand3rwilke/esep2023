@@ -15,6 +15,7 @@ gescanntesWKMap = {};
 gesuchtesWKMap = {};
 wkAufFBM2 = false;
 
+
 //adcWaitList = {};
 
 
@@ -100,8 +101,8 @@ void ContextData::setGesuchtWKMapForStateForIndex(int index, int gesuchtesWK) {
 }
 
 
-void ContextData::setGescanntWKMapForStateForIndex(int index,int gescanntesWK) {
-	 gescanntesWKMap[index] = gescanntesWK;
+void ContextData::setGescanntWKMapForStateForIndex(int index, Werkstueck* gescanntesWK) {
+	 gescanntesWKMap[index] = *gescanntesWK;
 
 }
 
@@ -114,7 +115,7 @@ int ContextData::getGesuchtWKMapForStateForIndex(int index) {
 }
 
 
-int ContextData::getGescanntWKMapForStateForIndex(int index) {
+Werkstueck ContextData::getGescanntWKMapForStateForIndex(int index) {
 
 	return  gescanntesWKMap.at(index);
 

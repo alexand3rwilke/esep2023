@@ -18,13 +18,15 @@ void BZUebergabe::entry() {
 
 }
     void BZUebergabe::exit() {
+    	//Versende die Daten des WS
+    	//TODO: stateID == key in map ?
+    	Werkstueck *ws = contextData->getGescanntWKMapForStateForIndex(stateId);
+    	MsgSendPulse(contextData->conIDDis, -1, WSDATA, ws->mittlereHoehe);
+    	MsgSendPulse(contextData->conIDDis, -1, WSDATA, ws->werkstueckTyp);
+    	MsgSendPulse(contextData->conIDDis, -1, WSDATA, stateId);
 
     	cout << "\n  BZUebergabe exit\n" << endl;
     	contextData->removeWK();
-    	//Versende die Daten des WS
-//    	MsgSendPulse(contextData->conIDDis, -1, WSDATA, );
-//    	MsgSendPulse(contextData->conIDDis, -1, WSDATA, x);
-//    	MsgSendPulse(contextData->conIDDis, -1, WSDATA, x);
     	if(contextData->getWKCount() == 0) {
     		actions->stopFB();
     	}

@@ -18,14 +18,14 @@ public:
 	Werkstueck();
 	virtual~Werkstueck();
 
-	WkType werkstueckTyp;
+	int werkstueckTyp;
 	int absoluteHoehe;
 	int mittlereHoehe;
 	bool wkFlipped;
 	bool aussortieren;
 
-	WkType getWkType(void);
-	void setWkType(WkType wkType);
+	int getWkType(void);
+	void setWkType(int wkType);
 
 	int getAbsoluteHoehe(void);
 	void setAbsoluteHoehe(int absoluteHoehe);

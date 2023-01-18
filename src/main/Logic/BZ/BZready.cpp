@@ -27,7 +27,7 @@ void BZready::entry() {
     	switch(event){
     		// check ob LSE interrupt bekommt
     		case LSA1interrupted :
-
+    			contextData->setGescanntWKMapForStateForIndex(stateID, new Werkstueck);
     			exit();
     			new(this) BZEinlauf;
     			entry();
@@ -48,10 +48,16 @@ void BZready::entry() {
 				break;
 
     		case WSDATA:
+    			//Reihenfolge von Übergabe : mittlereHöhe->WKType->ID(Key von map)
     			if(FESTO_TYPE == 2){
-    				//Daten in WS auf FBM speichern
+    				Werkstueck *ws2 = new Werkstueck();
+    				if(contextData->gescanntesWKMap.size()== 0){
+        				ws2->setMittlereHoehe(msg.value.sival_int);
+    				}else{
+    				ws2->setWkType(msg.value.sival_int);
+    				contextData->setGescanntWKMapForStateForIndex(msg.value.sival_int, ws2);
+    				}
     			}
-
     			break;
 
 
