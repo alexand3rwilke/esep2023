@@ -201,10 +201,31 @@ extern int MAX_HOEHE;
 #define WK_REMOVED 70
 #define WK_ADDED 71
 
+
 #define TIMER_IS_OVER 89
 #define SMZ_CHECK_HOEHE 46
 #define START_SMZ 47
 
+#define ESTP1Finished 90
+#define ESTP2Finished 91
+
+#define WK_ON_FB2 92
+#define WK_NON_FB2 93
+
+
+#define RUTSCHE_1_VOLL 29
+#define RUTSCHE_2_VOLL 30
+
+#define RUTSCHE_1_LEER 31
+#define RUTSCHE_2_LEER 32
+
+#define STATE_TOO_LONG 34
+
+#define FA2_RUNNING 67
+#define FA2_STOPPED 68
+
+
+enum WkType { WKN,WKF,WKB,WKBM,WKU,NOWK};
 
 
 #endif /* SRC_IMPORTS_H */

@@ -15,11 +15,19 @@
 void BZEinlauf::entry() {
 	cout << "\n  BZEinlauf entry\n" << endl;
 	actions->startFB();
-	contextData->addWK();
+
+	//TimerBZ *timerBz = new TimerBZ(contextData->disp,10,-1, STATE_TOO_LONG);
+	stateTimer = new SimpleTimer(this->contextData->disp);
+	stateTimer->startTimer();
+
+
 
 }
     void BZEinlauf::exit() {
 
+
+    	stateTimer->stopTimer();
+    	stateTimer->resetTimer();
     }
     void BZEinlauf::estp() {
 
@@ -32,9 +40,14 @@ void BZEinlauf::entry() {
     		switch (event) {
 
     		case ADC_WK_IN_HM :
+
+    			if(stateTimer->getTime() > 2) {
     			exit();
     			new(this) BZHoehenmessung;
     			entry();
+
+    			}
+
     			break;
 
     		}

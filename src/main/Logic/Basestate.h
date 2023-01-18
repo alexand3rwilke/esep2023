@@ -12,24 +12,28 @@
 #include "Actions.h"
 #include "ContextData.h"
 #include "../WSAData.h"
+//#include "TimerBZ.h"
+#include "SimpleTimer.h"
 
 
 class Basestate {
 protected:
 	//Befehle der HAL
 
+	//TimerBZ *timerBz;
+	SimpleTimer *stateTimer;
 	Basestate *substate;
 
+	vector<Basestate *> substateList;
 	Actions *actions;
 	WSAData *wsa_data;
 	ContextData *contextData;
 	int myChannel;
 	int myConnection;
 
+
 	int dispId;
 	int stateId;
-
-
 
 public:
 
@@ -51,6 +55,7 @@ public:
 	//int getErkanntesWK(int dispId) {return contextData->getErkanntesWk();};
 	//int getZielWK(int dispId) {return contextData->getZielWk();};
 	int getStateId() {return stateId;};
+	void setChannelId(int chanID){this->myChannel = chanID;};
 
 	//
 };

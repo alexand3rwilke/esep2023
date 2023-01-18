@@ -14,10 +14,11 @@
 #include "ContextData.h"
 #include "../Imports.h"
 #include "TimerBZ.h"
+
 class Context {
 private:
 	//Basestate *state;
-	vector<Basestate *> stateList;
+	Basestate *fisrsState;
 	std::thread* ContextThread;
 	std::vector<int8_t> events;
 	std::vector<int> werkstuckReihenfolgeList;
@@ -31,8 +32,9 @@ private:
 public:
 	Context(Dispatcher *dispatcher, Actions *actions, ContextData  * contextData, vector<int> werkstuckReihenfolge);
 
-	virtual ~Context();
+
 	TimerBZ *timerBz;
+	virtual ~Context();
 	void entry();
 	void exit();
 	void estp();

@@ -23,12 +23,14 @@ private:
 	bool recivedIntereupt = false;
 	double timerResult;
 	int event;
+	int reactionEvent;
+
 	void setUp();
 	void timerGestartet();
 
 public:
 	TimerBZ();
-	TimerBZ(Dispatcher *disp,int seconds, int event);
+	TimerBZ(Dispatcher *disp,int seconds, int event, int reactionEvent);
 	virtual ~TimerBZ();
 	void startTimer();
 //	double stopTimer();

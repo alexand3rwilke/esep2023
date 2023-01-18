@@ -16,6 +16,7 @@ void BZUebergabe::entry() {
 
 
 
+
 }
     void BZUebergabe::exit() {
 
@@ -25,6 +26,11 @@ void BZUebergabe::entry() {
     	if(contextData->getWKCount() == 0) {
     		actions->stopFB();
     	}
+
+     	stateTimer->stopTimer();
+        	stateTimer->resetTimer();
+
+        	delete stateTimer;
 
     }
     void BZUebergabe::estp() {
@@ -50,8 +56,9 @@ void BZUebergabe::entry() {
     		case LSA2interrupted:
   			// TODO delete this thread
 				exit();
-				new(this) BZready;
-				entry();
+				delete this;
+				//new(this) BZready;
+				//entry();
 				break;
 
 

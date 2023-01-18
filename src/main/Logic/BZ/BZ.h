@@ -21,6 +21,9 @@
 
 
 
+
+
+
 /**
  * Erbt von Basic_State
  */
@@ -29,6 +32,7 @@ private:
 	int myChannel;
 	int myConnection;
 	Dispatcher *disp;
+
 
 public:
 	void entry()override;
