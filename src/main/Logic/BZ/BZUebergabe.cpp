@@ -22,9 +22,9 @@ void BZUebergabe::entry() {
     	cout << "\n  BZUebergabe exit\n" << endl;
     	contextData->removeWK();
     	//Versende die Daten des WS
-    	MsgSendPulse(contextData->conIDDis, -1, WSDATA, x);
-    	MsgSendPulse(contextData->conIDDis, -1, WSDATA, x);
-    	MsgSendPulse(contextData->conIDDis, -1, WSDATA, x);
+//    	MsgSendPulse(contextData->conIDDis, -1, WSDATA, );
+//    	MsgSendPulse(contextData->conIDDis, -1, WSDATA, x);
+//    	MsgSendPulse(contextData->conIDDis, -1, WSDATA, x);
     	if(contextData->getWKCount() == 0) {
     		actions->stopFB();
     	}
