@@ -9,11 +9,13 @@
 
 using namespace std;
 
-ContextData::ContextData(Dispatcher *dispatcher) {
+ContextData::ContextData(Dispatcher *dispatcher, vector<int> werkstuckReihenfolge) {
 disp = dispatcher;
 gescanntesWKMap = {};
 gesuchtesWKMap = {};
 wkAufFBM2 = false;
+wkReihenfolgeIndex = 0;
+this->werkstuckReihenfolgeList = werkstuckReihenfolge;
 
 //adcWaitList = {};
 
@@ -92,6 +94,7 @@ int ContextData::getWKCount() {
 }
 
 void ContextData::setGesuchtWKMapForStateForIndex(int index, int gesuchtesWK) {
+
 	gesuchtesWKMap[index] = gesuchtesWK;
 	cout << "Gesuchtes WK wurde auf folgendes gesetzt:" << gesuchtesWKMap[index] << endl; // just for illustration.
 
@@ -100,8 +103,15 @@ void ContextData::setGesuchtWKMapForStateForIndex(int index, int gesuchtesWK) {
 }
 
 
-void ContextData::setGescanntWKMapForStateForIndex(int index,int gescanntesWK) {
-	 gescanntesWKMap[index] = gescanntesWK;
+void ContextData::setGescanntWKMapForStateForIndex(int index,int gescanntesWK, int durchschnittHoehe) {
+
+	Werkstueck wk;
+	wk.setAbsoluteHoehe(0);
+	wk.setAussortieren(false);
+	wk.setMittlereHoehe(durchschnittHoehe);
+	wk.setWkFlipped(false);
+	wk.setWkType(gescanntesWK);
+	gescanntesWKMap[index] = wk;
 
 }
 
@@ -114,7 +124,7 @@ int ContextData::getGesuchtWKMapForStateForIndex(int index) {
 }
 
 
-int ContextData::getGescanntWKMapForStateForIndex(int index) {
+Werkstueck ContextData::getGescanntWKMapForStateForIndex(int index) {
 
 	return  gescanntesWKMap.at(index);
 
@@ -153,10 +163,17 @@ void ContextData::setWkOnFMB2(bool wkAufFBM2) {
 
 this->wkAufFBM2 = wkAufFBM2;
 }
-   bool ContextData::getWkOnFMB2() {
 
 
-return wkAufFBM2;
+bool ContextData::getWkOnFMB2() {
+
+
+	return wkAufFBM2;
+  }
+
+   void ContextData::increaseWkReihenfolgeIndex() {
+
+	   wkReihenfolgeIndex++;
    }
 
 

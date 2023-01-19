@@ -39,6 +39,7 @@ public:
 	void entry()override;
 	void exit() override;
 	void doAction(int, _pulse) override;
+	void setWkInStateWhereNotSet(int wkType, int durchschnittHoehe);
 };
 
 #endif /* SRC_MAIN_LOGIC_BZ_H_ */

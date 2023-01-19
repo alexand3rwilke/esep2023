@@ -41,7 +41,6 @@ void ADC_Service::adcInterruptService() {
 			conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
 			if (conID < 0) {
 				perror("Could not connect to channel!");
-
 			}
 
 			// schicke pulse mit sampling don wenn sampling fertig ist an adc_service selber
@@ -49,10 +48,8 @@ void ADC_Service::adcInterruptService() {
 
 
 
-			events = {ADC_START_SAMPLE, ADC_SAMLING_FINISHED, START_SMZ, LSR1interrupted
-			};
+			events = {ADC_START_SAMPLE, ADC_SAMLING_FINISHED, START_SMZ, LSR1interrupted, LSR2interrupted};
 
-			//events = {ADC_START_SAMPLE};
 
 			disp->registerForEventWIthConnection(events, conID);
 
@@ -102,7 +99,7 @@ void ADC_Service::adcInterruptService() {
 					MsgSendPulse(dispId, -1, ADC_WK_IN_HM, 0);
 					}
 					//WS raus aus Höhenmessung
-					else if((aktuelleHoehe > h_grund-150 && isInterrupted)&& (counter != 0) && samples.size() > 50){
+					else if((aktuelleHoehe > h_grund-90 && isInterrupted)&& (counter != 0) && samples.size() > 50){
 						isInterrupted = false;
 						printf("Es wurden %d Messungn beim Höhenmesser gemacht \n",counter);
 						// berechne durchschnnit
@@ -124,18 +121,11 @@ void ADC_Service::adcInterruptService() {
 					} else {
 
 						if(ws_type== 0){
-
 							smz(pulse);
 						} else {
 							chooseWS();
 						}
 					}
-					 			//break;
-//					 			switch(pulse.code){
-//					 		case ADC_START_SAMPLE:
-//					 				adc.sample();
-//					 				break;
-					 		//}
 				 }
 }
 
@@ -157,7 +147,11 @@ void ADC_Service::smz(_pulse pulse){
 		cout <<"Es wurden in " << samples.size() << "Messungen der Durschnitt:"<<  tmp <<"\n" << endl;
 		cout <<"Höhste gemessene Grundhöhe:"<<  max <<"\n" << endl;
 		h_grund = tmp;
-		MsgSendPulse(dispId, -1, LSR1interrupted, 0);
+		if(FESTO_TYPE == 1){
+			MsgSendPulse(dispId, -1, LSR1interrupted, 0);
+		} else if (FESTO_TYPE == 2){
+			MsgSendPulse(dispId, -1, LSR2interrupted, 0);
+		}
 		// hiernach soll max und min höhe gesetzt werden
 		//MsgSendPulse();
 		samples.clear();
@@ -227,22 +221,22 @@ int ADC_Service::classifyWK() {
 
 
 	if(durchschnitt < h_flach + toleranz && durchschnitt > h_flach - toleranz) {
-			MsgSendPulse(dispId, -1, WK_FLACH, 0);
+			MsgSendPulse(dispId, -1, WK_FLACH, durchschnitt);
 			cout << "FLACHES WK ENTDECKT  \n" << endl;
 			cout << "Flach: "<< h_flach<< "\n" << endl;
 			return WK_FLACH;
 	} else if(durchschnitt < h_bohrung + toleranz && durchschnitt > h_bohrung - toleranz ) {
-			MsgSendPulse(dispId, -1, WK_Bohrung_Normal, 0);
+			MsgSendPulse(dispId, -1, WK_Bohrung_Normal, durchschnitt);
 			printf("BOHRUNG WK ENTDECKT  \n");
 			cout << "Bohrung: "<< h_bohrung<< "\n" << endl;
 			return WK_Bohrung_Normal;
 	}else if(durchschnitt < h_normal + toleranz && durchschnitt > h_normal - toleranz){
-			MsgSendPulse(dispId, -1, WK_Normal, 0);
+			MsgSendPulse(dispId, -1, WK_Normal, durchschnitt);
 			printf("NORMAL WK ENTDECKT  \n");
 			cout << "NORMAL: "<< h_normal<< "\n" << endl;
 			return WK_Normal;
 	} else if(durchschnitt < h_metall + toleranz && durchschnitt > h_metall - toleranz) {
-		MsgSendPulse(dispId, -1, WK_Bohrung_Normal, 0);
+		MsgSendPulse(dispId, -1, WK_Bohrung_Normal, durchschnitt);
 			printf("METALL WK ENTDECKT  \n");
 			cout << "Bohrung Metall: "<< h_normal<< "\n" << endl;
 			return WK_Bohrung_Normal;
@@ -341,14 +335,22 @@ int ADC_Service::setWS_hoehe(){
 		adc.sample();
 
 		int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
-		if(pulse.code == LSR1interrupted){
 
-//			for(int i = 0; i < 10; i++) {
-//
-//					samples.erase(samples.begin());
-//					samples.pop_back();
-//				}
+		if(pulse.code == LSR1interrupted && FESTO_TYPE == 1){
+			int summe=0;
+			for(int s: samples){
+				//cout << s << "in looooop "<< endl;
 
+				summe += s;
+			}
+			summe = summe / samples.size();
+			cout << "setWS_hoehe: " << summe << endl;
+			//cout <<"Es wurden in " << summe <<"\n" << endl;
+
+			SMZ_checkHoehe = false;
+			samples.clear();
+			return summe;
+		} else if (pulse.code == LSR2interrupted && FESTO_TYPE == 2){
 			int summe=0;
 			for(int s: samples){
 				//cout << s << "in looooop "<< endl;

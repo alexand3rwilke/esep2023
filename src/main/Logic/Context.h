@@ -14,9 +14,11 @@
 #include "ContextData.h"
 #include "../Imports.h"
 #include "TimerBZ.h"
+#include "../MQTTpublish/MQTTpublish/MQTTpublish.h"
 
 class Context {
 private:
+
 	//Basestate *state;
 	Basestate *fisrsState;
 	std::thread* ContextThread;
@@ -24,13 +26,13 @@ private:
 	std::vector<int> werkstuckReihenfolgeList;
 	void eventHandler();
 	int dispID;
-	void setWkInStateWhereNotSet(int wkType);
+	void setWkInStateWhereNotSet(int wkType,int durchschnittHoehe);
 	int wkReihenfolgeIndex;
 	int stateIndex;
 	bool firstState = true; // wird direkt beim ersten LSA trigger auf false gesetzt
 
 public:
-	Context(Dispatcher *dispatcher, Actions *actions, ContextData  * contextData, vector<int> werkstuckReihenfolge);
+	Context(Dispatcher *dispatcher, Actions *actions, ContextData  * contextDat);
 
 
 	TimerBZ *timerBz;

@@ -6,9 +6,11 @@
 
 #ifndef CONTEXTDATA_H
 #define CONTEXTDATA_H
-
+using namespace std;
 
 #include "../dispatcher/Dispatcher.h"
+#include "Werkstueck.h"
+//#include "../MQTTpublish/MQTTpublish/MQTTpublish.h"
 
 
 class ContextData{
@@ -21,13 +23,19 @@ private:
     int wkCounter = 0;
     bool wkAufFBM2;
 
+    int wkReihenfolgeIndex;
+    bool f2Running = false;
+
     map<int, int> gesuchtesWKMap;
-    map<int, int> gescanntesWKMap;
+    map<int, Werkstueck> gescanntesWKMap;
     std::vector<int> adcWaitList;
+
+
 
 public:
     Dispatcher *disp;
-    ContextData(Dispatcher *dispatcher);
+    vector<int> werkstuckReihenfolgeList;
+    ContextData(Dispatcher *dispatcher, vector<int> werkstuckReihenfolge);
     ~ContextData();
     void incErrorCounter();
     void clearErrorcounter();
@@ -55,9 +63,9 @@ public:
 
     // WK gesucht & gescannt map
     void setGesuchtWKMapForStateForIndex(int index, int gesuchtesWK);
-    void setGescanntWKMapForStateForIndex(int index,int gescanntesWK);
+    void setGescanntWKMapForStateForIndex(int index,int gescanntesWK, int durchschnittHoehe);
     int getGesuchtWKMapForStateForIndex(int index);
-    int getGescanntWKMapForStateForIndex(int index);
+    Werkstueck getGescanntWKMapForStateForIndex(int index);
     bool isPresentInMap(int index);
 
     void registerForAdc(int stateId);
@@ -65,7 +73,27 @@ public:
     int getLatestRegisterForAdcState();
     void setWkOnFMB2(bool wkAufFBM2);
     bool getWkOnFMB2();
+
+
+
+
     int conIDDis = 0;
+
+    void increaseWkReihenfolgeIndex();
+	int getwkReihenfolgeIndex() {
+		return wkReihenfolgeIndex;
+	}
+	bool getF2Running()  {
+		return f2Running;
+	}
+
+	void setF2Running(bool f2Running = false) {
+		this->f2Running = f2Running;
+	}
+
+	;
+
+
 };
 
 

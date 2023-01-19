@@ -20,6 +20,7 @@
 #include "Qnet/QnetClient/QnetClient.h"
 #include "Qnet/QnetServer/QnetServer.h"
 #include <fstream>
+#include "MQTTpublish/MQTTpublish/MQTTpublish.h"
 
 #include "Imports.h"
 
@@ -68,6 +69,8 @@ int main(int argc, char** args) {
 		ADC_Service *adcService = new ADC_Service(&dispatcher);
 
 
+
+
 //		fstream config;
 //		string input = "WK_NORMAL WK_FLACH WK_BOHRUNG";
 //		string delimiter= " ";
@@ -78,6 +81,8 @@ int main(int argc, char** args) {
 //		string werkstueck;
 
 		werkstuckReihenfolge.push_back(WK_Normal);
+		werkstuckReihenfolge.push_back(WK_FLACH);
+		werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
 		//werkstuckReihenfolge.push_back(WK_FLACH);
 		//werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
 //		while(getline(config, input))
@@ -111,20 +116,30 @@ int main(int argc, char** args) {
 			perror("Es wurde keine Reihenfolge bestimmt!");
 		}
 
-		ContextData *contextData = new ContextData(&dispatcher);
-		Context *context = new Context(&dispatcher, actions,contextData,werkstuckReihenfolge);
+
+		ContextData *contextData = new ContextData(&dispatcher,werkstuckReihenfolge);
+		Context *context = new Context(&dispatcher, actions,contextData);
+//string s="_MQTT geht auf main";
+//		MQTTPublish *mqtt = new  MQTTPublish(&dispatcher,contextData);
+//		mqtt->sendToConsole(s);
+//		usleep(1000 * (5 * 1000 ));
+		//mqtt->sendToConsole("Was los");
+//		delete mqtt;
+//		MQTTPublish *mqtt_j = new  MQTTPublish(&dispatcher,contextData);
+//				mqtt_j->sendToConsole("Was los");
+
 
 		if (strcmp(args[1], "F1") == 0) {
 
 			cout << "Starting Festo FBM1 \n" << endl;
-			QnetServer *server = new QnetServer("FBM1",&dispatcher);
-			QnetClient *client = new QnetClient("FBM2",&dispatcher);
+			QnetServer *server = new QnetServer("FBM1",&dispatcher,contextData);
+			QnetClient *client = new QnetClient("FBM2",&dispatcher,contextData);
 		}
 		else if (strcmp(args[1], "F2") == 0) {
 
 			cout << "Starting Festo FBM2 \n" << endl;
-			QnetServer *server = new QnetServer("FBM2",&dispatcher);
-			QnetClient *client = new QnetClient("FBM1",&dispatcher);
+			QnetServer *server = new QnetServer("FBM2",&dispatcher,contextData);
+			QnetClient *client = new QnetClient("FBM1",&dispatcher,contextData);
 		}
 //
 //			cout << "Starting Festo FBM1 \n" << endl;

@@ -9,7 +9,7 @@
 
 
 void SMZwsNormal::entry(){
-	cout << "[SMZ] - Bitte WS mit Normal drauflegen" << endl;
+	cout << "[SMZ] - Bitte normales Werkstück drauflegen" << endl;
 	actions->yellowOn();
 }
 
@@ -21,17 +21,56 @@ void SMZwsNormal::exit(){
 void SMZwsNormal::doAction(int event,_pulse msg){
 
 	switch(event){
+	if(FESTO_TYPE == 1){
 	case LSA1interrupted:
-		cout << "[SMZ] -  Messe WS mit Normal..." << endl;
 		actions->startFB();
+		cout << "[SMZ] -  Messe normales Werkstück..." << endl;
 		actions->startSMZ_hoehe(2);
 		actions->yellowLightBlinking();
 		break;
 	case LSR1interrupted:
-		cout << "[SMZ] -  Messung WS mit Normal fertig " << endl;
+		cout << "[SMZ] -  Messung fertig." << endl;
 		actions->stopFB();
-		actions->yellowOn();
 		break;
+	} else {
+	case LSA2interrupted:
+		actions->startFB();
+		cout << "[SMZ] -  Messe normales Werkstück..." << endl;
+		actions->startSMZ_hoehe(2);
+		actions->yellowLightBlinking();
+		break;
+
+	case LSR2interrupted:
+		cout << "[SMZ] -  Messung fertig." << endl;
+		actions->stopFB();
+		break;
+	}
+//	if(FESTO_TYPE == 1){
+//	case LSA1interrupted:
+//		actions->startFB();
+//		cout << "[SMZ] -  Messe normales Werkstück..." << endl;
+//		actions->startSMZ_hoehe(2);
+//		actions->yellowLightBlinking();
+//		break;
+//	case LSR1interrupted:
+//		cout << "[SMZ] -  Messung fertig " << endl;
+//		actions->stopFB();
+//		break;
+//
+//	} else {
+//	case LSA2interrupted:
+//		actions->startFB();
+//		cout << "[SMZ] -  Messe normales Werkstück..." << endl;
+//		actions->startSMZ_hoehe(2);
+//		actions->yellowLightBlinking();
+//		break;
+//
+//	case LSR2interrupted:
+//		cout << "[SMZ] -  Messung fertig " << endl;
+//		actions->stopFB();
+//		break;
+//	}
+
 	case STRinterrupted:
 		exit();
 		new(this) SMZwsBohrung;
