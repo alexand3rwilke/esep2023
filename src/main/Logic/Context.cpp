@@ -266,8 +266,6 @@ void Context::eventHandler(){
 				break;
 
 				case LSR1interrupted : 
-				//timerBz;
-				//int k =LSR1notInterrupted;
 				cout << "LSR1interrupted" << endl;
 				timerBz = new TimerBZ(disp,3,LSR1notInterrupted);
 				contextData->setRampe1Voll(true);
@@ -342,6 +340,4 @@ void Context::setWkInStateWhereNotSet(int wkType) {
 //		contextData->getLatestRegisterForAdcState();
 //		int adcRecieverStateId = contextData->getLatestRegisterForAdcState();
 //		contextData->setGescanntWKMapForStateForIndex(adcRecieverStateId,wkType);
-
-
 }

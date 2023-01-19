@@ -41,7 +41,6 @@ void ADC_Service::adcInterruptService() {
 			conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
 			if (conID < 0) {
 				perror("Could not connect to channel!");
-
 			}
 
 			// schicke pulse mit sampling don wenn sampling fertig ist an adc_service selber
@@ -49,10 +48,8 @@ void ADC_Service::adcInterruptService() {
 
 
 
-			events = {ADC_START_SAMPLE, ADC_SAMLING_FINISHED, START_SMZ, LSR1interrupted
-			};
+			events = {ADC_START_SAMPLE, ADC_SAMLING_FINISHED, START_SMZ, LSR1interrupted};
 
-			//events = {ADC_START_SAMPLE};
 
 			disp->registerForEventWIthConnection(events, conID);
 
@@ -119,18 +116,11 @@ void ADC_Service::adcInterruptService() {
 					} else {
 
 						if(ws_type== 0){
-
 							smz(pulse);
 						} else {
 							chooseWS();
 						}
 					}
-					 			//break;
-//					 			switch(pulse.code){
-//					 		case ADC_START_SAMPLE:
-//					 				adc.sample();
-//					 				break;
-					 		//}
 				 }
 }
 
@@ -152,7 +142,11 @@ void ADC_Service::smz(_pulse pulse){
 		cout <<"Es wurden in " << samples.size() << "Messungen der Durschnitt:"<<  tmp <<"\n" << endl;
 		cout <<"Höhste gemessene Grundhöhe:"<<  max <<"\n" << endl;
 		h_grund = tmp;
-		MsgSendPulse(dispId, -1, LSR1interrupted, 0);
+		if(FESTO_TYPE == 1){
+			MsgSendPulse(dispId, -1, LSR1interrupted, 0);
+		} else if (FESTO_TYPE == 2){
+			MsgSendPulse(dispId, -1, LSR2interrupted, 0);
+		}
 		// hiernach soll max und min höhe gesetzt werden
 		//MsgSendPulse();
 		samples.clear();
@@ -317,7 +311,7 @@ int ADC_Service::setWS_hoehe(){
 		adc.sample();
 
 		int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
-		if(pulse.code == LSR1interrupted){
+		if(pulse.code == LSR1interrupted || pulse.code == LSR2interrupted){
 			int summe=0;
 			for(int s: samples){
 

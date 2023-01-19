@@ -12,7 +12,7 @@
 void SMZMesseGrundhoehe::entry(){
 	actions->yellowLightBlinking();
 	cout << "[SMZ] - Bereit grundhoehe zu messen" << endl;
-
+	cout << "Zum starten LSA unterbrechen" << endl;
 	//clearThresholds();
 
 //	exit();
@@ -29,15 +29,26 @@ void SMZMesseGrundhoehe::doAction(int event, _pulse msg){
 
 	switch(event){
 	case LSA1interrupted:
-		cout << "[SMZ] - Messe Grundhoehe ..." << endl;
+
 		actions->yellowOn();
-		actions->startSMZ_hoehe(0);
 		actions->startFB();
+		actions->startSMZ_hoehe(0);
+		cout << "[SMZ] - Messe Grundhoehe ..." << endl;
 		break;
+	case LSA2interrupted:
+		actions->yellowOn();
+		actions->startFB();
+		actions->startSMZ_hoehe(0);
+		cout << "[SMZ] - Messe Grundhoehe ..." << endl;
+			break;
 	case LSR1interrupted:
 		actions->stopFB();
 		cout << "[SMZ] - Messung fertig" << endl;
 
+		break;
+	case LSR2interrupted:
+		actions->stopFB();
+		cout << "[SMZ] - Messung fertig" << endl;
 		break;
 	case STRinterrupted:
 		exit();

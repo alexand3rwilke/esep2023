@@ -8,7 +8,7 @@
 #include "SMZwsFlach.h"
 
 void SMZwsFlach::entry(){
-	cout << "[SMZ] - Bitte flaches WS drauflegen" << endl;
+	cout << "[SMZ] - Bitte flaches Werkstück drauflegen" << endl;
 	actions->yellowOn();
 }
 
@@ -21,15 +21,24 @@ void SMZwsFlach::doAction(int event,_pulse msg){
 
 	switch(event){
 	case LSA1interrupted:
-		cout << "[SMZ] -  Messe flaches Werkstück ..." << endl;
 		actions->startFB();
+		cout << "[SMZ] -  Messe flaches Werkstück ..." << endl;
+		actions->startSMZ_hoehe(1);
+		actions->yellowLightBlinking();
+		break;
+	case LSA2interrupted:
+		actions->startFB();
+		cout << "[SMZ] -  Messe flaches Werkstück ..." << endl;
 		actions->startSMZ_hoehe(1);
 		actions->yellowLightBlinking();
 		break;
 	case LSR1interrupted:
-		cout << "[SMZ] -  Messe Flaches fertig ..." << endl;
+		cout << "[SMZ] -  Messung fertig." << endl;
 		actions->stopFB();
-		actions->yellowOn();
+		break;
+	case LSR2interrupted:
+		cout << "[SMZ] -  Messung fertig." << endl;
+		actions->stopFB();
 		break;
 	case STRinterrupted:
 		exit();
