@@ -74,7 +74,7 @@ void BZ::doAction (int event, _pulse msg) {
 
 				substateList.push_back(newsubState);
 				contextData->addWK();
-				stateId++;
+				//stateId++;
 				cout << "StateCounter is now: " << stateId << endl;
 				cout << "New state created with id" << newsubState->getStateId() << endl;
 

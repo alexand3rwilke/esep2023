@@ -20,6 +20,14 @@ void BZAussortierer::entry() {
 
 	stateTimer->startTimer();
 
+	cout << "sol das WK aussortiert werden:   " << contextData->getAussortierenForWerkstueckInStateID(stateId) <<"  ans state ID: " << stateId<<endl;
+
+	if(contextData->getAussortierenForWerkstueckInStateID(stateId)) {
+	    				exit();
+	    				new(this)BZrutsche;
+	    				entry();
+	    			}
+
 }
     void BZAussortierer::exit() {
 
@@ -59,13 +67,7 @@ void BZAussortierer::entry() {
 
     			//contextData->getLatestRegisterForAdcState();
 
-    			if(contextData->getAussortierenForWerkstueckInStateID(stateId)) {
 
-    				exit();
-    				new(this)BZrutsche;
-    				entry();
-
-    			}
 
 			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex() % contextData->werkstuckReihenfolgeList.size())) {
 			actions->durchlassen();

@@ -91,7 +91,7 @@ public:
 	bool getAussortierenForWerkstueckInStateID(int stateID);
 	bool getFlippedForWerkstueckInStateID(int stateID);
 
-	;
+
 
 
 };
