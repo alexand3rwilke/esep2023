@@ -22,6 +22,7 @@ private:
     int wkCounter = 0;
     bool wkAufFBM2;
     int wkReihenfolgeIndex;
+    bool f2Running = false;
 
     map<int, int> gesuchtesWKMap;
     map<int, Werkstueck> gescanntesWKMap;
@@ -73,7 +74,18 @@ public:
     int conIDDis = 0;
 
     void increaseWkReihenfolgeIndex();
-    int getwkReihenfolgeIndex(){return wkReihenfolgeIndex;};
+	int getwkReihenfolgeIndex() {
+		return wkReihenfolgeIndex;
+	}
+	bool getF2Running()  {
+		return f2Running;
+	}
+
+	void setF2Running(bool f2Running = false) {
+		this->f2Running = f2Running;
+	}
+
+	;
 
 
 };

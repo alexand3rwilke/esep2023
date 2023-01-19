@@ -55,10 +55,10 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 
 
 
-	fisrsState->exit();
-
-	new (fisrsState) BZ;
-	fisrsState->entry(); //TODO ---------------------------------------------------------------------------------------- Nur für den Test
+//	fisrsState->exit();
+//
+//	new (fisrsState) BZ;
+//	fisrsState->entry(); //TODO ---------------------------------------------------------------------------------------- Nur für den Test
 
 
 
@@ -267,6 +267,9 @@ void Context::eventHandler(){
 			   	   break;
 
 			  case LSE2interrupted:
+				  if(FESTO_TYPE == 2) {
+					  actions->stopFB();
+				  }
 				  fisrsState->doAction(LSE2interrupted,msg);
 				  break;
 			  case LSA2interrupted:
@@ -387,21 +390,17 @@ void Context::eventHandler(){
 					break;
 
 				case FA2_RUNNING:
-					if(FESTO_TYPE == 1) {
-						actions->stopFB();
-
-					}
+					contextData->setF2Running(true);
 
 					break;
 
 				case FA2_STOPPED:
+					contextData->setF2Running(false);
+					if(contextData->getWKCount() >0 ) {
 
-					if(FESTO_TYPE == 1) {
-						if(contextData->getWKCount() >0) {
-							actions->startFB();
-							}
-
+						actions->startFB();
 					}
+
 
 					break;
 
