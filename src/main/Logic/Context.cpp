@@ -48,8 +48,8 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 	//fisrsState->setZielWK(werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
 	//RZ
 	fisrsState->setStateId(stateIndex);
-	contextData->setGescanntWKMapForStateForIndex(stateIndex,0);
-	contextData->setGesuchtWKMapForStateForIndex(stateIndex++,werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
+	//contextData->setGescanntWKMapForStateForIndex(stateIndex,0,0);
+	//contextData->setGesuchtWKMapForStateForIndex(stateIndex++,werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
 
 	fisrsState->entry();
 
@@ -355,27 +355,27 @@ void Context::eventHandler(){
 
 				// TODO Werkstück erkennung testen
 				case WK_FLACH :
-				setWkInStateWhereNotSet(WK_FLACH);
+				setWkInStateWhereNotSet(WK_FLACH,msg.value.sival_int);
 				fisrsState->doAction(WK_FLACH, msg);
 				break;
 
 				case WK_Normal :
-				setWkInStateWhereNotSet(WK_Normal);
+				setWkInStateWhereNotSet(WK_Normal,msg.value.sival_int);
 				fisrsState->doAction(WK_Normal, msg);
 				break;
 
 				case WK_Bohrung_Metal :
-				setWkInStateWhereNotSet(WK_Bohrung_Metal);
+				setWkInStateWhereNotSet(WK_Bohrung_Metal,msg.value.sival_int);
 				fisrsState->doAction(WK_Bohrung_Metal, msg);
 				break;
 
 				case WK_Bohrung_Normal :
-				setWkInStateWhereNotSet(WK_Bohrung_Normal);
+				setWkInStateWhereNotSet(WK_Bohrung_Normal,msg.value.sival_int);
 				fisrsState->doAction(WK_Bohrung_Normal, msg);
 				break;
 
 				case WK_UNDEFINED :
-				setWkInStateWhereNotSet(WK_UNDEFINED);
+				setWkInStateWhereNotSet(WK_UNDEFINED,msg.value.sival_int);
 				fisrsState->doAction(WK_UNDEFINED, msg);
 				break;
 
@@ -420,7 +420,7 @@ void Context::eventHandler(){
 
 }
 
-void Context::setWkInStateWhereNotSet(int wkType) {
+void Context::setWkInStateWhereNotSet(int wkType, int durchschnittHoehe) {
 
 	for(int i = 0;i < stateIndex; i++) {
 		//cout << "map auf wert 0 ist:" << contextData->getGescanntWKMapForStateForIndex(0) << "\n" << endl;
@@ -428,7 +428,7 @@ void Context::setWkInStateWhereNotSet(int wkType) {
 //		cout << "--------------------map hat wert: "<< contextData->getGescanntWKMapForStateForIndex(i) << "\n" << endl;
 //	cout << "--------------------map hat wert" << "\n" << endl;
 	if(contextData->getGescanntWKMapForStateForIndex(i).werkstueckTyp == 0) {
-		contextData->setGescanntWKMapForStateForIndex(0,wkType);
+		contextData->setGescanntWKMapForStateForIndex(0,wkType, durchschnittHoehe);
 //			cout << "--------------------map hat wert 2" << "\n" << endl;
 //				return;
 	}

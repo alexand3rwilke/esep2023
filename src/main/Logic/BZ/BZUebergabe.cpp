@@ -15,6 +15,8 @@ void BZUebergabe::entry() {
 
 	cout << "\n  BZUebergabe entry\n" << endl;
 
+	MsgSendPulse(contextData->disp->getConnectionID(), -1, WK_TELEPORT, getStateId());
+	cout << "Übertrage Werkstueck von State" << getStateId() << "an Festp2"<< "\n" << endl;
 
 }
     void BZUebergabe::exit() {

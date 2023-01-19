@@ -102,12 +102,12 @@ void ContextData::setGesuchtWKMapForStateForIndex(int index, int gesuchtesWK) {
 }
 
 
-void ContextData::setGescanntWKMapForStateForIndex(int index,int gescanntesWK) {
+void ContextData::setGescanntWKMapForStateForIndex(int index,int gescanntesWK, int durchschnittHoehe) {
 
 	Werkstueck wk;
 	wk.setAbsoluteHoehe(0);
 	wk.setAussortieren(false);
-	wk.setMittlereHoehe(0);
+	wk.setMittlereHoehe(durchschnittHoehe);
 	wk.setWkFlipped(false);
 	wk.setWkType(gescanntesWK);
 	gescanntesWKMap[index] = wk;

@@ -20,13 +20,15 @@ void BZAussortierer::entry() {
 
 	stateTimer->startTimer();
 
-
-
 }
     void BZAussortierer::exit() {
 
      	stateTimer->stopTimer();
         	stateTimer->resetTimer();
+
+        	cout << "------------Aussortierer Test:"<< endl;
+		cout << "------------Gesucht:"<< contextData->getGesuchtWKMapForStateForIndex(stateId) << endl;
+		cout << "------------Folgendes WK wurde gescannt:"<< contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp << endl;
 
     }
     void BZAussortierer::estp() {
@@ -55,11 +57,8 @@ void BZAussortierer::entry() {
 			// checke ob das WK das gesuchte ist, sonst aussortieren und wieder in BZready+
 
 
-    			contextData->getLatestRegisterForAdcState();
-    			cout << "------------Aussortierer Test:"<< endl;
-				cout << "------------Gesucht:"<< contextData->getGesuchtWKMapForStateForIndex(stateId) << endl;
+    			//contextData->getLatestRegisterForAdcState();
 
-				cout << "------------Folgendes WK wurde gescannt:"<< contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp << endl;
 
 
 			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == contextData->getGesuchtWKMapForStateForIndex(stateId)) {
@@ -93,7 +92,7 @@ void BZAussortierer::entry() {
 
 			case MTD1interrupted :
 			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == WK_Bohrung_Normal) {
-				contextData->setGescanntWKMapForStateForIndex(stateId,WK_Bohrung_Metal);
+				contextData->setGescanntWKMapForStateForIndex(stateId,WK_Bohrung_Metal,contextData->getGescanntWKMapForStateForIndex(stateId).mittlereHoehe);
 
 				cout << "Werkstück enthält Metall \n" << endl;
 

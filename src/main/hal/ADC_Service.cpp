@@ -227,22 +227,22 @@ int ADC_Service::classifyWK() {
 
 
 	if(durchschnitt < h_flach + toleranz && durchschnitt > h_flach - toleranz) {
-			MsgSendPulse(dispId, -1, WK_FLACH, 0);
+			MsgSendPulse(dispId, -1, WK_FLACH, durchschnitt);
 			cout << "FLACHES WK ENTDECKT  \n" << endl;
 			cout << "Flach: "<< h_flach<< "\n" << endl;
 			return WK_FLACH;
 	} else if(durchschnitt < h_bohrung + toleranz && durchschnitt > h_bohrung - toleranz ) {
-			MsgSendPulse(dispId, -1, WK_Bohrung_Normal, 0);
+			MsgSendPulse(dispId, -1, WK_Bohrung_Normal, durchschnitt);
 			printf("BOHRUNG WK ENTDECKT  \n");
 			cout << "Bohrung: "<< h_bohrung<< "\n" << endl;
 			return WK_Bohrung_Normal;
 	}else if(durchschnitt < h_normal + toleranz && durchschnitt > h_normal - toleranz){
-			MsgSendPulse(dispId, -1, WK_Normal, 0);
+			MsgSendPulse(dispId, -1, WK_Normal, durchschnitt);
 			printf("NORMAL WK ENTDECKT  \n");
 			cout << "NORMAL: "<< h_normal<< "\n" << endl;
 			return WK_Normal;
 	} else if(durchschnitt < h_metall + toleranz && durchschnitt > h_metall - toleranz) {
-		MsgSendPulse(dispId, -1, WK_Bohrung_Normal, 0);
+		MsgSendPulse(dispId, -1, WK_Bohrung_Normal, durchschnitt);
 			printf("METALL WK ENTDECKT  \n");
 			cout << "Bohrung Metall: "<< h_normal<< "\n" << endl;
 			return WK_Bohrung_Normal;

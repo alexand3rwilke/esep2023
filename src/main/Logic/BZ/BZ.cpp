@@ -36,18 +36,22 @@ void BZ::doAction (int event, _pulse msg) {
 
 
 	if(event == LSA1interrupted && FESTO_TYPE ==1) {
+
 		Basestate *newsubState;
+		newsubState->setStateId(stateId);
 		newsubState = new BZEinlauf();
 		newsubState->setActions(actions);
 		newsubState->setContextData(contextData);
 		newsubState->entry();
-		contextData->setGescanntWKMapForStateForIndex(stateId,0);
+		contextData->setGescanntWKMapForStateForIndex(newsubState->getStateId(),0,0);
 		int gesuchtesWK = contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex() % contextData->werkstuckReihenfolgeList.size());
-		contextData->setGesuchtWKMapForStateForIndex(stateId,gesuchtesWK);
+		contextData->setGesuchtWKMapForStateForIndex(newsubState->getStateId(),gesuchtesWK);
 		contextData->increaseWkReihenfolgeIndex();
-		newsubState->setStateId(stateId++);
+		newsubState->setStateId(newsubState->getStateId());
 		substateList.push_back(newsubState);
 		contextData->addWK();
+		stateId++;
+
 
 
 		//cout << contextData->getWKCount() << "ist die aktuelle WK anzahl" << endl;
@@ -55,18 +59,21 @@ void BZ::doAction (int event, _pulse msg) {
 	}
 
 	if(event == LSA2interrupted && FESTO_TYPE ==2) {
+
 			Basestate *newsubState;
+			newsubState->setStateId(stateId);
 			newsubState = new BZEinlauf();
 			newsubState->setActions(actions);
 			newsubState->setContextData(contextData);
 			newsubState->entry();
-			contextData->setGescanntWKMapForStateForIndex(stateId,0);
+			contextData->setGescanntWKMapForStateForIndex(newsubState->getStateId(),0,0);
 			int gesuchtesWK = contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex() % contextData->werkstuckReihenfolgeList.size());
-			contextData->setGesuchtWKMapForStateForIndex(stateId,gesuchtesWK);
+			contextData->setGesuchtWKMapForStateForIndex(newsubState->getStateId(),gesuchtesWK);
 			contextData->increaseWkReihenfolgeIndex();
-			newsubState->setStateId(stateId++);
+			newsubState->setStateId(newsubState->getStateId());
 			substateList.push_back(newsubState);
 			contextData->addWK();
+			stateId++;
 
 			if(contextData->getWKCount() == 1 ) {
 				MsgSendPulse(contextData->disp->getConnectionID(), -1, FA2_RUNNING, 0);

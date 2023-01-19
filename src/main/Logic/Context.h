@@ -24,7 +24,7 @@ private:
 	std::vector<int> werkstuckReihenfolgeList;
 	void eventHandler();
 	int dispID;
-	void setWkInStateWhereNotSet(int wkType);
+	void setWkInStateWhereNotSet(int wkType,int durchschnittHoehe);
 	int wkReihenfolgeIndex;
 	int stateIndex;
 	bool firstState = true; // wird direkt beim ersten LSA trigger auf false gesetzt
