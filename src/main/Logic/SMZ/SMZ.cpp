@@ -60,7 +60,4 @@ void SMZ :: doAction(int event, _pulse msg){
 		entry();
 		break;
 	}
-
-
-
 }

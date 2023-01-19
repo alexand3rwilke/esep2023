@@ -286,8 +286,7 @@ void Context::eventHandler(){
 				break;
 
 				case LSR1interrupted : 
-
-				cout << "LSR1interrupted" << endl;
+				//cout << "LSR1interrupted" << endl;
 				timerBz = new TimerBZ(disp,3,LSR1notInterrupted,RUTSCHE_1_VOLL);
 				fisrsState->doAction(LSR1interrupted, msg);
 				//TODO setze contextData Rampe1 voll auf true;
@@ -433,6 +432,4 @@ void Context::setWkInStateWhereNotSet(int wkType) {
 //		contextData->getLatestRegisterForAdcState();
 //		int adcRecieverStateId = contextData->getLatestRegisterForAdcState();
 //		contextData->setGescanntWKMapForStateForIndex(adcRecieverStateId,wkType);
-
-
 }
