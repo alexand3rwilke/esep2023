@@ -16,7 +16,7 @@ void BZAussortierer::entry() {
 
 	//TODO MUSS NOCH ANGEPAST WERDEN
 	cout << "\n  BZAussortierer entry\n" << endl;
-	cout << "\n  Das Gesuchte WK ist: " << contextData->getGesuchtWKMapForStateForIndex(stateId) <<  "\n" << endl;
+	cout << "------------Gesucht:"<< contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex() % contextData->werkstuckReihenfolgeList.size()) << endl;
 
 	stateTimer->startTimer();
 
@@ -27,7 +27,7 @@ void BZAussortierer::entry() {
         	stateTimer->resetTimer();
 
         	cout << "------------Aussortierer Test:"<< endl;
-		cout << "------------Gesucht:"<< contextData->getGesuchtWKMapForStateForIndex(stateId) << endl;
+		cout << "------------Gesucht:"<< contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex() % contextData->werkstuckReihenfolgeList.size()) << endl;
 		cout << "------------Folgendes WK wurde gescannt:"<< contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp << endl;
 
     }
@@ -59,18 +59,17 @@ void BZAussortierer::entry() {
 
     			//contextData->getLatestRegisterForAdcState();
 
-
-
-			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == contextData->getGesuchtWKMapForStateForIndex(stateId)) {
+			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex() % contextData->werkstuckReihenfolgeList.size())) {
 			actions->durchlassen();
+			contextData->increaseWkReihenfolgeIndex();
 			// TODO : Vielleicht noch eine Sekunde weiterlaufen lassen damit es in die Rutsche geht
 			// TODO : Vielleicht brauchen wir noch einen Ruschen state um zu warten bis das WK die rutsche runtergerutscht ist, damit wir keine feste Zeit warten müssen
 			} else {
 				//TODO ENTFERNEN
-				actions->durchlassen();
-//			exit();
-//			new(this)BZrutsche;
-//			entry();
+				//actions->durchlassen();
+			exit();
+			new(this)BZrutsche;
+			entry();
 
 
 			}
