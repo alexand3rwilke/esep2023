@@ -6,7 +6,7 @@
 
 #ifndef CONTEXTDATA_H
 #define CONTEXTDATA_H
-
+using namespace std;
 
 #include "../dispatcher/Dispatcher.h"
 #include "./Werkstueck.h";
@@ -21,9 +21,12 @@ private:
     int erkanntesWk = 0;
     int wkCounter = 0;
     bool wkAufFBM2;
+
     int wkReihenfolgeIndex;
     bool f2Running = false;
 
+
+    string mqtt = "Test MQTT mit sting";
     map<int, int> gesuchtesWKMap;
     map<int, Werkstueck> gescanntesWKMap;
     std::vector<int> adcWaitList;
@@ -71,6 +74,23 @@ public:
     int getLatestRegisterForAdcState();
     void setWkOnFMB2(bool wkAufFBM2);
     bool getWkOnFMB2();
+    char mqtt_msg[40];
+
+	const char* getMqttMsg() {
+		char *mqtt_msg = new char[mqtt.length()+1];
+	    strcpy(mqtt_msg, mqtt.c_str());
+		return mqtt_msg;
+	}
+
+	string getMqtt() {
+
+		return mqtt;
+	}
+
+	void setMqtt( string mqtt) {
+		this->mqtt = mqtt;
+	}
+
     int conIDDis = 0;
 
     void increaseWkReihenfolgeIndex();
