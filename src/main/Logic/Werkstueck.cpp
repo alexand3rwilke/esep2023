@@ -99,6 +99,7 @@ string Werkstueck::toJsonString() {
 	json_stream << "\"mittlereHoehe\":" << to_string(mittlereHoehe) << ",";
 	json_stream << "\"wkFlipped\":" << (wkFlipped ? "true" : "false") << ",";
 	json_stream << "\"aussortieren\":" << (aussortieren ? "true" : "false");
+	json_stream << "}";
 	return json_stream.str();
 	}
 

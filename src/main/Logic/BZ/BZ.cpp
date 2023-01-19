@@ -38,19 +38,22 @@ void BZ::doAction (int event, _pulse msg) {
 	if(event == LSA1interrupted && FESTO_TYPE ==1) {
 
 		Basestate *newsubState;
-		newsubState->setStateId(stateId);
+
 		newsubState = new BZEinlauf();
 		newsubState->setActions(actions);
 		newsubState->setContextData(contextData);
 		newsubState->entry();
+		newsubState->setStateId(stateId);
 		contextData->setGescanntWKMapForStateForIndex(newsubState->getStateId(),0,0);
 		int gesuchtesWK = contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex() % contextData->werkstuckReihenfolgeList.size());
 		contextData->setGesuchtWKMapForStateForIndex(newsubState->getStateId(),gesuchtesWK);
 		contextData->increaseWkReihenfolgeIndex();
-		newsubState->setStateId(newsubState->getStateId());
+
 		substateList.push_back(newsubState);
 		contextData->addWK();
 		stateId++;
+		cout << "StateCounter is now: " << stateId << endl;
+		cout << "New state created with id" << newsubState->getStateId() << endl;
 
 
 
