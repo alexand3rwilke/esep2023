@@ -215,7 +215,7 @@ int QnetServer::server(){
 				   }
 
 		       }
-		       if (STR_MSG == header.type) {
+		       if (STR_MSG == header.type && FESTO_TYPE == 2) {
 		       			   		// printf("Server: STR_MSG received.\n");
 		       			   		// read app header
 		       			   		app_header_t app_header;
