@@ -24,7 +24,7 @@
 
 
 
-Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *contextData,vector<int> werkstuckReihenfolgeList) {
+Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *contextData) {
 
 
 	//TimerBZ timerBz;
@@ -32,8 +32,6 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 //			timerBz = new TimerBZ(3,7);
 	wkReihenfolgeIndex = 0;
 	stateIndex = 0;
-	this->werkstuckReihenfolgeList = werkstuckReihenfolgeList;
-	this->contextData->werkstuckReihenfolgeList = werkstuckReihenfolgeList;
 	this->contextData = contextData;
 
 	this->disp = dispatcher;

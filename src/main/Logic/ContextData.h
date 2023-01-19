@@ -28,10 +28,11 @@ private:
     std::vector<int> adcWaitList;
 
 
+
 public:
     Dispatcher *disp;
     vector<int> werkstuckReihenfolgeList;
-    ContextData(Dispatcher *dispatcher);
+    ContextData(Dispatcher *dispatcher, vector<int> werkstuckReihenfolge);
     ~ContextData();
     void incErrorCounter();
     void clearErrorcounter();

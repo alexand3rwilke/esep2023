@@ -30,7 +30,7 @@ private:
 	bool firstState = true; // wird direkt beim ersten LSA trigger auf false gesetzt
 
 public:
-	Context(Dispatcher *dispatcher, Actions *actions, ContextData  * contextData, vector<int> werkstuckReihenfolge);
+	Context(Dispatcher *dispatcher, Actions *actions, ContextData  * contextDat);
 
 
 	TimerBZ *timerBz;

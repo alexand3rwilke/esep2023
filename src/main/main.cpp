@@ -111,8 +111,8 @@ int main(int argc, char** args) {
 			perror("Es wurde keine Reihenfolge bestimmt!");
 		}
 
-		ContextData *contextData = new ContextData(&dispatcher);
-		Context *context = new Context(&dispatcher, actions,contextData,werkstuckReihenfolge);
+		ContextData *contextData = new ContextData(&dispatcher,werkstuckReihenfolge);
+		Context *context = new Context(&dispatcher, actions,contextData);
 
 		if (strcmp(args[1], "F1") == 0) {
 

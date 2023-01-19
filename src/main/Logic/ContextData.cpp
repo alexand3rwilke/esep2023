@@ -9,12 +9,13 @@
 
 using namespace std;
 
-ContextData::ContextData(Dispatcher *dispatcher) {
+ContextData::ContextData(Dispatcher *dispatcher, vector<int> werkstuckReihenfolge) {
 disp = dispatcher;
 gescanntesWKMap = {};
 gesuchtesWKMap = {};
 wkAufFBM2 = false;
 wkReihenfolgeIndex = 0;
+this->werkstuckReihenfolgeList = werkstuckReihenfolge;
 
 //adcWaitList = {};
 
