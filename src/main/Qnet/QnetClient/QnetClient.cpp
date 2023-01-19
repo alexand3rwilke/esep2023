@@ -209,10 +209,11 @@ int QnetClient::client(){
 					case WK_TELEPORT :
 
 						Werkstueck wk = contextData->getGescanntWKMapForStateForIndex(msg.value.sival_int);
+						string wkJson = wk.toJsonString();
 
 						char payload[200];                      // use dummy values as payload
 						memset(payload,0,200);
-						strcat(payload, "TEST TEST");
+						strcat(payload,wkJson.c_str());
 						int payload_size;                       // +1 due to \0 at the end of a string
 						payload_size = sizeof(payload)+1;
 						// Compose the msg using an IOV
