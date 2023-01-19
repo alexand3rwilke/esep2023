@@ -19,25 +19,25 @@ Werkstueck::Werkstueck() {
 
 Werkstueck::Werkstueck(string wkJson) {
 
-	    size_t pos = wkJson.find("werkstueckTyp") + 15;
-	    size_t end = wkJson.find(",", pos);
-	    werkstueckTyp = std::stoi(wkJson.substr(pos, end - pos));
+	 // extract the values from the JSON string and assign them to the class' member variables
 
-	    pos = wkJson.find("absoluteHoehe") + 14;
-	    end = wkJson.find(",", pos);
-	    absoluteHoehe = std::stoi(wkJson.substr(pos, end - pos));
+	std::vector<std::string> substrings;
+	    std::size_t start = 0, end = 0;
+	    string delimiter= " ";
+	    while ((end = wkJson.find(delimiter, start)) != std::string::npos) {
+	        substrings.push_back(wkJson.substr(start, end - start));
+	        start = end + delimiter.length();
+	    }
+	    substrings.push_back(wkJson.substr(start));
 
-	    pos = wkJson.find("mittlereHoehe") + 15;
-	    end = wkJson.find(",", pos);
-	    mittlereHoehe = std::stoi(wkJson.substr(pos, end - pos));
 
-	    pos = wkJson.find("wkFlipped") + 11;
-	    end = wkJson.find(",", pos);
-	    wkFlipped = wkJson.substr(pos, end - pos) == "true";
+	    	werkstueckTyp = stoi(substrings.at(0));
+	    	absoluteHoehe = stoi(substrings.at(1));
+	    	mittlereHoehe = stoi(substrings.at(2));
+	    	wkFlipped = substrings.at(3) == "true";
+	    	aussortieren = substrings.at(4) == "true";
 
-	    pos = wkJson.find("aussortieren") + 13;
-	    end = wkJson.find("}", pos);
-	    aussortieren = wkJson.substr(pos, end - pos) == "true";
+
 }
 
 Werkstueck::~Werkstueck(){
@@ -88,6 +88,18 @@ return aussortieren;
 	void Werkstueck::setAussortieren(bool aussortieren) {
 
 this->aussortieren = aussortieren;
+	}
+
+	string Werkstueck::toString() {
+
+		stringstream json_stream;
+			json_stream << to_string(werkstueckTyp) << " ";
+			json_stream << to_string(absoluteHoehe) << " ";
+			json_stream << to_string(mittlereHoehe) << " ";
+			json_stream << (wkFlipped ? "true" : "false") << " ";
+			json_stream << (aussortieren ? "true" : "false");
+
+			return json_stream.str();
 	}
 
 string Werkstueck::toJsonString() {

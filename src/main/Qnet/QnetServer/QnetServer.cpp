@@ -233,8 +233,9 @@ int QnetServer::server(){
 
 		       			   		printf("Server: got the STR_MSG (count = %d): %s \n", app_header.count, buf);
 		       			   		// TODO HIER DANN WK ANLEGEN AUS DEM STRING
-
-		       			   		// iwie sowas wie contextData->
+		       			   		string wkJsonString;
+		       			   		wkJsonString.assign(buf, sizeof(buf));
+		       			   		Werkstueck *wk = new Werkstueck(wkJsonString);
 
 		       			   		MsgReply(rcvid, EOK, NULL, 0);
 		       			   		//free(buf);

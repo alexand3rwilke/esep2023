@@ -1,4 +1,4 @@
-#include "Werkstueck.h"
+#include "../Logic/Werkstueck.h"
 
 
 class WerkstueckTest {
