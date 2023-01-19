@@ -18,6 +18,7 @@
 
 class Context {
 private:
+
 	//Basestate *state;
 	Basestate *fisrsState;
 	std::thread* ContextThread;

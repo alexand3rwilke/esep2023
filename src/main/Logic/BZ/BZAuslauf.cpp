@@ -16,6 +16,7 @@ void BZAuslauf::entry() {
 	MQTTPublish *mqtt = new  MQTTPublish(contextData->disp,contextData);
 	//Werkstueck *wk = contextData->
 
+	//TODO String vom Werkstück
 	mqtt->sendToConsole("Auslauf wurde an mqtt geschickt");
 
 	cout << "\n  BZAuslauf entry\n" << endl;
