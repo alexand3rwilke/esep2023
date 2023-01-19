@@ -70,7 +70,7 @@ int QnetClient::client(){
 	}
 
 	vector<int8_t> events = {LSE, LSE1interrupted, LSA2interrupted,ESTP1interrupted, ESTP2interrupted,LSR1notInterrupted,LSR2notInterrupted,LSR1interrupted,LSR2interrupted
-			,ESTP1Finished,ESTP2Finished,ESTP1notInterrupted,ESTP2notInterrupted,FA2_RUNNING,FA2_STOPPED};
+			,ESTP1Finished,ESTP2Finished,ESTP1notInterrupted,ESTP2notInterrupted,FA2_RUNNING,FA2_STOPPED,WK_TELEPORT};
 
 	dispatcher->registerForEventWIthConnection(events, conID);
 
@@ -210,6 +210,7 @@ int QnetClient::client(){
 
 						Werkstueck wk = contextData->getGescanntWKMapForStateForIndex(msg.value.sival_int);
 						string wkJson = wk.toJsonString();
+						cout << wkJson << endl;
 
 						char payload[200];                      // use dummy values as payload
 						memset(payload,0,200);
