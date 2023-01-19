@@ -119,8 +119,14 @@ int main(int argc, char** args) {
 
 		ContextData *contextData = new ContextData(&dispatcher,werkstuckReihenfolge);
 		Context *context = new Context(&dispatcher, actions,contextData);
-
-		MQTTPublish *mqtt = new  MQTTPublish(&dispatcher,contextData);
+//string s="_MQTT geht auf main";
+//		MQTTPublish *mqtt = new  MQTTPublish(&dispatcher,contextData);
+//		mqtt->sendToConsole(s);
+//		usleep(1000 * (5 * 1000 ));
+		//mqtt->sendToConsole("Was los");
+//		delete mqtt;
+//		MQTTPublish *mqtt_j = new  MQTTPublish(&dispatcher,contextData);
+//				mqtt_j->sendToConsole("Was los");
 
 
 		if (strcmp(args[1], "F1") == 0) {

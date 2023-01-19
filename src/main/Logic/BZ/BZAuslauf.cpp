@@ -8,10 +8,15 @@
 
 #include "BZAuslauf.h"
 #include "BZready.h"
+#include "../../MQTTpublish/MQTTpublish/MQTTpublish.h"
 
 
 
 void BZAuslauf::entry() {
+	MQTTPublish *mqtt = new  MQTTPublish(contextData->disp,contextData);
+	//Werkstueck *wk = contextData->
+
+	mqtt->sendToConsole("Auslauf wurde an mqtt geschickt");
 
 	cout << "\n  BZAuslauf entry\n" << endl;
 

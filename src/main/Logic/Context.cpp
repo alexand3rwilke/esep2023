@@ -229,7 +229,9 @@ void Context::eventHandler(){
 
 			   case	STRinterrupted:
 				   //state->doAction(STRinterrupted);
-
+//				   contextData->setMqtt("Hallo STR");
+//				   MsgSendPulse(dispID,-1,MQTTMESSAGE,0);
+				   //MQTTPublish *mqtt = new  MQTTPublish(&dispatcher,contextData,"MQTT in Context start");
 					time_t start_time;
 					time_t end_time;
 					start_time = time(NULL);
@@ -258,6 +260,9 @@ void Context::eventHandler(){
 				  break;
 
 			  case STPinterrupted:
+				  //MQTTPublish *mqtt = new  MQTTPublish(&dispatcher,contextData,"MQTT in Context stop");
+//				   contextData->setMqtt("Hallo Stoooooop");
+//				   MsgSendPulse(dispID,-1,MQTTMESSAGE,0);
 				  // if keine Warning
 				  fisrsState->doAction(STPinterrupted, msg);
 				  break;

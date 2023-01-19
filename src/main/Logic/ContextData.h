@@ -9,7 +9,8 @@
 using namespace std;
 
 #include "../dispatcher/Dispatcher.h"
-#include "./Werkstueck.h";
+#include "Werkstueck.h";
+//#include "../MQTTpublish/MQTTpublish/MQTTpublish.h"
 
 
 class ContextData{
@@ -77,9 +78,13 @@ public:
     char mqtt_msg[40];
 
 	const char* getMqttMsg() {
-		char *mqtt_msg = new char[mqtt.length()+1];
-	    strcpy(mqtt_msg, mqtt.c_str());
-		return mqtt_msg;
+//		char *mqtt_msg = new char[mqtt.length()+1];
+//	    strcpy(mqtt_msg, mqtt.c_str());
+		char char_array[40];
+		for (int i = 0; i < mqtt.length(); i++) {
+		        char_array[i] = mqtt[i];
+		    }
+		return char_array;
 	}
 
 	string getMqtt() {

@@ -19,21 +19,29 @@
 #define ADDRESS     "tcp://192.168.101.202:1883"
 #define CLIENTID    "ExampleClientPub"
 // Topic muss im Broker angegeben werden -> darüber Nachrichten empfangen
-#define TOPIC       "/Festo/106"
+#define TOPIC       "/Festo/108"
 // payload ist hier erstmal Kosmetik, siehe Zeile
-#define PAYLOAD     "WS NORMAL MITBOHRUNG 24 23!"
+#define PAYLOAD     " Start MQTT"
 #define QOS         1
-#define TIMEOUT     10000L
+#define TIMEOUT     10L
+
+//#define TIMEOUT     10000L
 
 
 MQTTPublish::MQTTPublish(Dispatcher *disp,ContextData *contextData) {
 
 	this->dispatcher = disp;
 	this->contextData =contextData;
-	ClientThread = new std::thread([this]() {client();});
 }
 
 MQTTPublish::~MQTTPublish() {}
+
+void MQTTPublish::sendToConsole(string wert){
+	this->ergebnisString =wert;
+	ClientThread = new std::thread([this]() {client();});
+}
+
+
 
 int MQTTPublish::client(){
 
@@ -62,17 +70,17 @@ int MQTTPublish::client(){
 //	while (true) {
 //
 //      //Fals irgendwann mal WS an FBM2 ankommen
-//		//int recvid = MsgReceivePulse(channnelID, &msg, sizeof(_pulse), nullptr);
-//
+//		int recvid = MsgReceivePulse(channnelID, &msg, sizeof(_pulse), nullptr);
+
 //		switch(msg.code){
 //
 //					case MQTTMESSAGE:
 //
 //					break;
 //			}
-//	}
 
-	    printf("Running simple MQTT client publish example ");
+
+	    //printf("Running simple MQTT client publish example ");
 		fflush(stdout);
 	    MQTTClient client;
 	    MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
@@ -96,7 +104,15 @@ int MQTTPublish::client(){
 	    }
 
 	    // dieser Stringbuffer wird übertragen !!!!!!!!!!!!!!!!!
-	    char payload[40] = "WS NORMAL MITBOHRUNG 25!";
+	    char payload[40] = "Joshua------------------------!";
+	    string s = contextData->getMqtt();
+	    memset(payload,0,40);
+		for (int i = 0; i < ergebnisString.length(); i++) {
+			payload[i] = ergebnisString[i];
+		    }
+	    //char alex[40] = "Alex-------";
+	    //strcat(payload,alex);
+//	    strcat(payload,contextData->mqtt_msg);
 //	    char *payload = new char[sizeof(contextData->getMqtt())];
 	    //memset(payload);
 
@@ -112,9 +128,9 @@ int MQTTPublish::client(){
 	         exit(EXIT_FAILURE);
 	    }
 
-	    printf("Waiting for up to %d seconds for publication of %s\n"
-	            "on topic %s for client with ClientID: %s\n",
-	            (int)(TIMEOUT/1000), PAYLOAD, TOPIC, CLIENTID);
+//	    printf("Waiting for up to %d seconds for publication of %s\n"
+//	            "on topic %s for client with ClientID: %s\n",
+//	            (int)(TIMEOUT/1000), PAYLOAD, TOPIC, CLIENTID);
 	    rc = MQTTClient_waitForCompletion(client, token, TIMEOUT);
 	    printf("Message with delivery token %d delivered\n", token);
 
@@ -122,5 +138,5 @@ int MQTTPublish::client(){
 	    	printf("Failed to disconnect, return code %d\n", rc);
 	    MQTTClient_destroy(&client);
 	    return rc;
-
+//	}
 }

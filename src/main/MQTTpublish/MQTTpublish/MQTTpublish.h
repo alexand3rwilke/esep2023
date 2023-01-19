@@ -18,11 +18,19 @@ using namespace std;
 class MQTTPublish {
 private:
 	ContextData *contextData;
+	string ergebnisString = "ergebnisString wurde nicht gesettet";
+
 
 public:
 	MQTTPublish(Dispatcher *disp, ContextData *contextData);
 	virtual ~MQTTPublish();
 	int client();
+
+//	void setErgebnisString( string ergebnisString) {
+//		this->ergebnisString = ergebnisString;
+//	}
+	void sendToConsole(string wert);
+
 	thread *ClientThread;
 	Dispatcher *dispatcher;
 };
