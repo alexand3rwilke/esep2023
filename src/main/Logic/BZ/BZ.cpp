@@ -8,6 +8,7 @@
 #include "BZ.h"
 #include "../RZ/RZ.h"
 #include "../ESZ/ESZ.h"
+#include <iterator>
 
 
 void BZ::entry(){
@@ -53,6 +54,7 @@ void BZ::doAction (int event, _pulse msg) {
 		stateId++;
 		cout << "StateCounter is now: " << stateId << endl;
 		cout << "New state created with id" << newsubState->getStateId() << endl;
+		cout << "Und gesucht wird TYPE:" << contextData->getGesuchtWKMapForStateForIndex(newsubState->getStateId()) << "  !" << endl;
 
 
 
@@ -118,7 +120,18 @@ void BZ::doAction (int event, _pulse msg) {
 						entry();
 						break;
 
+					case DELETE_STATE :
+						for(int i = 0; i < substateList.size(); i++ ) {
+							if(substateList.at(i)->getStateId() == msg.value.sival_int) {
+								cout << "DELETING STATE WITH ID: " << substateList.at(i)->getStateId() << endl;
 
+								auto it = substateList.begin();
+								std::advance(it, i);
+								substateList.erase(it);
+								break;
+
+							}
+						}
 					}
 
 	for(Basestate *stateFromList :substateList ) {

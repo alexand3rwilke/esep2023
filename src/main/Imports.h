@@ -226,6 +226,8 @@ extern int MAX_HOEHE;
 
 #define WK_TELEPORT 94
 
+#define DELETE_STATE 74
+
 
 enum WkType { WKN,WKF,WKB,WKBM,WKU,NOWK};
 

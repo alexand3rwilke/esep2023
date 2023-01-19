@@ -78,6 +78,8 @@ int main(int argc, char** args) {
 //		string werkstueck;
 
 		werkstuckReihenfolge.push_back(WK_Normal);
+		werkstuckReihenfolge.push_back(WK_FLACH);
+		werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
 		//werkstuckReihenfolge.push_back(WK_FLACH);
 		//werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
 //		while(getline(config, input))

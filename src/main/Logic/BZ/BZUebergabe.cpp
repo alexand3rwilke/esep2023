@@ -30,8 +30,12 @@ void BZUebergabe::entry() {
 
      	stateTimer->stopTimer();
         	stateTimer->resetTimer();
-
         	delete stateTimer;
+
+        	MsgSendPulse(contextData->disp->getConnectionID(), -1, DELETE_STATE, getStateId());
+
+
+
 
     }
     void BZUebergabe::estp() {
@@ -57,7 +61,7 @@ void BZUebergabe::entry() {
     		case LSA2interrupted:
   			// TODO delete this thread
 				exit();
-				delete this;
+			//	delete this;
 				//new(this) BZready;
 				//entry();
 				break;

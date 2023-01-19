@@ -104,7 +104,8 @@ void Context::eventHandler(){
 					ESTP1Finished, ESTP2Finished,
 					TIMER_IS_OVER,
 					RUTSCHE_1_VOLL,RUTSCHE_2_VOLL,RUTSCHE_1_LEER,RUTSCHE_2_LEER,
-					FA2_RUNNING,FA2_STOPPED
+					FA2_RUNNING,FA2_STOPPED,
+					DELETE_STATE
 
 					};
 
@@ -407,8 +408,12 @@ void Context::eventHandler(){
 
 					}
 
-
 					break;
+
+				case DELETE_STATE :
+					fisrsState->doAction(DELETE_STATE, msg);
+					break;
+
 
 			   }
 
