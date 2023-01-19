@@ -18,6 +18,7 @@
 #include "BZAuslauf.h"
 #include "BZAussortierer.h"
 #include "BZHoehenmessung.h"
+#include "../FZ/FZ.h"
 
 
 

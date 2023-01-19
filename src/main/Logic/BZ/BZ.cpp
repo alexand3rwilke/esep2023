@@ -10,6 +10,7 @@
 #include "../ESZ/ESZ.h"
 
 
+
 void BZ::entry(){
 	// grünes licht an entry
 	actions->greenOn();
@@ -71,6 +72,7 @@ void BZ::doAction (int event, _pulse msg) {
 
 				   case ESTP1interrupted:
 					   exit();
+					   substateList = {};
 					   new (this) ESZ;
 					   entry();
 					   doAction(event, msg);
@@ -79,6 +81,7 @@ void BZ::doAction (int event, _pulse msg) {
 
 				   case ESTP2interrupted:
 					   exit();
+					   substateList = {};
 					   new (this) ESZ;
 					   entry();
 					   doAction(event, msg);
@@ -97,8 +100,51 @@ void BZ::doAction (int event, _pulse msg) {
 						entry();
 						break;
 
+					case FEHLER_1:
+						exit();
+						new(this) FZ;
+						entry();
+						break;
+
+					case FEHLER_2:
+						exit();
+						new(this) FZ;
+						entry();
+						break;
+					case RUTSCHE_1_VOLL:
+						contextData->setRampe1Voll(true);
+						if(FESTO_TYPE == 1) {
+							actions->greenOff();
+							actions->yellowLightBlinking();
+						}
+
+						break;
+					case RUTSCHE_2_VOLL:
+						contextData->setRampe2Voll(true);
+						if(FESTO_TYPE == 2) {
+							actions->greenOff();
+							actions->yellowLightBlinking();
+						}
+						break;
+					case RUTSCHE_1_LEER:
+					contextData->setRampe1Voll(false);
+					if(FESTO_TYPE == 1) {
+						actions->yellowOff();
+						actions->greenOn();
 
 					}
+					break;
+
+					case RUTSCHE_2_LEER:
+					contextData->setRampe2Voll(false);
+					if(FESTO_TYPE == 2) {
+						actions->yellowOff();
+						actions->greenOn();
+
+					}
+					break;
+					}
+
 
 	for(Basestate *stateFromList :substateList ) {
 

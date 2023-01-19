@@ -302,52 +302,13 @@ void Context::eventHandler(){
 				break;
 
 				case RUTSCHE_1_VOLL:
-				contextData->setRampe1Voll(true);
 				cout << "Rutsche 1" << contextData->getRampe1Voll() <<"und Rutsche 2: " <<contextData->getRampe2Voll() << endl;
-				if(FESTO_TYPE == 1) {
-					actions->greenOff();
-									actions->yellowLightBlinking();
-
-				}
-
-
-
+				fisrsState->doAction(RUTSCHE_1_VOLL, msg);
 				break;
 
 				case RUTSCHE_2_VOLL:
-				contextData->setRampe2Voll(true);
-				cout << "Rutsche 1" << contextData->getRampe1Voll() <<"und Rutsche 2: " <<contextData->getRampe2Voll() << endl;
-				if(FESTO_TYPE == 2) {
-					actions->greenOff();
-					actions->yellowLightBlinking();
-
-				}
-
-
-
-				break;
-
-
-
-				case RUTSCHE_1_LEER:
-				contextData->setRampe1Voll(false);
-				if(FESTO_TYPE == 1) {
-					actions->yellowOff();
-					actions->greenOn();
-
-				}
-
-
-				break;
-
-				case RUTSCHE_2_LEER:
-				contextData->setRampe2Voll(false);
-				if(FESTO_TYPE == 2) {
-					actions->yellowOff();
-					actions->greenOn();
-
-				}
-
+				cout << "Rutsche 1: " << contextData->getRampe1Voll() <<"und Rutsche 2: " <<contextData->getRampe2Voll() << endl;
+				fisrsState->doAction(RUTSCHE_2_VOLL, msg);
 				break;
 
 				// TODO Werkstück erkennung testen
@@ -392,29 +353,21 @@ void Context::eventHandler(){
 				case FA2_RUNNING:
 					if(FESTO_TYPE == 1) {
 						actions->stopFB();
-
 					}
-
-					break;
+				break;
 
 				case FA2_STOPPED:
-
 					if(FESTO_TYPE == 1) {
 						if(contextData->getWKCount() >0) {
 							actions->startFB();
-							}
-
+						}
 					}
+				break;
 
-
-					break;
-
+				default:
+					fisrsState->doAction(msg.code, msg);
 			   }
-
-
-
 		}
-
 }
 
 void Context::setWkInStateWhereNotSet(int wkType) {
