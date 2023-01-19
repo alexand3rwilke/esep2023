@@ -68,10 +68,9 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 Context::~Context() {
 	//delete states;
 
-		delete fisrsState;
-
-
+	delete fisrsState;
 	delete disp;
+	delete contextData;
 }
 
 
