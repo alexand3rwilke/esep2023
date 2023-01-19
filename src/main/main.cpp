@@ -78,6 +78,8 @@ int main(int argc, char** args) {
 //		string werkstueck;
 
 		werkstuckReihenfolge.push_back(WK_Normal);
+		werkstuckReihenfolge.push_back(WK_FLACH);
+		werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
 		//werkstuckReihenfolge.push_back(WK_FLACH);
 		//werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
 //		while(getline(config, input))
@@ -111,20 +113,20 @@ int main(int argc, char** args) {
 			perror("Es wurde keine Reihenfolge bestimmt!");
 		}
 
-		ContextData *contextData = new ContextData(&dispatcher);
-		Context *context = new Context(&dispatcher, actions,contextData,werkstuckReihenfolge);
+		ContextData *contextData = new ContextData(&dispatcher,werkstuckReihenfolge);
+		Context *context = new Context(&dispatcher, actions,contextData);
 
 		if (strcmp(args[1], "F1") == 0) {
 
 			cout << "Starting Festo FBM1 \n" << endl;
-			QnetServer *server = new QnetServer("FBM1",&dispatcher);
-			QnetClient *client = new QnetClient("FBM2",&dispatcher);
+			QnetServer *server = new QnetServer("FBM1",&dispatcher,contextData);
+			QnetClient *client = new QnetClient("FBM2",&dispatcher,contextData);
 		}
 		else if (strcmp(args[1], "F2") == 0) {
 
 			cout << "Starting Festo FBM2 \n" << endl;
-			QnetServer *server = new QnetServer("FBM2",&dispatcher);
-			QnetClient *client = new QnetClient("FBM1",&dispatcher);
+			QnetServer *server = new QnetServer("FBM2",&dispatcher,contextData);
+			QnetClient *client = new QnetClient("FBM1",&dispatcher,contextData);
 		}
 //
 //			cout << "Starting Festo FBM1 \n" << endl;

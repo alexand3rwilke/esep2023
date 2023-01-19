@@ -8,8 +8,25 @@
 #include "QnetClient.h"
 #include "../../Imports.h"
 
-QnetClient::QnetClient(const char* attach_point, Dispatcher *disp) {
+typedef struct {
+int size; // size of data block
+int count; // some counter used by the application
 
+} app_header_t;
+typedef struct _pulse header_t;
+
+app_header_t app_header;
+iov_t iov[3]; // m
+header_t  header;
+char  r_msg[512]; // buffer for the answer
+
+
+#define STR_MSG   (_IO_MAX + 1)
+#define DATA_MSG  (_IO_MAX + 2)
+
+QnetClient::QnetClient(const char* attach_point, Dispatcher *disp,ContextData  *contextData) {
+
+	this->contextData = contextData;
 	this->dispatcher = disp;
 	this->attach_point =attach_point;
 	ClientThread = new std::thread([this]() {client();});
@@ -53,7 +70,7 @@ int QnetClient::client(){
 	}
 
 	vector<int8_t> events = {LSE, LSE1interrupted, LSA2interrupted,ESTP1interrupted, ESTP2interrupted,LSR1notInterrupted,LSR2notInterrupted,LSR1interrupted,LSR2interrupted
-			,ESTP1Finished,ESTP2Finished,ESTP1notInterrupted,ESTP2notInterrupted,FA2_RUNNING,FA2_STOPPED};
+			,ESTP1Finished,ESTP2Finished,ESTP1notInterrupted,ESTP2notInterrupted,FA2_RUNNING,FA2_STOPPED,WK_TELEPORT};
 
 	dispatcher->registerForEventWIthConnection(events, conID);
 
@@ -188,6 +205,35 @@ int QnetClient::client(){
 						}
 						break;
 
+
+					case WK_TELEPORT :
+
+						Werkstueck wk = contextData->getGescanntWKMapForStateForIndex(msg.value.sival_int);
+						string wkJson = wk.toJsonString();
+						cout << wkJson << endl;
+
+						char payload[200];                      // use dummy values as payload
+						memset(payload,0,200);
+						strcat(payload,wkJson.c_str());
+						int payload_size;                       // +1 due to \0 at the end of a string
+						payload_size = sizeof(payload)+1;
+						// Compose the msg using an IOV
+						header.type = STR_MSG;    // define msg type
+						header.subtype = 0x00;
+
+						app_header.size = payload_size;	// fill application header
+						app_header.count = 0;
+
+						SETIOV(iov+0, &header, sizeof(header));
+						SETIOV(iov+1, &app_header, sizeof(app_header));
+						SETIOV(iov+2, payload, payload_size);
+
+						// send msg
+						if (-1 == MsgSendvs(server_coid, iov, 3, r_msg, sizeof(r_msg))){
+							perror("Client: MsgSend failed");
+							//exit(EXIT_FAILURE);
+						}
+						break;
 
 
 

@@ -24,7 +24,7 @@
 
 
 
-Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *contextData,vector<int> werkstuckReihenfolgeList) {
+Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *contextData) {
 
 
 	//TimerBZ timerBz;
@@ -32,8 +32,8 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 //			timerBz = new TimerBZ(3,7);
 	wkReihenfolgeIndex = 0;
 	stateIndex = 0;
-	this->werkstuckReihenfolgeList = werkstuckReihenfolgeList;
 	this->contextData = contextData;
+
 	this->disp = dispatcher;
 	this->dispID = disp->getConnectionID();
 	this->actions = actions;
@@ -46,8 +46,8 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 	//fisrsState->setZielWK(werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
 	//RZ
 	fisrsState->setStateId(stateIndex);
-	contextData->setGescanntWKMapForStateForIndex(stateIndex,0);
-	contextData->setGesuchtWKMapForStateForIndex(stateIndex++,werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
+	//contextData->setGescanntWKMapForStateForIndex(stateIndex,0,0);
+	//contextData->setGesuchtWKMapForStateForIndex(stateIndex++,werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
 
 	fisrsState->entry();
 
@@ -55,10 +55,10 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 
 
 
-	fisrsState->exit();
-
-	new (fisrsState) BZ;
-	fisrsState->entry(); //TODO ---------------------------------------------------------------------------------------- Nur für den Test
+//	fisrsState->exit();
+//
+//	new (fisrsState) BZ;
+//	fisrsState->entry(); //TODO ---------------------------------------------------------------------------------------- Nur für den Test
 
 
 
@@ -104,7 +104,8 @@ void Context::eventHandler(){
 					ESTP1Finished, ESTP2Finished,
 					TIMER_IS_OVER,
 					RUTSCHE_1_VOLL,RUTSCHE_2_VOLL,RUTSCHE_1_LEER,RUTSCHE_2_LEER,
-					FA2_RUNNING,FA2_STOPPED
+					FA2_RUNNING,FA2_STOPPED,
+					DELETE_STATE
 
 					};
 
@@ -266,6 +267,9 @@ void Context::eventHandler(){
 			   	   break;
 
 			  case LSE2interrupted:
+				  if(FESTO_TYPE == 2) {
+					  actions->stopFB();
+				  }
 				  fisrsState->doAction(LSE2interrupted,msg);
 				  break;
 			  case LSA2interrupted:
@@ -302,6 +306,7 @@ void Context::eventHandler(){
 
 				case RUTSCHE_1_VOLL:
 				contextData->setRampe1Voll(true);
+
 				cout << "Rutsche 1" << contextData->getRampe1Voll() <<"und Rutsche 2: " <<contextData->getRampe2Voll() << endl;
 				if(FESTO_TYPE == 1) {
 					actions->greenOff();
@@ -349,31 +354,7 @@ void Context::eventHandler(){
 
 				break;
 
-				// TODO Werkstück erkennung testen
-				case WK_FLACH :
-				setWkInStateWhereNotSet(WK_FLACH);
-				fisrsState->doAction(WK_FLACH, msg);
-				break;
 
-				case WK_Normal :
-				setWkInStateWhereNotSet(WK_Normal);
-				fisrsState->doAction(WK_Normal, msg);
-				break;
-
-				case WK_Bohrung_Metal :
-				setWkInStateWhereNotSet(WK_Bohrung_Metal);
-				fisrsState->doAction(WK_Bohrung_Metal, msg);
-				break;
-
-				case WK_Bohrung_Normal :
-				setWkInStateWhereNotSet(WK_Bohrung_Normal);
-				fisrsState->doAction(WK_Bohrung_Normal, msg);
-				break;
-
-				case WK_UNDEFINED :
-				setWkInStateWhereNotSet(WK_UNDEFINED);
-				fisrsState->doAction(WK_UNDEFINED, msg);
-				break;
 
 				case WK_ADDED :
 				contextData->addWK();
@@ -383,30 +364,49 @@ void Context::eventHandler(){
 				contextData->removeWK();
 				break;
 
+				case WK_FLACH :
+				fisrsState->doAction(WK_FLACH, msg);
+				break;
+
+				case WK_Normal :
+				fisrsState->doAction(WK_Normal, msg);
+				break;
+
+				case WK_Bohrung_Metal :
+				fisrsState->doAction(WK_Bohrung_Metal, msg);
+				break;
+
+				case WK_Bohrung_Normal :
+				fisrsState->doAction(WK_Bohrung_Normal, msg);
+				break;
+
+				case WK_UNDEFINED :
+				fisrsState->doAction(WK_UNDEFINED, msg);
+				break;
 
 				case TIMER_IS_OVER:
 					cout << "---------Time Over" << endl;
 					break;
 
 				case FA2_RUNNING:
-					if(FESTO_TYPE == 1) {
-						actions->stopFB();
-
-					}
+					contextData->setF2Running(true);
 
 					break;
 
 				case FA2_STOPPED:
+					contextData->setF2Running(false);
+					if(contextData->getWKCount() >0 ) {
 
-					if(FESTO_TYPE == 1) {
-						if(contextData->getWKCount() >0) {
-							actions->startFB();
-							}
-
+						actions->startFB();
 					}
 
 
 					break;
+
+				case DELETE_STATE :
+					fisrsState->doAction(DELETE_STATE, msg);
+					break;
+
 
 			   }
 
@@ -416,20 +416,4 @@ void Context::eventHandler(){
 
 }
 
-void Context::setWkInStateWhereNotSet(int wkType) {
 
-	for(int i = 0;i < stateIndex; i++) {
-		//cout << "map auf wert 0 ist:" << contextData->getGescanntWKMapForStateForIndex(0) << "\n" << endl;
-		//cout << i << "\n" << endl;
-//		cout << "--------------------map hat wert: "<< contextData->getGescanntWKMapForStateForIndex(i) << "\n" << endl;
-//	cout << "--------------------map hat wert" << "\n" << endl;
-	if(contextData->getGescanntWKMapForStateForIndex(i) == 0) {
-		contextData->setGescanntWKMapForStateForIndex(0,wkType);
-//			cout << "--------------------map hat wert 2" << "\n" << endl;
-//				return;
-	}
-}
-//		contextData->getLatestRegisterForAdcState();
-//		int adcRecieverStateId = contextData->getLatestRegisterForAdcState();
-//		contextData->setGescanntWKMapForStateForIndex(adcRecieverStateId,wkType);
-}

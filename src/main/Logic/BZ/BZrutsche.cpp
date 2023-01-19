@@ -17,9 +17,7 @@ void BZrutsche::entry() {
 }
     void BZrutsche::exit() {
 
-     	stateTimer->stopTimer();
-        	stateTimer->resetTimer();
-        	delete stateTimer;
+
 
     	cout << "\n  BZrutsche exit\n" << "in State: "<< stateId << endl;
 
@@ -28,11 +26,14 @@ void BZrutsche::entry() {
     	    		if(contextData->getWKCount()==0) {
 
     	    			actions->stopFB();
-    	    		} else {
-
-    	    		delete this;
     	    		}
 
+
+    	    				//stateTimer->stopTimer();
+    	    		        	stateTimer->resetTimer();
+    	    		        	//delete stateTimer;
+
+    	    		        	MsgSendPulse(contextData->disp->getConnectionID(), -1, DELETE_STATE, getStateId());
 
     }
     void BZrutsche::estp() {

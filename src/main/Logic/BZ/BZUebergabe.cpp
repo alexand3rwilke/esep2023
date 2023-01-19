@@ -10,12 +10,17 @@
 #include "../../Imports.h"
 
 
+
 void BZUebergabe::entry() {
 
 	cout << "\n  BZUebergabe entry\n" << endl;
+	if(contextData->getF2Running()) {
+		actions->stopFB();
+	}
 
 
-
+	MsgSendPulse(contextData->disp->getConnectionID(), -1, WK_TELEPORT, getStateId());
+	cout << "Übertrage Werkstueck von State" << getStateId() << "an Festp2"<< "\n" << endl;
 
 }
     void BZUebergabe::exit() {
@@ -29,8 +34,12 @@ void BZUebergabe::entry() {
 
      	stateTimer->stopTimer();
         	stateTimer->resetTimer();
-
         	delete stateTimer;
+
+        	MsgSendPulse(contextData->disp->getConnectionID(), -1, DELETE_STATE, getStateId());
+
+
+
 
     }
     void BZUebergabe::estp() {
@@ -56,7 +65,7 @@ void BZUebergabe::entry() {
     		case LSA2interrupted:
   			// TODO delete this thread
 				exit();
-				delete this;
+			//	delete this;
 				//new(this) BZready;
 				//entry();
 				break;
