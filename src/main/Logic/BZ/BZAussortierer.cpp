@@ -59,21 +59,39 @@ void BZAussortierer::entry() {
 
     			//contextData->getLatestRegisterForAdcState();
 
+    			if(contextData->getAussortierenForWerkstueckInStateID(stateId)) {
+
+    				exit();
+    				new(this)BZrutsche;
+    				entry();
+
+    			}
+
 			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex() % contextData->werkstuckReihenfolgeList.size())) {
 			actions->durchlassen();
+			contextData->setAussortierenForWerkstueckInStateID(stateId, false);
 			contextData->increaseWkReihenfolgeIndex();
 			// TODO : Vielleicht noch eine Sekunde weiterlaufen lassen damit es in die Rutsche geht
 			// TODO : Vielleicht brauchen wir noch einen Ruschen state um zu warten bis das WK die rutsche runtergerutscht ist, damit wir keine feste Zeit warten müssen
 			} else {
-				//TODO ENTFERNEN
-				//actions->durchlassen();
-			exit();
-			new(this)BZrutsche;
-			entry();
+				if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == WK_FLACH) {
+					contextData->setAussortierenForWerkstueckInStateID(stateId, true);
+					if(!contextData->getRampe1Voll()) {
+						exit();
+									new(this)BZrutsche;
+									entry();
+
+					} else {
+					actions->durchlassen();
+
+					}
+
+
+				}
+
 
 			}
     			break;
-
 
 
     		case LSE2interrupted :

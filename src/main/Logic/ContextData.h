@@ -86,6 +86,11 @@ public:
 		this->f2Running = f2Running;
 	}
 
+	void setAussortierenForWerkstueckInStateID(int stateID, bool value);
+	void setFlippedForWerkstueckInStateID(int stateID, bool value);
+	bool getAussortierenForWerkstueckInStateID(int stateID);
+	bool getFlippedForWerkstueckInStateID(int stateID);
+
 	;
 
 
