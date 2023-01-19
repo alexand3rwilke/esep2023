@@ -22,25 +22,40 @@ void SMZwsMetall::exit(){
 void SMZwsMetall::doAction(int event,_pulse msg){
 
 	switch(event){
+
+
 	case LSA1interrupted:
+		if (FESTO_TYPE == 1){
 		actions->startFB();
 		cout << "[SMZ] -  Messe WS mit Metall..." << endl;
 		actions->startSMZ_hoehe(4);
 		actions->yellowLightBlinking();
+		}
 		break;
-	case LSA2interrupted:
-		actions->startFB();
-		cout << "[SMZ] -  Messe WS mit Metall..." << endl;
-		actions->startSMZ_hoehe(4);
-		actions->yellowLightBlinking();
-		break;
+
+
 	case LSR1interrupted:
+		if (FESTO_TYPE == 1){
 		cout << "[SMZ] -  Messung fertig " << endl;
 		actions->stopFB();
+		}
 		break;
+
+
+	case LSA2interrupted:
+		if (FESTO_TYPE == 2){
+		actions->startFB();
+		cout << "[SMZ] -  Messe WS mit Metall..." << endl;
+		actions->startSMZ_hoehe(4);
+		actions->yellowLightBlinking();
+		}
+		break;
+
 	case LSR2interrupted:
+		if (FESTO_TYPE == 2){
 		cout << "[SMZ] -  Messung fertig " << endl;
 		actions->stopFB();
+		}
 		break;
 	case STRinterrupted:
 		exit();

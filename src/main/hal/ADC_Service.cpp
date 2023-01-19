@@ -48,7 +48,7 @@ void ADC_Service::adcInterruptService() {
 
 
 
-			events = {ADC_START_SAMPLE, ADC_SAMLING_FINISHED, START_SMZ, LSR1interrupted};
+			events = {ADC_START_SAMPLE, ADC_SAMLING_FINISHED, START_SMZ, LSR1interrupted, LSR2interrupted};
 
 
 			disp->registerForEventWIthConnection(events, conID);
