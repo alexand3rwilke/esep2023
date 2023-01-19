@@ -17,10 +17,11 @@ typedef struct {
 	// further data fields required by our application
 } app_header_t;
 
-QnetServer::QnetServer(const char* attach_point, Dispatcher *disp) {
+QnetServer::QnetServer(const char* attach_point, Dispatcher *disp, ContextData  *contextData) {
 	//this->data = data;
 	this ->dispatcher = disp;
 	this->attach_point =attach_point;
+	this->contextData = contextData;
 	ServerThread = new std::thread([this]() {server();});
 }
 
@@ -232,6 +233,8 @@ int QnetServer::server(){
 
 		       			   		printf("Server: got the STR_MSG (count = %d): %s \n", app_header.count, buf);
 		       			   		// TODO HIER DANN WK ANLEGEN AUS DEM STRING
+
+		       			   		// iwie sowas wie contextData->
 
 		       			   		MsgReply(rcvid, EOK, NULL, 0);
 		       			   		//free(buf);

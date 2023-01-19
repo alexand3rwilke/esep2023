@@ -117,13 +117,13 @@ int main(int argc, char** args) {
 		if (strcmp(args[1], "F1") == 0) {
 
 			cout << "Starting Festo FBM1 \n" << endl;
-			QnetServer *server = new QnetServer("FBM1",&dispatcher);
+			QnetServer *server = new QnetServer("FBM1",&dispatcher,contextData);
 			QnetClient *client = new QnetClient("FBM2",&dispatcher,contextData);
 		}
 		else if (strcmp(args[1], "F2") == 0) {
 
 			cout << "Starting Festo FBM2 \n" << endl;
-			QnetServer *server = new QnetServer("FBM2",&dispatcher);
+			QnetServer *server = new QnetServer("FBM2",&dispatcher,contextData);
 			QnetClient *client = new QnetClient("FBM1",&dispatcher,contextData);
 		}
 //
