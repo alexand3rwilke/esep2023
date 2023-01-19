@@ -20,6 +20,7 @@
 #include "Qnet/QnetClient/QnetClient.h"
 #include "Qnet/QnetServer/QnetServer.h"
 #include <fstream>
+#include "MQTTpublish/MQTTpublish/MQTTpublish.h"
 
 #include "Imports.h"
 
@@ -68,6 +69,8 @@ int main(int argc, char** args) {
 		ADC_Service *adcService = new ADC_Service(&dispatcher);
 
 
+
+
 //		fstream config;
 //		string input = "WK_NORMAL WK_FLACH WK_BOHRUNG";
 //		string delimiter= " ";
@@ -113,6 +116,7 @@ int main(int argc, char** args) {
 
 		ContextData *contextData = new ContextData(&dispatcher);
 		Context *context = new Context(&dispatcher, actions,contextData,werkstuckReihenfolge);
+		MQTTPublish *mqtt = new  MQTTPublish(&dispatcher,contextData);
 
 		if (strcmp(args[1], "F1") == 0) {
 

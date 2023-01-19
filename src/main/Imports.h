@@ -224,6 +224,8 @@ extern int MAX_HOEHE;
 #define FA2_RUNNING 67
 #define FA2_STOPPED 68
 
+#define MQTTMESSAGE 4
+
 
 enum WkType { WKN,WKF,WKB,WKBM,WKU,NOWK};
 

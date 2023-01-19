@@ -19,7 +19,6 @@ CXX = qcc -lang-c++ -std=c++14 -D_QNX_SOURCE -Vgcc_nto$(PLATFORM)
 # Hier einkommentieren wenn die Tests kompiliert werden sollen!
 #CXX += -DRUN_TESTS
 ##################################################################
-
 LD = $(CXX)
 
 #User defined include/preprocessor flags and libraries
@@ -29,7 +28,7 @@ LD = $(CXX)
 
 #LIBS += -L/path/to/my/lib/$(PLATFORM)/usr/lib -lmylib
 #LIBS += -L../mylib/$(OUTPUT_DIR) -lmylib
-
+LIBS += -lsocket
 ###########################################################
 # Wir benutzen die library für das GoogleTest framework. 
 #	Diese muss ggf. noch auf euer VM installiert werden! 
