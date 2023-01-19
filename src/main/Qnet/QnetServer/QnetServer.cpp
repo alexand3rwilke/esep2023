@@ -236,6 +236,7 @@ int QnetServer::server(){
 		       			   		string wkJsonString;
 		       			   		wkJsonString.assign(buf, sizeof(buf));
 		       			   		Werkstueck *wk = new Werkstueck(wkJsonString);
+		       			   		contextData->setGescanntWKMapForStateForIndex(0,wk->werkstueckTyp, wk->mittlereHoehe,wk->wkFlipped,wk->aussortieren,wk->absoluteHoehe);
 
 		       			   		MsgReply(rcvid, EOK, NULL, 0);
 		       			   		//free(buf);

@@ -71,9 +71,8 @@ void BZAussortierer::entry() {
 			new(this)BZrutsche;
 			entry();
 
-
 			}
-    		break;
+    			break;
 
 
 
