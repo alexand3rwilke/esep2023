@@ -32,6 +32,9 @@ void BZrutsche::entry() {
     	    				//stateTimer->stopTimer();
     	    		        	stateTimer->resetTimer();
     	    		        	//delete stateTimer;
+    	    		        	if(FESTO_TYPE == 2) {
+    	    		        		MsgSendPulse(contextData->disp->getConnectionID(), -1, FA2_STOPPED, 0);
+    	    		        	}
 
     	    		        	MsgSendPulse(contextData->disp->getConnectionID(), -1, DELETE_STATE, getStateId());
 

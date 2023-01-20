@@ -74,7 +74,7 @@ void BZ::doAction (int event, _pulse msg) {
 
 				substateList.push_back(newsubState);
 				contextData->addWK();
-				stateId++;
+				//stateId++;
 				cout << "StateCounter is now: " << stateId << endl;
 				cout << "New state created with id" << newsubState->getStateId() << endl;
 
@@ -134,27 +134,53 @@ void BZ::doAction (int event, _pulse msg) {
 
 						// TODO Werkstück erkennung testen
 					case WK_FLACH :
-					setWkInStateWhereNotSet(WK_FLACH,msg.value.sival_int);
+						if(FESTO_TYPE == 2) {
+
+						contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp!= WK_FLACH);
+						} else {
+							setWkInStateWhereNotSet(WK_FLACH,msg.value.sival_int);
+						}
+
 
 					break;
 
 					case WK_Normal :
-					setWkInStateWhereNotSet(WK_Normal,msg.value.sival_int);
+						if(FESTO_TYPE == 2) {
+
+						contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Normal);
+						} else {
+							setWkInStateWhereNotSet(WK_Normal,msg.value.sival_int);
+						}
 
 					break;
 
 					case WK_Bohrung_Metal :
-					setWkInStateWhereNotSet(WK_Bohrung_Metal,msg.value.sival_int);
+						if(FESTO_TYPE == 2) {
+
+						contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung_Metal);
+						} else {
+							setWkInStateWhereNotSet(WK_Bohrung_Metal,msg.value.sival_int);
+						}
 
 					break;
 
 					case WK_Bohrung_Normal :
-					setWkInStateWhereNotSet(WK_Bohrung_Normal,msg.value.sival_int);
+						if(FESTO_TYPE == 2) {
+
+						contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung_Normal);
+						} else {
+							setWkInStateWhereNotSet(WK_Bohrung_Normal,msg.value.sival_int);
+						}
 
 					break;
 
 					case WK_UNDEFINED :
-					setWkInStateWhereNotSet(WK_UNDEFINED,msg.value.sival_int);
+						if(FESTO_TYPE == 2) {
+
+						contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_UNDEFINED);
+						} else {
+							setWkInStateWhereNotSet(WK_UNDEFINED,msg.value.sival_int);
+						}
 
 					break;
 					}

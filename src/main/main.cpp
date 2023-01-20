@@ -20,10 +20,10 @@
 #include "Qnet/QnetClient/QnetClient.h"
 #include "Qnet/QnetServer/QnetServer.h"
 #include <fstream>
+
 #include "MQTTpublish/MQTTpublish/MQTTpublish.h"
-
+#include <iostream>
 #include "Imports.h"
-
 
 int MIN_HOEHE = 3300;
 int MAX_HOEHE = 2100;
@@ -71,49 +71,70 @@ int main(int argc, char** args) {
 
 
 
-//		fstream config;
-//		string input = "WK_NORMAL WK_FLACH WK_BOHRUNG";
-//		string delimiter= " ";
-//		config.open("/bspreihenfolgeWK.cfg", ios::in);
-		vector<int> werkstuckReihenfolge;
-//
-//		if(!config)perror("Fehler beim Öffnen von bspreihenfolgeWK.cfg");
-//		string werkstueck;
 
+		fstream config;
+		string input = "WK_NORMAL WK_FLACH WK_BOHRUNG";
+		string delimiter= " ";
+//		config.open("/bspreihenfolgeWK.cfg", ios::in);
+
+		vector<int> werkstuckReihenfolge;
+
+//		std::ofstream outfile("/bspreihenfolgeWK.cfg");
+//
+//		outfile << "my text here!" << std::endl;
+//
+//		outfile.close();
+
+//		if(!config)perror("Fehler beim Öffnen von bspreihenfolgeWK.cfg");
+		string werkstueck;
+
+
+		//TODO EINKOMMENTIEREN
 		werkstuckReihenfolge.push_back(WK_Normal);
 		werkstuckReihenfolge.push_back(WK_FLACH);
 		werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
+		// TODO EINKOMMENTIEREN
+
+
 		//werkstuckReihenfolge.push_back(WK_FLACH);
 		//werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
-//		while(getline(config, input))
-//		{
-//			werkstueck = input.substr(input.find(delimiter) + 1, input.length());
-//
-//
-//			if(werkstueck == "WK_NORMAL")  {
-//				werkstuckReihenfolge.push_back(WK_Normal);
-//			}
-//
-//			else if(werkstueck == "WK_FLACH")  {
-//				werkstuckReihenfolge.push_back(WK_FLACH);
-//			}
-//
-//			else if(werkstueck == "WK_Bohrung_Normal")  {
-//				werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
-//			}
-//
-//			else if(werkstueck == "WK_Bohrung_Metal")  {
-//				werkstuckReihenfolge.push_back(WK_Bohrung_Metal);
-//			}
-//
-//
-//		}
-//
-//		config.close();
+		while(getline(config, input))
+		{
+			werkstueck = input.substr(input.find(delimiter) + 1, input.length());
+
+
+			if(werkstueck == "WK_NORMAL")  {
+				werkstuckReihenfolge.push_back(WK_Normal);
+			}
+
+			else if(werkstueck == "WK_FLACH")  {
+				werkstuckReihenfolge.push_back(WK_FLACH);
+			}
+
+			else if(werkstueck == "WK_Bohrung_Normal")  {
+				werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
+			}
+
+			else if(werkstueck == "WK_Bohrung_Metal")  {
+				werkstuckReihenfolge.push_back(WK_Bohrung_Metal);
+			}
+
+
+		}
+
+		config.close();
 
 		if(werkstuckReihenfolge.size() == 0) {
 
 			perror("Es wurde keine Reihenfolge bestimmt!");
+		}
+
+
+		for(int wkConfig : werkstuckReihenfolge) {
+			cout << wkConfig << " in List eingefügt " << endl;
+
+
+
 		}
 
 
