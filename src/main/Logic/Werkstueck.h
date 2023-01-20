@@ -42,6 +42,7 @@ public:
 	void setAussortieren(bool aussortieren);
 
 	string toJsonString(void);
+	string toString(void);
 
 
 };

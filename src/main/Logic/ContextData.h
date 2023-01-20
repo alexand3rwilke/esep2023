@@ -64,6 +64,7 @@ public:
     // WK gesucht & gescannt map
     void setGesuchtWKMapForStateForIndex(int index, int gesuchtesWK);
     void setGescanntWKMapForStateForIndex(int index,int gescanntesWK, int durchschnittHoehe);
+    void setGescanntWKMapForStateForIndex(int index,int gescanntesWK, int durchschnittHoehe,bool flipped,bool aussortieren,int absuluteHoehe);
     int getGesuchtWKMapForStateForIndex(int index);
     Werkstueck getGescanntWKMapForStateForIndex(int index);
     bool isPresentInMap(int index);
@@ -91,7 +92,12 @@ public:
 		this->f2Running = f2Running;
 	}
 
-	;
+	void setAussortierenForWerkstueckInStateID(int stateID, bool value);
+	void setFlippedForWerkstueckInStateID(int stateID, bool value);
+	bool getAussortierenForWerkstueckInStateID(int stateID);
+	bool getFlippedForWerkstueckInStateID(int stateID);
+
+
 
 
 };

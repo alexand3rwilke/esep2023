@@ -224,7 +224,7 @@ int QnetClient::client(){
 					case WK_TELEPORT :
 
 						Werkstueck wk = contextData->getGescanntWKMapForStateForIndex(msg.value.sival_int);
-						string wkJson = wk.toJsonString();
+						string wkJson = wk.toString();
 						cout << wkJson << endl;
 
 						char payload[200];                      // use dummy values as payload

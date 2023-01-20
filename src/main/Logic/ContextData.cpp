@@ -115,6 +115,49 @@ void ContextData::setGescanntWKMapForStateForIndex(int index,int gescanntesWK, i
 
 }
 
+void ContextData::setGescanntWKMapForStateForIndex(int index,int gescanntesWK, int durchschnittHoehe,bool flipped,bool aussortieren,int absuluteHoehe) {
+
+	Werkstueck wk;
+	wk.setAbsoluteHoehe(0);
+	wk.setAussortieren(aussortieren);
+	wk.setMittlereHoehe(durchschnittHoehe);
+	wk.setWkFlipped(flipped);
+	wk.setWkType(gescanntesWK);
+	gescanntesWKMap[index] = wk;
+
+}
+
+void ContextData::setAussortierenForWerkstueckInStateID(int stateID, bool value) {
+Werkstueck wk;
+wk = gescanntesWKMap.at(stateID);
+wk.aussortieren = value;
+gescanntesWKMap[stateID] = wk;
+}
+
+void ContextData::setFlippedForWerkstueckInStateID(int stateID, bool value) {
+Werkstueck wk;
+wk = gescanntesWKMap.at(stateID);
+wk.wkFlipped = value;
+gescanntesWKMap[stateID] = wk;
+}
+
+
+
+bool ContextData::getAussortierenForWerkstueckInStateID(int stateID) {
+Werkstueck wk;
+wk = gescanntesWKMap.at(stateID);
+return wk.aussortieren;
+
+}
+
+bool ContextData::getFlippedForWerkstueckInStateID(int stateID) {
+Werkstueck wk;
+wk = gescanntesWKMap.at(stateID);
+return wk.wkFlipped;
+
+}
+
+
 
 int ContextData::getGesuchtWKMapForStateForIndex(int index) {
 

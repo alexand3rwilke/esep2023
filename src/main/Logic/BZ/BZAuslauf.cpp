@@ -23,6 +23,8 @@ void BZAuslauf::entry() {
 
 	stateTimer = new SimpleTimer(this->contextData->disp);
 	    	actions->stopFB();
+	    	Werkstueck wk = contextData->getGescanntWKMapForStateForIndex(stateId);
+	    	cout << wk.toJsonString() << "kam am ende an" << endl;
 
 
 
