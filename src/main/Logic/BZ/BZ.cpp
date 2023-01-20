@@ -15,6 +15,10 @@
 void BZ::entry(){
 	// grünes licht an entry
 	actions->greenOn();
+	if(0<contextData->getWKCount()){   // ---------------------------- Das würde nur gehen wenn FB2 leer ist
+		//weiter
+		actions->startFB();
+	}
 	//printf("in BZ");
 	//actions->greenOn();
 

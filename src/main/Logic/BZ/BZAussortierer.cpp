@@ -72,18 +72,26 @@ void BZAussortierer::entry() {
 			} else {
 				//TODO ENTFERNEN
 
-				actions->aussortieren();
+
 
 				if(contextData->getRampe1Voll() == true && contextData->getRampe2Voll() == true){
 					if(FESTO_TYPE == 1){
-						MsgSendPulse(contextData->disp->getConnectionID(), -1, FEHLER_1,0);
-					} else {
+					MsgSendPulse(contextData->disp->getConnectionID(), -1, FEHLER_1,0);
+					}else {
 						MsgSendPulse(contextData->disp->getConnectionID(), -1, FEHLER_2,0);
 					}
+					actions->stopFB();
+
+				} else if (FESTO_TYPE == 2 && contextData->getRampe2Voll() == true) {
+					MsgSendPulse(contextData->disp->getConnectionID(), -1, FEHLER_2,0);
+					actions->stopFB();
+				}else {
+
+					actions->aussortieren();
+					exit();
+					new(this)BZrutsche;
+					entry();
 				}
-			exit();
-			new(this)BZrutsche;
-			entry();
 
 
 			}
@@ -111,6 +119,12 @@ void BZAussortierer::entry() {
 
 			}
 			break;
+
+			case LSS1notInterrupted:
+				exit();
+				new(this)BZrutsche;
+				entry();
+				break;
     		    
 
 			// Klassefizierung
