@@ -48,24 +48,24 @@ int MQTTPublish::client(){
 	// der Broker sollte bereit sein
 
 	/* ### Create channel - Connecting with Dispatcher ### */
-	int channnelID = ChannelCreate(0);//Create channel to receive Events
-
-	if (channnelID < 0) {
-		perror("Could not create a channel!\n");
-	}
-
-	int pid = getpid();
-	int conID = ConnectAttach(0, pid, channnelID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
-
-	if (conID < 0) {
-		perror("Could not connect to channel!");
-	}
-
-	vector<int8_t> events = {MQTTMESSAGE};
-
-	dispatcher->registerForEventWIthConnection(events, conID);
-
-	_pulse msg;
+//	int channnelID = ChannelCreate(0);//Create channel to receive Events
+//
+//	if (channnelID < 0) {
+//		perror("Could not create a channel!\n");
+//	}
+//
+//	int pid = getpid();
+//	int conID = ConnectAttach(0, pid, channnelID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
+//
+//	if (conID < 0) {
+//		perror("Could not connect to channel!");
+//	}
+//
+//	vector<int8_t> events = {MQTTMESSAGE};
+//
+//	dispatcher->registerForEventWIthConnection(events, conID);
+//
+//	_pulse msg;
 
 //	while (true) {
 //
@@ -104,7 +104,7 @@ int MQTTPublish::client(){
 	    }
 
 	    // dieser Stringbuffer wird übertragen !!!!!!!!!!!!!!!!!
-	    char payload[40] = "Joshua------------------------!";
+	    //char payload[40] = "Joshua------------------------!";
 	    memset(payload,0,40);
 		for (int i = 0; i < ergebnisString.length(); i++) {
 			payload[i] = ergebnisString[i];

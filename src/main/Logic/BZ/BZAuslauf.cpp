@@ -17,6 +17,8 @@ void BZAuslauf::entry() {
 	string stringForMQTT = contextData->getGescanntWKMapForStateForIndex(stateId).toJsonString();
 	mqtt->sendToConsole(stringForMQTT);
 
+	delete mqtt;
+
 	cout << "\n  BZAuslauf entry\n" << endl;
 
 	stateTimer->startTimer();

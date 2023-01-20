@@ -92,7 +92,7 @@ int main(int argc, char** args) {
 		//TODO EINKOMMENTIEREN
 		werkstuckReihenfolge.push_back(WK_Normal);
 		werkstuckReihenfolge.push_back(WK_FLACH);
-		werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
+		werkstuckReihenfolge.push_back(WK_Bohrung_Metal);
 		// TODO EINKOMMENTIEREN
 
 
