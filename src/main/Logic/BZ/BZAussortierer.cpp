@@ -54,12 +54,17 @@ void BZAussortierer::entry() {
     		case LSE1interrupted :
     			if(stateTimer->getTime() > 1.5) {
     				exit();
-				new(this) BZUebergabe;
-				entry();
+    				new(this) BZUebergabe;
+    				entry();
 
     			}
-
     			break;
+
+    		case LSE2interrupted :
+				exit();
+				new(this) BZAuslauf;
+				entry();
+				break;
 
 
 

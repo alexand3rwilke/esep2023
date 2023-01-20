@@ -14,14 +14,12 @@
 
 void BZAuslauf::entry() {
 	MQTTPublish *mqtt = new  MQTTPublish(contextData->disp,contextData);
-	//Werkstueck *wk = contextData->
-
-	//TODO String vom Werkstück
-	mqtt->sendToConsole(contextData->getGescanntWKMapForStateForIndex(stateId).toJsonString());
+	string stringForMQTT = contextData->getGescanntWKMapForStateForIndex(stateId).toJsonString();
+	mqtt->sendToConsole(stringForMQTT);
 
 	cout << "\n  BZAuslauf entry\n" << endl;
 
-	stateTimer = new SimpleTimer(this->contextData->disp);
+	stateTimer->startTimer();
 	    	actions->stopFB();
 	    	Werkstueck wk = contextData->getGescanntWKMapForStateForIndex(stateId);
 	    	cout << wk.toJsonString() << "kam am ende an" << endl;
