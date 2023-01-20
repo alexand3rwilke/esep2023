@@ -10,6 +10,8 @@
 
 void FGUZ:: entry(){
 	actions->greenLightBlinking();
+	//actions->greenOn();
+	cout << "[FZ] entry von alleine weg" << endl;
 	//TimerBZ = new TimerBZ((contextData->disp->getConnectionID(),3,)
 	usleep(1000 * (3 * 1000 ));
 	MsgSendPulse(contextData->disp->getConnectionID(),-1,FEHLER_OK,0);

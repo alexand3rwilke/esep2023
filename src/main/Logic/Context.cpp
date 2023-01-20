@@ -285,6 +285,7 @@ void Context::eventHandler(){
 				  break;
 
 				case LSR1notInterrupted:
+				cout << "Rutsche leer auf 1 --- vor Timer" << endl;
 				fisrsState->doAction(LSR1interrupted, msg);
 				timerBz = new TimerBZ(disp,3,LSR1notInterrupted, RUTSCHE_1_LEER);
 				contextData->setRampe1Voll(false);
@@ -292,6 +293,7 @@ void Context::eventHandler(){
 				break;
 
 				case LSR2notInterrupted:
+				cout << "Rutsche leer auf 2--- vor Timer" << endl;
 				fisrsState->doAction(LSR2interrupted, msg);
 				timerBz = new TimerBZ(disp,3,LSR2notInterrupted, RUTSCHE_2_LEER);
 				//TODO setze contextData Rampe2 voll auf false;
@@ -321,9 +323,23 @@ void Context::eventHandler(){
 				break;
 
 				case RUTSCHE_2_VOLL:
-				cout << "Rutsche 1: " << contextData->getRampe1Voll() <<"und Rutsche 2: " <<contextData->getRampe2Voll() << endl;
+				//cout << "Rutsche 1: " << contextData->getRampe1Voll() <<"und Rutsche 2: " <<contextData->getRampe2Voll() << endl;
 				fisrsState->doAction(RUTSCHE_2_VOLL, msg);
 				break;
+
+				case RUTSCHE_1_LEER:
+					contextData->setRampe1Voll(false);
+					//cout << "Rutsche leer auf 1--- Nach timer" << endl;
+					fisrsState->doAction(RUTSCHE_1_LEER, msg);
+
+					break;
+
+				case RUTSCHE_2_LEER:
+					contextData->setRampe2Voll(false);
+					//cout << "Rutsche leer auf 2---  Nach timer" << endl;
+					fisrsState->doAction(RUTSCHE_2_LEER, msg);
+
+					break;
 
 
 

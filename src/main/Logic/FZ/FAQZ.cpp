@@ -8,7 +8,7 @@
 #include "FAQZ.h"
 
 void FAQZ:: entry(){
-	cout << "entry FZ Anstehend quittieren" << endl;
+	cout << "[FZ] Anstehend quittieren" << endl;
 	actions->redOn();
 
 }
