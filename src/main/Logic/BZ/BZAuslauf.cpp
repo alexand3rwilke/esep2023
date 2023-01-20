@@ -13,11 +13,14 @@
 
 
 void BZAuslauf::entry() {
-	MQTTPublish *mqtt = new  MQTTPublish(contextData->disp,contextData);
-	string stringForMQTT = contextData->getGescanntWKMapForStateForIndex(stateId).toJsonString();
-	mqtt->sendToConsole(stringForMQTT);
 
-	delete mqtt;
+	string stringForMQTT = contextData->getGescanntWKMapForStateForIndex(stateId).toJsonString();
+	stringForMQTT = "Mqtt mit Dispatchtecher";
+	mqtt->sendToConsole(stringForMQTT);
+	usleep(1000 * (2 * 1000 ));
+	MsgSendPulse(contextData->disp->getConnectionID(),-1,MQTTMESSAGE,0);
+
+
 
 	cout << "\n  BZAuslauf entry\n" << endl;
 
@@ -42,6 +45,7 @@ void BZAuslauf::entry() {
 
 
     }
+
     void BZAuslauf::doAction(int event, _pulse){
 
 

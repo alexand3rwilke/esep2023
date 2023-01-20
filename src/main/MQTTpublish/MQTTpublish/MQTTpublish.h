@@ -18,13 +18,13 @@ using namespace std;
 class MQTTPublish {
 private:
 	ContextData *contextData;
-	string ergebnisString = "ergebnisString wurde nicht gesettet";
+	string ergebnisString = "String in MQTT wurde nicht gesetzt";
 
 
 public:
 	MQTTPublish(Dispatcher *disp, ContextData *contextData);
 	virtual ~MQTTPublish();
-	int client();
+	void client(void);
 
 //	void setErgebnisString( string ergebnisString) {
 //		this->ergebnisString = ergebnisString;

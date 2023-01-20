@@ -19,59 +19,61 @@
 #define ADDRESS     "tcp://192.168.101.202:1883"
 #define CLIENTID    "ExampleClientPub"
 // Topic muss im Broker angegeben werden -> darüber Nachrichten empfangen
-#define TOPIC       "/Festo/108"
+#define TOPIC       "/Festo/102"
 // payload ist hier erstmal Kosmetik, siehe Zeile
 #define PAYLOAD     " Start MQTT"
 #define QOS         1
-#define TIMEOUT     10L
+//#define TIMEOUT     10L
 
-//#define TIMEOUT     10000L
+#define TIMEOUT     10000L
 
 
 MQTTPublish::MQTTPublish(Dispatcher *disp,ContextData *contextData) {
 
 	this->dispatcher = disp;
 	this->contextData =contextData;
+	ClientThread = new std::thread([this]() {client();});
 }
 
 MQTTPublish::~MQTTPublish() {}
 
 void MQTTPublish::sendToConsole(string wert){
 	this->ergebnisString =wert;
-	ClientThread = new std::thread([this]() {client();});
+
 }
 
 
 
-int MQTTPublish::client(){
+void MQTTPublish::client(){
 
 	// der Broker sollte bereit sein
 
 	/* ### Create channel - Connecting with Dispatcher ### */
-//	int channnelID = ChannelCreate(0);//Create channel to receive Events
-//
-//	if (channnelID < 0) {
-//		perror("Could not create a channel!\n");
-//	}
-//
-//	int pid = getpid();
-//	int conID = ConnectAttach(0, pid, channnelID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
-//
-//	if (conID < 0) {
-//		perror("Could not connect to channel!");
-//	}
-//
-//	vector<int8_t> events = {MQTTMESSAGE};
-//
-//	dispatcher->registerForEventWIthConnection(events, conID);
-//
-//	_pulse msg;
+	int channnelID = ChannelCreate(0);//Create channel to receive Events
 
-//	while (true) {
-//
-//      //Fals irgendwann mal WS an FBM2 ankommen
-//		int recvid = MsgReceivePulse(channnelID, &msg, sizeof(_pulse), nullptr);
+	if (channnelID < 0) {
+		perror("Could not create a channel!\n");
+	}
 
+	int pid = getpid();
+	int conID = ConnectAttach(0, pid, channnelID, _NTO_SIDE_CHANNEL, 0);
+
+	if (conID < 0) {
+		perror("Could not connect to channel!");
+	}
+
+	vector<int8_t> events = {MQTTMESSAGE};
+
+	dispatcher->registerForEventWIthConnection(events, conID);
+
+	_pulse msg;
+
+	while (true) {
+
+		cout << "MQTT vor dem Recive" << endl;
+
+		int recvid = MsgReceivePulse(channnelID, &msg, sizeof(_pulse), nullptr);
+		cout << "MQTT vor dem Recive ----- danach" << endl;
 //		switch(msg.code){
 //
 //					case MQTTMESSAGE:
@@ -104,7 +106,7 @@ int MQTTPublish::client(){
 	    }
 
 	    // dieser Stringbuffer wird übertragen !!!!!!!!!!!!!!!!!
-	    //char payload[40] = "Joshua------------------------!";
+	    char payload[40] = "Joshua------------------------!";
 	    memset(payload,0,40);
 		for (int i = 0; i < ergebnisString.length(); i++) {
 			payload[i] = ergebnisString[i];
@@ -117,6 +119,7 @@ int MQTTPublish::client(){
 
 
 	    //string payload = "WS NORMAL MITBOHRUNG 24 23!";
+
 	    pubmsg.payload = payload;
 	    pubmsg.payloadlen = (int)strlen(payload);
 	    pubmsg.qos = QOS;
@@ -136,6 +139,6 @@ int MQTTPublish::client(){
 	    if ((rc = MQTTClient_disconnect(client, 10000)) != MQTTCLIENT_SUCCESS)
 	    	printf("Failed to disconnect, return code %d\n", rc);
 	    MQTTClient_destroy(&client);
-	    return rc;
-//	}
+	    //return rc;
+	} // while(true)
 }

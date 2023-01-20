@@ -8,7 +8,8 @@
 
 
 class BZAuslauf : public Basestate {
-
+private:
+	MQTTPublish *mqtt = new  MQTTPublish(contextData->disp,contextData);
 public:
 
     void entry() override;
