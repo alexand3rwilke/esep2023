@@ -14,6 +14,7 @@ public:
     void exit() override;
     void estp() override;
     void doAction(int, _pulse) override;
+    void  aussortieren();
     //void showState() override;
 };
 

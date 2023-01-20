@@ -15,6 +15,7 @@ void BZUebergabe::entry() {
 
 	cout << "\n  BZUebergabe entry\n" << endl;
 	if(contextData->getF2Running()) {
+		cout << "Warte .. Festo2 läuft läuft noch! " << endl;
 		actions->stopFB();
 	}
 

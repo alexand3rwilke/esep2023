@@ -16,17 +16,16 @@ void BZAussortierer::entry() {
 
 	//TODO MUSS NOCH ANGEPAST WERDEN
 	cout << "\n  BZAussortierer entry\n" << endl;
-	cout << "------------Gesucht:"<< contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex() % contextData->werkstuckReihenfolgeList.size()) << endl;
 
 	stateTimer->startTimer();
 
-	cout << "sol das WK aussortiert werden:   " << contextData->getAussortierenForWerkstueckInStateID(stateId) <<"  ans state ID: " << stateId<<endl;
 
-	if(contextData->getAussortierenForWerkstueckInStateID(stateId)) {
-	    				exit();
-	    				new(this)BZrutsche;
-	    				entry();
-	    			}
+	if(FESTO_TYPE == 2) {
+		cout << "Das Werkstueck soll aussortiert werden:  " << contextData->getAussortierenForWerkstueckInStateID(stateId) <<"  an state ID: " << stateId<<endl;
+
+	}
+
+
 
 }
     void BZAussortierer::exit() {
@@ -34,7 +33,6 @@ void BZAussortierer::entry() {
      	stateTimer->stopTimer();
         	stateTimer->resetTimer();
 
-        	cout << "------------Aussortierer Test:"<< endl;
 		cout << "------------Gesucht:"<< contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex() % contextData->werkstuckReihenfolgeList.size()) << endl;
 		cout << "------------Folgendes WK wurde gescannt:"<< contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp << endl;
 
@@ -62,47 +60,39 @@ void BZAussortierer::entry() {
 
 
     		case LSS1interrupted :
-			// checke ob das WK das gesuchte ist, sonst aussortieren und wieder in BZready+
 
 
-    			//contextData->getLatestRegisterForAdcState();
+    			if (FESTO_TYPE == 1) {
+    				// Hier wird der aktuelle WkType des States mit dem gesuchten WK verglichen
+    				// Wenn es das gesuchte ist, wird die schranke geöffnet und das gesuchte einen hochgezählt (zeiger auf das nächste WK der Reihenfolgeliste)
+    				// Wenn es das Falsche ist, geht es in die aussortieren() methode, welche die Rutschen checket und je nach kapazität auf der jeweiligen Rutsche aussortiert.
+    				if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp ==
+    					contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex()
+    					% contextData->werkstuckReihenfolgeList.size())) {
+
+    							actions->durchlassen();
+    							contextData->setAussortierenForWerkstueckInStateID(stateId, false);
+    							contextData->increaseWkReihenfolgeIndex();
+
+    							} else {
+
+    								aussortieren();
+    							}
+
+    			}
+
+    			if (FESTO_TYPE == 2) {
 
 
+    				if(contextData->getAussortierenForWerkstueckInStateID(stateId)) {
 
-			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex() % contextData->werkstuckReihenfolgeList.size())) {
-			actions->durchlassen();
-			contextData->setAussortierenForWerkstueckInStateID(stateId, false);
-			contextData->increaseWkReihenfolgeIndex();
-			// TODO : Vielleicht noch eine Sekunde weiterlaufen lassen damit es in die Rutsche geht
-			// TODO : Vielleicht brauchen wir noch einen Ruschen state um zu warten bis das WK die rutsche runtergerutscht ist, damit wir keine feste Zeit warten müssen
-			} else {
-				if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == WK_FLACH) {
-					contextData->setAussortierenForWerkstueckInStateID(stateId, true);
-					if(!contextData->getRampe1Voll()) {
-						exit();
-									new(this)BZrutsche;
-									entry();
-
+    					// HIER RUTSCHE CHEKEN
+					exit();
+					new(this)BZrutsche;
+					entry();
 					} else {
 					actions->durchlassen();
-
 					}
-
-
-				}
-
-
-			}
-    			break;
-
-
-    		case LSE2interrupted :
-
-    			if(stateTimer->getTime() > 2) {
-    				exit();
-    				new (this) BZAuslauf;
-    				entry();
-
     			}
 
     		    break;
@@ -112,34 +102,37 @@ void BZAussortierer::entry() {
 			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == WK_Bohrung_Normal) {
 				contextData->setGescanntWKMapForStateForIndex(stateId,WK_Bohrung_Metal,contextData->getGescanntWKMapForStateForIndex(stateId).mittlereHoehe);
 
-				cout << "Werkstück enthält Metall \n" << endl;
+			cout << "Werkstück enthält Metall \n" << endl;
 
 			}
 			break;
     		    
 
-			// Klassefizierung
-
-//			case WK_FLACH :
-//			contextData->setGescanntWKMapForStateForIndex(stateId,WK_FLACH);
-//			cout << "WERKSTÜCK AUF FLACH GESETZT \n" << endl;
-//			break;
-//
-//			case WK_Normal:
-//			contextData->setGescanntWKMapForStateForIndex(stateId,WK_Normal);
-//			cout << "WERKSTÜCK AUF NORMAL GESETZT \n" << endl;
-//			break;
-//
-//			case WK_Bohrung_Normal :
-//			contextData->setGescanntWKMapForStateForIndex(stateId,WK_Bohrung_Normal);
-//			cout << "WERKSTÜCK AUF BOHRUNG NORMAL GESETZT \n" << endl;
-//			break;
-//
-//			case WK_UNDEFINED :
-//			contextData->setGescanntWKMapForStateForIndex(stateId,WK_UNDEFINED);
-//			cout << "WERKSTÜCK AUF UNDEFINED GESETZT \n" << endl;
-//			break;
 
     		}
 
 	}
+
+    void BZAussortierer::aussortieren() {
+    	contextData->setAussortierenForWerkstueckInStateID(stateId,true);
+
+    	if(contextData->getRampe1Voll() && contextData->getRampe2Voll()) {
+    		// FEHLERZUSTAND, sollte hier nicht reinkommen
+
+
+    	}
+
+    	if(!contextData->getRampe1Voll() && !contextData->getRampe2Voll()) {
+        		actions->durchlassen();
+        	}
+
+    	if(!contextData->getRampe1Voll() && contextData->getRampe2Voll()) {
+            		exit();
+            		new (this) BZrutsche;
+            		entry();
+            	}
+
+    	if(contextData->getRampe1Voll() && !contextData->getRampe2Voll()) {
+                		actions->durchlassen();
+                	}
+    }

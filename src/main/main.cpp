@@ -73,14 +73,14 @@ int main(int argc, char** args) {
 		fstream config;
 		string input;
 		string delimiter= " ";
-		config.open("/esep_gruppe2.2_git/src/main/bspreihenfolgeWK.cfg", ios::in);
+		config.open("/bspreihenfolgeWK.cfg", ios::in);
 		vector<int> werkstuckReihenfolge;
 
-		std::ofstream outfile("/bspreihenfolgeWK.cfg");
-
-		outfile << "my text here!" << std::endl;
-
-		outfile.close();
+//		std::ofstream outfile("/bspreihenfolgeWK.cfg");
+//
+//		outfile << "my text here!" << std::endl;
+//
+//		outfile.close();
 
 		if(!config)perror("Fehler beim Öffnen von bspreihenfolgeWK.cfg");
 		string werkstueck;

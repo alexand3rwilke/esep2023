@@ -119,9 +119,9 @@ void ContextData::setGescanntWKMapForStateForIndex(int index,int gescanntesWK, i
 
 	Werkstueck wk;
 	wk.setAbsoluteHoehe(0);
-	wk.setAussortieren(false);
+	wk.setAussortieren(aussortieren);
 	wk.setMittlereHoehe(durchschnittHoehe);
-	wk.setWkFlipped(false);
+	wk.setWkFlipped(flipped);
 	wk.setWkType(gescanntesWK);
 	gescanntesWKMap[index] = wk;
 
