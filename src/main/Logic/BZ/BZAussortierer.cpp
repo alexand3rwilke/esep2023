@@ -106,13 +106,13 @@ void BZAussortierer::entry() {
 			}
 			break;
 
-			case LSS1notInterrupted:
-				actions->aussortieren();
-				exit();
-				new(this)BZrutsche;
-				entry();
-				break;
-    		    
+//			case LSS1notInterrupted:
+//				actions->aussortieren();
+//				exit();
+//				new(this)BZrutsche;
+//				entry();
+//				break;
+//
 
 
     		}

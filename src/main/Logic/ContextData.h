@@ -21,7 +21,7 @@ private:
     int zielWk = 0;
     int erkanntesWk = 0;
     int wkCounter = 0;
-    bool wkAufFBM2;
+    bool wkAufFBM2 = false;
 
     int wkReihenfolgeIndex;
     bool f2Running = false;
