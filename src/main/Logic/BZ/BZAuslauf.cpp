@@ -17,7 +17,7 @@ void BZAuslauf::entry() {
 	//Werkstueck *wk = contextData->
 
 	//TODO String vom Werkstück
-	mqtt->sendToConsole("Auslauf wurde an mqtt geschickt");
+	mqtt->sendToConsole(contextData->getGescanntWKMapForStateForIndex(stateId).toJsonString());
 
 	cout << "\n  BZAuslauf entry\n" << endl;
 
