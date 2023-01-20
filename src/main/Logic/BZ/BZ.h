@@ -33,6 +33,7 @@ private:
 	int myChannel;
 	int myConnection;
 	Dispatcher *disp;
+	void resetBZ();
 
 
 public:

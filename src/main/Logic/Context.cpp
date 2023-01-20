@@ -91,7 +91,7 @@ void Context::eventHandler(){
 		//TODO alle sensorsignale einfügen
 		events = 	{LSA1interrupted,LSA2interrupted,
 					LSE1interrupted,LSE2interrupted,LSE1notInterrupted,LSE2notInterrupted,
-					LSS1interrupted,LSS1notInterrupted,
+					LSSinterrupted,LSS1notInterrupted,
 					LSR1notInterrupted,LSR2notInterrupted,LSR1interrupted,LSR2interrupted,
 					STRinterrupted,STRnotInterrupted,STPinterrupted,
 					ADC_WK_IN_HM,ADC_WK_NIN_HM,ADC_SINGLE_SAMLING_FINISHED,ADC_START_SINGLE_SAMPLE,
@@ -167,37 +167,22 @@ void Context::eventHandler(){
 					   // ADD NEW STATE
 					   // TODO hier noch unterscheiden ob wir im fisrsState sind, um nich am Anfang schon mit 2 states zu starten
 					   // Da-> init mit [fisrsState] in RZ(), dann kommt LSA1 interrupted welches nicht einen neuen State in den vector packen soll...
-//					  if(!fisrsState) {
-//				   	   Basestate *newState = new BZ;
-//					   newState->setContextData(contextData);
-//					   newState->setActions(actions);
-//					   newState->entry();
-//					   newState->doAction(LSA1interrupted, msg);
-//					   // setze gesuchtes WK auf den aktuellen stand der liste und setze den pointer danach hoch
-//					   //newState->setZielWK(werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
-//					   newState->setStateId(stateIndex);
-//					   contextData->setGescanntWKMapForStateForIndex(stateIndex,0);
-//					   contextData->setGesuchtWKMapForStateForIndex(stateIndex++,wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size());
-//					   stateList.push_back(newState);
-//					   fisrsState = false;
-//					   contextData->addWK();
-//					   cout << "WK anzahl auf den FB ist : " << contextData->getWKCount();
-//					  }
 
-				   	// danach normale action
 				   fisrsState->doAction(LSA1interrupted, msg);
 
 				   break;
 
 			   case LSE1interrupted:
+			   contextData->setLs1Free(false);
 				   fisrsState->doAction(LSE1interrupted, msg);
 				   break;
 
-			   case	LSS1interrupted:
-				   fisrsState->doAction(LSS1interrupted , msg);
+			   case	LSSinterrupted:
+				   fisrsState->doAction(LSSinterrupted , msg);
 				   break;
 
 			   case LSE1notInterrupted:
+			   contextData->setLs1Free(true);
 				   fisrsState->doAction(LSE1notInterrupted, msg);
 				   break;
 
@@ -210,14 +195,12 @@ void Context::eventHandler(){
 
 
 			   case ADC_WK_IN_HM:
-				   //cout << "ADC_WK_IN_HM \n" << endl;
 
 				   MsgSendPulse(chanID, -1, ADC_START_SINGLE_SAMPLE, 0);
 				   fisrsState->doAction(ADC_WK_IN_HM, msg);
 				   break;
 
 			   case	ADC_WK_NIN_HM:
-				   //cout << "ADC_WK_NIN_HM \n" << endl;
 
 				   fisrsState->doAction(ADC_WK_NIN_HM, msg);
 				   break;
@@ -287,7 +270,7 @@ void Context::eventHandler(){
 				case LSR1notInterrupted:
 				cout << "Rutsche leer auf 1 --- vor Timer" << endl;
 				fisrsState->doAction(LSR1interrupted, msg);
-				timerBz = new TimerBZ(disp,3,LSR1notInterrupted, RUTSCHE_1_LEER);
+				timerBz = new TimerBZ(disp,2,LSR1notInterrupted, RUTSCHE_1_LEER);
 				contextData->setRampe1Voll(false);
 				//TODO setze contextData Rampe1 voll auf false;
 				break;
@@ -295,13 +278,13 @@ void Context::eventHandler(){
 				case LSR2notInterrupted:
 				cout << "Rutsche leer auf 2--- vor Timer" << endl;
 				fisrsState->doAction(LSR2interrupted, msg);
-				timerBz = new TimerBZ(disp,3,LSR2notInterrupted, RUTSCHE_2_LEER);
+				timerBz = new TimerBZ(disp,2,LSR2notInterrupted, RUTSCHE_2_LEER);
 				//TODO setze contextData Rampe2 voll auf false;
 				break;
 
 				case LSR1interrupted : 
 				//cout << "LSR1interrupted" << endl;
-				timerBz = new TimerBZ(disp,3,LSR1notInterrupted,RUTSCHE_1_VOLL);
+				timerBz = new TimerBZ(disp,2,LSR1notInterrupted,RUTSCHE_1_VOLL);
 				fisrsState->doAction(LSR1interrupted, msg);
 				//TODO setze contextData Rampe1 voll auf true;
 				break;
@@ -309,9 +292,9 @@ void Context::eventHandler(){
 
 
 				case LSR2interrupted : 
-				timerBz = new TimerBZ(disp,3,LSR2notInterrupted, RUTSCHE_2_VOLL);
+				timerBz = new TimerBZ(disp,2,LSR2notInterrupted, RUTSCHE_2_VOLL);
 				fisrsState->doAction(LSR2interrupted, msg);
-				//TODO setze contextData Rampe2 voll auf true;
+
 				break;
 
 				case RUTSCHE_1_VOLL:
@@ -323,20 +306,18 @@ void Context::eventHandler(){
 				break;
 
 				case RUTSCHE_2_VOLL:
-				//cout << "Rutsche 1: " << contextData->getRampe1Voll() <<"und Rutsche 2: " <<contextData->getRampe2Voll() << endl;
+
 				fisrsState->doAction(RUTSCHE_2_VOLL, msg);
 				break;
 
 				case RUTSCHE_1_LEER:
 					contextData->setRampe1Voll(false);
-					//cout << "Rutsche leer auf 1--- Nach timer" << endl;
 					fisrsState->doAction(RUTSCHE_1_LEER, msg);
 
 					break;
 
 				case RUTSCHE_2_LEER:
 					contextData->setRampe2Voll(false);
-					//cout << "Rutsche leer auf 2---  Nach timer" << endl;
 					fisrsState->doAction(RUTSCHE_2_LEER, msg);
 
 					break;
@@ -379,23 +360,20 @@ void Context::eventHandler(){
 					contextData->setF2Running(true);
 
 
-//
+					break;
 //				case FA2_STOPPED:
 //					if(FESTO_TYPE == 1) {
+//						cout << "LSE2 frei ist bei Festo 1 angegkommen" << endl;
 //						if(contextData->getWKCount() >0) {
 //							actions->startFB();
 //						}
-
-
-
-					break;
+//					break;
 
 				case FA2_STOPPED:
 					contextData->setF2Running(false);
 					if(contextData->getWKCount() >0 ) {
-
+						cout << "LSE2 frei ist bei Festo 1 angegkommen" << endl;
 						actions->startFB();
-
 					}
 				break;
 

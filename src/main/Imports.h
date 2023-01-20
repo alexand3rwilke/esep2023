@@ -128,7 +128,7 @@ extern int FESTO_TYPE;
 // FESTO 1 Sensor Interrupt
 #define LSA1interrupted 100
 #define LSA1notInterrupted 101
-#define LSS1interrupted 102
+#define LSSinterrupted 102
 #define LSS1notInterrupted 103
 #define LSR1interrupted 104
 #define LSR1notInterrupted 105

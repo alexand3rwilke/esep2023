@@ -6,14 +6,14 @@
  */
 
 
-#include "BZUebergabe.h";
+#include "BZUebergabe.h"
 #include "../../Imports.h"
 
 
 
 void BZUebergabe::entry() {
 
-	cout << "\n  BZUebergabe entry\n" << endl;
+	cout << "[BZ] BZUebergabe entry\n" << endl;
 	if(contextData->getF2Running()) {
 		cout << "Warte .. Festo2 läuft läuft noch! " << endl;
 		actions->stopFB();
@@ -23,7 +23,7 @@ void BZUebergabe::entry() {
 }
     void BZUebergabe::exit() {
 
-    	cout << "\n  BZUebergabe exit\n" << endl;
+    	cout << "[BZ] BZUebergabe exit\n" << endl;
     	contextData->removeWK();
 
     	if(contextData->getWKCount() == 0) {
@@ -31,7 +31,7 @@ void BZUebergabe::entry() {
     	}
 
     	MsgSendPulse(contextData->disp->getConnectionID(), -1, WK_TELEPORT, getStateId());
-    		cout << "Übertrage Werkstueck von State" << getStateId() << "an Festp2"<< "\n" << endl;
+    		cout << "Übertrage Werkstueck von State" /* << getStateId() << "an Festp2"<< "\n"*/ << endl;
 
      	stateTimer->stopTimer();
         	stateTimer->resetTimer();

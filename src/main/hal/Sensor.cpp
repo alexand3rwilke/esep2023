@@ -70,12 +70,10 @@ void Sensor::sensorRoutine() {
 					   if(FESTO_TYPE == 1) {
 
 						   MsgSendPulse(dispID, -1, LSA1interrupted, 0);
-						   printf("Festo 1 LSA interrupt");
-						   printf("%d",FESTO_TYPE);
+
 
 					   } else  if(FESTO_TYPE == 2) {
-						   	   printf("Festo 2 LSA interrupt");
-						   	 printf("%d",FESTO_TYPE);
+
 						   MsgSendPulse(dispID, -1, LSA2interrupted, 0);
 					   }
 
@@ -113,7 +111,7 @@ void Sensor::sensorRoutine() {
 					   MsgSendPulse(dispID, -1, LSS1notInterrupted, 0);
 					   break;
 				   } else {
-					   MsgSendPulse(dispID, -1, LSS1interrupted, 0);
+					   MsgSendPulse(dispID, -1, LSSinterrupted, 0);
 				   } break;
 			   case LSR:
 				   if (pulse.value.sival_int == 1) {

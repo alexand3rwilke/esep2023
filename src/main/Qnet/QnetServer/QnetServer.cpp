@@ -197,6 +197,11 @@ int QnetServer::server(){
 						MsgSendPulse(dispatcher->getConnectionID(), -1, FEHLER_1, 0);
 					}
 					break;
+					case LSE1notInterrupted:
+						if(FESTO_TYPE == 2) {
+							MsgSendPulse(dispatcher->getConnectionID(), -1, LSE1notInterrupted, 0);
+						}
+						break;
 
 
 

@@ -30,7 +30,7 @@ void SMZTesting::doAction(int event, _pulse msg){
 		actions->greenOff();
 		break;
 
-	case LSS1interrupted:
+	case LSSinterrupted:
 		actions->greenOn();
 		sleep(2);
 		actions->greenOff();

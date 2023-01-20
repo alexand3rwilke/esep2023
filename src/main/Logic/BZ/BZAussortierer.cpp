@@ -68,7 +68,7 @@ void BZAussortierer::entry() {
 
 
 
-    		case LSS1interrupted :
+    		case LSSinterrupted :
 
 
 

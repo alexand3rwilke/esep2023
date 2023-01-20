@@ -66,7 +66,7 @@ void SMZDistanceMeasurement_ADC_WS::doAction(int event, _pulse msg){
 		   start_stopuhr();
 		   break;
 
-	   case LSS1interrupted:
+	   case LSSinterrupted:
 		   zeit = stopp_stopuhr();
 		   cout <<"ADC bis LSS: " << zeit << endl;
 		   actions->durchlassen();

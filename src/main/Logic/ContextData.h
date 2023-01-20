@@ -30,9 +30,11 @@ private:
     map<int, Werkstueck> gescanntesWKMap;
     std::vector<int> adcWaitList;
 
-
+    bool Lse1Free = true;
 
 public:
+    void setLs1Free(bool b);
+    bool isLse1Free();
     Dispatcher *disp;
     vector<int> werkstuckReihenfolgeList;
     ContextData(Dispatcher *dispatcher, vector<int> werkstuckReihenfolge);
@@ -47,19 +49,11 @@ public:
     bool getRampe1Voll();
     bool getRampe2Voll();
 
-    //Das Werkstück welches erwartet wird
-    //void setZielWk(int wkType);
-    //int getZielWk();
-
-
-    //Das Werkstück welches erwartet wird
-    //void setErkanntesWk(int wkType);
-    //int getErkanntesWk();
-
     //WK Counter Methoden
     void addWK();
     void removeWK();
     int getWKCount();
+    void resetCount();
 
     // WK gesucht & gescannt map
     void setGesuchtWKMapForStateForIndex(int index, int gesuchtesWK);
@@ -75,7 +69,7 @@ public:
     void setWkOnFMB2(bool wkAufFBM2);
     bool getWkOnFMB2();
 
-
+    void resetContextData();
 
 
     int conIDDis = 0;
@@ -98,7 +92,14 @@ public:
 	bool getFlippedForWerkstueckInStateID(int stateID);
 
 
+    //Das Werkstück welches erwartet wird
+    //void setZielWk(int wkType);
+    //int getZielWk();
 
+
+    //Das Werkstück welches erwartet wird
+    //void setErkanntesWk(int wkType);
+    //int getErkanntesWk();
 
 };
 

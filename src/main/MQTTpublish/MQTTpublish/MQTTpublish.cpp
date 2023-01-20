@@ -9,10 +9,18 @@
 #include "../../Imports.h"
 
 
+
+
+
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "MQTT/MQTTClient.h"
+
+//#include "paho/MQTTPacket.h"
+//#include "festo_mqtt_send.h"
+//#include "transport.h"
 
 
 // IPv4-Adresse des Brokers (Broker läuft auf RaspberryPi per default (autostart)): "tcp://192.168.101.*:1883"
@@ -142,3 +150,68 @@ void MQTTPublish::client(){
 	    //return rc;
 	} // while(true)
 }
+//
+//int MQTTPublish:: myMqttPublish(char * payload) {
+//	MQTTPacket_connectData data = MQTTPacket_connectData_initializer;
+//	int rc = 0;
+//	int mysock = 0;
+//	unsigned char buf[200];
+//	int buflen = sizeof(buf);
+//	int msgid = 1;
+//	MQTTString topicString = MQTTString_initializer;
+//	int req_qos = 0;
+//	int payloadlen = strlen(payload);
+//	int len = 0;
+//	char *host = "192.168.101.202";
+//	int port = 1883;
+//
+//	mysock = transport_open(host, port);
+//	if(mysock < 0)
+//		return mysock;
+//
+//	printf("Sending to hostname %s port %d\n", host, port);
+//
+//	data.clientID.cstring = "Sortiermaschine";
+//	data.keepAliveInterval = 20;
+//	data.cleansession = 1;
+//	data.username.cstring = "";
+//	data.password.cstring = "";
+//
+//	len = MQTTSerialize_connect(buf, buflen, &data);
+//	rc = transport_sendPacketBuffer(mysock, buf, len);
+//
+//	/* wait for connack */
+//	if (MQTTPacket_read(buf, buflen, transport_getdata) == CONNACK)
+//	{
+//		unsigned char sessionPresent, connack_rc;
+//
+//		if (MQTTDeserialize_connack(&sessionPresent, &connack_rc, buf, buflen) != 1 || connack_rc != 0)
+//		{
+//			printf("Unable to connect, return code %d\n", connack_rc);
+//			transport_close(mysock);
+//			return (-1);
+//		}
+//	}
+//	else {
+//		transport_close(mysock);
+//		return (-1);
+//	}
+//
+//
+//
+//	/* publish */
+//
+//	topicString.cstring = "pubtopic";
+//
+//	len = MQTTSerialize_publish(buf, buflen, 0, 0, 0, 0, topicString, (unsigned char*)payload, payloadlen);
+//	rc = transport_sendPacketBuffer(mysock, buf, len);
+//
+//	printf("disconnecting\n");
+//	len = MQTTSerialize_disconnect(buf, buflen);
+//	rc = transport_sendPacketBuffer(mysock, buf, len);
+//
+//	transport_close(mysock);
+//
+//	return 0;
+//}
+

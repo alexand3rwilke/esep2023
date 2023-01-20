@@ -18,7 +18,7 @@ using namespace std;
 class MQTTPublish {
 private:
 	ContextData *contextData;
-	string ergebnisString = "String in MQTT wurde nicht gesetzt";
+	string ergebnisString = " ";
 
 
 public:

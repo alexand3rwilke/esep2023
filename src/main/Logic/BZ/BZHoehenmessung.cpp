@@ -54,6 +54,18 @@ void BZHoehenmessung::entry() {
 
 		switch (event) {
 
+//		case LSSinterrupted :
+//
+//			//cout << stateTimer->getTime() << " ist die abgelaufene ZEIT ####" << endl;
+//			if(stateTimer->getTime() > 0.4) {
+//			exit();
+//			new(this) BZAussortierer;
+//			entry();
+//
+//			}
+//
+//			break;
+
 
 
 		case ADC_WK_NIN_HM :

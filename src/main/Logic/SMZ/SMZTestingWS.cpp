@@ -41,7 +41,7 @@ void SMZTestingWS::doAction(int event, _pulse msg){
 		actions->stopFB();
 		break;
 
-	case LSS1interrupted:
+	case LSSinterrupted:
 		if(wkTest){
 			actions->durchlassen();
 		}else{

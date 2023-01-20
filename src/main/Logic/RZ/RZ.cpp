@@ -28,14 +28,14 @@ void RZ::exit() {
 
 void RZ::doAction(int event, _pulse msg){
 	switch (event) {
-		//Starte Betriebszustand
+
 		case STRinterrupted:
 			printf("\n wechsel zu BZ \n");
 			exit();
 			new(this) BZ;
 			entry();
 			break;
-		//Starte Servicemode
+
 		case STR_SMZ:
 			exit();
 			new (this) SMZ;

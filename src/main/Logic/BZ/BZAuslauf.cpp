@@ -15,9 +15,9 @@
 void BZAuslauf::entry() {
 
 	string stringForMQTT = contextData->getGescanntWKMapForStateForIndex(stateId).toJsonString();
-	stringForMQTT = "Mqtt mit Dispatchtecher";
+	mqtt =new  MQTTPublish(contextData->disp,contextData);
 	mqtt->sendToConsole(stringForMQTT);
-	usleep(1000 * (2 * 1000 ));
+	//usleep(1000 * (2 * 1000 ));
 	MsgSendPulse(contextData->disp->getConnectionID(),-1,MQTTMESSAGE,0);
 
 

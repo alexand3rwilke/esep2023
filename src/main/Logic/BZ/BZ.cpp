@@ -15,10 +15,10 @@
 void BZ::entry(){
 	// grünes licht an entry
 	actions->greenOn();
-	if(0<contextData->getWKCount()){   // ---------------------------- Das würde nur gehen wenn FB2 leer ist
-		//weiter
-		actions->startFB();
-	}
+//	if(0<contextData->getWKCount()){   // ---------------------------- Das würde nur gehen wenn FB2 leer ist
+//		//weiter
+//		actions->startFB();
+//	}
 	//printf("in BZ");
 	//actions->greenOn();
 
@@ -57,11 +57,6 @@ void BZ::doAction (int event, _pulse msg) {
 		contextData->addWK();
 		stateId++;
 		cout << "StateCounter is now: " << stateId << endl;
-		cout << "New state created with id" << newsubState->getStateId() << endl;
-
-
-
-
 		//cout << contextData->getWKCount() << "ist die aktuelle WK anzahl" << endl;
 
 	}
@@ -81,7 +76,6 @@ void BZ::doAction (int event, _pulse msg) {
 				contextData->addWK();
 				//stateId++;
 				cout << "StateCounter is now: " << stateId << endl;
-				cout << "New state created with id" << newsubState->getStateId() << endl;
 
 			if(contextData->getWKCount() == 1 ) {
 				MsgSendPulse(contextData->disp->getConnectionID(), -1, FA2_RUNNING, 0);
@@ -96,7 +90,7 @@ void BZ::doAction (int event, _pulse msg) {
 
 				   case ESTP1interrupted:
 					   exit();
-					   substateList = {};
+					   resetBZ();
 					   new (this) ESZ;
 					   entry();
 					   doAction(event, msg);
@@ -105,7 +99,7 @@ void BZ::doAction (int event, _pulse msg) {
 
 				   case ESTP2interrupted:
 					   exit();
-					   substateList = {};
+					   resetBZ();
 					   new (this) ESZ;
 					   entry();
 					   doAction(event, msg);
@@ -160,20 +154,15 @@ void BZ::doAction (int event, _pulse msg) {
 					case DELETE_STATE :
 						for(int i = 0; i < substateList.size(); i++ ) {
 							if(substateList.at(i)->getStateId() == msg.value.sival_int) {
-								cout << "DELETING STATE WITH ID: " << substateList.at(i)->getStateId() << endl;
+								//cout << "DELETING STATE WITH ID: " << substateList.at(i)->getStateId() << endl;
 
 								auto it = substateList.begin();
 								std::advance(it, i);
 								substateList.erase(it);
 								break;
-
 							}
 						}
 						break;
-
-
-
-						// TODO Werkstück erkennung testen
 					case WK_FLACH :
 						if(FESTO_TYPE == 2) {
 
@@ -240,22 +229,14 @@ void BZ::doAction (int event, _pulse msg) {
 
 	for(Basestate *stateFromList :substateList ) {
 
-
 	stateFromList->doAction(event, msg);
 	//cout << "folgendes event wird an den substate weitergegebern: " << event << endl;
-
-	//
-
 	}
 }
 
 void BZ::setWkInStateWhereNotSet(int wkType, int durchschnittHoehe) {
 int index = 0;
 	for(int i = 0;i < substateList.size(); i++) {
-		//cout << "map auf wert 0 ist:" << contextData->getGescanntWKMapForStateForIndex(0) << "\n" << endl;
-		//cout << i << "\n" << endl;
-//		cout << "--------------------map hat wert: "<< contextData->getGescanntWKMapForStateForIndex(i) << "\n" << endl;
-//	cout << "--------------------map hat wert" << "\n" << endl;
 		index = substateList.at(i)->getStateId();
 	if(contextData->getGescanntWKMapForStateForIndex(index).werkstueckTyp == 0) {
 		contextData->setGescanntWKMapForStateForIndex(index,wkType, durchschnittHoehe);
@@ -266,7 +247,12 @@ int index = 0;
 //		contextData->getLatestRegisterForAdcState();
 //		int adcRecieverStateId = contextData->getLatestRegisterForAdcState();
 //		contextData->setGescanntWKMapForStateForIndex(adcRecieverStateId,wkType);
+}
 
+void BZ::resetBZ(){
+	substateList = {};
+	contextData->resetCount();
+	contextData->resetContextData();
 
 }
 

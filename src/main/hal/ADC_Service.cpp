@@ -93,15 +93,13 @@ void ADC_Service::adcInterruptService() {
 
 					isInterrupted = true;
 
-					printf("werkstueck in hoehenmessung %d \n",aktuelleHoehe);
-					printf("mit folgendem WERT %d \n",counter);
 					//
 					MsgSendPulse(dispId, -1, ADC_WK_IN_HM, 0);
 					}
 					//WS raus aus Höhenmessung
 					else if((aktuelleHoehe > h_grund-90 && isInterrupted)&& (counter != 0) && samples.size() > 50){
 						isInterrupted = false;
-						printf("Es wurden %d Messungn beim Höhenmesser gemacht \n",counter);
+						//printf("Es wurden %d Messungn beim Höhenmesser gemacht \n",counter);
 						// berechne durchschnnit
 						MsgSendPulse(dispId, -1, ADC_WK_NIN_HM, 0);
 						//MsgSendPulse(dispId, -1, ADC_SAMLING__VALUE_FINISHED, aktuelleHöhe);

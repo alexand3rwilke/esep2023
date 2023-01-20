@@ -14,7 +14,11 @@
 
 void BZEinlauf::entry() {
 	cout << "\n  BZEinlauf entry\n" << endl;
-	actions->startFB();
+	if(FESTO_TYPE == 1 && contextData->isLse1Free()){
+		actions->startFB();
+	} else if (FESTO_TYPE == 2){
+		actions->startFB();
+	}
 
 	//TimerBZ *timerBz = new TimerBZ(contextData->disp,10,-1, STATE_TOO_LONG);
 	stateTimer = new SimpleTimer(this->contextData->disp);

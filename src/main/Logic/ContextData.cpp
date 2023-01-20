@@ -219,6 +219,38 @@ bool ContextData::getWkOnFMB2() {
 	   wkReihenfolgeIndex++;
    }
 
+void ContextData::setLs1Free(bool b){
+	Lse1Free =b;
+}
+
+bool ContextData::isLse1Free(){
+	return Lse1Free;
+}
+
+void ContextData::resetCount(){
+	wkCounter =0;
+}
+
+void ContextData::resetContextData(){
+	gescanntesWKMap = {};
+	gesuchtesWKMap = {};
+	wkAufFBM2 = false;
+	wkReihenfolgeIndex = 0;
+
+	rampe1Voll = false;
+	rampe2Voll = false;
+	zielWk = 0;
+	erkanntesWk = 0;
+	wkCounter = 0;
+	wkAufFBM2 = false;
+
+	wkReihenfolgeIndex = 0;
+	f2Running = false;
+
+
+	adcWaitList={};
+	Lse1Free = true;
+}
 
 
 
