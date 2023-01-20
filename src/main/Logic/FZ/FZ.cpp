@@ -32,11 +32,18 @@ void FZ::doAction(int event, _pulse msg){
 	case LSR2notInterrupted:
 		substate->doAction(LSR2notInterrupted, msg);
 		break;
-	case LSR1interrupted:
-		contextData->setRampe1Voll(true);
+//	case LSR1interrupted:
+//		contextData->setRampe1Voll(true);
+//		break;
+//	case LSR2interrupted:
+//		contextData->setRampe2Voll(true);
+//		break;
+
+	case RUTSCHE_1_LEER:
+		substate->doAction(RUTSCHE_1_LEER, msg);
 		break;
-	case LSR2interrupted:
-		contextData->setRampe2Voll(true);
+	case RUTSCHE_2_LEER:
+		substate->doAction(RUTSCHE_2_LEER, msg);
 		break;
 	case ESTP1interrupted:
 		exit();

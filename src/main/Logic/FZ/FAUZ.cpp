@@ -8,6 +8,7 @@
 #include "FAUZ.h"
 
 void FAUZ:: entry(){
+	cout << "entry FZ Anstehend quittieren" << endl;
 	actions->redLightBlinking();
 }
 void FAUZ:: exit(){
@@ -15,16 +16,15 @@ void FAUZ:: exit(){
 }
 void FAUZ:: doAction(int event, _pulse msg){
 	switch(event){
-	case LSR1notInterrupted:
-		contextData->setRampe1Voll(false);
+	case RUTSCHE_1_LEER:
 		if(contextData->getRampe2Voll()==false){
 			exit();
 			new (this) FGUZ;
 			entry();
 		}
 		break;
-	case LSR2notInterrupted:
-		contextData->setRampe2Voll(false);
+	case RUTSCHE_2_LEER:
+
 		if(contextData->getRampe1Voll()==false){
 			exit();
 			new (this) FGUZ;
