@@ -236,6 +236,11 @@ extern int MAX_HOEHE;
 #define DELETE_STATE 74
 #define MQTTMESSAGE 4
 
+#define GPIO_REGISTER_LENGHT 0x1000
+
+static uintptr_t gpio_bank_0 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO0_ADDRESS_START);
+static uintptr_t gpio_bank_1 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO1_ADDRESS_START);
+static uintptr_t gpio_bank_2 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO2_ADDRESS_START);
 
 
 

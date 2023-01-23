@@ -13,19 +13,10 @@
 #include <sys/mman.h>
 #include <hw/inout.h>
 #include <sys/neutrino.h>
-
-
-uintptr_t gpio_bank_0;
-uintptr_t gpio_bank_1;
-uintptr_t gpio_bank_2;
-
-
+#include "../Imports.h"
 
 
 Actuator::Actuator(Dispatcher *dispatcher) {
-	gpio_bank_0 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO0_ADDRESS_START);
-	gpio_bank_1 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO1_ADDRESS_START);
-	gpio_bank_2 = mmap_device_io(GPIO1_ADDRESS_LENGTH, (uint64_t) GPIO2_ADDRESS_START);
 
 
 

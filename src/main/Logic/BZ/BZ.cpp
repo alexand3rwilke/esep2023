@@ -9,6 +9,8 @@
 #include "../RZ/RZ.h"
 #include "../ESZ/ESZ.h"
 #include <iterator>
+#include "../../Imports.h"
+#include "../../hal/SensorWrapper/SensorWrapper.h"
 
 
 
@@ -20,6 +22,26 @@ void BZ::entry(){
 //		actions->startFB();
 //	}
 	//printf("in BZ");
+
+	if(SensorWrapper::readPin(gpio_bank_0, 27)  == 0){
+			if(FESTO_TYPE == 1) {
+				//ESTP 1 GEDRÜCKT
+
+			} else {
+				//ESTP 2 GEDRÜCKT
+			}
+
+			}
+
+		if(SensorWrapper::readPin(gpio_bank_0, 15)  == 0){
+				if(FESTO_TYPE == 1) {
+					// RUTSCHE 1 VOLL
+
+				} else {
+					// RUTSCHE 2 VOLL
+				}
+
+				}
 }
 
 void BZ::exit(){
