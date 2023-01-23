@@ -95,49 +95,37 @@ int main(int argc, char** args) {
 		    config.open("/bspreihenfolgeWK.cfg", ios::in);
 
 		    if(!config)perror("Failed to create/open file!");
-		    string token;
 
 		    while(getline(config, input))
 		    			    			{
 
 		    	cout << input << " wurde gelesen" << endl;
-		    			    				werkstueck = input.substr(input.find(delimiter) + 1, input.length());
+
+				werkstueck = input.substr(input.find(delimiter) + 1, input.length());
 
 
-		    			    				if(werkstueck == "WK_NORMAL")  {
-		    			    					werkstuckReihenfolge.push_back(WK_Normal);
-		    			    				}
+				if(werkstueck == "WK_NORMAL")  {
+					werkstuckReihenfolge.push_back(WK_Normal);
+				}
 
-		    			    				else if(werkstueck == "WK_FLACH")  {
-		    			    					werkstuckReihenfolge.push_back(WK_FLACH);
-		    			    				}
+				else if(werkstueck == "WK_FLACH")  {
+					werkstuckReihenfolge.push_back(WK_FLACH);
+				}
 
-		    			    				else if(werkstueck == "WK_BOHRUNG_NORMAL")  {
-		    			    					werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
-		    			    				}
+				else if(werkstueck == "WK_BOHRUNG_NORMAL")  {
+					werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
+				}
 
-		    			    				else if(werkstueck == "WK_BOHRUNG_METALL")  {
-		    			    					werkstuckReihenfolge.push_back(WK_Bohrung_Metal);
-		    			    				}
-
-
-		    			    			}
+				else if(werkstueck == "WK_BOHRUNG_METALL")  {
+					werkstuckReihenfolge.push_back(WK_Bohrung_Metal);
+				}
 
 
-
+			}
 
 		    config.close();
 
 		// extract all the text from the input file
-
-
-
-
-
-
-
-
-
 
 //		config.close();
 

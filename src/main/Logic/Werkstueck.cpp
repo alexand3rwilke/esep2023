@@ -106,7 +106,36 @@ string Werkstueck::toJsonString() {
 
 	stringstream json_stream;
 	json_stream << "{";
-	json_stream << "\"werkstueckTyp\":" << to_string(werkstueckTyp) << ",";
+
+	switch(werkstueckTyp) {
+
+	case WK_Normal:
+		json_stream << "\"werkstueckTyp\":" << "Normal" << ",";
+		break;
+
+	case WK_FLACH:
+		json_stream << "\"werkstueckTyp\":" << "Flach" << ",";
+		break;
+
+	case WK_Bohrung_Normal:
+		json_stream << "\"werkstueckTyp\":" << "Bohrung" << ",";
+		break;
+
+	case WK_Bohrung_Metal:
+		json_stream << "\"werkstueckTyp\":" << "Bohrung Metall" << ",";
+		break;
+
+	case WK_UNDEFINED:
+		json_stream << "\"werkstueckTyp\":" << "Undefined" << ",";
+		break;
+
+	default :
+		json_stream << "\"werkstueckTyp\":" << "Undefined" << ",";
+		break;
+
+
+
+	}
 	json_stream << "\"absoluteHoehe\":" << to_string(absoluteHoehe) << ",";
 	json_stream << "\"mittlereHoehe\":" << to_string(mittlereHoehe) << ",";
 	json_stream << "\"wkFlipped\":" << (wkFlipped ? "true" : "false") << ",";
