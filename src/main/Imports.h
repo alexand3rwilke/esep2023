@@ -193,7 +193,7 @@ extern int MAX_HOEHE;
 #define WK_FLACH 35
 #define WK_Normal 36
 #define WK_Bohrung_Metal 37
-#define WK_Bohrung_Normal 38
+#define WK_Bohrung 38
 #define WK_UNDEFINED 39
 
 

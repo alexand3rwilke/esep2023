@@ -44,7 +44,7 @@ Actuator::Actuator(Dispatcher *dispatcher) {
 	istWeiche = getAussortierer();
 
 
-	cout << "\n Cout Aktorik\n" << endl;
+	//cout << "\n Cout Aktorik\n" << endl;
 	aktuatorThread = new thread([this]() {handleEvents();});
 
 

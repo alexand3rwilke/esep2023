@@ -80,8 +80,9 @@ void BZAussortierer::doAction(int event, _pulse msg){
 			break;
 
 
-		case MTD1interrupted :
-			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == WK_Bohrung_Normal) {
+
+			case MTD1interrupted :
+			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == WK_Bohrung) {
 				contextData->setGescanntWKMapForStateForIndex(stateId,WK_Bohrung_Metal,contextData->getGescanntWKMapForStateForIndex(stateId).mittlereHoehe);
 				cout << "Werkstück enthält Metall \n" << endl;
 

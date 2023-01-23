@@ -92,9 +92,9 @@ public:
 	bool getFlippedForWerkstueckInStateID(int stateID);
 
 
-    //Das Werkstück welches erwartet wird
-    //void setZielWk(int wkType);
-    //int getZielWk();
+	void setGescanntWKType(int index, int wkType);
+
+
 
 
     //Das Werkstück welches erwartet wird

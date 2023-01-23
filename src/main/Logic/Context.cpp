@@ -95,7 +95,7 @@ void Context::eventHandler(){
 					ESTP1interrupted,ESTP1notInterrupted, 
 					ESTP2interrupted,ESTP2notInterrupted,
 					RSTinterrupted,
-					WK_FLACH,WK_Normal,WK_Bohrung_Metal,WK_Bohrung_Normal,WK_UNDEFINED,
+					WK_FLACH,WK_Normal,WK_Bohrung_Metal,WK_Bohrung,WK_UNDEFINED,
 					WK_REMOVED,WK_ADDED,
 					ESTP1Finished, ESTP2Finished,
 					TIMER_IS_OVER,
@@ -310,8 +310,8 @@ void Context::eventHandler(){
 				fisrsState->doAction(WK_Bohrung_Metal, msg);
 				break;
 
-				case WK_Bohrung_Normal :
-				fisrsState->doAction(WK_Bohrung_Normal, msg);
+				case WK_Bohrung :
+				fisrsState->doAction(WK_Bohrung, msg);
 				break;
 
 				case WK_UNDEFINED :

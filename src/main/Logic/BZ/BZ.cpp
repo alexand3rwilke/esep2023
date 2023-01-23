@@ -144,6 +144,7 @@ void BZ::doAction (int event, _pulse msg) {
 						std::advance(it, i);
 						substateList.erase(it);
 						break;
+
 					}
 				}
 				break;
@@ -171,11 +172,11 @@ void BZ::doAction (int event, _pulse msg) {
 				}
 			break;
 
-			case WK_Bohrung_Normal :
+			case WK_Bohrung :
 				if(FESTO_TYPE == 2) {
-					contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung_Normal);
+					contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung);
 				} else {
-					setWkInStateWhereNotSet(WK_Bohrung_Normal,msg.value.sival_int);
+					setWkInStateWhereNotSet(WK_Bohrung,msg.value.sival_int);
 				}
 			break;
 
@@ -196,6 +197,140 @@ void BZ::doAction (int event, _pulse msg) {
 			actions->greenOn();
 		}
 		break;
+		// ____
+//		case RUTSCHE_2_VOLL:
+//			contextData->setRampe2Voll(true);
+//			if(FESTO_TYPE == 2) {
+//				actions->greenOff();
+//				actions->yellowLightBlinking();
+//			}
+//			break;
+//		case RUTSCHE_1_LEER:
+//		contextData->setRampe1Voll(false);
+//		if(FESTO_TYPE == 1) {
+//			actions->yellowOff();
+//			actions->greenOn();
+//
+//		case DELETE_STATE :
+//			for(int i = 0; i < substateList.size(); i++ ) {
+//				if(substateList.at(i)->getStateId() == msg.value.sival_int) {
+//					cout << "DELETING STATE WITH ID: " << substateList.at(i)->getStateId() << endl;
+//
+//					auto it = substateList.begin();
+//					std::advance(it, i);
+//					substateList.erase(it);
+//					break;
+//
+//				}
+//			}
+//			break;
+//
+//
+//
+//			// TODO Werkstück erkennung testen
+//		case WK_FLACH :
+//			if(FESTO_TYPE == 2) {
+//			// Unnötig, da ein Flaches WK geflippt = ein Flaches bleibt
+//			if(contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp!= WK_FLACH) {
+//				cout << "[Context] Werkstueck hat sich geändert! \n" << endl;
+//			}
+//
+//			} else {
+//				setWkInStateWhereNotSet(WK_FLACH,msg.value.sival_int);
+//			}
+//
+//
+//		break;
+//
+//		case WK_Normal :
+//			if(FESTO_TYPE == 2) {
+//
+//				switch (contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp) {
+//
+//					case WK_Bohrung:
+//						contextData->setFlippedForWerkstueckInStateID(0, true);
+//						contextData->setGescanntWKType(0,WK_Normal);
+//						break;
+//
+//					case WK_Bohrung_Metal:
+//						contextData->setFlippedForWerkstueckInStateID(0, true);
+//						contextData->setGescanntWKType(0,WK_Normal);
+//						break;
+//
+//					case WK_Normal:
+//						break;
+//
+//					default :
+//						cout << "[Context] Werkstueck hat sich geändert! \n" << endl;
+//						break;
+//				}
+//
+//			} else {
+//				setWkInStateWhereNotSet(WK_Normal,msg.value.sival_int);
+//			}
+//
+//		break;
+//
+//		case WK_Bohrung_Metal :
+//			if(FESTO_TYPE == 2) {
+//
+//				if(contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp == WK_Normal) {
+//
+//					contextData->setFlippedForWerkstueckInStateID(0,true);
+//					contextData->setGescanntWKType(0,WK_Bohrung_Metal);
+//				}
+//
+//				else if(contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung_Metal){
+//
+//					cout << "[Context] Werkstueck hat sich geändert! \n" << endl;
+//				}
+//
+//
+//			} else {
+//				setWkInStateWhereNotSet(WK_Bohrung_Metal,msg.value.sival_int);
+//			}
+//
+//		break;
+//
+//		case WK_Bohrung :
+//			if(FESTO_TYPE == 2) {
+//
+//				if(contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp == WK_Normal) {
+//
+//					contextData->setFlippedForWerkstueckInStateID(0,true);
+//					contextData->setGescanntWKType(0,WK_Bohrung);
+//					}else if(contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung){
+//
+//						cout << "[Context] Werkstueck hat sich geändert! \n" << endl;
+//					}
+//
+//			} else {
+//				setWkInStateWhereNotSet(WK_Bohrung,msg.value.sival_int);
+//			}
+//
+//		break;
+//
+//		case WK_UNDEFINED :
+//			if(FESTO_TYPE == 2) {
+//
+//			//contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_UNDEFINED);
+//			} else {
+//				setWkInStateWhereNotSet(WK_UNDEFINED,msg.value.sival_int);
+//			}
+//
+//		break;
+//		}
+//		break;
+//
+//		case RUTSCHE_2_LEER:
+//		contextData->setRampe2Voll(false);
+//		if(FESTO_TYPE == 2) {
+//			actions->yellowOff();
+//			actions->greenOn();
+//
+//		}
+//		break;
+		//__
 	}
 
 	for(Basestate *stateFromList :substateList ) {

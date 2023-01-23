@@ -7,7 +7,11 @@
  *
  */
 #include "ADC_Service.h"
+
 #include <cmath>
+#include <fstream>
+
+
 
 TSCADC tsc;
 ADC adc(tsc);
@@ -200,7 +204,6 @@ int ADC_Service::classifyWK() {
 
 		printf("WS Wert bei Classify: %d \n",wsHoehenWert);
 
-
 	if(wsHoehenWert < h_flach + toleranz && wsHoehenWert > h_flach - toleranz) {
 		wsHoehenWert = convertToCm(wsHoehenWert, cmConvertValue_flach);
 		MsgSendPulse(dispId, -1, WK_FLACH, wsHoehenWert);
@@ -209,10 +212,10 @@ int ADC_Service::classifyWK() {
 		return WK_FLACH;
 	} else if(wsHoehenWert < h_bohrung + toleranz && wsHoehenWert > h_bohrung - toleranz ) {
 		wsHoehenWert = convertToCm(wsHoehenWert, cmConvertValue_normal);
-		MsgSendPulse(dispId, -1, WK_Bohrung_Normal, wsHoehenWert);
+		MsgSendPulse(dispId, -1, WK_Bohrung, wsHoehenWert);
 		printf("BOHRUNG WS ENTDECKT  \n");
 		cout << "Bohrung: "<< h_bohrung<< "\n" << endl;
-		return WK_Bohrung_Normal;
+		return WK_Bohrung;
 	}else if(wsHoehenWert < h_normal + toleranz && wsHoehenWert > h_normal - toleranz){
 		wsHoehenWert = convertToCm(wsHoehenWert, cmConvertValue_normal);
 		MsgSendPulse(dispId, -1, WK_Normal, wsHoehenWert);
@@ -221,10 +224,10 @@ int ADC_Service::classifyWK() {
 		return WK_Normal;
 	} else if(wsHoehenWert < h_metall + toleranz && wsHoehenWert > h_metall - toleranz) {
 		wsHoehenWert = convertToCm(wsHoehenWert, cmConvertValue_normal);
-		MsgSendPulse(dispId, -1, WK_Bohrung_Normal, wsHoehenWert);
+		MsgSendPulse(dispId, -1, WK_Bohrung, wsHoehenWert);
 		printf("METALL WS ENTDECKT  \n");
 		cout << "Bohrung Metall: "<< h_metall<< "\n" << endl;
-		return WK_Bohrung_Normal;
+		return WK_Bohrung;
 	}
 	MsgSendPulse(dispId, -1, WK_UNDEFINED, 0);
 	printf("UNDEFINED WS ENTDECKT  \n");
@@ -261,7 +264,20 @@ switch(ws_type){
 	case 4:
 		h_metall = setWS_hoehe();
 		cout << "Metall: "<< h_metall<< "\n" << endl;
-		break;
+
+
+//		 int result = remove("/servicemode.cfg");
+//		 cout << result << " ergebnis bei löschen von servicemode file , (0 heisst gelöscht)";
+//
+//		 cout << result;
+//		fstream config;
+//		config.open("/hoehenwerte.cfg", ios::out);
+//		config << "FLACH " << h_flach <<endl;
+//		config << "NORMAL " << h_normal <<endl;
+//		config << "BOHRUNG " << h_bohrung <<endl;
+//		config << "BOHRUNG_METALL " << h_metall <<endl;
+//		config.close();
+//		break;
 
 
 	}

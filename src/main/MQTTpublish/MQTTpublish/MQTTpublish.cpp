@@ -96,6 +96,7 @@ void MQTTPublish::client(){
 	    MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
 	    MQTTClient_message pubmsg = MQTTClient_message_initializer;
 	    MQTTClient_deliveryToken token;
+
 	    int rc;
 
 	    if ((rc = MQTTClient_create(&client, ADDRESS, CLIENTID,
