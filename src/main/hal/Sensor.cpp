@@ -96,10 +96,10 @@ void Sensor::sensorRoutine() {
 				   } else {
 					   if(FESTO_TYPE == 1) {
 						   MsgSendPulse(dispID, -1, LSE1interrupted, 0);
-						   cout << "\n  Sensorik sagt: LSE1interrupted auf FBM1\n" << endl;
+						  // cout << "\n  Sensorik sagt: LSE1interrupted auf FBM1\n" << endl;
 					   } else if(FESTO_TYPE == 2) {
 
-						   cout << "\n  Sensorik sagt: LSE1interrupted auf FBM2\n" << endl;
+						 //  cout << "\n  Sensorik sagt: LSE1interrupted auf FBM2\n" << endl;
 
 						   MsgSendPulse(dispID, -1, LSE2interrupted, 0);
 					   }
@@ -150,7 +150,7 @@ void Sensor::sensorRoutine() {
 					break;
 				case ESTP:
 				   if (pulse.value.sival_int == 1) {
-					   cout << "ESTP ist druaßen\n" << endl;
+					   cout << "[ESTP] ESTP ist druaßen\n" << endl;
 
  						if(FESTO_TYPE == 1) {
 						    MsgSendPulse(dispID, -1, ESTP1notInterrupted, 0);
@@ -160,7 +160,7 @@ void Sensor::sensorRoutine() {
 					   }
 					   break;
 				   } else {
-					   cout << "ESTP Reingedrückt\n" << endl;
+					   cout << "[ESTP] ESTP Reingedrückt\n" << endl;
 					   if(FESTO_TYPE == 1) {
 						     MsgSendPulse(dispID, -1, ESTP1interrupted, 0);
 					   } else if(FESTO_TYPE == 2) {

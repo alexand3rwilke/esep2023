@@ -207,37 +207,37 @@ int ADC_Service::classifyWK() {
 	if(wsHoehenWert < h_flach + toleranz && wsHoehenWert > h_flach - toleranz) {
 		wsHoehenWert = convertToCm(wsHoehenWert, cmConvertValue_flach);
 		MsgSendPulse(dispId, -1, WK_FLACH, wsHoehenWert);
-		cout << "FLACHES WS ENTDECKT  \n" << endl;
+		cout << "[ADC-Service] FLACHES WS ENTDECKT  \n" << endl;
 		cout << "Flach: "<< h_flach<< "\n" << endl;
 		return WK_FLACH;
 	} else if(wsHoehenWert < h_bohrung + toleranz && wsHoehenWert > h_bohrung - toleranz ) {
 		wsHoehenWert = convertToCm(wsHoehenWert, cmConvertValue_normal);
 		MsgSendPulse(dispId, -1, WK_Bohrung, wsHoehenWert);
-		printf("BOHRUNG WS ENTDECKT  \n");
+		printf("[ADC-Service] BOHRUNG WS ENTDECKT  \n");
 		cout << "Bohrung: "<< h_bohrung<< "\n" << endl;
 		return WK_Bohrung;
 	}else if(wsHoehenWert < h_normal + toleranz && wsHoehenWert > h_normal - toleranz){
 		wsHoehenWert = convertToCm(wsHoehenWert, cmConvertValue_normal);
 		MsgSendPulse(dispId, -1, WK_Normal, wsHoehenWert);
-		printf("NORMAL WS ENTDECKT  \n");
+		printf("[ADC-Service] NORMAL WS ENTDECKT  \n");
 		cout << "NORMAL: "<< h_normal<< "\n" << endl;
 		return WK_Normal;
 	} else if(wsHoehenWert < h_metall + toleranz && wsHoehenWert > h_metall - toleranz) {
 		wsHoehenWert = convertToCm(wsHoehenWert, cmConvertValue_normal);
 		MsgSendPulse(dispId, -1, WK_Bohrung, wsHoehenWert);
-		printf("METALL WS ENTDECKT  \n");
+		printf("[ADC-Service] METALL WS ENTDECKT  \n");
 		cout << "Bohrung Metall: "<< h_metall<< "\n" << endl;
 		return WK_Bohrung;
 	}
 	MsgSendPulse(dispId, -1, WK_UNDEFINED, 0);
-	printf("UNDEFINED WS ENTDECKT  \n");
+	printf("[ADC-Service] UNDEFINED WS ENTDECKT  \n");
 	return WK_UNDEFINED;
 }
 
 void ADC_Service::printSamples(){
 	int i=1;
 	for(int s: samples){
-		cout << i << ". höhe:"<< s << endl;
+		//cout << i << ". höhe:"<< s << endl;
 		//printf("%d. höhe: %d \n ",i,s);
 		i++;
 	}
@@ -248,22 +248,22 @@ void ADC_Service::chooseWS(){
 switch(ws_type){
 	case 1:
 		h_flach = setWS_hoehe();
-		cout << "Flach: "<< h_flach<< "\n" << endl;
+		//cout << "Flach: "<< h_flach<< "\n" << endl;
 		break;
 
 	case 2:
 		h_normal = setWS_hoehe();
-		cout <<"Normal: "<< h_normal<< "\n" << endl;
+		//cout <<"Normal: "<< h_normal<< "\n" << endl;
 		break;
 
 	case 3:
 		h_bohrung = setWS_hoehe();
-		cout << "Bohrung: "<< h_bohrung<< "\n" << endl;
+		//cout << "Bohrung: "<< h_bohrung<< "\n" << endl;
 		break;
 
 	case 4:
 		h_metall = setWS_hoehe();
-		cout << "Metall: "<< h_metall<< "\n" << endl;
+		//cout << "Metall: "<< h_metall<< "\n" << endl;
 
 
 //		 int result = remove("/servicemode.cfg");
@@ -286,25 +286,25 @@ switch(ws_type){
 int ADC_Service::getGemssenehoehe(int type){
 	switch(type){
 		case 1:
-			cout <<"Flach: "<< h_normal<< "\n" << endl;
+			//cout <<"Flach: "<< h_normal<< "\n" << endl;
 			return h_flach;
 			//break;
 
 		case 2:
-			cout <<"Normal: "<< h_normal<< "\n" << endl;
+			//cout <<"Normal: "<< h_normal<< "\n" << endl;
 			return h_normal;
 			//break;
 		case 3:
-			cout << "Bohrung: "<< h_bohrung<< "\n" << endl;
+			//cout << "Bohrung: "<< h_bohrung<< "\n" << endl;
 			return h_bohrung;
 			//break;
 
 		case 4:
-			cout << "Metall: "<< h_metall<< "\n" << endl;
+			//cout << "Metall: "<< h_metall<< "\n" << endl;
 			return h_metall;
 			//break;
 		default:
-			cout << "Die Nummer : "<< type<< "kann als höhe im ADC nicht ausgewählt werden\n" << endl;
+			//cout << "Die Nummer : "<< type<< "kann als höhe im ADC nicht ausgewählt werden\n" << endl;
 			return -1;
 		}
 }
@@ -322,7 +322,7 @@ int ADC_Service::setWS_hoehe(){
 				summe += s;
 			}
 			summe = summe / samples.size();
-			cout << "setWS_hoehe: " << summe << endl;
+			cout << "[Servicemode] setWS_hoehe: " << summe << endl;
 
 			SMZ_checkHoehe = false;
 			samples.clear();
@@ -333,7 +333,7 @@ int ADC_Service::setWS_hoehe(){
 				summe += s;
 			}
 			summe = summe / samples.size();
-			cout << "setWS_hoehe: " << summe << endl;
+			cout << "[Servicemode]setWS_hoehe: " << summe << endl;
 
 			SMZ_checkHoehe = false;
 			samples.clear();

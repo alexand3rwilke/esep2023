@@ -94,7 +94,7 @@ int QnetServer::server(){
 		    	   	// 	break;
 
 		    	   	case HELLO:
-		    	   		std::cout << "Hallo von anderer Anlage gesendet!\n" << endl ;
+		    	   		std::cout << "[QNX] Handshake von anderer Anlage erhalten \n" << endl ;
 		    	   	    break;
 
 		    	   	case LSE1interrupted:
@@ -176,7 +176,7 @@ int QnetServer::server(){
 
 					case FA2_RUNNING:
 					if(FESTO_TYPE == 1) {
-						cout << "recieved MESSAGE FA2_RUNNING!!!!" << endl;
+						//cout << "recieved MESSAGE FA2_RUNNING!!!!" << endl;
 						MsgSendPulse(dispatcher->getConnectionID(), -1, FA2_RUNNING, 0);
 					}
 					break;

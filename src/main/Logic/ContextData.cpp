@@ -39,7 +39,7 @@ void ContextData::incErrorCounter() {
 }
 
 void ContextData::show() {
-    cout << "error counter:" << errorCounter << endl; // just for illustration.
+   // cout << "error counter:" << errorCounter << endl; // just for illustration.
 }
 
 void ContextData::setRampe1Voll(bool value) {
@@ -96,10 +96,7 @@ int ContextData::getWKCount() {
 void ContextData::setGesuchtWKMapForStateForIndex(int index, int gesuchtesWK) {
 
 	gesuchtesWKMap[index] = gesuchtesWK;
-	cout << "Gesuchtes WK wurde auf folgendes gesetzt:" << gesuchtesWKMap[index] << endl; // just for illustration.
-
-
-
+	cout << "[ContextData] Gesuchtes WK wurde auf folgendes gesetzt:" << gesuchtesWKMap[index] << endl; // just for illustration.
 }
 
 
@@ -198,7 +195,7 @@ void ContextData::registerForAdc(int stateId){
 	adcWaitList.push_back(stateId);
 
 	for(int bla : adcWaitList) {
-		cout << "State wartet auf ADC :" << bla << endl; // just for illustration.
+		//cout << "State wartet auf ADC :" << bla << endl; // just for illustration.
 
 	}
 

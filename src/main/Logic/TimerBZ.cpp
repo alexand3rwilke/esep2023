@@ -73,6 +73,6 @@ void TimerBZ::stopTimer(){
 
 	end_time = time(NULL);
 	double timerResult = difftime(end_time,start_time);
-	cout << timerResult << endl;
+	// << timerResult << endl;
 
 }

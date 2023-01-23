@@ -33,7 +33,7 @@ void BZUebergabe::entry() {
 
 
     	MsgSendPulse(contextData->disp->getConnectionID(), -1, WK_TELEPORT, getStateId());
-    		cout << "Übertrage Werkstueck von State" /* << getStateId() << "an Festp2"<< "\n"*/ << endl;
+    	//	cout << "Übertrage Werkstueck von State" /* << getStateId() << "an Festp2"<< "\n"*/ << endl;
 
 			if(FESTO_TYPE==1){
 				stateTimer->stopTimer();

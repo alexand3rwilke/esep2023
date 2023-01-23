@@ -27,7 +27,7 @@ void BZAuslauf::entry() {
 			//stateTimer->startTimer();
 	    	actions->stopFB();
 	    	Werkstueck wk = contextData->getGescanntWKMapForStateForIndex(stateId);
-	    	cout << wk.toJsonString() << "kam am ende an" << endl;
+	    	cout << "[MQTT] "<< wk.toJsonString() << endl;
 
 
 

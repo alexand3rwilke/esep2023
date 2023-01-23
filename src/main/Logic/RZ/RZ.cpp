@@ -42,7 +42,7 @@ void RZ::doAction(int event, _pulse msg){
 			entry();
 			break;
 		case ESTP1interrupted:
-			cout << "Estp in RZ \n" << endl;
+			//cout << "Estp in RZ \n" << endl;
 			exit();
 			new(this) ESZ;
 			entry();
@@ -50,7 +50,7 @@ void RZ::doAction(int event, _pulse msg){
 
 
 		case ESTP2interrupted:
-			cout << "Estp in RZ \n" << endl;
+			//cout << "Estp in RZ \n" << endl;
 			exit();
 			new(this) ESZ;
 			entry();

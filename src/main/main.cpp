@@ -67,8 +67,6 @@ int main(int argc, char** args) {
 
 	 cout << "Im Festo:" << FESTO_TYPE << endl;
 
-	cout << "Starting Festo Test \n" << endl;
-
 		Dispatcher dispatcher;
 
 		WSAData *wsa_data = new WSAData();
@@ -99,7 +97,7 @@ int main(int argc, char** args) {
 		    while(getline(config, input))
 		    			    			{
 
-		    	cout << input << " wurde gelesen" << endl;
+		    	cout << input << " Reihenfolge gelesen" << endl;
 
 				werkstueck = input.substr(input.find(delimiter) + 1, input.length());
 
@@ -142,14 +140,6 @@ int main(int argc, char** args) {
 		}
 
 
-		for(int wkConfig : werkstuckReihenfolge) {
-			cout << wkConfig << " in List eingefügt " << endl;
-
-
-
-		}
-
-
 		ContextData *contextData = new ContextData(&dispatcher,werkstuckReihenfolge);
 		Context *context = new Context(&dispatcher, actions,contextData);
 //string s="_MQTT geht auf main";
@@ -164,13 +154,13 @@ int main(int argc, char** args) {
 
 		if (strcmp(args[1], "F1") == 0) {
 
-			cout << "Starting Festo FBM1 \n" << endl;
+			//cout << "Starting Festo FBM1 \n" << endl;
 			QnetServer *server = new QnetServer("FBM1",&dispatcher,contextData);
 			QnetClient *client = new QnetClient("FBM2",&dispatcher,contextData);
 		}
 		else if (strcmp(args[1], "F2") == 0) {
 
-			cout << "Starting Festo FBM2 \n" << endl;
+			//cout << "Starting Festo FBM2 \n" << endl;
 			QnetServer *server = new QnetServer("FBM2",&dispatcher,contextData);
 			QnetClient *client = new QnetClient("FBM1",&dispatcher,contextData);
 		}

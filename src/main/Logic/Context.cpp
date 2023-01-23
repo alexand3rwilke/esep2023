@@ -190,7 +190,7 @@ void Context::eventHandler(){
 				   break;
 
 			   case ADC_SINGLE_SAMLING_FINISHED:
-				   cout << "ADC_SINGLE_SAMLING_FINISHED \n" << endl;
+				  // cout << "ADC_SINGLE_SAMLING_FINISHED \n" << endl;
 				   fisrsState->doAction(ADC_SINGLE_SAMLING_FINISHED, msg);
 				   break;
 
