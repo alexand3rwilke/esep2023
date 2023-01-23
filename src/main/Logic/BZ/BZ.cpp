@@ -176,8 +176,11 @@ void BZ::doAction (int event, _pulse msg) {
 						// TODO Werkstück erkennung testen
 					case WK_FLACH :
 						if(FESTO_TYPE == 2) {
+						// Unnötig, da ein Flaches WK geflippt = ein Flaches bleibt
+						if(contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp!= WK_FLACH) {
+							cout << "[Context] Werkstueck hat sich geändert! \n" << endl;
+						}
 
-						contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp!= WK_FLACH);
 						} else {
 							setWkInStateWhereNotSet(WK_FLACH,msg.value.sival_int);
 						}
@@ -188,7 +191,26 @@ void BZ::doAction (int event, _pulse msg) {
 					case WK_Normal :
 						if(FESTO_TYPE == 2) {
 
-						contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Normal);
+							switch (contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp) {
+
+								case WK_Bohrung:
+									contextData->setFlippedForWerkstueckInStateID(0, true);
+									contextData->setGescanntWKType(0,WK_Normal);
+									break;
+
+								case WK_Bohrung_Metal:
+									contextData->setFlippedForWerkstueckInStateID(0, true);
+									contextData->setGescanntWKType(0,WK_Normal);
+									break;
+
+								case WK_Normal:
+									break;
+
+								default :
+									cout << "[Context] Werkstueck hat sich geändert! \n" << endl;
+									break;
+							}
+
 						} else {
 							setWkInStateWhereNotSet(WK_Normal,msg.value.sival_int);
 						}
@@ -198,19 +220,38 @@ void BZ::doAction (int event, _pulse msg) {
 					case WK_Bohrung_Metal :
 						if(FESTO_TYPE == 2) {
 
-						contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung_Metal);
+							if(contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp == WK_Normal) {
+
+								contextData->setFlippedForWerkstueckInStateID(0,true);
+								contextData->setGescanntWKType(0,WK_Bohrung_Metal);
+							}
+
+							else if(contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung_Metal){
+
+								cout << "[Context] Werkstueck hat sich geändert! \n" << endl;
+							}
+
+
 						} else {
 							setWkInStateWhereNotSet(WK_Bohrung_Metal,msg.value.sival_int);
 						}
 
 					break;
 
-					case WK_Bohrung_Normal :
+					case WK_Bohrung :
 						if(FESTO_TYPE == 2) {
 
-						contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung_Normal);
+							if(contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp == WK_Normal) {
+
+								contextData->setFlippedForWerkstueckInStateID(0,true);
+								contextData->setGescanntWKType(0,WK_Bohrung);
+								}else if(contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung){
+
+									cout << "[Context] Werkstueck hat sich geändert! \n" << endl;
+								}
+
 						} else {
-							setWkInStateWhereNotSet(WK_Bohrung_Normal,msg.value.sival_int);
+							setWkInStateWhereNotSet(WK_Bohrung,msg.value.sival_int);
 						}
 
 					break;
@@ -218,7 +259,7 @@ void BZ::doAction (int event, _pulse msg) {
 					case WK_UNDEFINED :
 						if(FESTO_TYPE == 2) {
 
-						contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_UNDEFINED);
+						//contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_UNDEFINED);
 						} else {
 							setWkInStateWhereNotSet(WK_UNDEFINED,msg.value.sival_int);
 						}

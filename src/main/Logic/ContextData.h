@@ -98,6 +98,9 @@ public:
 	bool getFlippedForWerkstueckInStateID(int stateID);
 
 
+	void setGescanntWKType(int index, int wkType);
+
+
 
 
 };

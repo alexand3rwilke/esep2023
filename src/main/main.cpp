@@ -113,7 +113,7 @@ int main(int argc, char** args) {
 				}
 
 				else if(werkstueck == "WK_BOHRUNG_NORMAL")  {
-					werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
+					werkstuckReihenfolge.push_back(WK_Bohrung);
 				}
 
 				else if(werkstueck == "WK_BOHRUNG_METALL")  {
