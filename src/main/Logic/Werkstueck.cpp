@@ -117,7 +117,7 @@ string Werkstueck::toJsonString() {
 		json_stream << "\"werkstueckTyp\":" << "Flach" << ",";
 		break;
 
-	case WK_Bohrung_Normal:
+	case WK_Bohrung:
 		json_stream << "\"werkstueckTyp\":" << "Bohrung" << ",";
 		break;
 

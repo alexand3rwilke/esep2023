@@ -127,6 +127,15 @@ void ContextData::setGescanntWKMapForStateForIndex(int index,int gescanntesWK, i
 
 }
 
+
+void ContextData::setGescanntWKType(int stateID, int wkType) {
+	Werkstueck wk;
+	wk = gescanntesWKMap.at(stateID);
+	wk.setWkType(wkType);
+	gescanntesWKMap[stateID] = wk;
+
+}
+
 void ContextData::setAussortierenForWerkstueckInStateID(int stateID, bool value) {
 Werkstueck wk;
 wk = gescanntesWKMap.at(stateID);
