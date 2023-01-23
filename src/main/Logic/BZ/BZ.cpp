@@ -25,20 +25,22 @@ void BZ::entry(){
 
 	if(SensorWrapper::readPin(gpio_bank_0, 27)  == 0){
 			if(FESTO_TYPE == 1) {
-				//ESTP 1 GEDRÜCKT
+				MsgSendPulse(contextData->disp->getConnectionID(), -1, ESTP1interrupted, 0);
+
 
 			} else {
-				//ESTP 2 GEDRÜCKT
+				MsgSendPulse(contextData->disp->getConnectionID(), -1, ESTP2interrupted, 0);
+
 			}
 
 			}
 
 		if(SensorWrapper::readPin(gpio_bank_0, 15)  == 0){
 				if(FESTO_TYPE == 1) {
-					// RUTSCHE 1 VOLL
+					MsgSendPulse(contextData->disp->getConnectionID(), -1, RUTSCHE_1_VOLL, 0);
 
 				} else {
-					// RUTSCHE 2 VOLL
+					MsgSendPulse(contextData->disp->getConnectionID(), -1, RUTSCHE_2_VOLL, 0);
 				}
 
 				}
