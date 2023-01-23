@@ -174,6 +174,7 @@ void BZ::doAction (int event, _pulse msg) {
 				break;
 			case WK_FLACH :
 				if(FESTO_TYPE == 2) {
+					contextData->setGescanntWKAbsoluteHoeheForStateForIndex(0,msg.value.sival_int);
 					contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp!= WK_FLACH);
 				} else {
 					setWkInStateWhereNotSet(WK_FLACH,msg.value.sival_int);
@@ -182,6 +183,7 @@ void BZ::doAction (int event, _pulse msg) {
 
 			case WK_Normal :
 				if(FESTO_TYPE == 2) {
+					contextData->setGescanntWKAbsoluteHoeheForStateForIndex(0,msg.value.sival_int);
 					contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Normal);
 				} else {
 					setWkInStateWhereNotSet(WK_Normal,msg.value.sival_int);
@@ -190,6 +192,7 @@ void BZ::doAction (int event, _pulse msg) {
 
 			case WK_Bohrung_Metal :
 				if(FESTO_TYPE == 2) {
+					contextData->setGescanntWKAbsoluteHoeheForStateForIndex(0,msg.value.sival_int);
 				contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung_Metal);
 				} else {
 					setWkInStateWhereNotSet(WK_Bohrung_Metal,msg.value.sival_int);
@@ -198,6 +201,7 @@ void BZ::doAction (int event, _pulse msg) {
 
 			case WK_Bohrung :
 				if(FESTO_TYPE == 2) {
+					contextData->setGescanntWKAbsoluteHoeheForStateForIndex(0,msg.value.sival_int);
 					contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung);
 				} else {
 					setWkInStateWhereNotSet(WK_Bohrung,msg.value.sival_int);
@@ -206,6 +210,7 @@ void BZ::doAction (int event, _pulse msg) {
 
 			case WK_UNDEFINED :
 				if(FESTO_TYPE == 2) {
+					contextData->setGescanntWKAbsoluteHoeheForStateForIndex(0,msg.value.sival_int);
 					contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_UNDEFINED);
 				} else {
 					setWkInStateWhereNotSet(WK_UNDEFINED,msg.value.sival_int);

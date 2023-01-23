@@ -175,6 +175,13 @@ int ContextData::getGesuchtWKMapForStateForIndex(int index) {
 
 }
 
+void ContextData::setGescanntWKAbsoluteHoeheForStateForIndex(int stateID,int value) {
+	Werkstueck wk;
+	wk = gescanntesWKMap.at(stateID);
+	wk.absoluteHoehe = value;
+	gescanntesWKMap[stateID] = wk;
+}
+
 
 Werkstueck ContextData::getGescanntWKMapForStateForIndex(int index) {
 

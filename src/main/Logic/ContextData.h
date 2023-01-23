@@ -62,6 +62,7 @@ public:
     void setGescanntWKMapForStateForIndex(int index,int gescanntesWK, int durchschnittHoehe,bool flipped,bool aussortieren,int absuluteHoehe);
     int getGesuchtWKMapForStateForIndex(int index);
     Werkstueck getGescanntWKMapForStateForIndex(int index);
+    void setGescanntWKAbsoluteHoeheForStateForIndex(int stateID,int value);
     bool isPresentInMap(int index);
 
     void registerForAdc(int stateId);
