@@ -38,6 +38,18 @@ void wait(int seconds) {
 int FESTO_TYPE;
 int main(int argc, char** args) {
 
+
+
+	ofstream myfile;
+	ofstream outfile ("beispielreihen.txt");
+
+	outfile << "my text here!" << std::endl;
+
+	outfile.close();
+
+
+
+
 			if (strcmp(args[1], "F1") == 0) {
 				FESTO_TYPE = 1;
 				system("gns -s");
@@ -68,61 +80,73 @@ int main(int argc, char** args) {
 		Actuator *actuator = new Actuator(&dispatcher);
 		ADC_Service *adcService = new ADC_Service(&dispatcher);
 
+//		fstream config;
+//		string input = "WK_NORMAL WK_FLACH WK_BOHRUNG";
 
-
-
-
-		fstream config;
-		string input = "WK_NORMAL WK_FLACH WK_BOHRUNG";
-		string delimiter= " ";
-//		config.open("/bspreihenfolgeWK.cfg", ios::in);
-
+//		config.open("bspreihenfolgeWK.cfg", ios::in);
 		vector<int> werkstuckReihenfolge;
-
-//		std::ofstream outfile("/bspreihenfolgeWK.cfg");
-//
-//		outfile << "my text here!" << std::endl;
-//
-//		outfile.close();
-
-//		if(!config)perror("Fehler beim Öffnen von bspreihenfolgeWK.cfg");
 		string werkstueck;
 
+		fstream config;
+		string input;
+		string delimiter= " ";
+
+
+		    config.open("/bspreihenfolgeWK.cfg", ios::in);
+
+		    if(!config)perror("Failed to create/open file!");
+		    string token;
+
+		    while(getline(config, input))
+		    			    			{
+
+		    	cout << input << " wurde gelesen" << endl;
+		    			    				werkstueck = input.substr(input.find(delimiter) + 1, input.length());
+
+
+		    			    				if(werkstueck == "WK_NORMAL")  {
+		    			    					werkstuckReihenfolge.push_back(WK_Normal);
+		    			    				}
+
+		    			    				else if(werkstueck == "WK_FLACH")  {
+		    			    					werkstuckReihenfolge.push_back(WK_FLACH);
+		    			    				}
+
+		    			    				else if(werkstueck == "WK_BOHRUNG_NORMAL")  {
+		    			    					werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
+		    			    				}
+
+		    			    				else if(werkstueck == "WK_BOHRUNG_METALL")  {
+		    			    					werkstuckReihenfolge.push_back(WK_Bohrung_Metal);
+		    			    				}
+
+
+		    			    			}
+
+
+
+
+		    config.close();
+
+		// extract all the text from the input file
+
+
+
+
+
+
+
+
+
+
+//		config.close();
 
 		//TODO EINKOMMENTIEREN
-		werkstuckReihenfolge.push_back(WK_Normal);
-		werkstuckReihenfolge.push_back(WK_FLACH);
-		werkstuckReihenfolge.push_back(WK_Bohrung_Metal);
-		// TODO EINKOMMENTIEREN
 
+//		werkstuckReihenfolge.push_back(WK_Normal);
+//		werkstuckReihenfolge.push_back(WK_FLACH);
+//		werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
 
-		//werkstuckReihenfolge.push_back(WK_FLACH);
-		//werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
-		while(getline(config, input))
-		{
-			werkstueck = input.substr(input.find(delimiter) + 1, input.length());
-
-
-			if(werkstueck == "WK_NORMAL")  {
-				werkstuckReihenfolge.push_back(WK_Normal);
-			}
-
-			else if(werkstueck == "WK_FLACH")  {
-				werkstuckReihenfolge.push_back(WK_FLACH);
-			}
-
-			else if(werkstueck == "WK_Bohrung_Normal")  {
-				werkstuckReihenfolge.push_back(WK_Bohrung_Normal);
-			}
-
-			else if(werkstueck == "WK_Bohrung_Metal")  {
-				werkstuckReihenfolge.push_back(WK_Bohrung_Metal);
-			}
-
-
-		}
-
-		config.close();
 
 		if(werkstuckReihenfolge.size() == 0) {
 

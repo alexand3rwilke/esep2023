@@ -104,7 +104,7 @@ int MQTTPublish::client(){
 	    }
 
 	    // dieser Stringbuffer wird übertragen !!!!!!!!!!!!!!!!!
-	    //char payload[40] = "Joshua------------------------!";
+	    char payload[40] = "Joshua------------------------!";
 	    memset(payload,0,40);
 		for (int i = 0; i < ergebnisString.length(); i++) {
 			payload[i] = ergebnisString[i];

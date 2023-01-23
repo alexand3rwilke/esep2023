@@ -7,6 +7,8 @@
  *
  */
 #include "ADC_Service.h"
+#include <fstream>
+
 
 TSCADC tsc;
 ADC adc(tsc);
@@ -296,7 +298,20 @@ switch(ws_type){
 	case 4:
 		h_metall = setWS_hoehe();
 		cout << "Metall: "<< h_metall<< "\n" << endl;
-		break;
+
+
+//		 int result = remove("/servicemode.cfg");
+//		 cout << result << " ergebnis bei löschen von servicemode file , (0 heisst gelöscht)";
+//
+//		 cout << result;
+//		fstream config;
+//		config.open("/hoehenwerte.cfg", ios::out);
+//		config << "FLACH " << h_flach <<endl;
+//		config << "NORMAL " << h_normal <<endl;
+//		config << "BOHRUNG " << h_bohrung <<endl;
+//		config << "BOHRUNG_METALL " << h_metall <<endl;
+//		config.close();
+//		break;
 
 
 	}
