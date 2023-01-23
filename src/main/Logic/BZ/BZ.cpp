@@ -350,7 +350,12 @@ void BZ::setWkInStateWhereNotSet(int wkType, int durchschnittHoehe) {
 }
 
 void BZ::resetBZ(){
+	stateId = 0;
+	for(Basestate *state : substateList) {
+			delete state;
+		}
 	substateList = {};
+
 	contextData->resetCount();
 	contextData->resetContextData();
 }

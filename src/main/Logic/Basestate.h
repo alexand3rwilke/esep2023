@@ -38,6 +38,7 @@ protected:
 public:
 
 	virtual ~Basestate(){
+		delete stateTimer;
 	};
 
 	virtual void entry() {};
