@@ -20,26 +20,15 @@ void BZ::entry(){
 //		actions->startFB();
 //	}
 	//printf("in BZ");
-	//actions->greenOn();
-
-//	substate->contextData
-
-	//substateList.push_back(substate);
-
 }
 
 void BZ::exit(){
-	// grünes licht aus exit
 	actions->greenOff();
 	actions->stopFB();
 }
 
 
 void BZ::doAction (int event, _pulse msg) {
-
-	///
-				// gebe event an substate weiter
-
 
 	if(event == LSA1interrupted && FESTO_TYPE ==1) {
 
@@ -52,207 +41,182 @@ void BZ::doAction (int event, _pulse msg) {
 		contextData->setGescanntWKMapForStateForIndex(newsubState->getStateId(),0,0);
 
 		//contextData->setGesuchtWKMapForStateForIndex(newsubState->getStateId(),gesuchtesWK);
-
 		substateList.push_back(newsubState);
 		contextData->addWK();
 		stateId++;
 		cout << "StateCounter is now: " << stateId << endl;
 		//cout << contextData->getWKCount() << "ist die aktuelle WK anzahl" << endl;
-
 	}
 
 	if(event == LSA2interrupted && FESTO_TYPE ==2) {
 
 		Basestate *newsubState;
-				newsubState = new BZEinlauf();
-				newsubState->setActions(actions);
-				newsubState->setContextData(contextData);
-				newsubState->entry();
-				newsubState->setStateId(stateId);
-				contextData->setGescanntWKMapForStateForIndex(newsubState->getStateId(),0,0);
+		newsubState = new BZEinlauf(); // BZready
+		newsubState->setActions(actions);
+		newsubState->setContextData(contextData);
+		newsubState->entry();
+		newsubState->setStateId(stateId);
+		contextData->setGescanntWKMapForStateForIndex(newsubState->getStateId(),0,0);
 
 
-				substateList.push_back(newsubState);
-				contextData->addWK();
-				//stateId++;
-				cout << "StateCounter is now: " << stateId << endl;
+		substateList.push_back(newsubState);
+		contextData->addWK();
+		//stateId++;
+		cout << "StateCounter is now: " << stateId << endl;   // ---------- Muss raus
 
-			if(contextData->getWKCount() == 1 ) {
-				MsgSendPulse(contextData->disp->getConnectionID(), -1, FA2_RUNNING, 0);
-				cout << "sending message : FA_RUNNING" << endl;
-
-						}
-			//cout << contextData->getWKCount() << "ist die aktuelle WK anzahl" << endl;
+		if(contextData->getWKCount() == 1 ) {
+		MsgSendPulse(contextData->disp->getConnectionID(), -1, FA2_RUNNING, 0);
+		//cout << "sending message : FA_RUNNING" << endl;
 
 		}
+	//cout << contextData->getWKCount() << "ist die aktuelle WK anzahl" << endl;
+
+	}
 
 	switch (event) {
 
-				   case ESTP1interrupted:
-					   exit();
-					   resetBZ();
-					   new (this) ESZ;
-					   entry();
-					   doAction(event, msg);
-					   break;
+	   case ESTP1interrupted:
+		   exit();
+		   resetBZ();
+		   new (this) ESZ;
+		   entry();
+		   doAction(event, msg);
+		   break;
 
 
-				   case ESTP2interrupted:
-					   exit();
-					   resetBZ();
-					   new (this) ESZ;
-					   entry();
-					   doAction(event, msg);
-					   break;
+	   case ESTP2interrupted:
+		   exit();
+		   resetBZ();
+		   new (this) ESZ;
+		   entry();
+		   doAction(event, msg);
+		   break;
 
 
-				   case STPinterrupted:
-					   exit();
-				  		new (this) RZ;
-				  		entry();
-				  		break;
+	   case STPinterrupted:
+		   exit();
+			new (this) RZ;
+			entry();
+			break;
 
-					case STRinterrupted:
-						exit();
-						new(this) BZ;
-						entry();
+		case STRinterrupted:
+			exit();
+			new(this) BZ;
+			entry();
+			break;
+
+
+		case FEHLER_1:
+			exit();
+			new(this) FZ;
+			entry();
+			break;
+
+		case FEHLER_2:
+			exit();
+			new(this) FZ;
+			entry();
+			break;
+		case RUTSCHE_1_VOLL:
+			contextData->setRampe1Voll(true);
+			if(FESTO_TYPE == 1) {
+				actions->greenOff();
+				actions->yellowLightBlinking();
+			}
+			break;
+		case RUTSCHE_2_VOLL:
+			contextData->setRampe2Voll(true);
+			if(FESTO_TYPE == 2) {
+				actions->greenOff();
+				actions->yellowLightBlinking();
+			}
+			break;
+		case RUTSCHE_1_LEER:
+		contextData->setRampe1Voll(false);
+		if(FESTO_TYPE == 1) {
+			actions->yellowOff();
+			actions->greenOn();
+
+			case DELETE_STATE :
+				for(int i = 0; i < substateList.size(); i++ ) {
+					if(substateList.at(i)->getStateId() == msg.value.sival_int) {
+						auto it = substateList.begin();
+						std::advance(it, i);
+						substateList.erase(it);
 						break;
-
-
-					case FEHLER_1:
-						exit();
-						new(this) FZ;
-						entry();
-						break;
-
-					case FEHLER_2:
-						exit();
-						new(this) FZ;
-						entry();
-						break;
-					case RUTSCHE_1_VOLL:
-						contextData->setRampe1Voll(true);
-						if(FESTO_TYPE == 1) {
-							actions->greenOff();
-							actions->yellowLightBlinking();
-						}
-
-						break;
-					case RUTSCHE_2_VOLL:
-						contextData->setRampe2Voll(true);
-						if(FESTO_TYPE == 2) {
-							actions->greenOff();
-							actions->yellowLightBlinking();
-						}
-						break;
-					case RUTSCHE_1_LEER:
-					contextData->setRampe1Voll(false);
-					if(FESTO_TYPE == 1) {
-						actions->yellowOff();
-						actions->greenOn();
-
-					case DELETE_STATE :
-						for(int i = 0; i < substateList.size(); i++ ) {
-							if(substateList.at(i)->getStateId() == msg.value.sival_int) {
-								//cout << "DELETING STATE WITH ID: " << substateList.at(i)->getStateId() << endl;
-
-								auto it = substateList.begin();
-								std::advance(it, i);
-								substateList.erase(it);
-								break;
-							}
-						}
-						break;
-					case WK_FLACH :
-						if(FESTO_TYPE == 2) {
-
-						contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp!= WK_FLACH);
-						} else {
-							setWkInStateWhereNotSet(WK_FLACH,msg.value.sival_int);
-						}
-
-
-					break;
-
-					case WK_Normal :
-						if(FESTO_TYPE == 2) {
-
-						contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Normal);
-						} else {
-							setWkInStateWhereNotSet(WK_Normal,msg.value.sival_int);
-						}
-
-					break;
-
-					case WK_Bohrung_Metal :
-						if(FESTO_TYPE == 2) {
-
-						contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung_Metal);
-						} else {
-							setWkInStateWhereNotSet(WK_Bohrung_Metal,msg.value.sival_int);
-						}
-
-					break;
-
-					case WK_Bohrung_Normal :
-						if(FESTO_TYPE == 2) {
-
-						contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung_Normal);
-						} else {
-							setWkInStateWhereNotSet(WK_Bohrung_Normal,msg.value.sival_int);
-						}
-
-					break;
-
-					case WK_UNDEFINED :
-						if(FESTO_TYPE == 2) {
-
-						contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_UNDEFINED);
-						} else {
-							setWkInStateWhereNotSet(WK_UNDEFINED,msg.value.sival_int);
-						}
-
-					break;
 					}
-					break;
+				}
+				break;
+			case WK_FLACH :
+				if(FESTO_TYPE == 2) {
+					contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp!= WK_FLACH);
+				} else {
+					setWkInStateWhereNotSet(WK_FLACH,msg.value.sival_int);
+				}
+			break;
 
-					case RUTSCHE_2_LEER:
-					contextData->setRampe2Voll(false);
-					if(FESTO_TYPE == 2) {
-						actions->yellowOff();
-						actions->greenOn();
+			case WK_Normal :
+				if(FESTO_TYPE == 2) {
+					contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Normal);
+				} else {
+					setWkInStateWhereNotSet(WK_Normal,msg.value.sival_int);
+				}
+			break;
 
-					}
-					break;
-					}
+			case WK_Bohrung_Metal :
+				if(FESTO_TYPE == 2) {
+				contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung_Metal);
+				} else {
+					setWkInStateWhereNotSet(WK_Bohrung_Metal,msg.value.sival_int);
+				}
+			break;
 
+			case WK_Bohrung_Normal :
+				if(FESTO_TYPE == 2) {
+					contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_Bohrung_Normal);
+				} else {
+					setWkInStateWhereNotSet(WK_Bohrung_Normal,msg.value.sival_int);
+				}
+			break;
+
+			case WK_UNDEFINED :
+				if(FESTO_TYPE == 2) {
+					contextData->setFlippedForWerkstueckInStateID(0, contextData->getGescanntWKMapForStateForIndex(0).werkstueckTyp != WK_UNDEFINED);
+				} else {
+					setWkInStateWhereNotSet(WK_UNDEFINED,msg.value.sival_int);
+				}
+			break;
+		}
+		break;
+
+		case RUTSCHE_2_LEER:
+		contextData->setRampe2Voll(false);
+		if(FESTO_TYPE == 2) {
+			actions->yellowOff();
+			actions->greenOn();
+		}
+		break;
+	}
 
 	for(Basestate *stateFromList :substateList ) {
-
-	stateFromList->doAction(event, msg);
-	//cout << "folgendes event wird an den substate weitergegebern: " << event << endl;
+		stateFromList->doAction(event, msg);
+		//cout << "folgendes event wird an den substate weitergegebern: " << event << endl;
 	}
 }
 
 void BZ::setWkInStateWhereNotSet(int wkType, int durchschnittHoehe) {
-int index = 0;
+	int index = 0;
 	for(int i = 0;i < substateList.size(); i++) {
 		index = substateList.at(i)->getStateId();
-	if(contextData->getGescanntWKMapForStateForIndex(index).werkstueckTyp == 0) {
-		contextData->setGescanntWKMapForStateForIndex(index,wkType, durchschnittHoehe);
-//			cout << "--------------------map hat wert 2" << "\n" << endl;
-//				return;
+		if(contextData->getGescanntWKMapForStateForIndex(index).werkstueckTyp == 0) {
+			contextData->setGescanntWKMapForStateForIndex(index,wkType, durchschnittHoehe);
+		}
 	}
-}
-//		contextData->getLatestRegisterForAdcState();
-//		int adcRecieverStateId = contextData->getLatestRegisterForAdcState();
-//		contextData->setGescanntWKMapForStateForIndex(adcRecieverStateId,wkType);
 }
 
 void BZ::resetBZ(){
 	substateList = {};
 	contextData->resetCount();
 	contextData->resetContextData();
-
 }
 

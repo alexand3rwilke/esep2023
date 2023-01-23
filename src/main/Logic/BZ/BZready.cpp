@@ -52,7 +52,7 @@ void BZready::entry() {
 
 
     		case LSE1notInterrupted:
-    			if(FESTO_TYPE ==2 && !contextData->getF2Running()){
+    			if(FESTO_TYPE ==2 /*&& !contextData->getF2Running()*/){
     				actions->startFB();
     			}
     			break;

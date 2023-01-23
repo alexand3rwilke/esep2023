@@ -72,40 +72,25 @@ void SimpleTimer::stopStartThread(){
 			while(true) {
 
 				int recvid = MsgReceivePulse(chanID, &pulse, sizeof(_pulse), nullptr);
+				if (recvid < 0) {
+						perror("MsgReceivePulse failed!- in Timer");
+						exit(EXIT_FAILURE);
+				}
 
-								if (recvid < 0) {
-										perror("MsgReceivePulse failed!- in Timer");
-										exit(EXIT_FAILURE);
-								}
+				   switch(pulse.code) {
 
-								   switch(pulse.code) {
+				   case FA2_RUNNING:
+					   //printf("ALLES TIMER WERDEN GESTOPPT!");
+					   if(FESTO_TYPE == 1) {
+						   stopTimer();
+					   }
+					break;
 
-								   case FA2_RUNNING:
-									   printf("ALLES TIMER WERDEN GESTOPPT!");
-									   if(FESTO_TYPE == 1) {
-
-
-
-										   stopTimer();
-									   }
-
-								   	break;
-
-								   	case FA2_STOPPED:
-								   	 if(FESTO_TYPE == 1) {
-
-								   		resumeTimer();
-								   										   }
-
-								   	break;
-
-								}
-
-			}
-
-
-
-
-
-
+					case FA2_STOPPED:
+					 if(FESTO_TYPE == 1) {
+						resumeTimer();
+					 }
+					break;
+				}
+		}
 }

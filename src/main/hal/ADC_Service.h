@@ -17,6 +17,8 @@
 #include "../ADC/tscadc_hw.h"
 #include "../WSAData.h"
 
+using namespace std;
+
 class ADC_Service  {
 private:
 	int aktuelleHoehe;
@@ -25,7 +27,7 @@ private:
 	void printSamples();
 	int classifyWK();
 	bool SMZ_checkHoehe = false;
-	void smz(_pulse pulse);
+	void messeGrundhoehe(_pulse pulse);
 	int h_grund = 3649;
 	int h_flach = 2527; //2426
 	int h_normal= 2300; //2184
@@ -35,6 +37,12 @@ private:
 	int ws_type=0;
 	void chooseWS();
 	vector<int> samples={};
+	double cmConvertValue_flach = 0;
+	double cmConvertValue_normal = 0;
+	double cmConvertValue_bohrung = 0;
+
+	double findCmConverter(double cm, int hoehenTyp);
+	double convertToCm(double adcValue, double cmConvertValue);
 
 public:
 

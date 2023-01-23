@@ -15,20 +15,21 @@ void BZHoehenmessung::entry() {
 	cout << "\n  BZHoehenmessung entry\n" << endl;
 
 
-		actions->moveSlower();
+	actions->moveSlower();
 
-
-	stateTimer->startTimer();
+	if(FESTO_TYPE==1){
+		stateTimer->startTimer();
+	}
 
 
 	//contextData->registerForAdc(stateId);
 
 }
     void BZHoehenmessung::exit() {
-
-     	stateTimer->stopTimer();
+		if(FESTO_TYPE==1){
+     		stateTimer->stopTimer();
         	stateTimer->resetTimer();
-
+		}
         	actions->moveFaster();
 
 
@@ -69,18 +70,19 @@ void BZHoehenmessung::entry() {
 
 
 		case ADC_WK_NIN_HM :
-
+			if(FESTO_TYPE==1){
 			//cout << stateTimer->getTime() << " ist die abgelaufene ZEIT ####" << endl;
-			if(stateTimer->getTime() > 0.4) {
-			exit();
-			new(this) BZAussortierer;
-			entry();
+				if(stateTimer->getTime() > 0.4) {
+				exit();
+				new(this) BZAussortierer;
+				entry();
 
+				}
+			} else {
+				exit();
+				new(this) BZAussortierer;
+				entry();
 			}
-
 			break;
-
 		}
-
-
     }

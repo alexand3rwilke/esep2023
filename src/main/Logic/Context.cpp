@@ -34,14 +34,11 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 	wkReihenfolgeIndex = 0;
 	stateIndex = 0;
 	this->contextData = contextData;
-
 	this->disp = dispatcher;
 	this->dispID = disp->getConnectionID();
 	this->actions = actions;
-	// Setze State auf RZ
 
 	fisrsState = new RZ();
-
 	fisrsState->setContextData(contextData);
 	fisrsState->setActions(actions);
 	//fisrsState->setZielWK(werkstuckReihenfolgeList.at(wkReihenfolgeIndex++ % werkstuckReihenfolgeList.size()));
@@ -53,13 +50,10 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 	fisrsState->entry();
 
 	//cout << "GESUCHTES WK WURDE AUF FOLGENDES GESETZT: "<< contextData->getGesuchtWKMapForStateForIndex(/*fisrsState->getStateId()*/0) << "\n" << endl;
-
-
-
 //	fisrsState->exit();
 //
 //	new (fisrsState) BZ;
-//	fisrsState->entry(); //TODO ---------------------------------------------------------------------------------------- Nur für den Test
+//	fisrsState->entry();
 
 
 
@@ -68,27 +62,29 @@ Context::Context(Dispatcher *dispatcher, Actions *actions, ContextData  *context
 
 Context::~Context() {
 	//delete states;
-
+	ContextThread->join();
 	delete fisrsState;
 	delete disp;
 	delete contextData;
+	delete timerBz;
+	delete actions;
 }
 
 
 void Context::eventHandler(){
 
-	/* ### Create channel ### */
-		int chanID = ChannelCreate(0);//Create channel to receive interrupt pulse messages.
+
+		int chanID = ChannelCreate(0);
 		fisrsState->setChannelId(chanID);
 		if (chanID < 0) {
 			perror("Could not create a channel!\n");
 		}
 
-		int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0); //Connect to channel.
+		int conID = ConnectAttach(0, 0, chanID, _NTO_SIDE_CHANNEL, 0);
 		if (conID < 0) {
 			perror("Could not connect to channel!");
 		}
-		//TODO alle sensorsignale einfügen
+
 		events = 	{LSA1interrupted,LSA2interrupted,
 					LSE1interrupted,LSE2interrupted,LSE1notInterrupted,LSE2notInterrupted,
 					LSSinterrupted,LSS1notInterrupted,
@@ -112,7 +108,7 @@ void Context::eventHandler(){
 		disp->registerForEventWIthConnection(events, conID);
 
 			_pulse msg;
-			//Verschicke events an den aktuellen State
+
 			while(true){
 
 			int recvid = MsgReceivePulse(chanID, &msg, sizeof(_pulse), nullptr);
@@ -123,13 +119,7 @@ void Context::eventHandler(){
 			   			//exit();
 			   		}
 
-			   //for(Basestate *state : stateList) {
-
-
-
 			   switch(msg.code) {
-			   //----------------------------------------------------
-			   // EStop
 			   case ESTP1interrupted:
 				   fisrsState->doAction(ESTP1interrupted, msg);
 			 		break;
@@ -161,15 +151,9 @@ void Context::eventHandler(){
 			  		break;
 
 
-			   	//----------------------------------------------------
 
 			   case LSA1interrupted:
-					   // ADD NEW STATE
-					   // TODO hier noch unterscheiden ob wir im fisrsState sind, um nich am Anfang schon mit 2 states zu starten
-					   // Da-> init mit [fisrsState] in RZ(), dann kommt LSA1 interrupted welches nicht einen neuen State in den vector packen soll...
-
 				   fisrsState->doAction(LSA1interrupted, msg);
-
 				   break;
 
 			   case LSE1interrupted:
@@ -212,12 +196,6 @@ void Context::eventHandler(){
 
 			   case	STRinterrupted:
 
-
-				  				  	//mqtt->sendToConsole("Start Mqtt");
-				   //state->doAction(STRinterrupted);
-//				   contextData->setMqtt("Hallo STR");
-//				   MsgSendPulse(dispID,-1,MQTTMESSAGE,0);
-				   //MQTTPublish *mqtt = new  MQTTPublish(&dispatcher,contextData,"MQTT in Context start");
 					time_t start_time;
 					time_t end_time;
 					start_time = time(NULL);
@@ -229,11 +207,9 @@ void Context::eventHandler(){
 						end_time = time(NULL);
 						double time_diff = difftime(end_time,start_time);
 
-						//Taster länger als 2 Sekunden betätigt, dann SMZ
 						if(time_diff >= 2){
 							fisrsState->doAction(STR_SMZ ,msg);
 							break;
-						//Taster weniger als 2 Sekunden, dann BZ
 						}else{
 							fisrsState->doAction(STRinterrupted, msg);
 							break;
@@ -246,10 +222,6 @@ void Context::eventHandler(){
 				  break;
 
 			  case STPinterrupted:
-//				  MQTTPublish *mqtt_j = new  MQTTPublish(contextData->disp,contextData);
-
-				  //mqtt->sendToConsole("SToppp Mqtt");
-				  // if keine Warning
 				  fisrsState->doAction(STPinterrupted, msg);
 				  break;
 
@@ -263,30 +235,28 @@ void Context::eventHandler(){
 				  }
 				  fisrsState->doAction(LSE2interrupted,msg);
 				  break;
+
 			  case LSA2interrupted:
 				  fisrsState->doAction(LSA2interrupted,msg);
 				  break;
 
 				case LSR1notInterrupted:
-				cout << "Rutsche leer auf 1 --- vor Timer" << endl;
+				//cout << "Rutsche leer auf 1 --- vor Timer" << endl;
 				fisrsState->doAction(LSR1interrupted, msg);
 				timerBz = new TimerBZ(disp,2,LSR1notInterrupted, RUTSCHE_1_LEER);
 				contextData->setRampe1Voll(false);
-				//TODO setze contextData Rampe1 voll auf false;
 				break;
 
 				case LSR2notInterrupted:
-				cout << "Rutsche leer auf 2--- vor Timer" << endl;
+				//cout << "Rutsche leer auf 2--- vor Timer" << endl;
 				fisrsState->doAction(LSR2interrupted, msg);
 				timerBz = new TimerBZ(disp,2,LSR2notInterrupted, RUTSCHE_2_LEER);
-				//TODO setze contextData Rampe2 voll auf false;
 				break;
 
 				case LSR1interrupted : 
 				//cout << "LSR1interrupted" << endl;
 				timerBz = new TimerBZ(disp,2,LSR1notInterrupted,RUTSCHE_1_VOLL);
 				fisrsState->doAction(LSR1interrupted, msg);
-				//TODO setze contextData Rampe1 voll auf true;
 				break;
 
 
@@ -299,9 +269,6 @@ void Context::eventHandler(){
 
 				case RUTSCHE_1_VOLL:
 				contextData->setRampe1Voll(true);
-
-
-				cout << "Rutsche 1" << contextData->getRampe1Voll() <<"und Rutsche 2: " <<contextData->getRampe2Voll() << endl;
 				fisrsState->doAction(RUTSCHE_1_VOLL, msg);
 				break;
 
@@ -319,7 +286,6 @@ void Context::eventHandler(){
 				case RUTSCHE_2_LEER:
 					contextData->setRampe2Voll(false);
 					fisrsState->doAction(RUTSCHE_2_LEER, msg);
-
 					break;
 
 
@@ -353,8 +319,7 @@ void Context::eventHandler(){
 				break;
 
 				case TIMER_IS_OVER:
-					cout << "---------Time Over" << endl;
-					break;
+				break;
 
 				case FA2_RUNNING:
 					contextData->setF2Running(true);
@@ -372,7 +337,7 @@ void Context::eventHandler(){
 				case FA2_STOPPED:
 					contextData->setF2Running(false);
 					if(contextData->getWKCount() >0 ) {
-						cout << "LSE2 frei ist bei Festo 1 angegkommen" << endl;
+						//cout << "LSE2 frei ist bei Festo 1 angegkommen" << endl;
 						actions->startFB();
 					}
 				break;
@@ -380,13 +345,10 @@ void Context::eventHandler(){
 				case DELETE_STATE :
 					fisrsState->doAction(DELETE_STATE, msg);
 					break;
+
 				default:
 					fisrsState->doAction(msg.code, msg);
-
-
 					break;
-
-
 			   }
 		}
 }

@@ -24,7 +24,7 @@ void BZAuslauf::entry() {
 
 	cout << "\n  BZAuslauf entry\n" << endl;
 
-	stateTimer->startTimer();
+			//stateTimer->startTimer();
 	    	actions->stopFB();
 	    	Werkstueck wk = contextData->getGescanntWKMapForStateForIndex(stateId);
 	    	cout << wk.toJsonString() << "kam am ende an" << endl;
@@ -35,11 +35,10 @@ void BZAuslauf::entry() {
     void BZAuslauf::exit() {
     	MsgSendPulse(contextData->disp->getConnectionID(), -1, FA2_STOPPED, 0);
     	contextData->removeWK();
-    	delete stateTimer;
-
+    	//delete stateTimer;
 
     	//lösche den State nachdem das WK vom Band genommen wurde
-    //	delete this;
+    	//	delete this;
     }
     void BZAuslauf::estp() {
 

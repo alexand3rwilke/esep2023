@@ -17,26 +17,22 @@ void BZAussortierer::entry() {
 
 	cout << "\n  BZAussortierer entry\n" << endl;
 
-
-	stateTimer->startTimer();
-
+	if(FESTO_TYPE == 1){
+		stateTimer->startTimer();
+	}
 
 	if(FESTO_TYPE == 2) {
 		cout << "Das Werkstueck soll aussortiert werden:  " << contextData->getAussortierenForWerkstueckInStateID(stateId) <<"  an state ID: " << stateId<<endl;
-
 	}
-
-
-
 }
 
     void BZAussortierer::exit() {
-
-     	stateTimer->stopTimer();
+    	if(FESTO_TYPE == 1){
+    		stateTimer->stopTimer();
         	stateTimer->resetTimer();
-
-		cout << "------------Gesucht:"<< contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex() % contextData->werkstuckReihenfolgeList.size()) << endl;
-		cout << "------------Folgendes WK wurde gescannt:"<< contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp << endl;
+    	}
+		cout << "Gesucht:"<< contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex() % contextData->werkstuckReihenfolgeList.size()) << endl;
+		cout << "Folgendes WK wurde gescannt:"<< contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp << endl;
 
     }
     void BZAussortierer::estp() {
@@ -44,69 +40,50 @@ void BZAussortierer::entry() {
 
     }
 
+void BZAussortierer::doAction(int event, _pulse msg){
 
-    void BZAussortierer::doAction(int event, _pulse msg){
-//
-//    		// wenn fertig dann in Auslauf
-
-
-    	switch (event) {
-    		case LSE1interrupted :
-    			if(stateTimer->getTime() > 1.5) {
-    				exit();
-    				new(this) BZUebergabe;
-    				entry();
-
-    			}
-    			break;
-
-    		case LSE2interrupted :
+	switch (event) {
+		case LSE1interrupted :
+			if(stateTimer->getTime() > 1.5) {
 				exit();
-				new(this) BZAuslauf;
+				new(this) BZUebergabe;
 				entry();
-				break;
+			}
+			break;
+
+		case LSE2interrupted :
+			exit();
+			new(this) BZAuslauf;
+			entry();
+			break;
 
 
 
-    		case LSSinterrupted :
+		case LSSinterrupted :
 
+				// Hier wird der aktuelle WkType des States mit dem gesuchten WK verglichen
+				// Wenn es das gesuchte ist, wird die schranke geöffnet und das gesuchte einen hochgezählt (zeiger auf das nächste WK der Reihenfolgeliste)
+				// Wenn es das Falsche ist, geht es in die aussortieren() methode, welche die Rutschen checket und je nach kapazität auf der jeweiligen Rutsche aussortiert.
+			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp ==
+				contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex()
+				% contextData->werkstuckReihenfolgeList.size())) {
 
+				actions->durchlassen();
+				contextData->setAussortierenForWerkstueckInStateID(stateId, false);
+				contextData->increaseWkReihenfolgeIndex();
 
-    				// Hier wird der aktuelle WkType des States mit dem gesuchten WK verglichen
-    				// Wenn es das gesuchte ist, wird die schranke geöffnet und das gesuchte einen hochgezählt (zeiger auf das nächste WK der Reihenfolgeliste)
-    				// Wenn es das Falsche ist, geht es in die aussortieren() methode, welche die Rutschen checket und je nach kapazität auf der jeweiligen Rutsche aussortiert.
-				if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp ==
-					contextData->werkstuckReihenfolgeList.at(contextData->getwkReihenfolgeIndex()
-					% contextData->werkstuckReihenfolgeList.size())) {
-
-			actions->durchlassen();
-			contextData->setAussortierenForWerkstueckInStateID(stateId, false);
-			contextData->increaseWkReihenfolgeIndex();
-
-			// TODO : Vielleicht noch eine Sekunde weiterlaufen lassen damit es in die Rutsche geht
-			// TODO : Vielleicht brauchen wir noch einen Ruschen state um zu warten bis das WK die rutsche runtergerutscht ist, damit wir keine feste Zeit warten müssen
 			} else {
-				//TODO ENTFERNEN
+				
+				aussortieren();
 
-//    							actions->durchlassen();
-//    							contextData->setAussortierenForWerkstueckInStateID(stateId, false);
-//    							contextData->increaseWkReihenfolgeIndex();
-
-    		aussortieren();
+			}
+			break;
 
 
-    			}
-
-
-
-    		    break;
-
-
-			case MTD1interrupted :
+		case MTD1interrupted :
 			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == WK_Bohrung_Normal) {
 				contextData->setGescanntWKMapForStateForIndex(stateId,WK_Bohrung_Metal,contextData->getGescanntWKMapForStateForIndex(stateId).mittlereHoehe);
-
-			cout << "Werkstück enthält Metall \n" << endl;
+				cout << "Werkstück enthält Metall \n" << endl;
 
 			}
 			break;
@@ -118,11 +95,8 @@ void BZAussortierer::entry() {
 //				entry();
 //				break;
 //
-
-
-    		}
-
 	}
+}
 
 
 void BZAussortierer::aussortieren() {
@@ -153,57 +127,52 @@ void BZAussortierer::aussortieren() {
 
 	contextData->setAussortierenForWerkstueckInStateID(stateId,true);
 
-    	if(FESTO_TYPE == 1){
+	if(FESTO_TYPE == 1){
 
-    		if(contextData->getRampe1Voll() && contextData->getRampe2Voll()) {
-    			MsgSendPulse(contextData->disp->getConnectionID(), -1, FEHLER_1,0);
+		if(contextData->getRampe1Voll() && contextData->getRampe2Voll()) {
+			MsgSendPulse(contextData->disp->getConnectionID(), -1, FEHLER_1,0);
 
-    		}
+		}
 
-    		else if(!contextData->getRampe1Voll() && contextData->getRampe2Voll()) {
-    			actions->aussortieren();
-				exit();				// Brauchen wir vlt nicht
-				new (this) BZrutsche;
-				entry();
+		else if(!contextData->getRampe1Voll() && contextData->getRampe2Voll()) {
+			actions->aussortieren();
+			exit();				// Brauchen wir vlt nicht
+			new (this) BZrutsche;
+			entry();
 
-    		}
+		}
 
-    		else if(contextData->getRampe1Voll() && !contextData->getRampe2Voll()) {
-    			actions->durchlassen();
-    		}
-    		else if(!contextData->getRampe1Voll() && !contextData->getRampe2Voll()) {
-    			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == WK_FLACH && FESTO_TYPE == 1) {
+		else if(contextData->getRampe1Voll() && !contextData->getRampe2Voll()) {
+			actions->durchlassen();
+		}
+		else if(!contextData->getRampe1Voll() && !contextData->getRampe2Voll()) {
+			if(contextData->getGescanntWKMapForStateForIndex(stateId).werkstueckTyp == WK_FLACH && FESTO_TYPE == 1) {
 					actions->aussortieren();
 					exit();
 					new (this) BZrutsche;
 					entry();
-					} else
+				} else
 					actions->durchlassen();
-    				}
+				}
 
-    		}
-    	// FESTO1 ENDE
+		}
+	// FESTO1 ENDE
 
-    	if(FESTO_TYPE == 2 ){
+	if(FESTO_TYPE == 2 ){
 
-    		if(contextData->getRampe2Voll()) {
-    			MsgSendPulse(contextData->disp->getConnectionID(), -1, FEHLER_2,0);
+		if(contextData->getRampe2Voll()) {
+			MsgSendPulse(contextData->disp->getConnectionID(), -1, FEHLER_2,0);
+		}
 
-    		}
+		else if(!contextData->getRampe2Voll()) {
+			actions->aussortieren();
+			exit();
+			new (this) BZrutsche;
+			entry();
 
-    		else if(!contextData->getRampe2Voll()) {
-    			actions->aussortieren();
-				exit();
-				new (this) BZrutsche;
-				entry();
-
-    		}
-
-
-    	}
-
-
-   }
+		}
+	}
+}
 
 
 
